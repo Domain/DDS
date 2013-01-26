@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "java", "java\java\java.visualdproj", "{BCF18074-B869-4360-9756-AF4E4C4FB026}"
 EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "apache", "java\apache\apache.visualdproj", "{CCE50A78-FC1F-47F3-9D5C-2A0A98F88BEB}"
@@ -39,7 +39,6 @@ Global
 		{4CC59204-5A96-4914-8D11-2B43D56AE780}.Release|Win32.ActiveCfg = Release|Win32
 		{4CC59204-5A96-4914-8D11-2B43D56AE780}.Release|Win32.Build.0 = Release|Win32
 		{7DFCF5DE-EC93-448B-928E-FF0186927D12}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7DFCF5DE-EC93-448B-928E-FF0186927D12}.Debug|Win32.Build.0 = Debug|Win32
 		{7DFCF5DE-EC93-448B-928E-FF0186927D12}.Release|Win32.ActiveCfg = Release|Win32
 		{7DFCF5DE-EC93-448B-928E-FF0186927D12}.Release|Win32.Build.0 = Release|Win32
 		{9262C4E9-FA57-4CAC-8296-D0B7A5228099}.Debug|Win32.ActiveCfg = Debug|Win32
