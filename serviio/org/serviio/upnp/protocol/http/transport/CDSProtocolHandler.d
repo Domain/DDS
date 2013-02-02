@@ -1,6 +1,8 @@
 module org.serviio.upnp.protocol.http.transport.CDSProtocolHandler;
 
 import java.lang.String;
+import java.lang.Integer;
+import java.lang.Long;
 import java.util.Map;
 import org.apache.http.ProtocolVersion;
 import org.serviio.delivery.Client;
@@ -9,6 +11,7 @@ import org.serviio.delivery.RangeHeaders;
 import org.serviio.delivery.ResourceDeliveryProcessor : HttpMethod;
 import org.serviio.delivery.ResourceInfo;
 import org.serviio.upnp.protocol.http.transport.AbstractProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class CDSProtocolHandler : AbstractProtocolHandler
 {
@@ -20,7 +23,7 @@ public class CDSProtocolHandler : AbstractProtocolHandler
 			responseHeaders.put("Content-Range", range);
 	}
 
-	public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
+	override public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
 	{
 		if (type == RangeHeaders.RangeUnit.BYTES) {
 			if (!transcoded) {
@@ -32,7 +35,7 @@ public class CDSProtocolHandler : AbstractProtocolHandler
 		return true;
 	}
 
-	protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+	override protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
 	{
 		if (type == RangeHeaders.RangeUnit.BYTES)
 		{

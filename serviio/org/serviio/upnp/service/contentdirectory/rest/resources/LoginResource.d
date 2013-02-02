@@ -5,8 +5,8 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LoginResource
 {
-  @Post("xml|json")
-  public abstract ResultRepresentation login();
+    //@Post("xml|json")
+    public abstract ResultRepresentation login();
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

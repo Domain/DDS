@@ -5,8 +5,8 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LogoutResource
 {
-  @Post("xml|json")
-  public abstract ResultRepresentation logout();
+    //@Post("xml|json")
+    public abstract ResultRepresentation logout();
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

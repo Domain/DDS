@@ -6,8 +6,8 @@ import org.restlet.resource.Get;
 
 public abstract interface CDSRetrieveMediaResource
 {
-  @Get("xml|json")
-  public abstract StreamRepresentation deliver();
+    //@Get("xml|json")
+    public abstract StreamRepresentation deliver();
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

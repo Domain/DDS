@@ -11,6 +11,8 @@ import org.serviio.delivery.HttpResponseCodeException;
 import org.serviio.delivery.RangeHeaders;
 import org.serviio.delivery.ResourceDeliveryProcessor : HttpMethod;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
+import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 
 public abstract interface ResourceTransportProtocolHandler
 {
