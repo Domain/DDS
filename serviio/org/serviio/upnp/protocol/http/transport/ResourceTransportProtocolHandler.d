@@ -2,6 +2,7 @@ module org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler
 
 import java.lang.String;
 import java.lang.Integer;
+import java.lang.Long;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import org.apache.http.ProtocolVersion;
