@@ -1,9 +1,0 @@
-[submodule "java"]
-	path = java
-	url = https://github.com/Domain/java.git
-[submodule "serviio"]
-	path = serviio
-	url = https://github.com/Domain/serviio.git
-[submodule "PMS"]
-	path = PMS
-	url = https://github.com/Domain/PMS.git
