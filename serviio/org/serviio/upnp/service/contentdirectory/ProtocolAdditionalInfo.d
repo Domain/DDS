@@ -1,12 +1,13 @@
 module org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
+import java.lang.String;
 import org.serviio.library.metadata.MediaFileType;
 
 public abstract interface ProtocolAdditionalInfo
 {
-  public abstract String buildMediaProtocolInfo(bool paramBoolean1, bool paramBoolean2, MediaFileType paramMediaFileType, bool paramBoolean3);
+    public abstract String buildMediaProtocolInfo(bool paramBoolean1, bool paramBoolean2, MediaFileType paramMediaFileType, bool paramBoolean3);
 
-  public abstract String buildProfileProtocolInfo(MediaFileType paramMediaFileType);
+    public abstract String buildProfileProtocolInfo(MediaFileType paramMediaFileType);
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

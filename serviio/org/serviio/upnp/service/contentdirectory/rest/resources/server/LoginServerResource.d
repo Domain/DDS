@@ -14,6 +14,7 @@ import org.serviio.restlet.ResultRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.LoginResource;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.SecurityUtils;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractCDSServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

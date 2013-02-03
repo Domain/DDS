@@ -1,6 +1,7 @@
 module org.serviio.MediaServer;
 
 import java.lang.String;
+import java.lang.Thread;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -25,12 +26,14 @@ import org.serviio.update.UpdateChecker;
 import org.serviio.upnp.discovery.DiscoveryManager;
 import org.serviio.upnp.webserver.WebServer;
 import org.serviio.util.StringUtils;
+import org.serviio.UPnPServerStatus;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+static import org.slf4j.Logger;
 
 public class MediaServer
 {
-    private static immutable org.slf4j.Logger log;
+    private static immutable org.slf4j.Logger.Logger log;
     private static DiscoveryManager discoveryManager;
     private static UPnPServerStatus status;
     private static Map!(String, Object) arguments;
@@ -240,7 +243,7 @@ public class MediaServer
 
     private static class ShutdownHook : Thread
     {
-        public void run()
+        override public void run()
         {
             LibraryManager.getInstance().stopLibraryAdditionsCheckerThread();
             LibraryManager.getInstance().stopLibraryUpdatesCheckerThread();

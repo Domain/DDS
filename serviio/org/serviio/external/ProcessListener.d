@@ -12,7 +12,7 @@ public abstract class ProcessListener
 
   public abstract void outputUpdated(String paramString);
 
-  public abstract void releaseResources();
+  public abstract synchronized void releaseResources();
 
   public ProcessExecutor getExecutor()
   {

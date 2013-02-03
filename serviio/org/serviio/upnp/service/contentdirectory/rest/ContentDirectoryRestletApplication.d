@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.ContentDirectoryRestletApplication;
 
+import java.lang.String;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -12,25 +13,25 @@ import org.serviio.upnp.service.contentdirectory.rest.resources.server.LogoutSer
 
 public class ContentDirectoryRestletApplication : Application
 {
-  public static final String APP_CONTEXT = "/cds";
+    public static const String APP_CONTEXT = "/cds";
 
-  public Restlet createInboundRoot()
-  {
-    Router router = new Router(getContext());
-    router.setDefaultMatchingMode(1);
+    public Restlet createInboundRoot()
+    {
+        Router router = new Router(getContext());
+        router.setDefaultMatchingMode(1);
 
-    router.attach("/browse/{profile}/{objectId}/{browseFlag}/{objectType}/{start}/{count}", CDSBrowseServerResource.class_);
-    router.attach("/resource", CDSRetrieveMediaServerResource.class_);
-    router.attach("/login", LoginServerResource.class_);
-    router.attach("/logout", LogoutServerResource.class_);
-    router.attach("/application", ApplicationServerResource.class_);
-    router.attach("/ping", PingServerResource.class_);
+        router.attach("/browse/{profile}/{objectId}/{browseFlag}/{objectType}/{start}/{count}", CDSBrowseServerResource.class_);
+        router.attach("/resource", CDSRetrieveMediaServerResource.class_);
+        router.attach("/login", LoginServerResource.class_);
+        router.attach("/logout", LogoutServerResource.class_);
+        router.attach("/application", ApplicationServerResource.class_);
+        router.attach("/ping", PingServerResource.class_);
 
-    return router;
-  }
+        return router;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.ContentDirectoryRestletApplication
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.ContentDirectoryRestletApplication
+* JD-Core Version:    0.6.2
+*/

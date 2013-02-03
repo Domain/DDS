@@ -2,6 +2,7 @@ module org.serviio.upnp.service.contentdirectory.rest.resources.server.LogoutSer
 
 import org.serviio.restlet.ResultRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.LogoutResource;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
