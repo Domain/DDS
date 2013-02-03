@@ -259,7 +259,7 @@ public class ResourceDeliveryProcessor
         return null;
     }
 
-    protected Long convertSecondsToBytes(Double seconds, TreeMap!(Double, TranscodingJobListener.TranscodingJobListener.ProgressData) filesizeMap)
+    protected Long convertSecondsToBytes(Double seconds, TreeMap!(Double, TranscodingJobListener.ProgressData) filesizeMap)
     {
         if (seconds.doubleValue() == 0.0) {
             return Long.valueOf(0L);
@@ -270,15 +270,15 @@ public class ResourceDeliveryProcessor
             Entry!(Double, TranscodingJobListener.ProgressData) lowerBoundary = filesizeMap.floorEntry(seconds);
 
             if (lowerBoundary is null) {
-                return convertSecondsToBytes((cast(TranscodingJobListener.TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), Long.valueOf(0L), Double.valueOf(0.0), seconds);
+                return convertSecondsToBytes((cast(TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), Long.valueOf(0L), Double.valueOf(0.0), seconds);
             }
-            return convertSecondsToBytes((cast(TranscodingJobListener.TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), (cast(TranscodingJobListener.TranscodingJobListener.ProgressData)lowerBoundary.getValue()).getFileSize(), cast(Double)lowerBoundary.getKey(), seconds);
+            return convertSecondsToBytes((cast(TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), (cast(TranscodingJobListener.TranscodingJobListener.ProgressData)lowerBoundary.getValue()).getFileSize(), cast(Double)lowerBoundary.getKey(), seconds);
         }
 
         Entry!(Double, TranscodingJobListener.ProgressData) lastEntry = filesizeMap.lastEntry();
         Double secondsFromLast = Double.valueOf(seconds.doubleValue() - (cast(Double)lastEntry.getKey()).doubleValue());
-        Double approxFileSizeSinceLastEntry = Double.valueOf((cast(TranscodingJobListener.TranscodingJobListener.ProgressData)lastEntry.getValue()).getBitrate().floatValue() * secondsFromLast.doubleValue() / 8.0 * 1024.0);
-        return Long.valueOf((cast(TranscodingJobListener.TranscodingJobListener.ProgressData)lastEntry.getValue()).getFileSize().longValue() + approxFileSizeSinceLastEntry.longValue());
+        Double approxFileSizeSinceLastEntry = Double.valueOf((cast(TranscodingJobListener.ProgressData)lastEntry.getValue()).getBitrate().floatValue() * secondsFromLast.doubleValue() / 8.0 * 1024.0);
+        return Long.valueOf((cast(TranscodingJobListener.ProgressData)lastEntry.getValue()).getFileSize().longValue() + approxFileSizeSinceLastEntry.longValue());
     }
 
     private Long convertSecondsToBytes(Long upperFileSize, Double upperTime, Long lowerFilesize, Double lowerTime, Double seconds)

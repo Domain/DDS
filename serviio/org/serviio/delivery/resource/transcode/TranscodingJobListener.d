@@ -2,6 +2,8 @@ module org.serviio.delivery.resource.transcode.TranscodingJobListener;
 
 import java.lang.String;
 import java.lang.Double;
+import java.lang.Float;
+import java.lang.Long;
 import java.io.File;
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -105,7 +107,7 @@ public class TranscodingJobListener : ProcessListener
         }
     }
 
-    public synchronized void releaseResources()
+    override public synchronized void releaseResources()
     {
         if (!shuttingDown) {
             shuttingDown = true;

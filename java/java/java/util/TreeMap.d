@@ -30,7 +30,7 @@ class TreeMap(K, V) : Map!(K, V), SortedMap!(K, V) {
             implMissingInPhobos();
         }
     }
-    public this(Comparator c){
+    public this(Comparator!K c){
         implMissing( __FILE__, __LINE__ );
     }
     public this(Map!(K, V) m){
@@ -46,7 +46,7 @@ class TreeMap(K, V) : Map!(K, V), SortedMap!(K, V) {
             implMissingInPhobos();
         }
     }
-    Comparator     comparator(){
+    Comparator!K     comparator(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }

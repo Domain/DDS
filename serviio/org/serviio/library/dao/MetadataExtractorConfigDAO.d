@@ -1,5 +1,6 @@
 module org.serviio.library.dao.MetadataExtractorConfigDAO;
 
+import java.lang.Long;
 import java.util.List;
 import org.serviio.db.dao.InvalidArgumentException;
 import org.serviio.db.dao.PersistenceException;
@@ -8,11 +9,11 @@ import org.serviio.library.metadata.MediaFileType;
 
 public abstract interface MetadataExtractorConfigDAO
 {
-  public abstract long create(MetadataExtractorConfig paramMetadataExtractorConfig);
+    public abstract long create(MetadataExtractorConfig paramMetadataExtractorConfig);
 
-  public abstract void delete_(Long paramLong);
+    public abstract void delete_(Long paramLong);
 
-  public abstract List!(MetadataExtractorConfig) retrieveByMediaFileType(MediaFileType paramMediaFileType);
+    public abstract List!(MetadataExtractorConfig) retrieveByMediaFileType(MediaFileType paramMediaFileType);
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
