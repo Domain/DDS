@@ -29,10 +29,10 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 {
     private static immutable Logger log;
 
-	static this()
-	{
-		log = LoggerFactory.getLogger!(MusicTrackDAOImpl)();
-	}
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MusicTrackDAOImpl)();
+    }
 
     public long create(MusicTrack newInstance)
     {
