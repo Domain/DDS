@@ -1,6 +1,7 @@
 module org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
 
 import java.lang.String;
+import java.lang.Double;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,74 +14,81 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamDescriptor;
+import org.serviio.delivery.resource.transcode.TranscodingJobListener;
+import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 
-public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy
-  , TranscodingDeliveryStrategy!(File)
+public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(File)
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(FileBasedTranscodingDeliveryStrategy)();
+	private static immutable Logger log;
 
-  public StreamDescriptor createInputStream(TranscodingJobListener jobListener, Client client)
-  {
-    File transcodedFile = jobListener.getTranscodedFile();
-    if (!transcodedFile.exists())
-      throw new IOException(String.format("Transcoded file '%s' cannot be found, FFmpeg execution probably failed", cast(Object[])[ transcodedFile.getPath() ]));
-    if ((jobListener.isFinished()) && (!jobListener.isSuccessful())) {
-      throw new IOException("FFmpeg execution failed");
-    }
-    transcodedFile.deleteOnExit();
-    StreamDescriptor stream = null;
-    if (!jobListener.isFinished()) {
-      log.debug_("Sending transcoding stream");
+	static this()
+	{
+		log = LoggerFactory.getLogger!(FileBasedTranscodingDeliveryStrategy)();
+	}
 
-      InputStream fis = new TranscodeInputStream(transcodedFile, client);
-      jobListener.addStream(cast(TranscodeInputStream)fis);
-      stream = new StreamDescriptor(fis, null);
-    }
-    else {
-      log.debug_(String.format("Transcoded file '%s' is complete, sending simple stream", cast(Object[])[ transcodedFile ]));
-      InputStream fis = new FileInputStream(transcodedFile);
-      stream = new StreamDescriptor(fis, Long.valueOf(transcodedFile.length()));
-    }
-    return stream;
-  }
+	public StreamDescriptor createInputStream(TranscodingJobListener jobListener, Client client)
+	{
+		File transcodedFile = jobListener.getTranscodedFile();
+		if (!transcodedFile.exists())
+			throw new IOException(String.format("Transcoded file '%s' cannot be found, FFmpeg execution probably failed", cast(Object[])[ transcodedFile.getPath() ]));
+		if ((jobListener.isFinished()) && (!jobListener.isSuccessful())) {
+			throw new IOException("FFmpeg execution failed");
+		}
+		transcodedFile.deleteOnExit();
+		StreamDescriptor stream = null;
+		if (!jobListener.isFinished()) {
+			log.debug_("Sending transcoding stream");
 
-  public TranscodingJobListener invokeTranscoder(String transcodingIdentifier, MediaItem mediaItem, Double timeOffsetInSeconds, Double durationInSeconds, TranscodingDefinition trDef, Client client, DeliveryListener deliveryListener)
-  {
-    File transcodedFile = prepareTranscodedOutput(transcodingIdentifier);
+			InputStream fis = new TranscodeInputStream(transcodedFile, client);
+			jobListener.addStream(cast(TranscodeInputStream)fis);
+			stream = new StreamDescriptor(fis, null);
+		}
+		else {
+			log.debug_(String.format("Transcoded file '%s' is complete, sending simple stream", cast(Object[])[ transcodedFile ]));
+			InputStream fis = new FileInputStream(transcodedFile);
+			stream = new StreamDescriptor(fis, Long.valueOf(transcodedFile.length()));
+		}
+		return stream;
+	}
 
-    TranscodingJobListener jobListener = new TranscodingJobListener(transcodingIdentifier);
-    jobListener.setTranscodedFile(transcodedFile);
+	public TranscodingJobListener invokeTranscoder(String transcodingIdentifier, MediaItem mediaItem, Double timeOffsetInSeconds, Double durationInSeconds, TranscodingDefinition trDef, Client client, DeliveryListener deliveryListener)
+	{
+		File transcodedFile = prepareTranscodedOutput(transcodingIdentifier);
 
-    invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, jobListener.getTranscodedFile(), trDef, jobListener);
+		TranscodingJobListener jobListener = new TranscodingJobListener(transcodingIdentifier);
+		jobListener.setTranscodedFile(transcodedFile);
 
-    int retries = 0;
-    int maxRetries = mediaItem.isLocalMedia() ? 15 : 50;
-    while (((!transcodedFile.exists()) || (transcodedFile.length() == 0L)) && (retries++ < maxRetries)) {
-      ThreadUtils.currentThreadSleep(500L);
-    }
-    return jobListener;
-  }
+		invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, jobListener.getTranscodedFile(), trDef, jobListener);
 
-  private File prepareTranscodedOutput(String transcodingIdentifier)
-  {
-    File transcodingFolder = prepareTranscodingFolder();
-    return new File(transcodingFolder, transcodingIdentifier);
-  }
+		int retries = 0;
+		int maxRetries = mediaItem.isLocalMedia() ? 15 : 50;
+		while (((!transcodedFile.exists()) || (transcodedFile.length() == 0L)) && (retries++ < maxRetries)) {
+			ThreadUtils.currentThreadSleep(500L);
+		}
+		return jobListener;
+	}
 
-  private File prepareTranscodingFolder()
-  {
-    File transcodingFolder = AbstractTranscodingDeliveryEngine.getTranscodingFolder();
-    if (!transcodingFolder.exists()) {
-      bool created = transcodingFolder.mkdirs();
-      if (!created) {
-        throw new IOException(String.format("Cannot create transcoding folder: %s", cast(Object[])[ transcodingFolder.getAbsolutePath() ]));
-      }
-    }
-    return transcodingFolder;
-  }
+	private File prepareTranscodedOutput(String transcodingIdentifier)
+	{
+		File transcodingFolder = prepareTranscodingFolder();
+		return new File(transcodingFolder, transcodingIdentifier);
+	}
+
+	private File prepareTranscodingFolder()
+	{
+		File transcodingFolder = AbstractTranscodingDeliveryEngine.getTranscodingFolder();
+		if (!transcodingFolder.exists()) {
+			bool created = transcodingFolder.mkdirs();
+			if (!created) {
+				throw new IOException(String.format("Cannot create transcoding folder: %s", cast(Object[])[ transcodingFolder.getAbsolutePath() ]));
+			}
+		}
+		return transcodingFolder;
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy
+* JD-Core Version:    0.6.2
+*/

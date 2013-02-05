@@ -1,5 +1,7 @@
 module org.serviio.library.dao.MusicTrackDAOImpl;
 
+import java.lang.Long;
+import java.lang.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,18 +15,24 @@ import org.serviio.db.dao.PersistenceException;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicTrack;
-import org.serviio.library.entities.Person : RoleType;
+import org.serviio.library.entities.Person;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.JdbcUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
+import org.serviio.library.dao.AbstractSortableItemDao;
+import org.serviio.library.dao.MusicTrackDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MusicTrackDAOImpl : AbstractSortableItemDao
-, MusicTrackDAO
+public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 {
-    private static final Logger log = LoggerFactory.getLogger!(MusicTrackDAOImpl)();
+    private static immutable Logger log;
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(MusicTrackDAOImpl)();
+	}
 
     public long create(MusicTrack newInstance)
     {
@@ -162,7 +170,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
-            ps.setString(3, RoleType.ARTIST.toString());
+            ps.setString(3, Person.RoleType.ARTIST.toString());
             ResultSet rs = ps.executeQuery();
             return mapResultSet(rs);
         } catch (SQLException e) {
@@ -184,7 +192,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
-            ps.setString(3, RoleType.ARTIST.toString());
+            ps.setString(3, Person.RoleType.ARTIST.toString());
             ResultSet rs = ps.executeQuery();
             Integer count;
             if (rs.next()) {
@@ -533,7 +541,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao
         }
     }
 
-    public List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
+    public List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
         log.debug_(String.format("Retrieving list of music tracks for person %s with role %s on album %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId, role, albumId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 
@@ -557,7 +565,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao
         }
     }
 
-    public int retrieveMusicTracksForTrackRoleAndAlbumCount(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup)
+    public int retrieveMusicTracksForTrackRoleAndAlbumCount(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup)
     {
         log.debug_(String.format("Retrieving number of music tracks for person %s with role %s on album %s [%s]", cast(Object[])[ artistId, role, albumId, accessGroup ]));
         Connection con = null;
