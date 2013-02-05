@@ -25,7 +25,7 @@ public class NonClosingPipedInputStream : PipedInputStream
 
 	private static immutable Logger log;
 
-	private immutable ScheduledExecutorService scheduler;
+	private /*final*/ ScheduledExecutorService scheduler;
 	private ScheduledFuture!(Object) scheduledFuture;
 	private /*final*/ ProcessListener processListener;
 	private AtomicReference!(Date) lastBytesRead;

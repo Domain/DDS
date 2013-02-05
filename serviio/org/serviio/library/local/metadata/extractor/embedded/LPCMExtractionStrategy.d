@@ -1,16 +1,17 @@
 module org.serviio.library.local.metadata.extractor.embedded.LPCMExtractionStrategy;
 
 import org.serviio.dlna.AudioContainer;
+import org.serviio.library.local.metadata.extractor.embedded.AudioExtractionStrategy;
 
 public class LPCMExtractionStrategy : AudioExtractionStrategy
 {
-  protected AudioContainer getContainer()
-  {
-    return AudioContainer.LPCM;
-  }
+	override protected AudioContainer getContainer()
+	{
+		return AudioContainer.LPCM;
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.LPCMExtractionStrategy
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.LPCMExtractionStrategy
+* JD-Core Version:    0.6.2
+*/

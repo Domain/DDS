@@ -1,5 +1,6 @@
 module org.serviio.library.local.metadata.extractor.embedded.JPEGExtractionStrategy;
 
+import java.lang.Integer;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,76 +17,83 @@ import org.serviio.dlna.ImageContainer;
 import org.serviio.dlna.SamplingMode;
 import org.serviio.library.local.metadata.ImageMetadata;
 import org.serviio.library.local.metadata.extractor.InvalidMediaFormatException;
+import org.serviio.library.local.metadata.extractor.embedded.ImageExtractionStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JPEGExtractionStrategy : ImageExtractionStrategy
 {
-  private static DateFormat exifDF = new SimpleDateFormat("''yyyy:MM:dd HH:mm:ss''");
+	private static DateFormat exifDF;
 
-  private static final Logger log = LoggerFactory.getLogger!(JPEGExtractionStrategy)();
+	private static immutable Logger log;
 
-  public void extractMetadata(ImageMetadata metadata, ByteSource f)
-  {
-    super.extractMetadata(metadata, f);
-    try
-    {
-      IImageMetadata imageMetadata = Sanselan.getMetadata(f.getInputStream(), f.getFilename());
+	static this()
+	{
+		exifDF = new SimpleDateFormat("''yyyy:MM:dd HH:mm:ss''");
+		log = LoggerFactory.getLogger!(JPEGExtractionStrategy)();
+	}
 
-      if ((imageMetadata !is null) && (( cast(JpegImageMetadata)imageMetadata !is null ))) {
-        JpegImageMetadata jpegMetadata = cast(JpegImageMetadata)imageMetadata;
+	override public void extractMetadata(ImageMetadata metadata, ByteSource f)
+	{
+		super.extractMetadata(metadata, f);
+		try
+		{
+			IImageMetadata imageMetadata = Sanselan.getMetadata(f.getInputStream(), f.getFilename());
 
-        TiffField dateField = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
-        if (dateField is null) {
-          dateField = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_MODIFY_DATE);
-        }
-        Date createdDate = dateField !is null ? exifDF.parse(dateField.getValueDescription()) : null;
-        metadata.setDate(createdDate);
-        metadata.setExifRotation(getRotation(jpegMetadata));
-      }
-      try
-      {
-        JPEGSamplingTypeReader.JpegImageParams params = JPEGSamplingTypeReader.getJpegImageData(f.getInputStream(), f.getFilename());
-        metadata.setChromaSubsampling(params.getSamplingMode());
-      }
-      catch (Exception e) {
-        metadata.setChromaSubsampling(SamplingMode.UNKNOWN);
-      }
-    } catch (ImageReadException e) {
-      log.debug_(String.format("Cannot read file %s for metadata extraction. Message: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]));
-    } catch (ParseException e) {
-    }
-    catch (OutOfMemoryError e) {
-      log.debug_(String.format("Cannot get metadata of file %s because of OutOfMemory error. The file is dodgy, but will still be added to the library.", cast(Object[])[ f.getFilename() ]));
-    } catch (IOException e) {
-      log.debug_(String.format("Cannot read EXIF metadata for file %s. Message: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]));
-    }
-  }
+			if ((imageMetadata !is null) && (( cast(JpegImageMetadata)imageMetadata !is null ))) {
+				JpegImageMetadata jpegMetadata = cast(JpegImageMetadata)imageMetadata;
 
-  protected ImageContainer getContainer()
-  {
-    return ImageContainer.JPEG;
-  }
+				TiffField dateField = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_DATE_TIME_ORIGINAL);
+				if (dateField is null) {
+					dateField = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_MODIFY_DATE);
+				}
+				Date createdDate = dateField !is null ? exifDF.parse(dateField.getValueDescription()) : null;
+				metadata.setDate(createdDate);
+				metadata.setExifRotation(getRotation(jpegMetadata));
+			}
+			try
+			{
+				JPEGSamplingTypeReader.JpegImageParams params = JPEGSamplingTypeReader.getJpegImageData(f.getInputStream(), f.getFilename());
+				metadata.setChromaSubsampling(params.getSamplingMode());
+			}
+			catch (Exception e) {
+				metadata.setChromaSubsampling(SamplingMode.UNKNOWN);
+			}
+		} catch (ImageReadException e) {
+			log.debug_(String.format("Cannot read file %s for metadata extraction. Message: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]));
+		} catch (ParseException e) {
+		}
+		catch (OutOfMemoryError e) {
+			log.debug_(String.format("Cannot get metadata of file %s because of OutOfMemory error. The file is dodgy, but will still be added to the library.", cast(Object[])[ f.getFilename() ]));
+		} catch (IOException e) {
+			log.debug_(String.format("Cannot read EXIF metadata for file %s. Message: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]));
+		}
+	}
 
-  protected Integer getRotation(JpegImageMetadata jpegMetadata)
-  {
-    TiffField rotation = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_ORIENTATION);
-    if (rotation !is null) {
-      if (rotation.getIntValue() == 3)
-        return Integer.valueOf(180);
-      if (rotation.getIntValue() == 8)
-        return Integer.valueOf(270);
-      if (rotation.getIntValue() == 6) {
-        return Integer.valueOf(90);
-      }
-      return Integer.valueOf(0);
-    }
+	override protected ImageContainer getContainer()
+	{
+		return ImageContainer.JPEG;
+	}
 
-    return Integer.valueOf(0);
-  }
+	protected Integer getRotation(JpegImageMetadata jpegMetadata)
+	{
+		TiffField rotation = jpegMetadata.findEXIFValue(TiffConstants.EXIF_TAG_ORIENTATION);
+		if (rotation !is null) {
+			if (rotation.getIntValue() == 3)
+				return Integer.valueOf(180);
+			if (rotation.getIntValue() == 8)
+				return Integer.valueOf(270);
+			if (rotation.getIntValue() == 6) {
+				return Integer.valueOf(90);
+			}
+			return Integer.valueOf(0);
+		}
+
+		return Integer.valueOf(0);
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.JPEGExtractionStrategy
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.JPEGExtractionStrategy
+* JD-Core Version:    0.6.2
+*/
