@@ -1,5 +1,7 @@
 module org.serviio.library.local.metadata.extractor.video.TheMovieDBSourceAdaptor;
 
+import java.lang.String;
+import java.lang.Integer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -23,6 +25,7 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.serviio.util.XPathUtil;
 import org.serviio.library.local.metadata.extractor.video.SearchSourceAdaptor;
+import org.serviio.library.local.metadata.extractor.video.VideoDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
