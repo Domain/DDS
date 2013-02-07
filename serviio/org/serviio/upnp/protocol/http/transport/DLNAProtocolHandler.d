@@ -2,6 +2,7 @@ module org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
 
 import java.lang.Long;
 import java.lang.String;
+import java.lang.Integer;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,9 @@ import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.upnp.protocol.ssdp.SSDPConstants;
 import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.util.DateUtils;
+import org.serviio.upnp.protocol.http.transport.AbstractProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class DLNAProtocolHandler : AbstractProtocolHandler
 {
@@ -64,7 +68,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
 		responseHeaders.put("realTimeInfo.dlna.org", "DLNA.ORG_TLAG=*");
 	}
 
-	public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
+	override public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
 	{
 		if (type == RangeHeaders.RangeUnit.BYTES) {
 			if ((http11) || ((!http11) && (!transcoded)))
@@ -80,7 +84,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
 		return true;
 	}
 
-	protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+	override protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
 	{
 		if (type == RangeHeaders.RangeUnit.BYTES)
 		{
@@ -98,7 +102,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
 	{
 		if (( cast(MediaFormatProfileResource)resourceInfo !is null )) {
 			MediaFormatProfileResource ri = cast(MediaFormatProfileResource)resourceInfo;
-			List/*!(? : ProtocolAdditionalInfo)*/ pis = client.getRendererProfile().getResourceProtocolInfo(ri.getFormatProfile()).getAdditionalInfos();
+			List!(ProtocolAdditionalInfo) pis = client.getRendererProfile().getResourceProtocolInfo(ri.getFormatProfile()).getAdditionalInfos();
 			ProtocolAdditionalInfo pi = cast(ProtocolAdditionalInfo)pis.get(protocolInfoIndex !is null ? protocolInfoIndex.intValue() : 0);
 			responseHeaders.put("contentFeatures.dlna.org", pi.buildMediaProtocolInfo(resourceInfo.isTranscoded(), resourceInfo.isLive(), (cast(MediaFormatProfileResource)resourceInfo).getFormatProfile().getFileType(), (resourceInfo.getDuration() !is null) && (resourceInfo.getDuration().intValue() > 0)));
 		}

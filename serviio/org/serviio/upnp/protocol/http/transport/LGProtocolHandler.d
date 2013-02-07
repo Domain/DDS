@@ -1,11 +1,13 @@
 module org.serviio.upnp.protocol.http.transport.LGProtocolHandler;
 
+import java.lang.Long;
 import org.serviio.delivery.HttpResponseCodeException;
 import org.serviio.delivery.RangeHeaders;
+import org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
 
 public class LGProtocolHandler : DLNAProtocolHandler
 {
-	public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
+	override public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded)
 	{
 		if (type == RangeHeaders.RangeUnit.BYTES) {
 			if (!transcoded) {
@@ -17,7 +19,7 @@ public class LGProtocolHandler : DLNAProtocolHandler
 		return super.supportsRangeHeader(type, http11, transcoded);
 	}
 
-	protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+	override protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
 	{
 		if ((type == RangeHeaders.RangeUnit.BYTES) && 
 			(transcoded))

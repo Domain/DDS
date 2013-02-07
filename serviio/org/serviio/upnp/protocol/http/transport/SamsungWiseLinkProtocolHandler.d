@@ -1,5 +1,8 @@
 module org.serviio.upnp.protocol.http.transport.SamsungWiseLinkProtocolHandler;
 
+import java.lang.String;
+import java.lang.Integer;
+import java.lang.Long;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +29,8 @@ import org.serviio.upnp.service.contentdirectory.HostInfo;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
+import org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 
 public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
 {
@@ -68,7 +73,7 @@ public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
 		}
 	}
 
-	public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri)
+	override public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri)
 	{
 		RequestedResourceDescriptor originalDescriptor = super.getRequestedResourceDescription(requestUri);
 		if ((originalDescriptor.getResourceType() == Resource.ResourceType.MEDIA_ITEM) && (originalDescriptor.getTargetProfileName() !is null) && (originalDescriptor.getTargetProfileName().equals(MediaFormatProfile.JPEG_SM.toString())))

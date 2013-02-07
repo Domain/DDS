@@ -10,13 +10,18 @@ import org.slf4j.LoggerFactory;
 
 public class RendererAdvertisementProcessor : Runnable
 {
-	private static final Logger log = LoggerFactory.getLogger!(RendererAdvertisementProcessor)();
+	private static immutable Logger log;
 	private String deviceIPAddress;
 	private String nts;
 	private int timeToKeep;
 	private String deviceDescriptionURL;
 	private String uuid;
 	private String server;
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(RendererAdvertisementProcessor)();
+	}
 
 	public this(SocketAddress deviceIPAddress, String uuid, String nts, int timeToKeep, String deviceDescriptionURL, String server)
 	{
