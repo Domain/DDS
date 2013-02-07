@@ -4,6 +4,7 @@ import com.sun.syndication.feed.modules.itunes.EntryInformation;
 import com.sun.syndication.feed.synd.SyndEntry;
 import org.serviio.library.online.metadata.FeedItem;
 import org.serviio.util.ObjectValidator;
+import org.serviio.library.online.feed.FeedEntryParser;
 
 public class ITunesPodcastFeedEntryParser
   : FeedEntryParser

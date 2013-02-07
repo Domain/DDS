@@ -6,8 +6,8 @@ import org.restlet.resource.Get;
 
 public abstract interface MediaBrowserResource
 {
-  @Get("xml|json")
-  public abstract InputRepresentation deliver();
+	//@Get("xml|json")
+	public abstract InputRepresentation deliver();
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio-media-browser.jar

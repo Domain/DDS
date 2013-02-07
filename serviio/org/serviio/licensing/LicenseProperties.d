@@ -1,5 +1,7 @@
 module org.serviio.licensing.LicenseProperties;
 
+import java.lang.String;
+
 public class LicenseProperties
 {
 	enum LicensePropertiesEnum : String
@@ -19,13 +21,13 @@ public class LicenseProperties
 	LicensePropertiesEnum licenseProperties;
 	alias licenseProperties this;
 
-  public String getName()
-  {
-	  return cast(String)licenseProperties;
-  }
+	public String getName()
+	{
+		return cast(String)licenseProperties;
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.licensing.LicenseProperties
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.licensing.LicenseProperties
+* JD-Core Version:    0.6.2
+*/

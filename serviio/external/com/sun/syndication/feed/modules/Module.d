@@ -3,10 +3,6 @@ module com.sun.syndication.feed.modules.Module;
 
 import java.lang.exceptions;
 
-public class Module
+public interface Module
 {
-    public this()
-    {
-        implMissing();
-    }
 }

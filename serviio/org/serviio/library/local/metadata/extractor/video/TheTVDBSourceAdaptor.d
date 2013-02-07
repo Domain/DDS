@@ -1,5 +1,7 @@
 module org.serviio.library.local.metadata.extractor.video.TheTVDBSourceAdaptor;
 
+import java.lang.String;
+import java.lang.Integer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -23,6 +25,8 @@ import org.serviio.util.NumberUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.serviio.util.XPathUtil;
+import org.serviio.library.local.metadata.extractor.video.SearchSourceAdaptor;
+import org.serviio.library.local.metadata.extractor.video.VideoDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -30,22 +34,35 @@ import org.w3c.dom.NodeList;
 
 public class TheTVDBSourceAdaptor : SearchSourceAdaptor
 {
-    private static final String APIKEY = "235C8CA4529142E9";
-    private static final String API_BASE_CONTEXT = "/api/";
-    private static final String MAIN_SERVER_URL = "http://www.thetvdb.com";
-    private static List!(String) xmlMirrors = new ArrayList!(String)();
-    private static List!(String) bannerMirrors = new ArrayList!(String)();
+    private static const String APIKEY = "235C8CA4529142E9";
+    private static const String API_BASE_CONTEXT = "/api/";
+    private static const String MAIN_SERVER_URL = "http://www.thetvdb.com";
+    private static List!(String) xmlMirrors;
+    private static List!(String) bannerMirrors;
 
-    private static final Logger log = LoggerFactory.getLogger!(TheTVDBSourceAdaptor);
+    private static immutable Logger log;
 
-    private static final DateFormat firstAiredDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static immutable DateFormat firstAiredDateFormat;
     private String seriesId;
     private String episodeXML;
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(TheTVDBSourceAdaptor);
+		firstAiredDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	}
+
+	public this()
+	{
+		xmlMirrors = new ArrayList!(String)();
+		bannerMirrors = new ArrayList!(String)();
+	}
 
     public void retrieveMetadata(String episodeId, VideoMetadata videoMetadata)
     {
         String seriesXML = getSeriesDetails(seriesId);
         if ((ObjectValidator.isNotEmpty(seriesXML)) && (ObjectValidator.isNotEmpty(episodeXML)))
+		{
             try
             {
                 Node rootSeriesNode = XPathUtil.getRootNode(seriesXML);
@@ -97,8 +114,11 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
                 throw new IOException(String.format("Cannot retrieve metadata for episode %s from tvdb.com, the returned XML is corrupt",
                                 cast(Object[])[ episodeId ]));
             }
+		}
         else
+		{
             throw new IOException("Series metadata is missing");
+		}
     }
 
     public String search(VideoDescription description)
@@ -193,37 +213,30 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
                                 log.debug_(String.format("Found %s series (or translations), using the first one",
                                                 cast(Object[])[ Integer.valueOf(seriesNodes.getLength()) ]));
                                 Node seriesNode = seriesNodes.item(0);
-                                return XPathUtil.getNodeValue(seriesNode,
-                                        "seriesid");
+                                return XPathUtil.getNodeValue(seriesNode, "seriesid");
                             }
 
                             log.debug_("No series with the name has been found");
                         }
                         else
                         {
-                            throw new IOException(
-                                    "Cannot retrieve series search results for tvdb.com, an error was returned");
+                            throw new IOException("Cannot retrieve series search results for tvdb.com, an error was returned");
                         }
                     }
                     catch (XPathExpressionException e)
                     {
-                        throw new IOException(
-                                "Cannot retrieve series search results for tvdb.com, the returned XML is corrupt");
+                        throw new IOException("Cannot retrieve series search results for tvdb.com, the returned XML is corrupt");
                     }
                 else
-                    throw new IOException(
-                            "Cannot retrieve series search results for tvdb.com, returned document is empty");
+                    throw new IOException("Cannot retrieve series search results for tvdb.com, returned document is empty");
             }
             catch (FileNotFoundException fnfe)
             {
-                throw new IOException(
-                        "Cannot retrieve series search results for tvdb.com, file not found");
+                throw new IOException("Cannot retrieve series search results for tvdb.com, file not found");
             }
             catch (Exception e)
             {
-                throw new IOException(
-                        String.format(
-                                "Cannot retrieve series search results for tvdb.com: %s",
+                throw new IOException(String.format("Cannot retrieve series search results for tvdb.com: %s",
                                 cast(Object[])[ e.getMessage() ]));
             }
         }
@@ -233,18 +246,13 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     private String getEpisodeDetails(String seriesId, int season, int episode)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String
-                .format("Retrieving details of episode (seriesId = %s, season = %s, episode = %s, language = %s)",
-                        cast(Object[])[ seriesId, Integer.valueOf(season),
-                                Integer.valueOf(episode), languageCode ]));
+        log.debug_(String.format("Retrieving details of episode (seriesId = %s, season = %s, episode = %s, language = %s)",
+                        cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode), languageCode ]));
 
         try
         {
-            String episodeDetailsPath = String.format(
-                    "%s%s%s/series/%s/default/%s/%s/%s.xml",
-                    cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY,
-                            seriesId, Integer.valueOf(season),
-                            Integer.valueOf(episode), languageCode ]);
+            String episodeDetailsPath = String.format("%s%s%s/series/%s/default/%s/%s/%s.xml",
+                    cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY, seriesId, Integer.valueOf(season), Integer.valueOf(episode), languageCode ]);
 
             episodeXML = retrieveXMLFromUrl(episodeDetailsPath);
             if (ObjectValidator.isNotEmpty(episodeXML))
@@ -253,61 +261,46 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
                 return XPathUtil.getNodeValue(rootNode, "Data/Episode/id");
             }
 
-            throw new IOException(
-                    "Cannot retrieve episode details, returned document is empty");
+            throw new IOException("Cannot retrieve episode details, returned document is empty");
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(
-                    String.format(
-                            "Cannot retrieve episode details (series = %s, season = %s, episode = %s), file not found",
-                            cast(Object[])[ seriesId, Integer.valueOf(season),
-                                    Integer.valueOf(episode) ]));
+            throw new IOException(String.format("Cannot retrieve episode details (series = %s, season = %s, episode = %s), file not found",
+                            cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode) ]));
         }
         catch (Exception e)
         {
-            throw new IOException(
-                    String.format(
-                            "Cannot retrieve episode details (series = %s, season = %s, episode = %s): %s",
-                            cast(Object[])[ seriesId, Integer.valueOf(season),
-                                    Integer.valueOf(episode), e.getMessage() ]));
+            throw new IOException(String.format("Cannot retrieve episode details (series = %s, season = %s, episode = %s): %s",
+                            cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode), e.getMessage() ]));
         }
     }
 
     private String getSeriesDetails(String seriesId)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String.format(
-                "Retrieving details of series (seriesId = %s, language = %s)",
+        log.debug_(String.format("Retrieving details of series (seriesId = %s, language = %s)",
                 cast(Object[])[ seriesId, languageCode ]));
         try
         {
             String seriesDetailsPath = String.format("%s%s%s/series/%s/%s.xml",
-                    cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY,
-                            seriesId, languageCode ]);
+                    cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY, seriesId, languageCode ]);
 
             return retrieveXMLFromUrl(seriesDetailsPath);
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(
-                    String.format(
-                            "Cannot retrieve series details (series = %s), file not found",
-                            cast(Object[])[ seriesId ]));
+            throw new IOException(String.format("Cannot retrieve series details (series = %s), file not found", cast(Object[])[ seriesId ]));
         }
         catch (Exception e)
         {
-            throw new IOException(String.format(
-                    "Cannot retrieve series details (series = %s): %s", 
-                    cast(Object[])[ seriesId, e.getMessage() ]));
+            throw new IOException(String.format("Cannot retrieve series details (series = %s): %s", cast(Object[])[ seriesId, e.getMessage() ]));
         }
         
     }
 
     private String getBannerMirror()
     {
-        int index = NumberUtils
-                .getRandomInInterval(0, bannerMirrors.size() - 1);
+        int index = NumberUtils.getRandomInInterval(0, bannerMirrors.size() - 1);
         return cast(String) bannerMirrors.get(index);
     }
 
@@ -367,8 +360,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
             }
             catch (Exception e1)
             {
-                throw new IOException(
-                        "Failed to parse retrieved file (even unpacked version)");
+                throw new IOException("Failed to parse retrieved file (even unpacked version)");
             }
         }
         return xml;
