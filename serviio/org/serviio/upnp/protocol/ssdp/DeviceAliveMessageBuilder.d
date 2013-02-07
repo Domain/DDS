@@ -8,6 +8,7 @@ import org.apache.http.HttpRequest;
 import org.serviio.upnp.Device;
 import org.serviio.upnp.protocol.http.HttpMessageBuilder;
 import org.serviio.upnp.service.Service;
+import org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
 
 public class DeviceAliveMessageBuilder : SSDPRequestMessageBuilder
 {

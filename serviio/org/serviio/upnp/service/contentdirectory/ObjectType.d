@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ObjectType
+public struct ObjectType
 {
 	enum ObjectTypeEnum
 	{
@@ -14,28 +14,39 @@ public class ObjectType
 	ObjectTypeEnum objectType;
 	alias objectType this;
 
-  public bool supportsContainers() {
-    return getContainerTypes().contains(this);
-  }
+	public this(ObjectTypeEnum type)
+	{
+		objectType = type;
+	}
 
-  public bool supportsItems() {
-    return getItemTypes().contains(this);
-  }
+	ObjectType opAssign(ObjectTypeEnum type)
+	{
+		objectType = type;
+		return this;
+	}
 
-  public static Set!(ObjectType) getItemTypes() {
-    return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ ITEMS, ALL ]));
-  }
+	public bool supportsContainers() {
+		return getContainerTypes().contains(this);
+	}
 
-  public static Set!(ObjectType) getContainerTypes() {
-    return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ALL ]));
-  }
+	public bool supportsItems() {
+		return getItemTypes().contains(this);
+	}
 
-  public static Set!(ObjectType) getAllTypes() {
-    return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ITEMS, ALL ]));
-  }
+	public static Set!(ObjectType) getItemTypes() {
+		return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ ITEMS, ALL ]));
+	}
+
+	public static Set!(ObjectType) getContainerTypes() {
+		return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ALL ]));
+	}
+
+	public static Set!(ObjectType) getAllTypes() {
+		return new HashSet!(ObjectType)(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ITEMS, ALL ]));
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.ObjectType
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.ObjectType
+* JD-Core Version:    0.6.2
+*/

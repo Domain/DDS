@@ -30,6 +30,7 @@ import org.serviio.upnp.Device;
 import org.serviio.upnp.service.Service;
 import org.serviio.upnp.service.StateVariable;
 import org.serviio.util.XmlUtils;
+import org.serviio.upnp.protocol.soap.OperationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpRequest;
 import org.serviio.upnp.protocol.http.HttpMessageBuilder;
+import org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
 
 public class RendererSearchMessageBuilder : SSDPRequestMessageBuilder
 {
