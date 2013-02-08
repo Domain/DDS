@@ -1,20 +1,21 @@
 module org.serviio.upnp.service.contentdirectory.command.person.ListArtistsForInitialCommand;
 
+import java.lang.String;
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.entities.Person : RoleType;
+import org.serviio.library.entities.Person;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 
 public class ListArtistsForInitialCommand : AbstractListPersonsForInitialCommand
 {
-  public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
-  {
-    super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, RoleType.ARTIST);
-  }
+	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
+	{
+		super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, Person.RoleType.ARTIST);
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.person.ListArtistsForInitialCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.person.ListArtistsForInitialCommand
+* JD-Core Version:    0.6.2
+*/

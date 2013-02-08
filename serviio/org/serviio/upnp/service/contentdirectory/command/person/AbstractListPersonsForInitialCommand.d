@@ -20,14 +20,14 @@ public abstract class AbstractListPersonsForInitialCommand : AbstractPersonsRetr
 		this.roleType = roleType;
 	}
 
-	protected List!(Person) retrieveEntityList()
+	override protected List!(Person) retrieveEntityList()
 	{
 		List!(Person) persons = PersonService.getListOfPersonsForInitial(getInitialFromId(getInternalObjectId()), roleType, startIndex, count);
 
 		return persons;
 	}
 
-	public int retrieveItemCount()
+	override public int retrieveItemCount()
 	{
 		return PersonService.getNumberOfPersonsForInitial(getInitialFromId(getInternalObjectId()), roleType);
 	}
