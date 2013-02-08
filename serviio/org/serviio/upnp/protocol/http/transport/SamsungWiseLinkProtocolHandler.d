@@ -31,10 +31,11 @@ import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
 import org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
 import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
 {
-	public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, ResourceDeliveryProcessor.HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+	override public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, ResourceDeliveryProcessor.HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
 	{
 		super.handleResponse(requestHeaders, responseHeaders, httpMethod, requestHttpVersion, mediaFileResourceInfo, protocolInfoIndex, transferMode, client, streamSize, range);
 

@@ -38,9 +38,14 @@ import org.w3c.dom.Node;
 
 public class ServiceInvoker
 {
-	private static final Logger log = LoggerFactory.getLogger!(ServiceInvoker)();
+	private static immutable Logger log;
 	private static MessageFactory messageFactory;
-	private static final String QUERY_STATE_VARIABLE = "QueryStateVariable";
+	private static const String QUERY_STATE_VARIABLE = "QueryStateVariable";
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(ServiceInvoker)();
+	}
 
 	public static SOAPMessage invokeService(String soapAction, String soapMessage, Renderer renderer)
 	{

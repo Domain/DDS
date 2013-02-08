@@ -21,48 +21,48 @@ import org.serviio.upnp.service.contentdirectory.definition.Definition;
 
 public class ListImagesCreationYearsCommand : AbstractCommand!(Container)
 {
-  public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
-  {
-    super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
-  }
+	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
+	{
+		super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
+	}
 
-  protected Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
-  }
+	override protected Set!(ObjectClassType) getSupportedClasses()
+	{
+		return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
+	}
 
-  protected Set!(ObjectType) getSupportedObjectTypes()
-  {
-    return ObjectType.getContainerTypes();
-  }
+	override protected Set!(ObjectType) getSupportedObjectTypes()
+	{
+		return ObjectType.getContainerTypes();
+	}
 
-  protected List!(Container) retrieveList()
-  {
-    List!(Container) items = new ArrayList!(Container)();
+	override protected List!(Container) retrieveList()
+	{
+		List!(Container) items = new ArrayList!(Container)();
 
-    List!(Integer) years = ImageService.getListOfImagesCreationYears(accessGroup, startIndex, count);
+		List!(Integer) years = ImageService.getListOfImagesCreationYears(accessGroup, startIndex, count);
 
-    foreach (Integer year ; years) {
-      String runtimeId = generateRuntimeObjectId(year);
-      Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(year.toString(), runtimeId, getDisplayedContainerId(objectId), objectType, accessGroup);
-      items.add(cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null));
-    }
-    return items;
-  }
+		foreach (Integer year ; years) {
+			String runtimeId = generateRuntimeObjectId(year);
+			Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(year.toString(), runtimeId, getDisplayedContainerId(objectId), objectType, accessGroup);
+			items.add(cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null));
+		}
+		return items;
+	}
 
-  protected Container retrieveSingleItem()
-  {
-    Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(getInternalObjectId(), objectId, Definition.instance().getParentNodeId(objectId), objectType, accessGroup);
-    return cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null);
-  }
+	override protected Container retrieveSingleItem()
+	{
+		Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(getInternalObjectId(), objectId, Definition.instance().getParentNodeId(objectId), objectType, accessGroup);
+		return cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null);
+	}
 
-  public int retrieveItemCount()
-  {
-    return ImageService.getNumberOfImagesCreationYears(accessGroup);
-  }
+	public int retrieveItemCount()
+	{
+		return ImageService.getNumberOfImagesCreationYears(accessGroup);
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationYearsCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationYearsCommand
+* JD-Core Version:    0.6.2
+*/

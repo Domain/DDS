@@ -1,5 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.audio.AbstractAlbumsRetrievalCommand;
 
+import java.lang.Long;
+import java.lang.String;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,29 +15,29 @@ import org.serviio.upnp.service.contentdirectory.command.AbstractEntityContainer
 
 public abstract class AbstractAlbumsRetrievalCommand : AbstractEntityContainerCommand!(MusicAlbum)
 {
-  public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
-  {
-    super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
-  }
+	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
+	{
+		super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
+	}
 
-  protected Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.MUSIC_ALBUM ]));
-  }
+	override protected Set!(ObjectClassType) getSupportedClasses()
+	{
+		return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.MUSIC_ALBUM ]));
+	}
 
-  protected MusicAlbum retrieveSingleEntity(Long entityId)
-  {
-    MusicAlbum album = AudioService.getMusicAlbum(entityId);
-    return album;
-  }
+	override protected MusicAlbum retrieveSingleEntity(Long entityId)
+	{
+		MusicAlbum album = AudioService.getMusicAlbum(entityId);
+		return album;
+	}
 
-  protected String getContainerTitle(MusicAlbum album)
-  {
-    return album.getTitle();
-  }
+	override protected String getContainerTitle(MusicAlbum album)
+	{
+		return album.getTitle();
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.AbstractAlbumsRetrievalCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.AbstractAlbumsRetrievalCommand
+* JD-Core Version:    0.6.2
+*/

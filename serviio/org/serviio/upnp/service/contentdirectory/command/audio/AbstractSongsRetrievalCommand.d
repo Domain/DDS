@@ -1,5 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.audio.AbstractSongsRetrievalCommand;
 
+import java.lang.String;
+import java.lang.Long;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,29 +15,29 @@ import org.serviio.upnp.service.contentdirectory.command.AbstractEntityItemComma
 
 public abstract class AbstractSongsRetrievalCommand : AbstractEntityItemCommand!(MusicTrack)
 {
-  public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
-  {
-    super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
-  }
+	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
+	{
+		super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
+	}
 
-  protected final Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.AUDIO_ITEM, ObjectClassType.MUSIC_TRACK ]));
-  }
+	override protected final Set!(ObjectClassType) getSupportedClasses()
+	{
+		return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.AUDIO_ITEM, ObjectClassType.MUSIC_TRACK ]));
+	}
 
-  protected MusicTrack retrieveSingleEntity(Long entityId)
-  {
-    MusicTrack song = AudioService.getSong(entityId);
-    return song;
-  }
+	override protected MusicTrack retrieveSingleEntity(Long entityId)
+	{
+		MusicTrack song = AudioService.getSong(entityId);
+		return song;
+	}
 
-  protected String getItemTitle(MusicTrack track, bool markItem)
-  {
-    return track.getTitle();
-  }
+	override protected String getItemTitle(MusicTrack track, bool markItem)
+	{
+		return track.getTitle();
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.AbstractSongsRetrievalCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.AbstractSongsRetrievalCommand
+* JD-Core Version:    0.6.2
+*/

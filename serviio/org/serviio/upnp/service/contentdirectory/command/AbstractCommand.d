@@ -1,6 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.AbstractCommand;
 
 import java.lang.String;
+import java.lang.Number;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,10 +26,11 @@ public abstract class AbstractCommand(T : DirectoryObject) : Command!(T)
 	protected Profile rendererProfile;
 	protected ObjectType objectType = ObjectType.ALL;
 
-	protected AccessGroup accessGroup = AccessGroup.ANY;
+	protected AccessGroup accessGroup;
 
 	public this(String objectId, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
 	{
+		accessGroup = AccessGroup.ANY;
 		this.objectId = objectId;
 		this.containerClassType = containerClassType;
 		this.itemClassType = itemClassType;

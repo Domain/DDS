@@ -1,5 +1,8 @@
 module org.serviio.upnp.service.contentdirectory.command.AbstractListOnlineObjectsByHierarchyCommand;
 
+import java.lang.String;
+import java.lang.Long;
+import java.lang.Number;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,189 +27,195 @@ import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.util.ObjectValidator;
+import org.serviio.upnp.service.contentdirectory.command.AbstractCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractCommand!(DirectoryObject)
 {
-  private static final Logger log = LoggerFactory.getLogger!(AbstractListOnlineObjectsByHierarchyCommand)();
-  private static final String FOLDER_PREFIX = "FD";
-  private static final String ITEM_PREFIX = "OI";
-  protected MediaFileType fileType;
+	private static immutable Logger log;
+	private static const String FOLDER_PREFIX = "FD";
+	private static const String ITEM_PREFIX = "OI";
+	protected MediaFileType fileType;
 
-  public this(String objectId, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, MediaFileType fileType)
-  {
-    super(objectId, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
-    this.fileType = fileType;
-  }
+	static this()
+	{
+		log = LoggerFactory.getLogger!(AbstractListOnlineObjectsByHierarchyCommand)();
+	}
 
-  protected Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet!(ObjectClassType)(Arrays.asList(ObjectClassType.values()));
-  }
+	public this(String objectId, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, MediaFileType fileType)
+	{
+		super(objectId, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
+		this.fileType = fileType;
+	}
 
-  protected Set!(ObjectType) getSupportedObjectTypes()
-  {
-    return ObjectType.getAllTypes();
-  }
+	override protected Set!(ObjectClassType) getSupportedClasses()
+	{
+		return new HashSet!(ObjectClassType)(Arrays.asList(ObjectClassType.values()));
+	}
 
-  protected List!(DirectoryObject) retrieveList()
-  {
-    List!(DirectoryObject) objects = new ArrayList!(DirectoryObject)();
-    Long folderId = getFolderId();
-    int returnedFoldersCount = 0;
-    int existingFoldersCount = 0;
+	override protected Set!(ObjectType) getSupportedObjectTypes()
+	{
+		return ObjectType.getAllTypes();
+	}
 
-    if (objectType.supportsContainers()) {
-      existingFoldersCount = folderId is null ? OnlineItemService.getCountOfParsedFeeds(fileType, accessGroup, true) : 0;
-      if (startIndex < existingFoldersCount)
-      {
-        List!(NamedOnlineResource!(OnlineResourceContainer!(Object, Object))) resources = OnlineItemService.getListOfParsedContainerResources(fileType, accessGroup, startIndex, count, true);
+	override protected List!(DirectoryObject) retrieveList()
+	{
+		List!(DirectoryObject) objects = new ArrayList!(DirectoryObject)();
+		Long folderId = getFolderId();
+		int returnedFoldersCount = 0;
+		int existingFoldersCount = 0;
 
-        foreach (NamedOnlineResource!(OnlineResourceContainer!(Object, Object)) folder ; resources) {
-          OnlineResourceContainer!(Object, Object) resource = cast(OnlineResourceContainer!(Object, Object))folder.getOnlineItem();
-          String runtimeId = generateFolderObjectId(resource.getOnlineRepositoryId());
-          Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(resource.toOnlineRepository(), runtimeId, getDisplayedContainerId(objectId), objectType, getFolderName(resource, folder.getRepositoryName()), rendererProfile, accessGroup);
+		if (objectType.supportsContainers()) {
+			existingFoldersCount = folderId is null ? OnlineItemService.getCountOfParsedFeeds(fileType, accessGroup, true) : 0;
+			if (startIndex < existingFoldersCount)
+			{
+				List!(NamedOnlineResource!(OnlineResourceContainer!(Object, Object))) resources = OnlineItemService.getListOfParsedContainerResources(fileType, accessGroup, startIndex, count, true);
 
-          objects.add(DirectoryObjectBuilder.createInstance(containerClassType, values, null, resource.getOnlineRepositoryId()));
-        }
-        returnedFoldersCount = resources.size();
-      }
-    }
-    if ((count > returnedFoldersCount) && (objectType.supportsItems()))
-    {
-      int itemStartIndex = startIndex - existingFoldersCount + returnedFoldersCount;
-      List!(NamedOnlineResource!(OnlineItem)) items = getItemsForMediaType(folderId, itemStartIndex, count - returnedFoldersCount);
+				foreach (NamedOnlineResource!(OnlineResourceContainer!(Object, Object)) folder ; resources) {
+					OnlineResourceContainer!(Object, Object) resource = cast(OnlineResourceContainer!(Object, Object))folder.getOnlineItem();
+					String runtimeId = generateFolderObjectId(resource.getOnlineRepositoryId());
+					Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(resource.toOnlineRepository(), runtimeId, getDisplayedContainerId(objectId), objectType, getFolderName(resource, folder.getRepositoryName()), rendererProfile, accessGroup);
 
-      foreach (NamedOnlineResource!(OnlineItem) namedItem ; items) {
-        OnlineItem item = cast(OnlineItem)namedItem.getOnlineItem();
-        String runtimeId = generateItemObjectId(item.getId());
-        MediaItem mediaItem = item.toMediaItem();
-        Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(mediaItem, runtimeId, getDisplayedContainerId(objectId), objectType, getItemTitle(item, namedItem.getRepositoryName()), rendererProfile, accessGroup);
+					objects.add(DirectoryObjectBuilder.createInstance(containerClassType, values, null, resource.getOnlineRepositoryId()));
+				}
+				returnedFoldersCount = resources.size();
+			}
+		}
+		if ((count > returnedFoldersCount) && (objectType.supportsItems()))
+		{
+			int itemStartIndex = startIndex - existingFoldersCount + returnedFoldersCount;
+			List!(NamedOnlineResource!(OnlineItem)) items = getItemsForMediaType(folderId, itemStartIndex, count - returnedFoldersCount);
 
-        List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, rendererProfile);
-        objects.add(DirectoryObjectBuilder.createInstance(itemClassType, values, res, item.getId()));
-      }
-    }
-    return objects;
-  }
+			foreach (NamedOnlineResource!(OnlineItem) namedItem ; items) {
+				OnlineItem item = cast(OnlineItem)namedItem.getOnlineItem();
+				String runtimeId = generateItemObjectId(item.getId());
+				MediaItem mediaItem = item.toMediaItem();
+				Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(mediaItem, runtimeId, getDisplayedContainerId(objectId), objectType, getItemTitle(item, namedItem.getRepositoryName()), rendererProfile, accessGroup);
 
-  protected DirectoryObject retrieveSingleItem()
-  {
-    Long itemId = getMediaItemId();
-    if (itemId !is null)
-    {
-      NamedOnlineResource!(Object) namedItem = getItem(itemId);
-      if (namedItem !is null) {
-        OnlineItem item = cast(OnlineItem)namedItem.getOnlineItem();
-        MediaItem mediaItem = item.toMediaItem();
-        Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(mediaItem, objectId, getRecursiveParentId(objectId), objectType, getItemTitle(item, namedItem.getRepositoryName()), rendererProfile, accessGroup);
+				List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, rendererProfile);
+				objects.add(DirectoryObjectBuilder.createInstance(itemClassType, values, res, item.getId()));
+			}
+		}
+		return objects;
+	}
 
-        List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, rendererProfile);
-        return DirectoryObjectBuilder.createInstance(itemClassType, values, res, itemId);
-      }
-      throw new ObjectNotFoundException(String.format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
-    }
+	override protected DirectoryObject retrieveSingleItem()
+	{
+		Long itemId = getMediaItemId();
+		if (itemId !is null)
+		{
+			NamedOnlineResource!(Object) namedItem = getItem(itemId);
+			if (namedItem !is null) {
+				OnlineItem item = cast(OnlineItem)namedItem.getOnlineItem();
+				MediaItem mediaItem = item.toMediaItem();
+				Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(mediaItem, objectId, getRecursiveParentId(objectId), objectType, getItemTitle(item, namedItem.getRepositoryName()), rendererProfile, accessGroup);
 
-    Long folderId = getFolderId();
-    if (folderId !is null)
-    {
-      NamedOnlineResource!(Object) resource = OnlineItemService.findNamedContainerResourceById(folderId);
-      if (resource !is null) {
-        OnlineResourceContainer!(Object, Object) feed = cast(OnlineResourceContainer!(Object, Object))resource.getOnlineItem();
-        Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(feed.toOnlineRepository(), objectId, Definition.instance().getParentNodeId(objectId), objectType, getFolderName(feed, resource.getRepositoryName()), rendererProfile, accessGroup);
+				List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, rendererProfile);
+				return DirectoryObjectBuilder.createInstance(itemClassType, values, res, itemId);
+			}
+			throw new ObjectNotFoundException(String.format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
+		}
 
-        return DirectoryObjectBuilder.createInstance(containerClassType, values, null, folderId);
-      }
-      throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
-    }
+		Long folderId = getFolderId();
+		if (folderId !is null)
+		{
+			NamedOnlineResource!(Object) resource = OnlineItemService.findNamedContainerResourceById(folderId);
+			if (resource !is null) {
+				OnlineResourceContainer!(Object, Object) feed = cast(OnlineResourceContainer!(Object, Object))resource.getOnlineItem();
+				Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(feed.toOnlineRepository(), objectId, Definition.instance().getParentNodeId(objectId), objectType, getFolderName(feed, resource.getRepositoryName()), rendererProfile, accessGroup);
 
-    throw new ObjectNotFoundException(String.format("Error retrieving object %s from CDS", cast(Object[])[ objectId ]));
-  }
+				return DirectoryObjectBuilder.createInstance(containerClassType, values, null, folderId);
+			}
+			throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
+		}
 
-  public int retrieveItemCount()
-  {
-    return OnlineItemService.getCountOfOnlineItemsAndRepositories(fileType, objectType, getFolderId(), accessGroup, true);
-  }
+		throw new ObjectNotFoundException(String.format("Error retrieving object %s from CDS", cast(Object[])[ objectId ]));
+	}
 
-  private String generateFolderObjectId(Number entityId)
-  {
-    return generateRuntimeObjectId(FOLDER_PREFIX + entityId.toString());
-  }
+	public int retrieveItemCount()
+	{
+		return OnlineItemService.getCountOfOnlineItemsAndRepositories(fileType, objectType, getFolderId(), accessGroup, true);
+	}
 
-  private String generateItemObjectId(Number entityId) {
-    if (objectId.indexOf("^") == -1)
-    {
-      return generateRuntimeObjectId("$OI" ~ entityId.toString());
-    }
-    return objectId + "$" + ITEM_PREFIX + entityId.toString();
-  }
+	private String generateFolderObjectId(Number entityId)
+	{
+		return generateRuntimeObjectId(FOLDER_PREFIX + entityId.toString());
+	}
 
-  private Long getFolderId()
-  {
-    if (objectId.indexOf(FOLDER_PREFIX) > -1) {
-      String strippedId = objectId.substring(objectId.indexOf(FOLDER_PREFIX));
-      if (strippedId.indexOf("$") > -1) {
-        strippedId = strippedId.substring(0, strippedId.indexOf("$"));
-      }
-      return Long.valueOf(Long.parseLong(strippedId.substring(FOLDER_PREFIX.length())));
-    }
-    return null;
-  }
+	private String generateItemObjectId(Number entityId) {
+		if (objectId.indexOf("^") == -1)
+		{
+			return generateRuntimeObjectId("$OI" ~ entityId.toString());
+		}
+		return objectId + "$" + ITEM_PREFIX + entityId.toString();
+	}
 
-  private Long getMediaItemId()
-  {
-    String itemPrefix = "$OI";
-    if (objectId.indexOf(itemPrefix) > -1) {
-      String strippedId = objectId.substring(objectId.lastIndexOf(itemPrefix));
-      return Long.valueOf(Long.parseLong(strippedId.substring(itemPrefix.length())));
-    }
-    return null;
-  }
+	private Long getFolderId()
+	{
+		if (objectId.indexOf(FOLDER_PREFIX) > -1) {
+			String strippedId = objectId.substring(objectId.indexOf(FOLDER_PREFIX));
+			if (strippedId.indexOf("$") > -1) {
+				strippedId = strippedId.substring(0, strippedId.indexOf("$"));
+			}
+			return Long.valueOf(Long.parseLong(strippedId.substring(FOLDER_PREFIX.length())));
+		}
+		return null;
+	}
 
-  private String getRecursiveParentId(String objectId)
-  {
-    return objectId.substring(0, objectId.lastIndexOf("$"));
-  }
+	private Long getMediaItemId()
+	{
+		String itemPrefix = "$OI";
+		if (objectId.indexOf(itemPrefix) > -1) {
+			String strippedId = objectId.substring(objectId.lastIndexOf(itemPrefix));
+			return Long.valueOf(Long.parseLong(strippedId.substring(itemPrefix.length())));
+		}
+		return null;
+	}
 
-  private String getFolderName(OnlineResourceContainer!(Object, Object) resource, String repositoryName) {
-    if (ObjectValidator.isNotEmpty(repositoryName)) {
-      return repositoryName;
-    }
-    if (ObjectValidator.isNotEmpty(resource.getDomain())) {
-      return String.format("%s [%s]", cast(Object[])[ resource.getTitle(), resource.getDomain() ]);
-    }
-    return resource.getTitle();
-  }
+	private String getRecursiveParentId(String objectId)
+	{
+		return objectId.substring(0, objectId.lastIndexOf("$"));
+	}
 
-  private String getItemTitle(OnlineItem item, String repositoryName)
-  {
-    if (ObjectValidator.isNotEmpty(repositoryName)) {
-      return repositoryName;
-    }
-    return item.getTitle();
-  }
+	private String getFolderName(OnlineResourceContainer!(Object, Object) resource, String repositoryName) {
+		if (ObjectValidator.isNotEmpty(repositoryName)) {
+			return repositoryName;
+		}
+		if (ObjectValidator.isNotEmpty(resource.getDomain())) {
+			return String.format("%s [%s]", cast(Object[])[ resource.getTitle(), resource.getDomain() ]);
+		}
+		return resource.getTitle();
+	}
 
-  private List!(NamedOnlineResource!(OnlineItem)) getItemsForMediaType(Long folderId, int startIndex, int count)
-  {
-    if (folderId is null) {
-      return OnlineItemService.getListOfSingleURLItems(fileType, accessGroup, startIndex, count, true);
-    }
-    OnlineResourceContainer!(Object, Object) cachedContainerResource = OnlineItemService.findContainerResourceById(folderId);
-    return OnlineItemService.getListOfFeedItems(cachedContainerResource, fileType, startIndex, count);
-  }
+	private String getItemTitle(OnlineItem item, String repositoryName)
+	{
+		if (ObjectValidator.isNotEmpty(repositoryName)) {
+			return repositoryName;
+		}
+		return item.getTitle();
+	}
 
-  private NamedOnlineResource!(OnlineItem) getItem(Long itemId)
-  {
-    try {
-      return OnlineItemService.findNamedOnlineItemById(itemId);
-    } catch (IOException e) {
-      log.debug_(String.format("Error retrieving online item %s: %s", cast(Object[])[ itemId, e.getMessage() ]), e);
-    }return null;
-  }
+	private List!(NamedOnlineResource!(OnlineItem)) getItemsForMediaType(Long folderId, int startIndex, int count)
+	{
+		if (folderId is null) {
+			return OnlineItemService.getListOfSingleURLItems(fileType, accessGroup, startIndex, count, true);
+		}
+		OnlineResourceContainer!(Object, Object) cachedContainerResource = OnlineItemService.findContainerResourceById(folderId);
+		return OnlineItemService.getListOfFeedItems(cachedContainerResource, fileType, startIndex, count);
+	}
+
+	private NamedOnlineResource!(OnlineItem) getItem(Long itemId)
+	{
+		try {
+			return OnlineItemService.findNamedOnlineItemById(itemId);
+		} catch (IOException e) {
+			log.debug_(String.format("Error retrieving online item %s: %s", cast(Object[])[ itemId, e.getMessage() ]), e);
+		}return null;
+	}
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.AbstractListOnlineObjectsByHierarchyCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.AbstractListOnlineObjectsByHierarchyCommand
+* JD-Core Version:    0.6.2
+*/
