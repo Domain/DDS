@@ -6,6 +6,7 @@ import org.serviio.library.entities.Person;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
+import org.serviio.upnp.service.contentdirectory.command.person.AbstractListPersonsForInitialCommand;
 
 public class ListArtistsForInitialCommand : AbstractListPersonsForInitialCommand
 {

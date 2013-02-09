@@ -1,6 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.person.AbstractPersonsRetrievalCommand;
 
 import java.lang.String;
+import java.lang.Long;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,7 @@ public abstract class AbstractPersonsRetrievalCommand : AbstractEntityContainerC
 		return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.PERSON, ObjectClassType.MUSIC_ARTIST, ObjectClassType.STORAGE_FOLDER ]));
 	}
 
-	protected Person retrieveSingleEntity(Long entityId)
+	override protected Person retrieveSingleEntity(Long entityId)
 	{
 		Person person = PersonService.getPerson(entityId);
 		return person;

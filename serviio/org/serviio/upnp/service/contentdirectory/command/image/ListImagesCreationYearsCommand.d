@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationYearsCommand;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;

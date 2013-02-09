@@ -1,5 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.video.ListSeriesByNameCommand;
 
+import java.lang.String;
+import java.lang.Long;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,40 +16,40 @@ import org.serviio.upnp.service.contentdirectory.command.AbstractEntityContainer
 
 public class ListSeriesByNameCommand : AbstractEntityContainerCommand!(Series)
 {
-  public this(String objectId, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
-  {
-    super(objectId, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
-  }
+    public this(String objectId, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count)
+    {
+        super(objectId, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
+    }
 
-  protected Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
-  }
+    override protected Set!(ObjectClassType) getSupportedClasses()
+    {
+        return new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
+    }
 
-  protected List!(Series) retrieveEntityList()
-  {
-    List!(Series) series = VideoService.getListOfSeries(startIndex, count);
-    return series;
-  }
+    override protected List!(Series) retrieveEntityList()
+    {
+        List!(Series) series = VideoService.getListOfSeries(startIndex, count);
+        return series;
+    }
 
-  protected Series retrieveSingleEntity(Long entityId)
-  {
-    Series series = VideoService.getSeries(entityId);
-    return series;
-  }
+    override protected Series retrieveSingleEntity(Long entityId)
+    {
+        Series series = VideoService.getSeries(entityId);
+        return series;
+    }
 
-  public int retrieveItemCount()
-  {
-    return VideoService.getNumberOfSeries();
-  }
+    override public int retrieveItemCount()
+    {
+        return VideoService.getNumberOfSeries();
+    }
 
-  protected String getContainerTitle(Series series)
-  {
-    return series.getTitle();
-  }
+    override protected String getContainerTitle(Series series)
+    {
+        return series.getTitle();
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.video.ListSeriesByNameCommand
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.video.ListSeriesByNameCommand
+* JD-Core Version:    0.6.2
+*/

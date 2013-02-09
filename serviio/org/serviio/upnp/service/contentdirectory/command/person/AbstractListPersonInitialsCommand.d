@@ -13,9 +13,9 @@ import org.serviio.upnp.service.contentdirectory.command.CommandExecutionExcepti
 
 public abstract class AbstractListPersonInitialsCommand : AbstractListInitialsCommand
 {
-	protected RoleType roleType;
+	protected Person.RoleType roleType;
 
-	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, RoleType roleType)
+	public this(String contextIdentifier, ObjectType objectType, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, Person.RoleType roleType)
 	{
 		super(contextIdentifier, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
 		this.roleType = roleType;

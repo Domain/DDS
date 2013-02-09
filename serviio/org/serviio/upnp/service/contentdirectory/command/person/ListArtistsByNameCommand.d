@@ -8,6 +8,7 @@ import org.serviio.library.local.service.PersonService;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
+import org.serviio.upnp.service.contentdirectory.command.person.AbstractPersonsRetrievalCommand;
 
 public class ListArtistsByNameCommand : AbstractPersonsRetrievalCommand
 {
@@ -16,13 +17,13 @@ public class ListArtistsByNameCommand : AbstractPersonsRetrievalCommand
 		super(objectId, objectType, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count);
 	}
 
-	protected List!(Person) retrieveEntityList()
+	override protected List!(Person) retrieveEntityList()
 	{
 		List!(Person) artists = PersonService.getListOfPersons(Person.RoleType.ARTIST, startIndex, count);
 		return artists;
 	}
 
-	public int retrieveItemCount()
+	override public int retrieveItemCount()
 	{
 		return PersonService.getNumberOfPersons(Person.RoleType.ARTIST);
 	}
