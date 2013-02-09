@@ -9,6 +9,7 @@ import org.serviio.util.XPathUtil;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
+import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;

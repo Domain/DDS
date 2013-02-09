@@ -1,37 +1,42 @@
 module org.serviio.upnp.service.contentdirectory.definition.WMPContentDirectoryDefinitionFilter;
 
+import java.lang.String;
 import java.util.Map;
 import org.serviio.upnp.service.contentdirectory.classes.ClassProperties;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
+import org.serviio.upnp.service.contentdirectory.definition.ContentDirectoryDefinitionFilter;
 
-public class WMPContentDirectoryDefinitionFilter
-  : ContentDirectoryDefinitionFilter
+public class WMPContentDirectoryDefinitionFilter : ContentDirectoryDefinitionFilter
 {
-  public String filterObjectId(String requestedNodeId, bool isSearch)
-  {
-    if (requestedNodeId.equals("2"))
+    public String filterObjectId(String requestedNodeId, bool isSearch)
     {
-      return "V";
-    }if (requestedNodeId.equals("3"))
-      return "I";
-    if (requestedNodeId.equals("1")) {
-      return "A";
+        if (requestedNodeId.equals("2"))
+        {
+            return "V";
+        }
+        if (requestedNodeId.equals("3"))
+        {
+            return "I";
+        }
+        if (requestedNodeId.equals("1")) 
+        {
+            return "A";
+        }
+
+        return requestedNodeId;
     }
 
-    return requestedNodeId;
-  }
+    public ObjectClassType filterContainerClassType(ObjectClassType requestedObjectClass, String objectId)
+    {
+        return requestedObjectClass;
+    }
 
-  public ObjectClassType filterContainerClassType(ObjectClassType requestedObjectClass, String objectId)
-  {
-    return requestedObjectClass;
-  }
-
-  public void filterClassProperties(String objectId, Map!(ClassProperties, Object) values)
-  {
-  }
+    public void filterClassProperties(String objectId, Map!(ClassProperties, Object) values)
+    {
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.definition.WMPContentDirectoryDefinitionFilter
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.definition.WMPContentDirectoryDefinitionFilter
+* JD-Core Version:    0.6.2
+*/
