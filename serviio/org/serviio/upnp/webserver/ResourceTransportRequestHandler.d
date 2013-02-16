@@ -46,7 +46,7 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
         dlnaProtocolHandler = new DLNAProtocolHandler();
     }
 
-    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
+    override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
         try
         {
@@ -77,11 +77,11 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
         }
     }
 
-    protected void checkMethod(HttpRequest request)
+    override protected void checkMethod(HttpRequest request)
     {
         String method = StringUtils.localeSafeToUppercase(request.getRequestLine().getMethod());
         if ((!method.equals("GET")) && (!method.equals("HEAD")))
-            throw new MethodNotSupportedException(method + " method not supported");
+            throw new MethodNotSupportedException(method ~ " method not supported");
     }
 
     private Map!(String, String) getRequestHeadersMap(HttpRequest request)

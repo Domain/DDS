@@ -3,7 +3,7 @@ module java.text.Collator;
 import java.lang.all;
 import java.util.Comparator;
 
-class Collator : Comparator {
+class Collator : Comparator!Object {
     public static Collator getInstance(){
         implMissing( __FILE__, __LINE__ );
         return null;
