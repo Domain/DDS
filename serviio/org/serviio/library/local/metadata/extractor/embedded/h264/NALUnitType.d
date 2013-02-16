@@ -4,22 +4,40 @@ import java.lang.String;
 
 public class NALUnitType
 {
-    public static const NALUnitType NON_IDR_SLICE = new NALUnitType(1, "non IDR slice");
-    public static const NALUnitType SLICE_PART_A = new NALUnitType(2, "slice part a");
-    public static const NALUnitType SLICE_PART_B = new NALUnitType(3, "slice part b");
-    public static const NALUnitType SLICE_PART_C = new NALUnitType(4, "slice part c");
-    public static const NALUnitType IDR_SLICE = new NALUnitType(5, "idr slice");
-    public static const NALUnitType SEI = new NALUnitType(6, "sei");
-    public static const NALUnitType SPS = new NALUnitType(7, "sequence parameter set");
-    public static const NALUnitType PPS = new NALUnitType(8, "picture parameter set");
-    public static const NALUnitType ACC_UNIT_DELIM = new NALUnitType(9, "access unit delimiter");
-    public static const NALUnitType END_OF_SEQ = new NALUnitType(10, "end of sequence");
-    public static const NALUnitType END_OF_STREAM = new NALUnitType(11, "end of stream");
-    public static const NALUnitType FILTER_DATA = new NALUnitType(12, "filter data");
-    public static const NALUnitType SEQ_PAR_SET_EXT = new NALUnitType(13, "sequence parameter set extension");
-    public static const NALUnitType AUX_SLICE = new NALUnitType(19, "auxilary slice");
+    public static immutable NALUnitType NON_IDR_SLICE;
+    public static immutable NALUnitType SLICE_PART_A;
+    public static immutable NALUnitType SLICE_PART_B;
+    public static immutable NALUnitType SLICE_PART_C;
+    public static immutable NALUnitType IDR_SLICE;
+    public static immutable NALUnitType SEI;
+    public static immutable NALUnitType SPS;
+    public static immutable NALUnitType PPS;
+    public static immutable NALUnitType ACC_UNIT_DELIM;
+    public static immutable NALUnitType END_OF_SEQ;
+    public static immutable NALUnitType END_OF_STREAM;
+    public static immutable NALUnitType FILTER_DATA;
+    public static immutable NALUnitType SEQ_PAR_SET_EXT;
+    public static immutable NALUnitType AUX_SLICE;
     private /*final*/ int value;
     private /*final*/ String name;
+
+    static this()
+    {
+        NON_IDR_SLICE = new NALUnitType(1, "non IDR slice");
+        SLICE_PART_A = new NALUnitType(2, "slice part a");
+        SLICE_PART_B = new NALUnitType(3, "slice part b");
+        SLICE_PART_C = new NALUnitType(4, "slice part c");
+        IDR_SLICE = new NALUnitType(5, "idr slice");
+        SEI = new NALUnitType(6, "sei");
+        SPS = new NALUnitType(7, "sequence parameter set");
+        PPS = new NALUnitType(8, "picture parameter set");
+        ACC_UNIT_DELIM = new NALUnitType(9, "access unit delimiter");
+        END_OF_SEQ = new NALUnitType(10, "end of sequence");
+        END_OF_STREAM = new NALUnitType(11, "end of stream");
+        FILTER_DATA = new NALUnitType(12, "filter data");
+        SEQ_PAR_SET_EXT = new NALUnitType(13, "sequence parameter set extension");
+        AUX_SLICE = new NALUnitType(19, "auxilary slice");
+    }
 
     private this(int value, String name)
     {

@@ -11,10 +11,11 @@ static import org.serviio.library.online.WebResourceItem;
 public class WebResourceItem : OnlineContainerItem!(WebResource) , Serializable
 {
     private static const long serialVersionUID = 6334150099157949087L;
-    private Map!(String, String) additionalInfo = new HashMap!(String, String)();
+    private Map!(String, String) additionalInfo;
 
     public this(WebResource parent, int order)
     {
+        additionalInfo = new HashMap!(String, String)();
         parentContainer = parent;
         this.order = order;
     }

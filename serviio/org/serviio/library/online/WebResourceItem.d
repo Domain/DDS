@@ -8,7 +8,12 @@ public class WebResourceItem
 {
 	private String title;
 	private Map!(String, String) additionalInfo;
-	private Date releaseDate = new Date();
+	private Date releaseDate;
+
+    public this()
+    {
+	    releaseDate = new Date();
+    }
 
 	public String getTitle() {
 		return title;

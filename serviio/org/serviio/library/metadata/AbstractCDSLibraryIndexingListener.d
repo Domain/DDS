@@ -19,13 +19,14 @@ public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListen
 
     protected ContentDirectory cds;
 
-    private AtomicBoolean libraryUpdated = new AtomicBoolean(false);
+    private AtomicBoolean libraryUpdated;
     private String lastAddedFile;
     private int numberOfAddedFiles = 0;
 
     static this()
     {
         log = LoggerFactory.getLogger!(AbstractCDSLibraryIndexingListener)();
+        libraryUpdated = new AtomicBoolean(false);
     }
 
     public this()
@@ -35,7 +36,8 @@ public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListen
         ServiioThreadFactory.getInstance().newThread(new CDSNotifierThread(), "CDS library notifier", true).start();
     }
 
-    public this(int intervalSeconds) {
+    public this(int intervalSeconds) 
+    {
         this();
         threadUpdateInterval = intervalSeconds;
     }

@@ -11,9 +11,10 @@ public class BitstreamReader
     private int nextByte;
     int nBit;
     protected static int bitsRead;
-    protected CharCache debugBits = new CharCache(50);
+    protected CharCache debugBits;
 
     public this(BufferWrapper is_) {
+        debugBits = new CharCache(50);
         this.is_ = is_;
         curByte = is_.read();
         nextByte = is_.read();

@@ -33,7 +33,7 @@ public class FFmpegMetadataRetriever
 {
     private static immutable Logger log;
 
-    private static /*final Pattern*/enum streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})");
+    private static immutable Pattern streamIndexPattern;
     private static const String CONTAINER = "container";
     private static const String DURATION = "duration";
     private static const String BITRATE = "bitrate";
@@ -384,6 +384,7 @@ public class FFmpegMetadataRetriever
     static this()
     {
         log = LoggerFactory.getLogger!(FFmpegMetadataRetriever)();
+        streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})");
         maxDpbMbs = new LinkedHashMap!(String, Integer)();
         prepareMaxDpbMbs();
     }
