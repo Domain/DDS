@@ -11,78 +11,83 @@ import org.serviio.library.local.metadata.ImageDescriptor;
 
 public abstract class LocalItemMetadata : ItemMetadata
 {
-  protected long fileSize;
-  protected String filePath;
-  protected List!(MetadataFile) metadataFiles = new ArrayList!(MetadataFile)();
-  private ImageDescriptor coverImage;
+    protected long fileSize;
+    protected String filePath;
+    protected List!(MetadataFile) metadataFiles;
+    private ImageDescriptor coverImage;
 
-  public void merge(LocalItemMetadata additionalMetadata)
-  {
-    if (ObjectValidator.isEmpty(title)) {
-      setTitle(additionalMetadata.getTitle());
+    public this()
+    {
+        metadataFiles = new ArrayList!(MetadataFile)();
     }
-    if (ObjectValidator.isEmpty(author)) {
-      setAuthor(additionalMetadata.getAuthor());
+
+    public void merge(LocalItemMetadata additionalMetadata)
+    {
+        if (ObjectValidator.isEmpty(title)) {
+            setTitle(additionalMetadata.getTitle());
+        }
+        if (ObjectValidator.isEmpty(author)) {
+            setAuthor(additionalMetadata.getAuthor());
+        }
+        if (date is null) {
+            setDate(additionalMetadata.getDate());
+        }
+        if (fileSize == 0L) {
+            setFileSize(additionalMetadata.getFileSize());
+        }
+        if (ObjectValidator.isEmpty(filePath)) {
+            setFilePath(additionalMetadata.getFilePath());
+        }
+        if (ObjectValidator.isEmpty(description)) {
+            setDescription(additionalMetadata.getDescription());
+        }
+        if (coverImage is null) {
+            setCoverImage(additionalMetadata.getCoverImage());
+        }
+        metadataFiles.addAll(additionalMetadata.getMetadataFiles());
     }
-    if (date is null) {
-      setDate(additionalMetadata.getDate());
+
+    override public void validateMetadata()
+    {
+        super.validateMetadata();
+        if (fileSize == 0L) {
+            throw new InvalidMetadataException("Filesize is zero.");
+        }
+        if (ObjectValidator.isEmpty(filePath))
+            throw new InvalidMetadataException("Filepath is empty.");
     }
-    if (fileSize == 0L) {
-      setFileSize(additionalMetadata.getFileSize());
+
+    public long getFileSize()
+    {
+        return fileSize;
     }
-    if (ObjectValidator.isEmpty(filePath)) {
-      setFilePath(additionalMetadata.getFilePath());
+
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
     }
-    if (ObjectValidator.isEmpty(description)) {
-      setDescription(additionalMetadata.getDescription());
+
+    public String getFilePath() {
+        return filePath;
     }
-    if (coverImage is null) {
-      setCoverImage(additionalMetadata.getCoverImage());
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
-    metadataFiles.addAll(additionalMetadata.getMetadataFiles());
-  }
 
-  override public void validateMetadata()
-  {
-    super.validateMetadata();
-    if (fileSize == 0L) {
-      throw new InvalidMetadataException("Filesize is zero.");
+    public List!(MetadataFile) getMetadataFiles() {
+        return metadataFiles;
     }
-    if (ObjectValidator.isEmpty(filePath))
-      throw new InvalidMetadataException("Filepath is empty.");
-  }
 
-  public long getFileSize()
-  {
-    return fileSize;
-  }
+    public ImageDescriptor getCoverImage() {
+        return coverImage;
+    }
 
-  public void setFileSize(long fileSize) {
-    this.fileSize = fileSize;
-  }
-
-  public String getFilePath() {
-    return filePath;
-  }
-
-  public void setFilePath(String filePath) {
-    this.filePath = filePath;
-  }
-
-  public List!(MetadataFile) getMetadataFiles() {
-    return metadataFiles;
-  }
-
-  public ImageDescriptor getCoverImage() {
-    return coverImage;
-  }
-
-  public void setCoverImage(ImageDescriptor coverImage) {
-    this.coverImage = coverImage;
-  }
+    public void setCoverImage(ImageDescriptor coverImage) {
+        this.coverImage = coverImage;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.LocalItemMetadata
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.library.local.metadata.LocalItemMetadata
+* JD-Core Version:    0.6.2
+*/

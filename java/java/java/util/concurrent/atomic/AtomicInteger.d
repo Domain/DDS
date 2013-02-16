@@ -9,4 +9,9 @@ public class AtomicInteger
     {
         implMissing();
     }
+
+    public this(int i)
+    {
+        implMissing();
+    }
 }

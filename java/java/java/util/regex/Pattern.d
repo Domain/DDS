@@ -4,9 +4,14 @@ import java.lang.all;
 import java.util.regex.Matcher;
 
 class Pattern {
-    public static const int MULTILINE;
-    public static const int CASE_INSENSITIVE ;
-    public static const int UNICODE_CASE ;
+    public static const int UNIX_LINES = 1;
+    public static const int CASE_INSENSITIVE = 2;
+    public static const int COMMENTS = 4;
+    public static const int MULTILINE = 8;
+    public static const int LITERAL = 16;
+    public static const int DOTALL = 32;
+    public static const int UNICODE_CASE = 64;
+    public static const int CANON_EQ = 128;
 
     public String pattern(){
         implMissing( __FILE__, __LINE__ );

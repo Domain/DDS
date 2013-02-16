@@ -7,20 +7,25 @@ import org.serviio.util.StringUtils;
 
 public abstract class AbstractSSDPMessageListener
 {
-  private static enum usnPattern = Pattern.compile("uuid:(.+)::urn:.+", 2);
-
-  protected String getDeviceUuidFromUSN(String usn) {
-    if (usn !is null) {
-      Matcher m = usnPattern.matcher(usn);
-      if (m.find()) {
-        return StringUtils.localeSafeToLowercase(m.group(1));
-      }
+    private static immutable Pattern usnPattern;
+    
+    static this()
+    {
+        usnPattern = Pattern.compile("uuid:(.+)::urn:.+", 2);
     }
-    return null;
-  }
+
+    protected String getDeviceUuidFromUSN(String usn) {
+        if (usn !is null) {
+            Matcher m = usnPattern.matcher(usn);
+            if (m.find()) {
+                return StringUtils.localeSafeToLowercase(m.group(1));
+            }
+        }
+        return null;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.discovery.AbstractSSDPMessageListener
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.discovery.AbstractSSDPMessageListener
+* JD-Core Version:    0.6.2
+*/

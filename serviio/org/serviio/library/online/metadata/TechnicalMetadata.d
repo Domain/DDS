@@ -31,7 +31,7 @@ public class TechnicalMetadata : Serializable, Cloneable
 	private Integer audioBitrate;
 	private String ftyp;
 	private H264Profile h264Profile;
-	private HashMap!(H264LevelType, String) h264Levels = new HashMap!(H264LevelType, String)();
+	private HashMap!(H264LevelType, String) h264Levels;
 	private String sar;
 	private Long fileSize;
 	private Integer width;
@@ -39,6 +39,11 @@ public class TechnicalMetadata : Serializable, Cloneable
 	private Integer bitrate;
 	private Long duration;
 	private Integer samplingRate;
+
+    static this()
+    {
+	    h264Levels = new HashMap!(H264LevelType, String)();
+    }
 
 	public ImageContainer getImageContainer()
 	{

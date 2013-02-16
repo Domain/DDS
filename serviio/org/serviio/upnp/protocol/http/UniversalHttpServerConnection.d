@@ -12,53 +12,58 @@ import org.slf4j.LoggerFactory;
 
 public class UniversalHttpServerConnection : DefaultHttpServerConnection
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(UniversalHttpServerConnection)();
-  private String connectionId;
-  private HttpEntity streamedEntity;
+    private static immutable Logger log;
+    private String connectionId;
+    private HttpEntity streamedEntity;
 
-  public this(String connectionId)
-  {
-    this.connectionId = connectionId;
-
-    log.trace(String.format("Initializing connection %s", cast(Object[])[ connectionId ]));
-  }
-
-  protected HttpRequestFactory createHttpRequestFactory()
-  {
-    return new UniversalHttpRequestFactory();
-  }
-
-  public String getSocketAddress() {
-    return getSocket().getRemoteSocketAddress().toString();
-  }
-
-  public void sendResponseEntity(HttpResponse response)
-  {
-    if ((response.getEntity() !is null) && (response.getEntity() !is null))
+    static this()
     {
-      streamedEntity = response.getEntity();
+        log = LoggerFactory.getLogger!(UniversalHttpServerConnection)();
     }
 
-    super.sendResponseEntity(response);
-  }
-
-  public void closeEntityStream()
-  {
-    try
+    public this(String connectionId)
     {
-      if ((streamedEntity !is null) && (streamedEntity.getContent() !is null)) {
-        log.trace(String.format("Closing input stream for connection %s", cast(Object[])[ connectionId ]));
-        streamedEntity.getContent().close();
-        streamedEntity = null;
-      }
+        this.connectionId = connectionId;
+
+        log.trace(String.format("Initializing connection %s", cast(Object[])[ connectionId ]));
     }
-    catch (IOException e) {
-      log.warn(String.format("Cannot close input stream for connection %s: %s", cast(Object[])[ connectionId, e.getMessage() ]));
+
+    protected HttpRequestFactory createHttpRequestFactory()
+    {
+        return new UniversalHttpRequestFactory();
     }
-  }
+
+    public String getSocketAddress() {
+        return getSocket().getRemoteSocketAddress().toString();
+    }
+
+    public void sendResponseEntity(HttpResponse response)
+    {
+        if ((response.getEntity() !is null) && (response.getEntity() !is null))
+        {
+            streamedEntity = response.getEntity();
+        }
+
+        super.sendResponseEntity(response);
+    }
+
+    public void closeEntityStream()
+    {
+        try
+        {
+            if ((streamedEntity !is null) && (streamedEntity.getContent() !is null)) {
+                log.trace(String.format("Closing input stream for connection %s", cast(Object[])[ connectionId ]));
+                streamedEntity.getContent().close();
+                streamedEntity = null;
+            }
+        }
+        catch (IOException e) {
+            log.warn(String.format("Cannot close input stream for connection %s: %s", cast(Object[])[ connectionId, e.getMessage() ]));
+        }
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.protocol.http.UniversalHttpServerConnection
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.protocol.http.UniversalHttpServerConnection
+* JD-Core Version:    0.6.2
+*/

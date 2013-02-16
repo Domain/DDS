@@ -205,6 +205,115 @@
       <File path="org\apache\commons\lang\WordUtils.d" />
      </Folder>
     </Folder>
+    <Folder name="http">
+     <Folder name="entity">
+      <File path="org\apache\http\entity\AbstractHttpEntity.d" />
+      <File path="org\apache\http\entity\ByteArrayEntity.d" />
+      <File path="org\apache\http\entity\InputStreamEntity.d" />
+      <File path="org\apache\http\entity\StringEntity.d" />
+     </Folder>
+     <Folder name="impl">
+      <Folder name="io">
+       <File path="org\apache\http\impl\io\AbstractSessionInputBuffer.d" />
+       <File path="org\apache\http\impl\io\AbstractSessionOutputBuffer.d" />
+       <File path="org\apache\http\impl\io\HttpRequestParser.d" />
+       <File path="org\apache\http\impl\io\HttpRequestWriter.d" />
+       <File path="org\apache\http\impl\io\HttpResponseParser.d" />
+       <File path="org\apache\http\impl\io\HttpResponseWriter.d" />
+      </Folder>
+      <File path="org\apache\http\impl\DefaultConnectionReuseStrategy.d" />
+      <File path="org\apache\http\impl\DefaultHttpClientConnection.d" />
+      <File path="org\apache\http\impl\DefaultHttpRequestFactory.d" />
+      <File path="org\apache\http\impl\DefaultHttpResponseFactory.d" />
+      <File path="org\apache\http\impl\DefaultHttpServerConnection.d" />
+     </Folder>
+     <Folder name="io">
+      <File path="org\apache\http\io\HttpMessageWriter.d" />
+      <File path="org\apache\http\io\SessionInputBuffer.d" />
+      <File path="org\apache\http\io\SessionOutputBuffer.d" />
+     </Folder>
+     <Folder name="message">
+      <File path="org\apache\http\message\BasicHttpEntityEnclosingRequest.d" />
+      <File path="org\apache\http\message\BasicHttpRequest.d" />
+      <File path="org\apache\http\message\BasicHttpResponse.d" />
+      <File path="org\apache\http\message\BasicLineFormatter.d" />
+      <File path="org\apache\http\message\BasicLineParser.d" />
+     </Folder>
+     <Folder name="params">
+      <File path="org\apache\http\params\BasicHttpParams.d" />
+      <File path="org\apache\http\params\HttpParams.d" />
+     </Folder>
+     <Folder name="protocol">
+      <File path="org\apache\http\protocol\BasicHttpContext.d" />
+      <File path="org\apache\http\protocol\BasicHttpProcessor.d" />
+      <File path="org\apache\http\protocol\HttpContext.d" />
+      <File path="org\apache\http\protocol\HttpProcessor.d" />
+      <File path="org\apache\http\protocol\HttpRequestExecutor.d" />
+      <File path="org\apache\http\protocol\HttpRequestHandler.d" />
+      <File path="org\apache\http\protocol\HttpRequestHandlerResolver.d" />
+      <File path="org\apache\http\protocol\HttpService.d" />
+      <File path="org\apache\http\protocol\RequestContent.d" />
+      <File path="org\apache\http\protocol\RequestTargetHost.d" />
+      <File path="org\apache\http\protocol\ResponseConnControl.d" />
+      <File path="org\apache\http\protocol\ResponseContent.d" />
+      <File path="org\apache\http\protocol\ResponseDate.d" />
+      <File path="org\apache\http\protocol\ResponseServer.d" />
+     </Folder>
+     <Folder name="util">
+      <File path="org\apache\http\util\EntityUtils.d" />
+     </Folder>
+     <File path="org\apache\http\ConnectionClosedException.d" />
+     <File path="org\apache\http\ConnectionReuseStrategy.d" />
+     <File path="org\apache\http\Header.d" />
+     <File path="org\apache\http\HttpEntity.d" />
+     <File path="org\apache\http\HttpEntityEnclosingRequest.d" />
+     <File path="org\apache\http\HttpException.d" />
+     <File path="org\apache\http\HttpHost.d" />
+     <File path="org\apache\http\HttpRequest.d" />
+     <File path="org\apache\http\HttpRequestFactory.d" />
+     <File path="org\apache\http\HttpResponse.d" />
+     <File path="org\apache\http\HttpResponseFactory.d" />
+     <File path="org\apache\http\HttpVersion.d" />
+     <File path="org\apache\http\MethodNotSupportedException.d" />
+     <File path="org\apache\http\ProtocolVersion.d" />
+     <File path="org\apache\http\RequestLine.d" />
+    </Folder>
+    <Folder name="jcs">
+     <Folder name="access">
+      <Folder name="exception">
+       <File path="org\apache\jcs\access\exception\CacheException.d" />
+      </Folder>
+     </Folder>
+     <File path="org\apache\jcs\JCS.d" />
+    </Folder>
+    <Folder name="sanselan">
+     <Folder name="common">
+      <Folder name="byteSources">
+       <File path="org\apache\sanselan\common\byteSources\ByteSource.d" />
+       <File path="org\apache\sanselan\common\byteSources\ByteSourceArray.d" />
+       <File path="org\apache\sanselan\common\byteSources\ByteSourceFile.d" />
+       <File path="org\apache\sanselan\common\byteSources\ByteSourceInputStream.d" />
+      </Folder>
+      <File path="org\apache\sanselan\common\BinaryFileParser.d" />
+      <File path="org\apache\sanselan\common\IImageMetadata.d" />
+     </Folder>
+     <Folder name="formats">
+      <Folder name="jpeg">
+       <File path="org\apache\sanselan\formats\jpeg\JpegImageMetadata.d" />
+       <File path="org\apache\sanselan\formats\jpeg\JpegUtils.d" />
+      </Folder>
+      <Folder name="tiff">
+       <Folder name="constants">
+        <File path="org\apache\sanselan\formats\tiff\constants\TiffConstants.d" />
+       </Folder>
+       <File path="org\apache\sanselan\formats\tiff\TiffField.d" />
+      </Folder>
+     </Folder>
+     <File path="org\apache\sanselan\ImageFormat.d" />
+     <File path="org\apache\sanselan\ImageInfo.d" />
+     <File path="org\apache\sanselan\ImageReadException.d" />
+     <File path="org\apache\sanselan\Sanselan.d" />
+    </Folder>
    </Folder>
   </Folder>
  </Folder>

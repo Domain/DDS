@@ -205,6 +205,42 @@
      <File path="com\sun\jna\Structure.d" />
      <File path="com\sun\jna\WString.d" />
     </Folder>
+    <Folder name="syndication">
+     <Folder name="feed">
+      <Folder name="modules">
+       <Folder name="itunes">
+        <File path="com\sun\syndication\feed\modules\itunes\EntryInformation.d" />
+       </Folder>
+       <Folder name="mediarss">
+        <Folder name="types">
+         <File path="com\sun\syndication\feed\modules\mediarss\types\MediaContent.d" />
+         <File path="com\sun\syndication\feed\modules\mediarss\types\MediaGroup.d" />
+         <File path="com\sun\syndication\feed\modules\mediarss\types\Metadata.d" />
+         <File path="com\sun\syndication\feed\modules\mediarss\types\Thumbnail.d" />
+         <File path="com\sun\syndication\feed\modules\mediarss\types\UrlReference.d" />
+        </Folder>
+        <File path="com\sun\syndication\feed\modules\mediarss\MediaEntryModule.d" />
+       </Folder>
+       <File path="com\sun\syndication\feed\modules\Module.d" />
+       <File path="com\sun\syndication\feed\modules\ModuleImpl.d" />
+      </Folder>
+      <Folder name="synd">
+       <File path="com\sun\syndication\feed\synd\SyndEnclosure.d" />
+       <File path="com\sun\syndication\feed\synd\SyndEntry.d" />
+       <File path="com\sun\syndication\feed\synd\SyndFeed.d" />
+       <File path="com\sun\syndication\feed\synd\SyndImage.d" />
+       <File path="com\sun\syndication\feed\synd\SyndLink.d" />
+      </Folder>
+     </Folder>
+     <Folder name="io">
+      <Folder name="impl">
+       <File path="com\sun\syndication\io\impl\Base64.d" />
+      </Folder>
+      <File path="com\sun\syndication\io\FeedException.d" />
+      <File path="com\sun\syndication\io\ModuleParser.d" />
+      <File path="com\sun\syndication\io\SyndFeedInput.d" />
+     </Folder>
+    </Folder>
    </Folder>
   </Folder>
  </Folder>

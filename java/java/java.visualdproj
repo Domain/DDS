@@ -483,5 +483,65 @@
     <File path="java\util\WeakHashMap.d" />
    </Folder>
   </Folder>
+  <Folder name="javax">
+   <Folder name="crypto">
+    <Folder name="spec">
+     <File path="javax\crypto\spec\SecretKeySpec.d" />
+    </Folder>
+    <File path="javax\crypto\Cipher.d" />
+    <File path="javax\crypto\Mac.d" />
+   </Folder>
+   <Folder name="imageio">
+    <File path="javax\imageio\ImageIO.d" />
+   </Folder>
+   <Folder name="xml">
+    <Folder name="namespace">
+     <File path="javax\xml\namespace\NamespaceContext.d" />
+     <File path="javax\xml\namespace\QName.d" />
+    </Folder>
+    <Folder name="parsers">
+     <File path="javax\xml\parsers\DocumentBuilder.d" />
+     <File path="javax\xml\parsers\DocumentBuilderFactory.d" />
+     <File path="javax\xml\parsers\ParserConfigurationException.d" />
+    </Folder>
+    <Folder name="soap">
+     <File path="javax\xml\soap\Detail.d" />
+     <File path="javax\xml\soap\DetailEntry.d" />
+     <File path="javax\xml\soap\MessageFactory.d" />
+     <File path="javax\xml\soap\MimeHeaders.d" />
+     <File path="javax\xml\soap\SOAPBody.d" />
+     <File path="javax\xml\soap\SOAPBodyElement.d" />
+     <File path="javax\xml\soap\SOAPElement.d" />
+     <File path="javax\xml\soap\SOAPEnvelope.d" />
+     <File path="javax\xml\soap\SOAPException.d" />
+     <File path="javax\xml\soap\SOAPFault.d" />
+     <File path="javax\xml\soap\SOAPMessage.d" />
+    </Folder>
+    <Folder name="transform">
+     <Folder name="dom">
+      <File path="javax\xml\transform\dom\DOMSource.d" />
+     </Folder>
+     <Folder name="stream">
+      <File path="javax\xml\transform\stream\StreamResult.d" />
+      <File path="javax\xml\transform\stream\StreamSource.d" />
+     </Folder>
+     <File path="javax\xml\transform\Source.d" />
+     <File path="javax\xml\transform\Transformer.d" />
+     <File path="javax\xml\transform\TransformerException.d" />
+     <File path="javax\xml\transform\TransformerFactory.d" />
+    </Folder>
+    <Folder name="validation">
+     <File path="javax\xml\validation\Schema.d" />
+     <File path="javax\xml\validation\SchemaFactory.d" />
+     <File path="javax\xml\validation\Validator.d" />
+    </Folder>
+    <Folder name="xpath">
+     <File path="javax\xml\xpath\XPath.d" />
+     <File path="javax\xml\xpath\XPathConstants.d" />
+     <File path="javax\xml\xpath\XPathExpressionException.d" />
+     <File path="javax\xml\xpath\XPathFactory.d" />
+    </Folder>
+   </Folder>
+  </Folder>
  </Folder>
 </DProject>

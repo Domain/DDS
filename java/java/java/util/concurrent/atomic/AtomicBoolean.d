@@ -5,7 +5,7 @@ import java.lang.exceptions;
 
 public class AtomicBoolean
 {
-    public this()
+    public this(bool value)
     {
         implMissing();
     }

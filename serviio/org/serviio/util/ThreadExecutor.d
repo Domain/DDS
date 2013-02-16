@@ -6,14 +6,19 @@ import java.util.concurrent.Executors;
 
 public class ThreadExecutor
 {
-  private static ExecutorService executor = Executors.newFixedThreadPool(10);
+    private static ExecutorService executor;
 
-  public static void execute(Runnable r) {
-    executor.execute(r);
-  }
+    static this()
+    {
+        executor = Executors.newFixedThreadPool(10);
+    }
+
+    public static void execute(Runnable r) {
+        executor.execute(r);
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.util.ThreadExecutor
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.util.ThreadExecutor
+* JD-Core Version:    0.6.2
+*/

@@ -11,39 +11,44 @@ import org.serviio.external.io.OutputReader;
 
 public class OutputBytesReader : OutputReader
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(OutputBytesReader)();
-  private ByteArrayOutputStream outputStream;
+    private static immutable Logger log;
+    private ByteArrayOutputStream outputStream;
 
-  public this(InputStream inputStream)
-  {
-    super(inputStream);
-    outputStream = new ByteArrayOutputStream();
-  }
-
-  override protected void processOutput()
-  {
-    try
+    static this()
     {
-      byte[] buf = new byte[500000];
-      int n = 0;
-      while ((n = inputStream.read(buf)) > 0)
-        outputStream.write(buf, 0, n);
+        log = LoggerFactory.getLogger!(OutputBytesReader)();
     }
-    catch (IOException e) {
-      log.warn(String.format("Error reading bytes stream from external process: %s" + e.getMessage(), new Object[0]));
+
+    public this(InputStream inputStream)
+    {
+        super(inputStream);
+        outputStream = new ByteArrayOutputStream();
     }
-  }
 
-  override public ByteArrayOutputStream getOutputStream() {
-    return outputStream;
-  }
+    override protected void processOutput()
+    {
+        try
+        {
+            byte[] buf = new byte[500000];
+            int n = 0;
+            while ((n = inputStream.read(buf)) > 0)
+                outputStream.write(buf, 0, n);
+        }
+        catch (IOException e) {
+            log.warn(String.format("Error reading bytes stream from external process: %s" + e.getMessage(), new Object[0]));
+        }
+    }
 
-  override public List!(String) getResults() {
-    return null;
-  }
+    override public ByteArrayOutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    override public List!(String) getResults() {
+        return null;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.external.io.OutputBytesReader
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.external.io.OutputBytesReader
+* JD-Core Version:    0.6.2
+*/

@@ -20,60 +20,65 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineVideoSourcesMetadataExtractor : MetadataExtractor
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(OnlineVideoSourcesMetadataExtractor)();
+    private static immutable Logger log;
 
-  override public ExtractorType getExtractorType()
-  {
-    return ExtractorType.ONLINE_VIDEO_SOURCES;
-  }
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OnlineVideoSourcesMetadataExtractor)();
+    }
 
-  override protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
-  {
-    VideoDescription videoDescription = FileNameParser.parse(mediaFile, repository);
-    if ((videoDescription.isSearchRecommended()) && (videoDescription.getType() != VideoDescription.VideoType.SPECIAL) && (fileType == MediaFileType.VIDEO)) {
-      SearchSourceAdaptor adaptor = SearchSourceFactory.getSearchSourceAdaptor(videoDescription.getType());
-      if (adaptor !is null) {
-        String metadataId = adaptor.search(videoDescription);
-        if (metadataId !is null) {
-          MetadataFile metadataFile = new MetadataFile(getExtractorType(), new Date(), metadataId, adaptor);
-          return metadataFile;
+    override public ExtractorType getExtractorType()
+    {
+        return ExtractorType.ONLINE_VIDEO_SOURCES;
+    }
+
+    override protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
+    {
+        VideoDescription videoDescription = FileNameParser.parse(mediaFile, repository);
+        if ((videoDescription.isSearchRecommended()) && (videoDescription.getType() != VideoDescription.VideoType.SPECIAL) && (fileType == MediaFileType.VIDEO)) {
+            SearchSourceAdaptor adaptor = SearchSourceFactory.getSearchSourceAdaptor(videoDescription.getType());
+            if (adaptor !is null) {
+                String metadataId = adaptor.search(videoDescription);
+                if (metadataId !is null) {
+                    MetadataFile metadataFile = new MetadataFile(getExtractorType(), new Date(), metadataId, adaptor);
+                    return metadataFile;
+                }
+                log.warn(String.format("Online metadata search returned no results for file %s [%s]", cast(Object[])[ mediaFile.getName(), videoDescription.toString() ]));
+                return null;
+            }
+
+            return null;
         }
-        log.warn(String.format("Online metadata search returned no results for file %s [%s]", cast(Object[])[ mediaFile.getName(), videoDescription.toString() ]));
+
         return null;
-      }
-
-      return null;
     }
 
-    return null;
-  }
-
-  override public bool isMetadataUpdated(File mediaFile, MediaItem mediaItem, MetadataDescriptor metadataDescriptor)
-  {
-    if (metadataDescriptor !is null) {
-      return false;
+    override public bool isMetadataUpdated(File mediaFile, MediaItem mediaItem, MetadataDescriptor metadataDescriptor)
+    {
+        if (metadataDescriptor !is null) {
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
 
-  override protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
-  {
-    SearchSourceAdaptor adaptor = cast(SearchSourceAdaptor)metadataDescriptor.getExtractable();
-    adaptor.retrieveMetadata(metadataDescriptor.getIdentifier(), cast(VideoMetadata)metadata);
+    override protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
+    {
+        SearchSourceAdaptor adaptor = cast(SearchSourceAdaptor)metadataDescriptor.getExtractable();
+        adaptor.retrieveMetadata(metadataDescriptor.getIdentifier(), cast(VideoMetadata)metadata);
 
-    setMetadataContentType(cast(VideoMetadata)metadata, cast(SearchSourceAdaptor)metadataDescriptor.getExtractable());
-  }
+        setMetadataContentType(cast(VideoMetadata)metadata, cast(SearchSourceAdaptor)metadataDescriptor.getExtractable());
+    }
 
-  protected void setMetadataContentType(VideoMetadata metadata, SearchSourceAdaptor adaptor)
-  {
-    if (( cast(TheMovieDBSourceAdaptor)adaptor !is null ))
-      metadata.setContentType(ContentType.MOVIE);
-    else if (( cast(TheTVDBSourceAdaptor)adaptor !is null ))
-      metadata.setContentType(ContentType.EPISODE);
-  }
+    protected void setMetadataContentType(VideoMetadata metadata, SearchSourceAdaptor adaptor)
+    {
+        if (( cast(TheMovieDBSourceAdaptor)adaptor !is null ))
+            metadata.setContentType(ContentType.MOVIE);
+        else if (( cast(TheTVDBSourceAdaptor)adaptor !is null ))
+            metadata.setContentType(ContentType.EPISODE);
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.video.OnlineVideoSourcesMetadataExtractor
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.video.OnlineVideoSourcesMetadataExtractor
+* JD-Core Version:    0.6.2
+*/

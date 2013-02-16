@@ -23,64 +23,69 @@ import org.xml.sax.SAXException;
 
 public class XmlUtils
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(XmlUtils)();
+    private static immutable Logger log;
 
-  public static String objectToXMLType(Object object)
-  {
-    if (object !is null) {
-      if (( cast(String)object !is null ))
-        return cast(String)object;
-      if (( cast(Integer)object !is null )) {
-        return (cast(Integer)object).toString();
-      }
-      return object.toString();
+    static this()
+    {
+        log = LoggerFactory.getLogger!(XmlUtils)();
     }
 
-    return null;
-  }
+    public static String objectToXMLType(Object object)
+    {
+        if (object !is null) {
+            if (( cast(String)object !is null ))
+                return cast(String)object;
+            if (( cast(Integer)object !is null )) {
+                return (cast(Integer)object).toString();
+            }
+            return object.toString();
+        }
 
-  public static String getStringFromDocument(Document doc)
-  {
-    DOMSource domSource = new DOMSource(doc);
-    StringWriter writer = new StringWriter();
-    StreamResult result = new StreamResult(writer);
-    TransformerFactory tf = TransformerFactory.newInstance();
-    try {
-      Transformer transformer = tf.newTransformer();
-      transformer.transform(domSource, result);
-    } catch (TransformerException e) {
-      throw new RuntimeException(e);
+        return null;
     }
 
-    return writer.toString();
-  }
+    public static String getStringFromDocument(Document doc)
+    {
+        DOMSource domSource = new DOMSource(doc);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        try {
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
 
-  public static bool validateXML(String xmlId, URL schemaURL, String xml)
-  {
-    Source xmlFile = new StreamSource(new StringReader(xml));
-    SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-    try {
-      Schema schema = schemaFactory.newSchema(schemaURL);
-      Validator validator = schema.newValidator();
-      validator.validate(xmlFile);
-      return true;
-    } catch (SAXException e) {
-      log.error(String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
-      return false;
-    } catch (IOException e) {
-      log.error(String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
-    }return false;
-  }
+        return writer.toString();
+    }
 
-  public static String decodeXml(String decodedXml)
-  {
-    String result = decodedXml.replaceAll("&lt;", "<");
-    result = result.replaceAll("&gt;", ">");
-    return result;
-  }
+    public static bool validateXML(String xmlId, URL schemaURL, String xml)
+    {
+        Source xmlFile = new StreamSource(new StringReader(xml));
+        SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+        try {
+            Schema schema = schemaFactory.newSchema(schemaURL);
+            Validator validator = schema.newValidator();
+            validator.validate(xmlFile);
+            return true;
+        } catch (SAXException e) {
+            log.error(String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
+            return false;
+        } catch (IOException e) {
+            log.error(String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
+        }return false;
+    }
+
+    public static String decodeXml(String decodedXml)
+    {
+        String result = decodedXml.replaceAll("&lt;", "<");
+        result = result.replaceAll("&gt;", ">");
+        return result;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.util.XmlUtils
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.util.XmlUtils
+* JD-Core Version:    0.6.2
+*/

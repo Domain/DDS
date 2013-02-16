@@ -71,29 +71,29 @@ version(Tango){
         }
     }
 } else { // Phobos
-	static import core.vararg;
-	
+    static import core.vararg;
+    
     class DwtLogger : IDwtLogger {
         private this( String name ) {
         }
         void trace( String file, ulong line, String fmt, ... ){
-			fmt = fmtFromTangoFmt(fmt);
+            fmt = fmtFromTangoFmt(fmt);
             std.stdio.writefln( "TRC %s %s: %s", file, line, doVarArgFormat(typeid(fmt) ~ _arguments, &fmt) );
         }																	
         void info( String file, ulong line, String fmt, ... ){	
-			fmt = fmtFromTangoFmt(fmt);		
+            fmt = fmtFromTangoFmt(fmt);		
             std.stdio.writefln( "INF %s %s: %s", file, line, doVarArgFormat(typeid(fmt) ~ _arguments, &fmt) );
         }																	
         void warn( String file, ulong line, String fmt, ... ){	
-			fmt = fmtFromTangoFmt(fmt);		
+            fmt = fmtFromTangoFmt(fmt);		
             std.stdio.writefln( "WRN %s %s: %s", file, line, doVarArgFormat(typeid(fmt) ~ _arguments, &fmt) );
         }																	
         void error( String file, ulong line, String fmt, ... ){
-			fmt = fmtFromTangoFmt(fmt);		
+            fmt = fmtFromTangoFmt(fmt);		
             std.stdio.writefln( "ERR %s %s: %s", file, line, doVarArgFormat(typeid(fmt) ~ _arguments, &fmt) );
         }																	
         void fatal( String file, ulong line, String fmt, ... ){
-			fmt = fmtFromTangoFmt(fmt);	
+            fmt = fmtFromTangoFmt(fmt);	
             std.stdio.writefln( "FAT %s %s: %s", file, line, doVarArgFormat(typeid(fmt) ~ _arguments, &fmt) );
         }
     }
@@ -113,7 +113,7 @@ IDwtLogger getDwtLogger(){
 }
 
 void implMissing(String file = __FILE__, uint line = __LINE__, T...)(lazy T args){
-	getDwtLogger().fatal( file, line, "implementation missing in file {} line {}", file, line );
+    getDwtLogger().fatal( file, line, "implementation missing in file {} line {}", file, line );
     getDwtLogger().fatal( file, line, "Please create a bug report at http://www.dsource.org/projects/dwt" );
     getDwtLogger().fatal( file, line, "exiting ..." );
     exit(1);
@@ -150,14 +150,14 @@ version(Tango){
 version(Tango){
     public alias tango.text.convert.Format.Format Format;
 } else { // Phobos
-	private string fmtFromTangoFmt(string tangoFmt) {
-		auto app = std.array.appender!(string)();
-		app.reserve(tangoFmt.length);
-	L:	for(int i = 0; i < tangoFmt.length; ++i) {
-			char c = tangoFmt[i];
-			if(c == '%')
-				app.put("%%");
-			else if(c == '{') {
+    private string fmtFromTangoFmt(string tangoFmt) {
+        auto app = std.array.appender!(string)();
+        app.reserve(tangoFmt.length);
+    L:	for(int i = 0; i < tangoFmt.length; ++i) {
+            char c = tangoFmt[i];
+            if(c == '%')
+                app.put("%%");
+            else if(c == '{') {
                 if(i + 1 < tangoFmt.length && tangoFmt[i + 1] == '{') {
                     app.put('{');
                     ++i;
@@ -198,11 +198,11 @@ version(Tango){
                     } else
                         app.put("%s");
                 }
-			} else
-				app.put(c);
-		}
+            } else
+                app.put(c);
+        }
         return app.data();
-	}
+    }
     
     unittest
     {
@@ -390,15 +390,15 @@ version(Tango){
                 Formatter( "{}", f ) == "{3.14 => PI, 1.00 => one}");*/
     }
     
-	private String doVarArgFormat(TypeInfo[] _arguments, core.vararg.va_list _argptr) {
-		char[] res;
+    private String doVarArgFormat(TypeInfo[] _arguments, core.vararg.va_list _argptr) {
+        char[] res;
         void putc(dchar c) {
             std.utf.encode(res, c);
         }
         std.format.doFormat(&putc, _arguments, _argptr);
-		return std.exception.assumeUnique(res);
-	}
-	
+        return std.exception.assumeUnique(res);
+    }
+    
     class Format{
         template UnTypedef(T) {
             static if (is(T U == typedef))
@@ -415,7 +415,7 @@ version(Tango){
                 else
                     args[i] = _a;
             
-			auto writer = std.array.appender!(String)();
+            auto writer = std.array.appender!(String)();
             std.format.formattedWrite(writer, fmtFromTangoFmt(_fmt), args);
             auto res = writer.data();
             return std.exception.assumeUnique(res);

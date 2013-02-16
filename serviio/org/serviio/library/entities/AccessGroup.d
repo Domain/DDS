@@ -6,28 +6,34 @@ import org.serviio.db.entities.PersistedEntity;
 
 public class AccessGroup : PersistedEntity
 {
-	public static Long NO_LIMIT_ACCESS_GROUP_ID = Long.valueOf(1L);
-	public static AccessGroup ANY = new AccessGroup("Any");
-	private String name;
+    public static Long NO_LIMIT_ACCESS_GROUP_ID;
+    public static AccessGroup ANY;
+    private String name;
 
-	public this(String name)
-	{
-		this.name = name;
-	}
+    static this()
+    {
+        NO_LIMIT_ACCESS_GROUP_ID = Long.valueOf(1L);
+        ANY = new AccessGroup("Any");
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public this(String name)
+    {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	override public String toString()
-	{
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    override public String toString()
+    {
+        return name;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

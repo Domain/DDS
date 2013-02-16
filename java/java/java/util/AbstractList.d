@@ -14,9 +14,9 @@ abstract class AbstractList(T) : AbstractCollection!T, List!T {
     public void add(int index, T element){
         throw new UnsupportedOperationException();
     }
-    public bool add(String o){
+    /*override public bool add(String o){
         return add(stringcast(o));
-    }
+    }*/
     override public bool add(T o){
         add(size(), o);
         return true;

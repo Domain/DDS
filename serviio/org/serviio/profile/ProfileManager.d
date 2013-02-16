@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class ProfileManager
 {
-	private static List!(Profile) profiles = new ArrayList!(Profile)();
+	private static List!(Profile) profiles;
 	public static const String DEFAULT_PROFILE_ID = "1";
 	private static const String PROFILES_XML_PATH = "/profiles.xml";
 	private static const String APP_PROFILES_XML_PATH = "/application-profiles.xml";
@@ -29,6 +29,7 @@ public class ProfileManager
 
 	static this()
 	{
+	    profiles = new ArrayList!(Profile)();
 		log = LoggerFactory.getLogger!(ProfileManager)();
 	}
 

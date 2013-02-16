@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 
 public class RendererExpirationChecker : Runnable
 {
-	private static immutable Logger log = LoggerFactory.getLogger!(RendererExpirationChecker)();
+	private static immutable Logger log;
 	private static const int CHECK_FREQUENCY = 5000;
 	private bool workerRunning = false;
 
 	static this()
 	{
-			log = LoggerFactory.getLogger!(RendererExpirationChecker)();
+		log = LoggerFactory.getLogger!(RendererExpirationChecker)();
 	}
 
 	public void run()

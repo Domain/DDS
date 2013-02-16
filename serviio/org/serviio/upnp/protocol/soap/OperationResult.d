@@ -7,38 +7,40 @@ import org.serviio.upnp.protocol.soap.InvocationError;
 
 public class OperationResult
 {
-  private Map!(String, Object) outputParameters = new LinkedHashMap!(String, Object)();
-  private InvocationError error;
+    private Map!(String, Object) outputParameters;
+    private InvocationError error;
 
-  public this()
-  {
-  }
+    public this()
+    {
+        outputParameters = new LinkedHashMap!(String, Object)();
+    }
 
-  public this(InvocationError error)
-  {
-    this.error = error;
-  }
+    public this(InvocationError error)
+    {
+        outputParameters = new LinkedHashMap!(String, Object)();
+        this.error = error;
+    }
 
-  public void addOutputParameter(String name, Object value)
-  {
-    outputParameters.put(name, value);
-  }
+    public void addOutputParameter(String name, Object value)
+    {
+        outputParameters.put(name, value);
+    }
 
-  public Map!(String, Object) getOutputParameters()
-  {
-    return outputParameters;
-  }
+    public Map!(String, Object) getOutputParameters()
+    {
+        return outputParameters;
+    }
 
-  public InvocationError getError() {
-    return error;
-  }
+    public InvocationError getError() {
+        return error;
+    }
 
-  public void setError(InvocationError error) {
-    this.error = error;
-  }
+    public void setError(InvocationError error) {
+        this.error = error;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.upnp.protocol.soap.OperationResult
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.upnp.protocol.soap.OperationResult
+* JD-Core Version:    0.6.2
+*/

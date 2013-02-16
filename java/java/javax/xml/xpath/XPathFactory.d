@@ -5,8 +5,13 @@ import java.lang.exceptions;
 
 public class XPathFactory
 {
-    public this()
+    private this()
     {
         implMissing();
+    }
+
+    public static XPathFactory newInstance()
+    {
+        return new XPathFactory();
     }
 }

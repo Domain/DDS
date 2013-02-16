@@ -16,65 +16,71 @@ import org.serviio.external.io.OutputReader;
 
 public class OutputTextReader : OutputReader
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(OutputTextReader)();
+    private static immutable Logger log;
 
-  private List!(String) lines = new ArrayList!(String)();
-  private Object linesLock;
-  private ProcessExecutor executor;
+    private List!(String) lines;
+    private Object linesLock;
+    private ProcessExecutor executor;
 
-  public this(ProcessExecutor executor, InputStream inputStream)
-  {
-    super(inputStream);
-    linesLock = new Object();
-    this.executor = executor;
-  }
-
-  override protected void processOutput()
-  {
-    BufferedReader br = null;
-    try {
-      br = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
-      String line = null;
-      while ((line = br.readLine()) !is null)
-        if (line.length() > 0) {
-          addLine(line);
-
-          executor.notifyListenersOutputUpdated(line);
-
-          log.trace(line);
-        }
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OutputTextReader)();
     }
-    catch (IOException e) {
-      log.warn(String.format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
-    } finally {
-      if (br !is null)
+
+    public this(ProcessExecutor executor, InputStream inputStream)
+    {
+        lines = new ArrayList!(String)();
+        super(inputStream);
+        linesLock = new Object();
+        this.executor = executor;
+    }
+
+    override protected void processOutput()
+    {
+        BufferedReader br = null;
         try {
-          br.close(); } catch (Exception e) {
+            br = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
+            String line = null;
+            while ((line = br.readLine()) !is null)
+                if (line.length() > 0) {
+                    addLine(line);
+
+                    executor.notifyListenersOutputUpdated(line);
+
+                    log.trace(line);
+                }
+        }
+        catch (IOException e) {
+            log.warn(String.format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
+        } finally {
+            if (br !is null)
+                try {
+                    br.close(); } catch (Exception e) {
+                    }
         }
     }
-  }
 
-  override public ByteArrayOutputStream getOutputStream() {
-    return null;
-  }
-
-  override public List!(String) getResults() {
-    List!(String) clonedResults = new ArrayList!(String)();
-    synchronized (linesLock) {
-      clonedResults.addAll(lines);
+    override public ByteArrayOutputStream getOutputStream() {
+        return null;
     }
-    return clonedResults;
-  }
 
-  private void addLine(String line)
-  {
-    synchronized (linesLock) {
-      lines.add(line);
+    override public List!(String) getResults() {
+        List!(String) clonedResults = new ArrayList!(String)();
+        synchronized (linesLock) {
+            clonedResults.addAll(lines);
+        }
+        return clonedResults;
     }
-  }
+
+    private void addLine(String line)
+    {
+        synchronized (linesLock) {
+            lines.add(line);
+        }
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.external.io.OutputTextReader
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.external.io.OutputTextReader
+* JD-Core Version:    0.6.2
+*/

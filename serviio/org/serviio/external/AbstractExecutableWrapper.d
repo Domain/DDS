@@ -6,21 +6,26 @@ import org.serviio.external.ProcessExecutor;
 
 public abstract class AbstractExecutableWrapper
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(AbstractExecutableWrapper)();
+    private static immutable Logger log;
 
-  protected static void executeSynchronously(ProcessExecutor executor)
-  {
-    executor.start();
-    try {
-      executor.join();
-    } catch (InterruptedException e) {
-      log.debug_("Interrupted executable invocation, killing the process");
-      executor.stopProcess(false);
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AbstractExecutableWrapper)();
     }
-  }
+
+    protected static void executeSynchronously(ProcessExecutor executor)
+    {
+        executor.start();
+        try {
+            executor.join();
+        } catch (InterruptedException e) {
+            log.debug_("Interrupted executable invocation, killing the process");
+            executor.stopProcess(false);
+        }
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.external.AbstractExecutableWrapper
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.external.AbstractExecutableWrapper
+* JD-Core Version:    0.6.2
+*/

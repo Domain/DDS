@@ -26,12 +26,17 @@ public abstract class OnlineItem : ItemMetadata
     private ImageDescriptor thumbnail;
     private String contentUrl;
     private MediaFileType type;
-    private TechnicalMetadata technicalMD = new TechnicalMetadata();
+    private TechnicalMetadata technicalMD;
     private String cacheKey;
     private bool validEssence = true;
 
     private bool live = false;
     private String userAgent;
+
+    public this()
+    {
+        technicalMD = new TechnicalMetadata();
+    }
 
     override public void validateMetadata()
     {

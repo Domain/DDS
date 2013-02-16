@@ -10,110 +10,115 @@ import org.slf4j.LoggerFactory;
 
 public class ContentURLContainer
 {
-  private static immutable Logger log = LoggerFactory.getLogger!(ContentURLContainer)();
-  private String contentUrl;
-  private String thumbnailUrl;
-  private MediaFileType fileType = MediaFileType.VIDEO;
-  private Date expiresOn;
-  private bool expiresImmediately = false;
-  private String cacheKey;
-  private bool live = false;
-  private String userAgent;
+    private static immutable Logger log;
+    private String contentUrl;
+    private String thumbnailUrl;
+    private MediaFileType fileType = MediaFileType.VIDEO;
+    private Date expiresOn;
+    private bool expiresImmediately = false;
+    private String cacheKey;
+    private bool live = false;
+    private String userAgent;
 
-  public String getContentUrl()
-  {
-    return contentUrl;
-  }
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ContentURLContainer)();
+    }
 
-  public URL getThumbnailUrl() {
-    try {
-      return thumbnailUrl !is null ? new URL(thumbnailUrl) : null;
-    } catch (MalformedURLException e) {
-      log.debug_((new StringBuilder()).append("Cannot parse thumbnail URL: ").append(e.getMessage()).toString());
-    }return null;
-  }
+    public String getContentUrl()
+    {
+        return contentUrl;
+    }
 
-  public MediaFileType getFileType()
-  {
-    return fileType;
-  }
+    public URL getThumbnailUrl() {
+        try {
+            return thumbnailUrl !is null ? new URL(thumbnailUrl) : null;
+        } catch (MalformedURLException e) {
+            log.debug_((new StringBuilder()).append("Cannot parse thumbnail URL: ").append(e.getMessage()).toString());
+        }return null;
+    }
 
-  public void setContentUrl(String contentUrl) {
-    this.contentUrl = contentUrl;
-  }
+    public MediaFileType getFileType()
+    {
+        return fileType;
+    }
 
-  public void setThumbnailUrl(String thumbnailUrl) {
-    this.thumbnailUrl = thumbnailUrl;
-  }
+    public void setContentUrl(String contentUrl) {
+        this.contentUrl = contentUrl;
+    }
 
-  public void setFileType(MediaFileType fileType) {
-    this.fileType = fileType;
-  }
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
 
-  public Date getExpiresOn() {
-    return expiresOn;
-  }
+    public void setFileType(MediaFileType fileType) {
+        this.fileType = fileType;
+    }
 
-  public void setExpiresOn(Date expiresIn) {
-    expiresOn = expiresIn;
-  }
+    public Date getExpiresOn() {
+        return expiresOn;
+    }
 
-  public bool isExpiresImmediately() {
-    return expiresImmediately;
-  }
+    public void setExpiresOn(Date expiresIn) {
+        expiresOn = expiresIn;
+    }
 
-  public void setExpiresImmediately(bool expiresImmediately) {
-    this.expiresImmediately = expiresImmediately;
-  }
+    public bool isExpiresImmediately() {
+        return expiresImmediately;
+    }
 
-  public String getCacheKey() {
-    return cacheKey;
-  }
+    public void setExpiresImmediately(bool expiresImmediately) {
+        this.expiresImmediately = expiresImmediately;
+    }
 
-  public void setCacheKey(String cacheKey) {
-    this.cacheKey = cacheKey;
-  }
+    public String getCacheKey() {
+        return cacheKey;
+    }
 
-  public bool isLive() {
-    return live;
-  }
+    public void setCacheKey(String cacheKey) {
+        this.cacheKey = cacheKey;
+    }
 
-  public void setLive(bool live) {
-    this.live = live;
-  }
+    public bool isLive() {
+        return live;
+    }
 
-  public String getUserAgent() {
-    return userAgent;
-  }
+    public void setLive(bool live) {
+        this.live = live;
+    }
 
-  public void setUserAgent(String userAgent) {
-    this.userAgent = userAgent;
-  }
+    public String getUserAgent() {
+        return userAgent;
+    }
 
-  override public String toString()
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("ContentURLContainer [");
-    if (fileType !is null)
-      builder.append("fileType=").append(fileType).append(", ");
-    if (contentUrl !is null)
-      builder.append("contentUrl=").append(contentUrl).append(", ");
-    if (thumbnailUrl !is null)
-      builder.append("thumbnailUrl=").append(thumbnailUrl).append(", ");
-    if (expiresOn !is null)
-      builder.append("expiresOn=").append(expiresOn).append(", ");
-    builder.append("expiresImmediately=").append(expiresImmediately).append(", ");
-    if (cacheKey !is null)
-      builder.append("cacheKey=").append(cacheKey).append(", ");
-    builder.append("live=").append(live).append(", ");
-    if (userAgent !is null)
-      builder.append("userAgent=").append(userAgent);
-    builder.append("]");
-    return builder.toString();
-  }
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    override public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ContentURLContainer [");
+        if (fileType !is null)
+            builder.append("fileType=").append(fileType).append(", ");
+        if (contentUrl !is null)
+            builder.append("contentUrl=").append(contentUrl).append(", ");
+        if (thumbnailUrl !is null)
+            builder.append("thumbnailUrl=").append(thumbnailUrl).append(", ");
+        if (expiresOn !is null)
+            builder.append("expiresOn=").append(expiresOn).append(", ");
+        builder.append("expiresImmediately=").append(expiresImmediately).append(", ");
+        if (cacheKey !is null)
+            builder.append("cacheKey=").append(cacheKey).append(", ");
+        builder.append("live=").append(live).append(", ");
+        if (userAgent !is null)
+            builder.append("userAgent=").append(userAgent);
+        builder.append("]");
+        return builder.toString();
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.library.online.ContentURLContainer
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.library.online.ContentURLContainer
+* JD-Core Version:    0.6.2
+*/

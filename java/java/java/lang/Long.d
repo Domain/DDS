@@ -77,6 +77,11 @@ class Long : Number {
     public static String toString( long i ){
         return String_valueOf(i);
     }
+
+    public static Long valueOf(long i) {
+        return new Long(i);
+    }
+
     private static Class TYPE_;
     public static Class TYPE(){
         if( TYPE_ is null ){

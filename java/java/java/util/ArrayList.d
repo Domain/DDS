@@ -29,9 +29,9 @@ class ArrayList(T) : AbstractList!T, List!T {
         data ~= o;
         return true;
     }
-    override public bool    add(String o){
+    /*override public bool    add(String o){
         return add(stringcast(o));
-    }
+    }*/
     override bool    addAll(Collection!T c){
         if( c.size() is 0 ) return false;
         uint idx = data.length;
@@ -66,9 +66,9 @@ class ArrayList(T) : AbstractList!T, List!T {
         }
         return false;
     }
-    bool    contains(String o){
+    /*bool    contains(String o){
         return contains(stringcast(o));
-    }
+    }*/
     override bool    containsAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
