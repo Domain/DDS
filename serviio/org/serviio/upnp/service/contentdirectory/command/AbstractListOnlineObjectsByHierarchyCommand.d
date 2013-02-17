@@ -114,7 +114,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
 				List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, rendererProfile);
 				return DirectoryObjectBuilder.createInstance(itemClassType, values, res, itemId);
 			}
-			throw new ObjectNotFoundException(String.format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
+			throw new ObjectNotFoundException(String_format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
 		}
 
 		Long folderId = getFolderId();
@@ -127,10 +127,10 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
 
 				return DirectoryObjectBuilder.createInstance(containerClassType, values, null, folderId);
 			}
-			throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
+			throw new ObjectNotFoundException(String_format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
 		}
 
-		throw new ObjectNotFoundException(String.format("Error retrieving object %s from CDS", cast(Object[])[ objectId ]));
+		throw new ObjectNotFoundException(String_format("Error retrieving object %s from CDS", cast(Object[])[ objectId ]));
 	}
 
 	public int retrieveItemCount()
@@ -183,7 +183,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
 			return repositoryName;
 		}
 		if (ObjectValidator.isNotEmpty(resource.getDomain())) {
-			return String.format("%s [%s]", cast(Object[])[ resource.getTitle(), resource.getDomain() ]);
+			return String_format("%s [%s]", cast(Object[])[ resource.getTitle(), resource.getDomain() ]);
 		}
 		return resource.getTitle();
 	}
@@ -210,7 +210,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
 		try {
 			return OnlineItemService.findNamedOnlineItemById(itemId);
 		} catch (IOException e) {
-			log.debug_(String.format("Error retrieving online item %s: %s", cast(Object[])[ itemId, e.getMessage() ]), e);
+			log.debug_(String_format("Error retrieving online item %s: %s", cast(Object[])[ itemId, e.getMessage() ]), e);
 		}return null;
 	}
 }

@@ -142,11 +142,11 @@ public abstract class ContainerNode : DefinitionNode
                 return cast(Command!(T))c.newInstance(cast(Object[])[ containerId, objectType, containerClassType, itemClassType, rendererProfile, userProfile, idPrefix, Integer.valueOf(startIndex), Integer.valueOf(count) ]);
             }
 
-            log.error(String.format("Cannot instantiate Command %s because it doesn't implement Command interface", cast(Object[])[ commandClass ]));
+            log.error(String_format("Cannot instantiate Command %s because it doesn't implement Command interface", cast(Object[])[ commandClass ]));
         }
         catch (Exception e)
         {
-            log.error(String.format("Cannot instantiate Command %s: %s", cast(Object[])[ commandClass, e.getMessage() ]));
+            log.error(String_format("Cannot instantiate Command %s: %s", cast(Object[])[ commandClass, e.getMessage() ]));
         }
         return null;
     }
@@ -157,7 +157,7 @@ public abstract class ContainerNode : DefinitionNode
         try {
             return command.retrieveItemCount();
         } catch (CommandExecutionException e) {
-            log.error(String.format("Cannot retrieve results of action count command: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(String_format("Cannot retrieve results of action count command: %s", cast(Object[])[ e.getMessage() ]), e);
         }return 0;
     }
 
@@ -171,7 +171,7 @@ public abstract class ContainerNode : DefinitionNode
         try {
             return command.retrieveItemList();
         } catch (CommandExecutionException e) {
-            log.error(String.format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(String_format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
             throw new RuntimeException(e);
         }
     }

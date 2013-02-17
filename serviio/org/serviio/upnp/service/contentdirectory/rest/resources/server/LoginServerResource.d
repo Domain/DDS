@@ -22,7 +22,7 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
 {
     private static const String X_SERVIIO_DATE_HEADER = "X-Serviio-Date";
     private static const String AUTH_HEADER = "Authorization";
-    private static enum authHeaderPattern = Pattern.compile("Serviio\\s(.*)$", 2);
+    private static immutable Pattern authHeaderPattern;
 
     private static immutable Logger log;
 
@@ -30,6 +30,7 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
 
     static this()
     {
+        authHeaderPattern = Pattern.compile("Serviio\\s(.*)$", 2);
         log = LoggerFactory.getLogger!(LoginServerResource)();
         storedTokens = new HashMap!(String, Date)();
     }

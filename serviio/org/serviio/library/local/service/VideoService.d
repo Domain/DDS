@@ -34,7 +34,7 @@ public class VideoService : Service
     {
         Long mediaItemId;
         if (metadata !is null) {
-            log.debug_(String.format("Adding video into database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(String_format("Adding video into database: %s", cast(Object[])[ metadata.getTitle() ]));
 
             Long folderId = FolderService.createOrReadFolder(repository, metadata.getFilePath());
 
@@ -108,7 +108,7 @@ public class VideoService : Service
     {
         Video video = getVideo(mediaItemId);
         if (video !is null) {
-            log.debug_(String.format("Removing video from database: %s", cast(Object[])[ video.getTitle() ]));
+            log.debug_(String_format("Removing video from database: %s", cast(Object[])[ video.getTitle() ]));
 
             DAOFactory.getPersonDAO().removeAllPersonsFromMedia(mediaItemId);
 
@@ -134,7 +134,7 @@ public class VideoService : Service
     public static void updateVideoInLibrary(VideoMetadata metadata, Long mediaItemId)
     {
         if (metadata !is null) {
-            log.debug_(String.format("Updating video in database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(String_format("Updating video in database: %s", cast(Object[])[ metadata.getTitle() ]));
 
             Video video = getVideo(mediaItemId);
 
@@ -386,12 +386,12 @@ public class VideoService : Service
         if (ObjectValidator.isNotEmpty(seriesName)) {
             Series series = DAOFactory.getSeriesDAO().findSeriesByName(seriesName);
             if (series is null) {
-                log.debug_(String.format("Series %s not found, creating a new one", cast(Object[])[ seriesName ]));
+                log.debug_(String_format("Series %s not found, creating a new one", cast(Object[])[ seriesName ]));
 
                 series = new Series(seriesName, null);
                 return Long.valueOf(DAOFactory.getSeriesDAO().create(series));
             }
-            log.debug_(String.format("Series %s found", cast(Object[])[ seriesName ]));
+            log.debug_(String_format("Series %s found", cast(Object[])[ seriesName ]));
             return series.getId();
         }
 

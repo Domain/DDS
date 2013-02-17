@@ -77,7 +77,7 @@ public class Playlist : PersistedEntity
 
     override public String toString()
     {
-        return String.format("Playlist [id=%s, title=%s]", cast(Object[])[ id, title ]);
+        return String_format("Playlist [id=%s, title=%s]", cast(Object[])[ id, title ]);
     }
 }
 

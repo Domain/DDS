@@ -40,6 +40,10 @@ version(Tango){
         }
     }
 
+    String getMessage(Exception e)
+    {
+        return e.toString();
+    }
 }
 
 class InternalError : Exception {

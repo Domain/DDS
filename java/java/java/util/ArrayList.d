@@ -230,9 +230,9 @@ class ArrayList(T) : AbstractList!T, List!T {
         data.length = data.length - 1;
         return true;
     }
-    override public bool remove(String key){
-        return remove(stringcast(key));
-    }
+    //override public bool remove(String key){
+    //    return remove(stringcast(key));
+    //}
     override bool    removeAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;

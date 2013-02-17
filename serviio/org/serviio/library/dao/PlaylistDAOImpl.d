@@ -39,7 +39,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		if ((newInstance is null) || (newInstance.getTitle() is null)) {
 			throw new InvalidArgumentException("Cannot create Playlist. Required data is missing.");
 		}
-		log.debug_(String.format("Creating a new Playlist (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
+		log.debug_(String_format("Creating a new Playlist (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -55,7 +55,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ps.executeUpdate();
 			return JdbcUtils.retrieveGeneratedID(ps);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot create Playlist with name %s", cast(Object[])[ newInstance.getTitle() ]), e);
+			throw new PersistenceException(String_format("Cannot create Playlist with name %s", cast(Object[])[ newInstance.getTitle() ]), e);
 		} finally {
 			DatabaseManager.releaseConnection(con);
 		}
@@ -63,7 +63,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public void delete_(Long id)
 	{
-		log.debug_(String.format("Deleting a Playlist (id = %s) and all related items", cast(Object[])[ id ]));
+		log.debug_(String_format("Deleting a Playlist (id = %s) and all related items", cast(Object[])[ id ]));
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -76,7 +76,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 			deletePlaylist(con, id);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot remove Playlist %s or its items", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot remove Playlist %s or its items", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -85,7 +85,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public Playlist read(Long id)
 	{
-		log.debug_(String.format("Reading a Playlist (id = %s)", cast(Object[])[ id ]));
+		log.debug_(String_format("Reading a Playlist (id = %s)", cast(Object[])[ id ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -96,7 +96,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ResultSet rs = ps.executeQuery();
 			return mapSingleResult(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read Playlist with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot read Playlist with id = %s", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -109,7 +109,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		{
 			throw new InvalidArgumentException("Cannot update Playlist. Required data is missing.");
 		}
-		log.debug_(String.format("Updating Playlist (id = %s)", cast(Object[])[ transientObject.getId() ]));
+		log.debug_(String_format("Updating Playlist (id = %s)", cast(Object[])[ transientObject.getId() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -126,7 +126,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ps.setLong(7, transientObject.getId().longValue());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot update Playlist with id %s", cast(Object[])[ transientObject.getId() ]), e);
+			throw new PersistenceException(String_format("Cannot update Playlist with id %s", cast(Object[])[ transientObject.getId() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -138,7 +138,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		if (playlistFile is null) {
 			throw new InvalidArgumentException("Cannot check playlist presence. Required data is missing.");
 		}
-		log.debug_(String.format("Checking if DB already contains playlist %s", cast(Object[])[ playlistFile.getName() ]));
+		log.debug_(String_format("Checking if DB already contains playlist %s", cast(Object[])[ playlistFile.getName() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -147,14 +147,14 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ps.setString(1, FileUtils.getProperFilePath(playlistFile));
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				log.debug_(String.format("Playlist %s already exists in DB", cast(Object[])[ playlistFile.getName() ]));
+				log.debug_(String_format("Playlist %s already exists in DB", cast(Object[])[ playlistFile.getName() ]));
 				return true;
 			}
-			log.debug_(String.format("Playlist %s doesn't exist in DB yet", cast(Object[])[ playlistFile.getName() ]));
+			log.debug_(String_format("Playlist %s doesn't exist in DB yet", cast(Object[])[ playlistFile.getName() ]));
 			return false;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot check if playlist exists: %s ", cast(Object[])[ playlistFile.getName() ]), e);
+			throw new PersistenceException(String_format("Cannot check if playlist exists: %s ", cast(Object[])[ playlistFile.getName() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -163,7 +163,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public List!(Playlist) getPlaylistsInRepository(Long repositoryId)
 	{
-		log.debug_(String.format("Reading Playlists for Repository (id = %s)", cast(Object[])[ repositoryId ]));
+		log.debug_(String_format("Reading Playlists for Repository (id = %s)", cast(Object[])[ repositoryId ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -174,7 +174,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read Playlists for Repository with id = %s", cast(Object[])[ repositoryId ]), e);
+			throw new PersistenceException(String_format("Cannot read Playlists for Repository with id = %s", cast(Object[])[ repositoryId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -199,7 +199,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		}
 		catch (SQLException e)
 		{
-			throw new PersistenceException(String.format("Cannot delete MediaItem with id = %s from playlists", cast(Object[])[ mediaItemId ]), e);
+			throw new PersistenceException(String_format("Cannot delete MediaItem with id = %s from playlists", cast(Object[])[ mediaItemId ]), e);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public void removePlaylistItems(final Long playlistId)
 	{
-		log.debug_(String.format("Removing all items from playlist %s", cast(Object[])[ playlistId ]));
+		log.debug_(String_format("Removing all items from playlist %s", cast(Object[])[ playlistId ]));
 		try {
 			(new class() JdbcExecutor!(Object)
 			 {
@@ -240,7 +240,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		}
 		catch (SQLException e)
 		{
-			throw new PersistenceException(String.format("Cannot delete PlaylistItems from playlist with id = %s", cast(Object[])[ playlistId ]), e);
+			throw new PersistenceException(String_format("Cannot delete PlaylistItems from playlist with id = %s", cast(Object[])[ playlistId ]), e);
 		}
 	}
 
@@ -249,7 +249,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		if ((order is null) || (mediaItemId is null) || (playlistId is null)) {
 			throw new InvalidArgumentException("Cannot create Playlist Item. Required data is missing.");
 		}
-		log.debug_(String.format("Adding a new Item to playlist (media item = %s, playlist = %s)", cast(Object[])[ mediaItemId, playlistId ]));
+		log.debug_(String_format("Adding a new Item to playlist (media item = %s, playlist = %s)", cast(Object[])[ mediaItemId, playlistId ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -269,7 +269,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public List!(Integer) getPlaylistItemIndices(Long playlistId)
 	{
-		log.debug_(String.format("Reading items for playlist %s", cast(Object[])[ playlistId ]));
+		log.debug_(String_format("Reading items for playlist %s", cast(Object[])[ playlistId ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -292,7 +292,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public List!(Playlist) retrievePlaylistsWithMedia(MediaFileType mediaType, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of Playlists for %s (from=%s, count=%s) [%s]", cast(Object[])[ mediaType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of Playlists for %s (from=%s, count=%s) [%s]", cast(Object[])[ mediaType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -303,7 +303,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of Playlists for %s", cast(Object[])[ mediaType ]), e);
+			throw new PersistenceException(String_format("Cannot read list of Playlists for %s", cast(Object[])[ mediaType ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -312,7 +312,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
 	public int getPlaylistsWithMediaCount(MediaFileType mediaType, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of playlists for %s [%s]", cast(Object[])[ mediaType, accessGroup ]));
+		log.debug_(String_format("Retrieving number of playlists for %s [%s]", cast(Object[])[ mediaType, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -354,7 +354,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 		}
 		catch (SQLException e)
 		{
-			throw new PersistenceException(String.format("Cannot delete Playlist with id = %s", cast(Object[])[ playlistId ]), e);
+			throw new PersistenceException(String_format("Cannot delete Playlist with id = %s", cast(Object[])[ playlistId ]), e);
 		}
 	}
 

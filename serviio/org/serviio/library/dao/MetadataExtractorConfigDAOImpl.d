@@ -33,7 +33,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
         {
             throw new InvalidArgumentException("Cannot create MetadataExtractorConfig. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new MetadataExtractorConfig (extractor = %s, file type = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]));
+        log.debug_(String_format("Creating a new MetadataExtractorConfig (extractor = %s, file type = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -47,7 +47,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
             ps.executeUpdate();
             return JdbcUtils.retrieveGeneratedID(ps);
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot create MetadataExtractorConfig %s for file type %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]), e);
+            throw new PersistenceException(String_format("Cannot create MetadataExtractorConfig %s for file type %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]), e);
         }
         finally {
             JdbcUtils.closeStatement(ps);
@@ -57,7 +57,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
 
     public void delete_(Long id)
     {
-        log.debug_(String.format("Deleting a MetadataExtractorConfig (id = %s)", cast(Object[])[ id ]));
+        log.debug_(String_format("Deleting a MetadataExtractorConfig (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -66,7 +66,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
             ps.setLong(1, id.longValue());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot delete MetadataExtractorConfig with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(String_format("Cannot delete MetadataExtractorConfig with id = %s", cast(Object[])[ id ]), e);
         } finally {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
@@ -75,7 +75,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
 
     public List!(MetadataExtractorConfig) retrieveByMediaFileType(MediaFileType type)
     {
-        log.debug_(String.format("Reading a list of Extractor configuration for type %s", cast(Object[])[ type.toString() ]));
+        log.debug_(String_format("Reading a list of Extractor configuration for type %s", cast(Object[])[ type.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -85,7 +85,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
             ResultSet rs = ps.executeQuery();
             return mapResultSet(rs);
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot read a list of Extractor configuration for type %s", cast(Object[])[ type.toString() ]), e);
+            throw new PersistenceException(String_format("Cannot read a list of Extractor configuration for type %s", cast(Object[])[ type.toString() ]), e);
         } finally {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);

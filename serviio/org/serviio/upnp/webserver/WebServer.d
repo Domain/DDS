@@ -77,7 +77,7 @@ public class WebServer
         {
             socketBuffer = DEFAULT_SOCKET_BUFFER;
         }
-        log.info(String.format("Socket buffer set to %s bytes",
+        log.info(String_format("Socket buffer set to %s bytes",
                 cast(Object[])[ Integer.valueOf(socketBuffer) ]));
     }
 
@@ -100,7 +100,7 @@ public class WebServer
             context.setAttribute("remote_ip_address", remoteIpAddress);
             try
             {
-                WebServer.log.debug_(String.format(
+                WebServer.log.debug_(String_format(
                         "Incoming connection from %s",
                         cast(Object[])[ remoteIpAddress ]));
                 while ((!Thread.interrupted()) && (conn.isOpen()))
@@ -213,7 +213,7 @@ public class WebServer
                     }
                     catch (IOException e)
                     {
-                        WebServer.log.error(String.format(
+                        WebServer.log.error(String_format(
                                 "I/O error initialising connection thread: %s",
                                 cast(Object[])[ e.getMessage() ]), e);
                     }

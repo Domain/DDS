@@ -26,7 +26,7 @@ public class ProtocolInfo
         Set!(String) result = new LinkedHashSet!(String)();
         foreach (ProtocolAdditionalInfo additionalInfo ; additionalInfos) {
             String additionalInfoField = additionalInfo.buildMediaProtocolInfo(transcoded, live, fileType, durationAvailable);
-            result.add(String.format("%s:%s:%s:%s", cast(Object[])[ protocol, context, mimeType, additionalInfoField ]));
+            result.add(String_format("%s:%s:%s:%s", cast(Object[])[ protocol, context, mimeType, additionalInfoField ]));
         }
         return result;
     }
@@ -36,7 +36,7 @@ public class ProtocolInfo
         Set!(String) result = new LinkedHashSet!(String)();
         foreach (ProtocolAdditionalInfo additionalInfo ; additionalInfos) {
             String additionalInfoField = additionalInfo.buildProfileProtocolInfo(fileType);
-            result.add(String.format("%s:%s:%s:%s", cast(Object[])[ protocol, context, mimeType, additionalInfoField ]));
+            result.add(String_format("%s:%s:%s:%s", cast(Object[])[ protocol, context, mimeType, additionalInfoField ]));
         }
         return result;
     }

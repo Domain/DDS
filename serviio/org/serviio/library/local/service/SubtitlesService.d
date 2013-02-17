@@ -29,9 +29,9 @@ public class SubtitlesService : Service
 			File mediaFile = MediaService.getFile(videoItemId);
 
 			foreach (String extension ; subtitleFileExtensions) {
-				File subtitleFile = new File(mediaFile.getParentFile(), String.format("%s.%s", cast(Object[])[ FileUtils.getFileNameWithoutExtension(mediaFile), extension ]));
+				File subtitleFile = new File(mediaFile.getParentFile(), String_format("%s.%s", cast(Object[])[ FileUtils.getFileNameWithoutExtension(mediaFile), extension ]));
 				if (subtitleFile.exists()) {
-					log.debug_(String.format("Found subtitle file: %s", cast(Object[])[ subtitleFile.toString() ]));
+					log.debug_(String_format("Found subtitle file: %s", cast(Object[])[ subtitleFile.toString() ]));
 					return subtitleFile;
 				}
 			}

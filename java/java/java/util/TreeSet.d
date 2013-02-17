@@ -30,14 +30,14 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
     public this(Collection!T c){
         implMissing( __FILE__, __LINE__ );
     }
-    public this(Comparator c){
+    public this(Comparator!T c){
         implMissing( __FILE__, __LINE__ );
     }
     public this(SortedSet!T){
         implMissing( __FILE__, __LINE__ );
     }
 
-    public bool    add(T o){
+    override public bool    add(T o){
         version(Tango){
             return set.add(o, 0);
         } else { // Phobos
@@ -53,7 +53,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
     //        return false;
     //    }
     //}
-    public bool    addAll(Collection!T c){
+    override public bool    addAll(Collection!T c){
         version(Tango){
             foreach( o; c ){
                 add(o);
@@ -64,14 +64,14 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
             return false;
         }
     }
-    public void   clear(){
+    override public void   clear(){
         version(Tango){
             set.clear();
         } else { // Phobos
             implMissingInPhobos();
         }
     }
-    public bool    contains(T o){
+    override public bool    contains(T o){
         version(Tango){
             return set.containsKey(o);
         } else { // Phobos
@@ -87,7 +87,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
     //        return false;
     //    }
     //}
-    public bool    containsAll(Collection!T c){
+    override public bool    containsAll(Collection!T c){
         version(Tango){
             foreach( o; c ){
                 if( !contains(o) ){
@@ -100,7 +100,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
             return false;
         }
     }
-    public Comparator     comparator(){
+    public Comparator!T     comparator(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
@@ -120,7 +120,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    public bool    isEmpty(){
+    override public bool    isEmpty(){
         version(Tango){
             return set.isEmpty();
         } else { // Phobos
@@ -128,7 +128,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
             return false;
         }
     }
-    public Iterator   iterator(){
+    override public Iterator!T   iterator(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
@@ -136,7 +136,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    public bool    remove(T o){
+    override public bool    remove(T o){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
@@ -148,15 +148,15 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
     //        return false;
     //    }
     //}
-    public bool    removeAll(Collection!T c){
+    override public bool    removeAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public bool    retainAll(Collection!T c){
+    override public bool    retainAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public int    size(){
+    override public int    size(){
         version(Tango){
             return set.size();
         } else { // Phobos
@@ -172,11 +172,11 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    public T[]   toArray(){
+    override public T[]   toArray(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    public T[]   toArray(T[] a){
+    override public T[]   toArray(T[] a){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
@@ -187,7 +187,7 @@ class TreeSet(T) : AbstractSet!T, SortedSet!T {
 
 
     // only for D
-    public int opApply (int delegate(ref T value) dg){
+    override public int opApply (int delegate(ref T value) dg){
         version(Tango){
             int localDg( ref Object key, ref int value ){
                 return dg( key );

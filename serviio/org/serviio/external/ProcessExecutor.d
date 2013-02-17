@@ -128,7 +128,7 @@ public class ProcessExecutor : Thread
                         notifyListenersEnd(Boolean.valueOf(true));
                     }
                 } catch (IllegalThreadStateException e) {
-                    log.error(String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
+                    log.error(String_format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
                 }
             else if (!destroyed) {
                 notifyListenersEnd(Boolean.valueOf(true));
@@ -149,7 +149,7 @@ public class ProcessExecutor : Thread
 
     public void stopProcess(bool success) {
         if ((process !is null) && (!destroyed)) {
-            log.debug_(String.format("Stopping external process: %s", cast(Object[])[ this ]));
+            log.debug_(String_format("Stopping external process: %s", cast(Object[])[ this ]));
             ProcessUtils.destroy(process);
             destroyed = true;
             closeStreams();
@@ -216,7 +216,7 @@ public class ProcessExecutor : Thread
         newEnv.put("HOMEDRIVE", tempPath[0]);
         newEnv.put("HOMEPATH", tempPath[1]);
         if (log.isTraceEnabled()) {
-            log.trace(String.format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
+            log.trace(String_format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
         }
         return newEnv;
     }

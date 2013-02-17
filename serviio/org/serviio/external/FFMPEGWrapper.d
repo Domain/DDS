@@ -67,7 +67,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
 
-        log.debug_(String.format("Invoking FFMPEG to check if it exists of path %s", cast(Object[])[ FFmpegCLBuilder.executablePath ]));
+        log.debug_(String_format("Invoking FFMPEG to check if it exists of path %s", cast(Object[])[ FFmpegCLBuilder.executablePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false);
         executeSynchronously(executor);
         bool success = (executor.isSuccess()) && (executor.getResults().size() > 5);
@@ -88,7 +88,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         addInputFileOptions(filePath, context, builder);
         builder.inFile(fixFilePath(filePath, context.isLocalContent()));
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve media information for file: %s", cast(Object[])[ filePath ]));
+        log.debug_(String_format("Invoking FFMPEG to retrieve media information for file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, Long.valueOf(context.isLocalContent() ? LOCAL_FILE_TIMEOUT : ONLINE_FILE_TIMEOUT));
         executeSynchronously(executor);
         return executor.getResults();
@@ -97,12 +97,12 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     public static byte[] readVideoThumbnail(File f, Integer videoLength, VideoCodec vCodec, VideoContainer vContainer)
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
-        builder.inFile(String.format("%s", cast(Object[])[ f.getAbsolutePath() ]));
+        builder.inFile(String_format("%s", cast(Object[])[ f.getAbsolutePath() ]));
 
         addTimePosition(videoLength, (vCodec != VideoCodec.MPEG2) && (vContainer != VideoContainer.MPEG2TS), builder);
         builder.outFileOptions(cast(String[])[ "-an", "-frames:v", "1", "-f", "image2" ]).outFile("pipe:");
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve thumbnail for file: %s", cast(Object[])[ f.getAbsolutePath() ]));
+        log.debug_(String_format("Invoking FFMPEG to retrieve thumbnail for file: %s", cast(Object[])[ f.getAbsolutePath() ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(160000L));
         executeSynchronously(executor);
         ByteArrayOutputStream out_ = cast(ByteArrayOutputStream)executor.getOutputStream();
@@ -117,7 +117,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
 
         addInputFileOptions(filePath, context, builder);
-        builder.inFile(String.format("%s", cast(Object[])[ fixFilePath(filePath, context.isLocalContent()) ]));
+        builder.inFile(String_format("%s", cast(Object[])[ fixFilePath(filePath, context.isLocalContent()) ]));
         builder.outFileOptions(cast(String[])[ "-frames:v", "1", "-c:v", "copy", "-f", "h264" ]);
         if (container != VideoContainer.MPEG2TS) {
             builder.outFileOptions(cast(String[])[ "-bsf:v", "h264_mp4toannexb" ]);
@@ -125,7 +125,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         builder.outFileOptions(cast(String[])[ "-an" ]);
         builder.outFile("pipe:");
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve H264 header for file: %s", cast(Object[])[ filePath ]));
+        log.debug_(String_format("Invoking FFMPEG to retrieve H264 header for file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, Long.valueOf(context.isLocalContent() ? LOCAL_FILE_TIMEOUT : ONLINE_FILE_TIMEOUT));
         executeSynchronously(executor);
         ByteArrayOutputStream out_ = cast(ByteArrayOutputStream)executor.getOutputStream();
@@ -187,7 +187,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         builder.outFileOptions(cast(String[])[ "-f", tDef.getTargetContainer().getFFmpegValue() ]);
         builder.outFile(getOutputFile(tmpFile));
 
-        log.debug_(String.format("Invoking FFmpeg to transcode video file: %s", cast(Object[])[ sourceFileName ]));
+        log.debug_(String_format("Invoking FFmpeg to transcode video file: %s", cast(Object[])[ sourceFileName ]));
         return executeTranscodingProcess(tmpFile, listener, builder.build());
     }
 
@@ -201,7 +201,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         {
             Integer itemBitrate = mediaItem.getBitrate() !is null ? mediaItem.getBitrate() : null;
             Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-            builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", [ audioBitrate ]) ]);
+            builder.outFileOptions(cast(String[])[ "-b:a", String_format("%sk", [ audioBitrate ]) ]);
         }
 
         Integer frequency = getAudioFrequency(tDef, mediaItem);
@@ -215,7 +215,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
         builder.outFileOptions(cast(String[])[ "-f", tDef.getTargetContainer().getFFmpegContainerEncoderName() ]).outFile(getOutputFile(tmpFile));
 
-        log.debug_(String.format("Invoking FFmpeg to transcode audio file: %s", cast(Object[])[ sourceFileName ]));
+        log.debug_(String_format("Invoking FFmpeg to transcode audio file: %s", cast(Object[])[ sourceFileName ]));
         return executeTranscodingProcess(tmpFile, listener, builder.build());
     }
 
@@ -245,7 +245,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
         addInputFileOptions(sourceFilePath, context, builder);
-        builder.inFile(String.format("%s", cast(Object[])[ sourceFilePath ])).outFileOptions(cast(String[])[ "-y" ]);
+        builder.inFile(String_format("%s", cast(Object[])[ sourceFilePath ])).outFileOptions(cast(String[])[ "-y" ]);
         return builder;
     }
 
@@ -265,10 +265,10 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     private static void mapStreams(Video mediaItem, FFmpegCLBuilder builder)
     {
         if (mediaItem.getVideoStreamIndex() !is null) {
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", [ mediaItem.getVideoStreamIndex() ]) ]);
+            builder.outFileOptions(cast(String[])[ "-map", String_format("0:%s", [ mediaItem.getVideoStreamIndex() ]) ]);
         }
         if ((mediaItem.getAudioCodec() !is null) && (mediaItem.getAudioStreamIndex() !is null))
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", [ mediaItem.getAudioStreamIndex() ]) ]);
+            builder.outFileOptions(cast(String[])[ "-map", String_format("0:%s", [ mediaItem.getAudioStreamIndex() ]) ]);
     }
 
     private static void addTimeConstraintParameters(Double timeOffset, Double timeDuration, FFmpegCLBuilder builder)
@@ -346,7 +346,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         if (resizeDefinition.changed()) {
             if (resizeDefinition.physicalDimensionsChanged())
             {
-                filters.add(String.format("scale=%s:%s", cast(Object[])[ Integer.valueOf(resizeDefinition.contentWidth), Integer.valueOf(resizeDefinition.contentHeight) ]));
+                filters.add(String_format("scale=%s:%s", cast(Object[])[ Integer.valueOf(resizeDefinition.contentWidth), Integer.valueOf(resizeDefinition.contentHeight) ]));
                 if (resizeDefinition.sarChangedToSquarePixels) {
                     filters.add("setsar=1");
                 }
@@ -355,7 +355,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
             {
                 Integer posX = Integer.valueOf(Math.abs(resizeDefinition.width - resizeDefinition.contentWidth) / 2);
                 Integer posY = Integer.valueOf(Math.abs(resizeDefinition.height - resizeDefinition.contentHeight) / 2);
-                filters.add(String.format("pad=%s:%s:%s:%s:black", cast(Object[])[ Integer.valueOf(resizeDefinition.width), Integer.valueOf(resizeDefinition.height), posX, posY ]));
+                filters.add(String_format("pad=%s:%s:%s:%s:black", cast(Object[])[ Integer.valueOf(resizeDefinition.width), Integer.valueOf(resizeDefinition.height), posX, posY ]));
                 filters.add("setdar=4:3");
             }
         }
@@ -384,7 +384,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
             {
                 Integer itemBitrate = mediaItem.getAudioBitrate() !is null ? mediaItem.getAudioBitrate() : null;
                 Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-                builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", [ audioBitrate ]) ]);
+                builder.outFileOptions(cast(String[])[ "-b:a", String_format("%sk", [ audioBitrate ]) ]);
             }
 
             Integer frequency = getAudioFrequency(tDef, mediaItem);
@@ -551,7 +551,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
                 return new Tupple!(Integer, Integer)(Integer.valueOf(Math.round(width.intValue() * sarFloat.floatValue())), height);
             } catch (Exception e) {
             }
-            log.debug_(String.format("File's SAR is not valid: %s", cast(Object[])[ sar ]));
+            log.debug_(String_format("File's SAR is not valid: %s", cast(Object[])[ sar ]));
             return new Tupple!(Integer, Integer)(width, height);
     }
 
@@ -612,7 +612,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         if ((url.startsWith("rtmp")) && (!live))
         {
-            url = String.format("%s buffer=%s", cast(Object[])[ url, Integer.valueOf(RTMP_BUFFER_SIZE) ]);
+            url = String_format("%s buffer=%s", cast(Object[])[ url, Integer.valueOf(RTMP_BUFFER_SIZE) ]);
         }
         return url;
     }
@@ -640,7 +640,8 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     static this()
     {
-        setupMaxChannelsMap();        thumbnailSeekPosition = ApplicationSettings.getIntegerProperty("video_thumbnail_seek_position");
+        setupMaxChannelsMap();
+        thumbnailSeekPosition = ApplicationSettings.getIntegerProperty("video_thumbnail_seek_position");
         defaultAudioBitrate = ApplicationSettings.getIntegerProperty("transcoding_default_audio_bitrate");
         videoQualityFactor = ApplicationSettings.getStringProperty("transcoding_quality_factor");
         log = LoggerFactory.getLogger!(FFMPEGWrapper)();

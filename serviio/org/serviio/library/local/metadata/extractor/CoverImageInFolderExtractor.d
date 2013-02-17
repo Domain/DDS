@@ -61,7 +61,7 @@ public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
 				if (foundFiles.length > 0)
 				{
 					File imageFile = findFileByPriority(foundFiles, regexPatterns);
-					log.debug_(String.format("Found cover image %s", cast(Object[])[ imageFile.getName() ]));
+					log.debug_(String_format("Found cover image %s", cast(Object[])[ imageFile.getName() ]));
 					MetadataFile metadataFile = new MetadataFile(getExtractorType(), FileUtils.getLastModifiedDate(imageFile), imageFile.getName(), mediaFile);
 
 					return metadataFile;
@@ -88,7 +88,7 @@ public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
 				(cast(VideoMetadata)metadata).setCoverImage(image);
 		}
 		catch (ImageReadException e) {
-			throw new InvalidMediaFormatException(String.format("Cannot read cover image %s: %s", cast(Object[])[ imageFile.getName(), e.getMessage() ]));
+			throw new InvalidMediaFormatException(String_format("Cannot read cover image %s: %s", cast(Object[])[ imageFile.getName(), e.getMessage() ]));
 		}
 	}
 

@@ -54,12 +54,12 @@ public class GenreService : Service
 		if (ObjectValidator.isNotEmpty(genreName)) {
 			Genre genre = DAOFactory.getGenreDAO().findGenreByName(genreName);
 			if (genre is null) {
-				log.debug_(String.format("Genre %s not found, creating a new one", cast(Object[])[ genreName ]));
+				log.debug_(String_format("Genre %s not found, creating a new one", cast(Object[])[ genreName ]));
 
 				genre = new Genre(genreName);
 				return Long.valueOf(DAOFactory.getGenreDAO().create(genre));
 			}
-			log.debug_(String.format("Genre %s found", cast(Object[])[ genreName ]));
+			log.debug_(String_format("Genre %s found", cast(Object[])[ genreName ]));
 			return genre.getId();
 		}
 

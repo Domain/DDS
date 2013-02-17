@@ -32,12 +32,13 @@ import org.slf4j.LoggerFactory;
 
 public class StatusServerResource : AbstractServerResource , StatusResource
 {
-    static /*final Pattern*/enum ipAddressPattern = Pattern.compile("\\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
+    static immutable Pattern ipAddressPattern;
 
     private static immutable Logger log;
 
     static this()
     {
+        ipAddressPattern = Pattern.compile("\\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
         log = LoggerFactory.getLogger!(StatusServerResource)();
     }
 

@@ -35,7 +35,7 @@ public class OutputBytesReader : OutputReader
                 outputStream.write(buf, 0, n);
         }
         catch (IOException e) {
-            log.warn(String.format("Error reading bytes stream from external process: %s" + e.getMessage(), new Object[0]));
+            log.warn(String_format("Error reading bytes stream from external process: %s" + e.getMessage(), new Object[0]));
         }
     }
 

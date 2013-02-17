@@ -32,7 +32,7 @@ public class UPnPIconRequestHandler : AbstractDescriptionRequestHandler
         String iconName = requestFields[0];
 
         if (iconName !is null) {
-            log.debug_(String.format("UPnP icon request received for icon %s", cast(Object[])[ iconName ]));
+            log.debug_(String_format("UPnP icon request received for icon %s", cast(Object[])[ iconName ]));
             IconDescription id = cast(IconDescription)icons.get(iconName);
             if (id !is null) {
                 byte[] iconBytes = FileUtils.readFileBytes(getClass().getResourceAsStream("/org/serviio/upnp/" + id.getFileName()));
@@ -44,7 +44,7 @@ public class UPnPIconRequestHandler : AbstractDescriptionRequestHandler
         }
 
         response.setStatusCode(404);
-        log.debug_(String.format("Icon with id %s doesn't exist, sending back 404 error", cast(Object[])[ iconName ]));
+        log.debug_(String_format("Icon with id %s doesn't exist, sending back 404 error", cast(Object[])[ iconName ]));
     }
 
     static this()

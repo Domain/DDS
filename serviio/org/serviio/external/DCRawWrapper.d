@@ -27,7 +27,7 @@ public class DCRawWrapper : AbstractExecutableWrapper
         if (present.get() is null) {
             DCRawCLBuilder builder = new DCRawCLBuilder();
 
-            log.debug_(String.format("Invoking DCRAW to check if it exists of path %s", cast(Object[])[ DCRawCLBuilder.executablePath ]));
+            log.debug_(String_format("Invoking DCRAW to check if it exists of path %s", cast(Object[])[ DCRawCLBuilder.executablePath ]));
             ProcessExecutor executor = processExecutorForTextOutput(builder);
             executeSynchronously(executor);
             present.set(executor.isSuccess() && (executor.getResults().size() > 5));
@@ -43,7 +43,7 @@ public class DCRawWrapper : AbstractExecutableWrapper
         builder.inFileOptions(cast(String[])[ "-c" ]);
         builder.inFileOptions(cast(String[])[ "-e" ]);
 
-        log.debug_(String.format("Invoking DCRAW to retrieve thumbnail from file: %s", cast(Object[])[ filePath ]));
+        log.debug_(String_format("Invoking DCRAW to retrieve thumbnail from file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(10000L));
         executeSynchronously(executor);
         ByteArrayOutputStream out_ = cast(ByteArrayOutputStream)executor.getOutputStream();

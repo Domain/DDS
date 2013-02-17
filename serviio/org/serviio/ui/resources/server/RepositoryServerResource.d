@@ -141,7 +141,7 @@ public class RepositoryServerResource : AbstractServerResource , RepositoryResou
                 repoToSave.setId(repository.getId());
                 repoToSave.setAccessGroupIds(fixAccessGroups(repository.getAccessGroupIds()));
                 reposToSave.add(repoToSave);
-                log.debug_(String.format("Updating repository with values: %s", cast(Object[])[ repoToSave.toString() ]));
+                log.debug_(String_format("Updating repository with values: %s", cast(Object[])[ repoToSave.toString() ]));
             }
             bool mediaItemsModified = RepositoryService.saveRepositories(reposToSave);
 
@@ -178,7 +178,7 @@ public class RepositoryServerResource : AbstractServerResource , RepositoryResou
                 repoToSave.setEnabled(repository.isEnabled());
                 repoToSave.setAccessGroupIds(fixAccessGroups(repository.getAccessGroupIds()));
                 reposToSave.add(repoToSave);
-                log.debug_(String.format("Updating repository with values: %s", cast(Object[])[ repoToSave.toString() ]));
+                log.debug_(String_format("Updating repository with values: %s", cast(Object[])[ repoToSave.toString() ]));
             }
             OnlineRepositoryService.saveRepositories(reposToSave);
         }
@@ -194,7 +194,7 @@ public class RepositoryServerResource : AbstractServerResource , RepositoryResou
             new URI(urlToCheck);
             return urlString;
         } catch (URISyntaxException e) {
-            log.debug_(String.format("Invalid URL: %s", cast(Object[])[ urlString ]));
+            log.debug_(String_format("Invalid URL: %s", cast(Object[])[ urlString ]));
         }throw new ValidationException(503, Collections.singletonList(urlString));
     }
 
@@ -216,12 +216,12 @@ public class RepositoryServerResource : AbstractServerResource , RepositoryResou
             try {
                 return new URL(fixedUrl);
             } catch (MalformedURLException e) {
-                log.debug_(String.format("Invalid URL: %s", cast(Object[])[ fixedUrl ]));
+                log.debug_(String_format("Invalid URL: %s", cast(Object[])[ fixedUrl ]));
                 throw new ValidationException(503, Collections.singletonList(fixedUrl));
             }
         }
 
-        log.debug_(String.format("Invalid URL of a feed: %s", cast(Object[])[ urlString ]));
+        log.debug_(String_format("Invalid URL of a feed: %s", cast(Object[])[ urlString ]));
         throw new ValidationException(503, Collections.singletonList(urlString));
     }
 

@@ -33,7 +33,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
 	{
 		CoverImage coverImage = retrieveCoverImage(coverImageId);
 
-		log.debug_(String.format("Retrieving Cover image with id %s", cast(Object[])[ coverImageId ]));
+		log.debug_(String_format("Retrieving Cover image with id %s", cast(Object[])[ coverImageId ]));
 
 		ResourceInfo resourceInfo = retrieveResourceInfo(coverImage, selectedVersion, client);
 		DeliveryContainer container = new StreamDeliveryContainer(new ByteArrayInputStream(coverImage.getImageBytes()), resourceInfo);
@@ -44,7 +44,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
 	{
 		CoverImage coverImage = retrieveCoverImage(coverImageId);
 
-		log.debug_(String.format("Retrieving info of Cover image with id %s", cast(Object[])[ coverImageId ]));
+		log.debug_(String_format("Retrieving info of Cover image with id %s", cast(Object[])[ coverImageId ]));
 		return retrieveResourceInfo(coverImage, selectedVersion, client);
 	}
 
@@ -61,7 +61,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
 		if (MediaItem.isLocalMedia(resourceId)) {
 			CoverImage coverImage = MediaService.getCoverImage(resourceId);
 			if (coverImage is null) {
-				throw new FileNotFoundException(String.format("Cover image %s cannot be found", cast(Object[])[ resourceId ]));
+				throw new FileNotFoundException(String_format("Cover image %s cannot be found", cast(Object[])[ resourceId ]));
 			}
 			return coverImage;
 		}
@@ -69,7 +69,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
 		CoverImage coverImage = OnlineItemService.findThumbnail(resourceId);
 		if (coverImage is null)
 		{
-			throw new FileNotFoundException(String.format("Cover image for feed item %s cannot be found", cast(Object[])[ resourceId ]));
+			throw new FileNotFoundException(String_format("Cover image for feed item %s cannot be found", cast(Object[])[ resourceId ]));
 		}
 		return coverImage;
 	}

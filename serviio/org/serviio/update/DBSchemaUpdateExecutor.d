@@ -49,7 +49,7 @@ public class DBSchemaUpdateExecutor
                     String sql = StringUtils.readStreamAsString(DBSchemaUpdateExecutor.class_.getResourceAsStream("/sql/" + scriptFile), "UTF-8");
                     JdbcUtils.executeBatchStatement(sql);
                 } catch (IOException e) {
-                    log.error(String.format("Cannot read script file %s", cast(Object[])[ scriptFile ]));
+                    log.error(String_format("Cannot read script file %s", cast(Object[])[ scriptFile ]));
                 }
             }
             log.info("Cleaning persistent cache");

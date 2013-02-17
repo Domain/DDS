@@ -41,14 +41,14 @@ public class CoverImageService : Service
                 log.debug_("Image successfully resized");
                 if ((requiredRotation !is null) && (!requiredRotation.equals(new Integer(0))))
                 {
-                    log.debug_(String.format("Rotating thumbnail image (%s)", cast(Object[])[ requiredRotation ]));
+                    log.debug_(String_format("Rotating thumbnail image (%s)", cast(Object[])[ requiredRotation ]));
                     resizedImage = ImageUtils.rotateImage(resizedImage.getImageData(), requiredRotation.intValue());
                 }
                 return new CoverImage(resizedImage.getImageData(), "image/jpeg", resizedImage.getWidth().intValue(), resizedImage.getHeight().intValue());
             }
             catch (Throwable e)
             {
-                log.warn(String.format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
+                log.warn(String_format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
                 return null;
             }
         }

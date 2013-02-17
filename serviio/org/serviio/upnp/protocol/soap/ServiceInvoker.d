@@ -202,22 +202,22 @@ public class ServiceInvoker
 				return cast(OperationResult)methodToExecute.invoke(service, methodParams);
 			}
 			catch (IllegalArgumentException e) {
-				log.error(String.format("Illegal parameters passed to operation %s", cast(Object[])[ operation.getOperationName() ]), e);
+				log.error(String_format("Illegal parameters passed to operation %s", cast(Object[])[ operation.getOperationName() ]), e);
 
 				return new OperationResult(InvocationError.INVALID_ARGS);
 			} catch (IllegalAccessException e) {
-				log.error(String.format("Operation %s is inaccessible", cast(Object[])[ operation.getOperationName() ]), e);
+				log.error(String_format("Operation %s is inaccessible", cast(Object[])[ operation.getOperationName() ]), e);
 
 				return new OperationResult(InvocationError.INVALID_ACTION);
 			} catch (InvocationTargetException e) {
-				log.error(String.format("Operation %s threw an exception", cast(Object[])[ operation.getOperationName() ]), e.getTargetException());
+				log.error(String_format("Operation %s threw an exception", cast(Object[])[ operation.getOperationName() ]), e.getTargetException());
 
 				return new OperationResult(InvocationError.ACTION_FAILED);
 			}
 
 		}
 
-		throw new ServiceInvocationException(String.format("Service %s is not registered", cast(Object[])[ serviceName ]));
+		throw new ServiceInvocationException(String_format("Service %s is not registered", cast(Object[])[ serviceName ]));
 	}
 
 	private static Object[] castMethodParameters(Map!(String, String) stringParameters, Method method)
@@ -259,7 +259,7 @@ public class ServiceInvoker
 				}
 				if ((paramAnnotation is null) && (groupAnnotation is null))
 				{
-					throw new RuntimeException(String.format("Parameters of method %s are not properly annotated", cast(Object[])[ method.getName() ]));
+					throw new RuntimeException(String_format("Parameters of method %s are not properly annotated", cast(Object[])[ method.getName() ]));
 				}
 
 				Object castValue = paramValue;
@@ -288,7 +288,12 @@ public class ServiceInvoker
 	private static class SOAPOperationVO
 	{
 		private String operationName;
-		private Map!(String, String) parameters = new HashMap!(String, String)();
+		private Map!(String, String) parameters;
+
+        public this()
+        {
+		    parameters = new HashMap!(String, String)();
+        }
 
 		public String getOperationName() {
 			return operationName;

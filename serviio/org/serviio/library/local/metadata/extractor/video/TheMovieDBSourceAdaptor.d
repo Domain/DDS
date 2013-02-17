@@ -60,7 +60,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
 
                 if (movieNode is null)
                 {
-                    throw new IOException(String.format("Problem retrieving metadata for movie with id %s",
+                    throw new IOException(String_format("Problem retrieving metadata for movie with id %s",
                                                         cast(Object[])[ movieId ]));
                 }
                 Integer numberReturned = Integer.valueOf(Integer.parseInt(XPathUtil.getNodeValue(rootMovieNode,
@@ -68,7 +68,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                                                                                                  namespaceContext)));
                 if (numberReturned.intValue() == 0)
                 {
-                    throw new IOException(String.format("Metadata of movie with id %s (as returned from search) cannot be retrieved",
+                    throw new IOException(String_format("Metadata of movie with id %s (as returned from search) cannot be retrieved",
                                                         cast(Object[])[ movieId ]));
                 }
 
@@ -108,15 +108,15 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                                     ImageInfo imageInfo = Sanselan.getImageInfo(bannerBytes);
                                     ImageDescriptor image = new ImageDescriptor(bannerBytes, imageInfo.getMimeType());
                                     videoMetadata.setCoverImage(image);
-                                    log.debug_(String.format("Retrieved poster: %s", cast(Object[])[ posterURL ]));
+                                    log.debug_(String_format("Retrieved poster: %s", cast(Object[])[ posterURL ]));
                                 }
                                 catch (FileNotFoundException e)
                                 {
-                                    log.warn(String.format("Poster '%s' doesn't exist, will try another one", cast(Object[])[ posterURL ]));
+                                    log.warn(String_format("Poster '%s' doesn't exist, will try another one", cast(Object[])[ posterURL ]));
                                 }
                                 catch (Exception e)
                                 {
-                                    log.warn(String.format("Cannot retrieve movie poster: %s", cast(Object[])[ e.getMessage() ]));
+                                    log.warn(String_format("Cannot retrieve movie poster: %s", cast(Object[])[ e.getMessage() ]));
                                 }
                             }
                         }
@@ -125,7 +125,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
             }
             catch (XPathExpressionException e)
             {
-                throw new IOException(String.format("Metadata XML for movie id %s is corrupt. ", cast(Object[])[ movieId ]));
+                throw new IOException(String_format("Metadata XML for movie id %s is corrupt. ", cast(Object[])[ movieId ]));
             }
         }
         else
@@ -161,13 +161,13 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                 if (matchingMovieNode !is null)
                 {
                     String movieId = XPathUtil.getNodeValue(matchingMovieNode, "id");
-                    log.debug_(String.format("Found a suitable movie match, id = %s", cast(Object[])[ movieId ]));
+                    log.debug_(String_format("Found a suitable movie match, id = %s", cast(Object[])[ movieId ]));
                     return movieId;
                 }
             }
             catch (XPathExpressionException e)
             {
-                throw new IOException(String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
+                throw new IOException(String_format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
             }
         }
         else
@@ -185,13 +185,13 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
         {
             if (ObjectValidator.isNotEmpty(movieName))
             {
-                log.debug_(String.format("Searching for movie '%s' %s (language: %s)",
+                log.debug_(String_format("Searching for movie '%s' %s (language: %s)",
                                          cast(Object[])[ movieName, year !is null ? year : "", languageCode ]));
                 try
                 {
-                    String searchTerm = String.format("%s%s", cast(Object[])[movieName, year !is null ? " " + year : "" ]);
+                    String searchTerm = String_format("%s%s", cast(Object[])[movieName, year !is null ? " " + year : "" ]);
 
-                    String moviesSearchPath = String.format("%sMovie.search/%s/xml/%s/%s", cast(Object[])[
+                    String moviesSearchPath = String_format("%sMovie.search/%s/xml/%s/%s", cast(Object[])[
                         API_BASE_CONTEXT, languageCode, APIKEY, URLEncoder.encode(searchTerm, "UTF-8") ]);
 
                     String searchResultXML = HttpClient.retrieveTextFileFromURL(moviesSearchPath, "UTF-8");
@@ -202,7 +202,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                         Integer numberReturned = Integer.valueOf(Integer.parseInt(XPathUtil.getNodeValue(rootNode,
                                                                                                          "OpenSearchDescription/opensearch:totalResults",
                                                                                                          namespaceContext)));
-                        log.debug_(String.format("Found %s matches", cast(Object[])[ numberReturned ]));
+                        log.debug_(String_format("Found %s matches", cast(Object[])[ numberReturned ]));
                         if (numberReturned.intValue() > 0)
                         {
                             NodeList movieNodes = XPathUtil.getNodeSet(rootNode, "OpenSearchDescription/movies/movie");
@@ -220,7 +220,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                 }
                 catch (Exception e)
                 {
-                    throw new IOException(String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
+                    throw new IOException(String_format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
                 }
             }
         }
@@ -230,11 +230,11 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
     private String getMovieDetails(String movieId)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String.format("Retrieving details of movie (movieId = %s, language = %s)",
+        log.debug_(String_format("Retrieving details of movie (movieId = %s, language = %s)",
                                  cast(Object[])[ movieId, languageCode ]));
         try
         {
-            String movieDetailsPath = String.format("%sMovie.getInfo/%s/xml/%s/%s", cast(Object[])[
+            String movieDetailsPath = String_format("%sMovie.getInfo/%s/xml/%s/%s", cast(Object[])[
                 API_BASE_CONTEXT, languageCode, APIKEY, movieId ]);
             String movieXML = HttpClient.retrieveTextFileFromURL(movieDetailsPath, "UTF-8");
             if ((ObjectValidator.isNotEmpty(movieXML)) && (movieXML.startsWith("<?xml")))
@@ -245,11 +245,11 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(String.format("Cannot retrieve movie details (movieId = %s), file not found", cast(Object[])[ movieId ]));
+            throw new IOException(String_format("Cannot retrieve movie details (movieId = %s), file not found", cast(Object[])[ movieId ]));
         }
         catch (Exception e)
         {
-            throw new IOException(String.format("Cannot retrieve movie details (movieId = %s) : %s", cast(Object[])[ movieId , e.getMessage()]));
+            throw new IOException(String_format("Cannot retrieve movie details (movieId = %s) : %s", cast(Object[])[ movieId , e.getMessage()]));
         }
     }
 

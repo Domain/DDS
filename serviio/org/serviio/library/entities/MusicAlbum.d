@@ -33,7 +33,7 @@ public class MusicAlbum : PersistedEntity
 
     override public String toString()
     {
-        return String.format("MusicAlbum [title=%s, sortTitle=%s]", cast(Object[])[ title, sortTitle ]);
+        return String_format("MusicAlbum [title=%s, sortTitle=%s]", cast(Object[])[ title, sortTitle ]);
     }
 }
 

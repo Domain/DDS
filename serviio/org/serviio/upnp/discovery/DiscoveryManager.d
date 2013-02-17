@@ -46,7 +46,7 @@ public class DiscoveryManager
 
     public void deviceAvailable()
     {
-        log.debug_(String.format("UPNP device %s (%s) is available", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
+        log.debug_(String_format("UPNP device %s (%s) is available", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
 
         discoverySearchListenerThread = ServiioThreadFactory.getInstance().newThread(discoverySSDPMessageListener, "DiscoverySSDPMessageListener", true);
         discoverySearchListenerThread.setPriority(10);
@@ -66,7 +66,7 @@ public class DiscoveryManager
     }
 
     public void deviceUnavailable() {
-        log.debug_(String.format("UPNP device %s (%s) is unavailable", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
+        log.debug_(String_format("UPNP device %s (%s) is unavailable", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
         try
         {
             RendererManager.getInstance().stopExpirationChecker();

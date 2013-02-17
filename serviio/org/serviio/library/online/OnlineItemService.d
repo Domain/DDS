@@ -53,7 +53,7 @@ public class OnlineItemService
             }
             return null;
         } catch (IOException e) {
-            log.warn(String.format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
+            log.warn(String_format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
         }return null;
     }
 

@@ -49,7 +49,7 @@ public class MediaUtils
                     validFrameRate = "23.976";
             }
             catch (NumberFormatException nfe) {
-                log.warn(String.format("Cannot get valid FPS of video file: %s", cast(Object[])[ fps ]));
+                log.warn(String_format("Cannot get valid FPS of video file: %s", cast(Object[])[ fps ]));
             }
         }
         return validFrameRate;

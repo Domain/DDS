@@ -1,6 +1,7 @@
 module org.serviio.cache.AbstractCacheDecorator;
 
 import java.lang.String;
+import java.lang.RuntimeException;
 import org.apache.jcs.JCS;
 import org.apache.jcs.access.exception.CacheException;
 import org.slf4j.Logger;
@@ -9,7 +10,7 @@ import org.serviio.cache.CacheDecorator;
 
 public abstract class AbstractCacheDecorator : CacheDecorator
 {
-    protected immutable Logger log;
+    protected Logger log;
     protected JCS cache;
     protected String regionName;
 
@@ -34,9 +35,9 @@ public abstract class AbstractCacheDecorator : CacheDecorator
         try
         {
             cache.clear();
-            log.debug_(String.format("Cleared cache (%s)", cast(Object[])[ regionName ]));
+            log.debug_(String_format("Cleared cache (%s)", cast(Object[])[ regionName ]));
         } catch (CacheException e) {
-            log.warn(String.format("Could not clean local cache (%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
+            log.warn(String_format("Could not clean local cache (%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
         }
     }
 

@@ -59,7 +59,7 @@ public class EmbeddedMetadataExtractor : MetadataExtractor
     if ((mediaFile.exists()) && (mediaFile.canRead())) {
       return new MetadataFile(getExtractorType(), FileUtils.getLastModifiedDate(mediaFile), null, mediaFile);
     }
-    throw new IOException(String.format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
+    throw new IOException(String_format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
   }
 
   override protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
@@ -114,7 +114,7 @@ public class EmbeddedMetadataExtractor : MetadataExtractor
       {
         strategy = new OGGExtractionStrategy();
       }
-      else throw new InvalidMediaFormatException(String.format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
+      else throw new InvalidMediaFormatException(String_format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
 
       strategy.extractMetadata(cast(AudioMetadata)metadata, audioFile, header, tag);
     } catch (CannotReadException e) {

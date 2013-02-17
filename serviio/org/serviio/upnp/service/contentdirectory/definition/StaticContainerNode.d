@@ -77,7 +77,7 @@ public class StaticContainerNode : ContainerNode , StaticDefinitionNode
     {
         String parentsTitle = Definition.instance().getContentOnlyParentTitles(id);
         if (parentsTitle !is null) {
-            return String.format("%s %s", cast(Object[])[ getTitle(), parentsTitle ]);
+            return String_format("%s %s", cast(Object[])[ getTitle(), parentsTitle ]);
         }
         return getTitle();
     }

@@ -68,7 +68,7 @@ public class PluginCompilerThread : Thread
             log.info("Finished looking for plugins");
         }
         else {
-            log.warn(String.format("Plugins folder '%s' does not exist. No plugins will be compiled.", cast(Object[])[ pluginsFolder ]));
+            log.warn(String_format("Plugins folder '%s' does not exist. No plugins will be compiled.", cast(Object[])[ pluginsFolder ]));
         }
     }
 
@@ -90,7 +90,7 @@ public class PluginCompilerThread : Thread
         if (!ObjectValidator.isEmpty(System.getProperty("plugins.location"))) {
             pluginFolder = new File(System.getProperty("plugins.location"), pluginFolderName);
         }
-        log.info(String.format("Looking for plugins at %s", cast(Object[])[ pluginFolder.getPath() ]));
+        log.info(String_format("Looking for plugins at %s", cast(Object[])[ pluginFolder.getPath() ]));
         return pluginFolder;
     }
 
@@ -115,7 +115,7 @@ public class PluginCompilerThread : Thread
     private void compilePluginFile(File pluginFile)
     {
         try {
-            log.debug_(String.format("Starting plugin %s compilation", cast(Object[])[ pluginFile.getName() ]));
+            log.debug_(String_format("Starting plugin %s compilation", cast(Object[])[ pluginFile.getName() ]));
             Class!(Object) pluginClass = gcl.parseClass(new GroovyCodeSource(pluginFile), false);
             if (AbstractUrlExtractor.class_.isAssignableFrom(pluginClass)) {
                 bool feedPlugin = true;
@@ -131,17 +131,17 @@ public class PluginCompilerThread : Thread
                 }
                 seenFilesCache.put(pluginFile, FileUtils.getLastModifiedDate(pluginFile));
                 OnlineLibraryManager.getInstance().removeFeedFromCache(pluginInstance);
-                log.info(String.format("Added %s plugin %s (%s), version: %d", cast(Object[])[ feedPlugin ? "Feed" : "Web Resouce", pluginInstance.getExtractorName(), pluginFile.getName(), Integer.valueOf(pluginInstance.getVersion()) ]));
+                log.info(String_format("Added %s plugin %s (%s), version: %d", cast(Object[])[ feedPlugin ? "Feed" : "Web Resouce", pluginInstance.getExtractorName(), pluginFile.getName(), Integer.valueOf(pluginInstance.getVersion()) ]));
             } else {
-                log.warn(String.format("Groovy class %s (%s) doesn't extend %s, it will not be used", cast(Object[])[ pluginClass.getName(), pluginFile.getName(), FeedItemUrlExtractor.class_.getName() ]));
+                log.warn(String_format("Groovy class %s (%s) doesn't extend %s, it will not be used", cast(Object[])[ pluginClass.getName(), pluginFile.getName(), FeedItemUrlExtractor.class_.getName() ]));
             }
         }
         catch (CompilationFailedException e) {
-            log.warn(String.format("Plugin %s failed to compile: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
+            log.warn(String_format("Plugin %s failed to compile: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
         } catch (IOException e) {
-            log.warn(String.format("Plugin %s failed to load: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
+            log.warn(String_format("Plugin %s failed to load: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
         } catch (Exception e) {
-            log.warn(String.format("Unexpected error during adding plugin %s: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]), e);
+            log.warn(String_format("Unexpected error during adding plugin %s: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]), e);
         }
     }
 

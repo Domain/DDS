@@ -44,7 +44,7 @@ public class Person : PersistedEntity
 
     override public String toString()
     {
-        return String.format("Person [name=%s, sortName=%s]", cast(Object[])[ name, sortName ]);
+        return String_format("Person [name=%s, sortName=%s]", cast(Object[])[ name, sortName ]);
     }
 
     public static enum RoleType

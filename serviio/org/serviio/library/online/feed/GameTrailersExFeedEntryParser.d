@@ -29,7 +29,7 @@ public class GameTrailersExFeedEntryParser : FeedEntryParser
 					ImageDescriptor thumbnail = new ImageDescriptor(new URL(mod.getThumbnailUrl()));
 					item.setThumbnail(thumbnail);
 				} catch (MalformedURLException e) {
-					log.debug_(String.format("Invalid thumbnail URL: %s. Message: %s", cast(Object[])[ mod.getThumbnailUrl(), e.getMessage() ]));
+					log.debug_(String_format("Invalid thumbnail URL: %s. Message: %s", cast(Object[])[ mod.getThumbnailUrl(), e.getMessage() ]));
 				}
 			}
 

@@ -77,7 +77,7 @@ public class Client
 
     override public String toString()
     {
-        return String.format("IPAddress=%s, Profile=%s", cast(Object[])[ ipAddress, rendererProfile ]);
+        return String_format("IPAddress=%s, Profile=%s", cast(Object[])[ ipAddress, rendererProfile ]);
     }
 }
 

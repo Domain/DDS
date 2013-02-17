@@ -78,14 +78,14 @@ public abstract class AbstractUrlExtractor
     }
 
     protected final void log(String message) {
-        logger.debug_(String.format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
+        logger.debug_(String_format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
     }
 
     protected final String generateMAC(String text, String salt, String algorithm) {
         try {
             return SecurityUtils.generateMacAsHex(salt, text, algorithm);
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Error generating MAC: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(String_format("Error generating MAC: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -97,7 +97,7 @@ public abstract class AbstractUrlExtractor
         try {
             return SecurityUtils.decrypt(key, text, algorithm);
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(String_format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -105,7 +105,7 @@ public abstract class AbstractUrlExtractor
         try {
             return SecurityUtils.decryptAsHex(key, text, algorithm);
         } catch (Exception e) {
-            throw new RuntimeException(String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(String_format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 

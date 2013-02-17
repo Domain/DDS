@@ -69,7 +69,7 @@ public class LocalAddressResolverStrategy
             return InetAddress.getByName(address);
         }
         catch (UnknownHostException e) {
-            log.warn(String.format("Cannot resolve IP address %s, will try other means", cast(Object[])[ address ]));
+            log.warn(String_format("Cannot resolve IP address %s, will try other means", cast(Object[])[ address ]));
         }
         return null;
     }

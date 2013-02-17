@@ -16,11 +16,12 @@ public class ITunesRssModuleImpl : ModuleImpl, ITunesRssModule
 	private Date releaseDate;
 	private String name;
 	private String artist;
-	private List!(Image) images = new ArrayList!(Image)();
+	private List!(Image) images;
 	private Integer duration;
 
 	public this()
 	{
+	    images = new ArrayList!(Image)();
 		super(ITunesRssModule.class_, "http://itunes.apple.com/rss");
 	}
 

@@ -113,6 +113,10 @@ String String_valueOf( in wchar[] wstr ){
     }
 }
 
+String String_format(Char, Args...)(in Char[] fmt, Args args){
+    return std.string.format(fmt, args);
+}
+
 int length( String str ){
     return str.length;
 }

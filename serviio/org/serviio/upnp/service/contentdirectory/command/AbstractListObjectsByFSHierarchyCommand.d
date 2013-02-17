@@ -123,7 +123,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
 				List!(Resource) res = ResourceValuesBuilder.buildResources(item, rendererProfile);
 				return DirectoryObjectBuilder.createInstance(itemClassType, values, res, itemId);
 			}
-			throw new ObjectNotFoundException(String.format("MediaItem with id %s not found in CDS", cast(Object[])[ itemId ]));
+			throw new ObjectNotFoundException(String_format("MediaItem with id %s not found in CDS", cast(Object[])[ itemId ]));
 		}
 
 		Long folderId = getFolderId();
@@ -134,7 +134,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
 				Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(folder, objectId, getRecursiveParentId(objectId), objectType, folder.getName(), rendererProfile, accessGroup);
 				return DirectoryObjectBuilder.createInstance(containerClassType, values, null, folderId);
 			}
-			throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
+			throw new ObjectNotFoundException(String_format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
 		}
 
 		Long repositoryId = getRepositoryId();
@@ -143,7 +143,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
 			Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(repository, objectId, Definition.instance().getParentNodeId(objectId), objectType, getRepositoryName(repository), rendererProfile, accessGroup);
 			return DirectoryObjectBuilder.createInstance(containerClassType, values, null, repositoryId);
 		}
-		throw new ObjectNotFoundException(String.format("Repository with id %s not found in CDS", cast(Object[])[ objectId ]));
+		throw new ObjectNotFoundException(String_format("Repository with id %s not found in CDS", cast(Object[])[ objectId ]));
 	}
 
 	public int retrieveItemCount()

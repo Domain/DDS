@@ -91,7 +91,7 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
 		}
 		catch (XPathExpressionException e)
 		{
-			throw new InvalidMediaFormatException(String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
+			throw new InvalidMediaFormatException(String_format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
 		} finally {
 			FileUtils.closeQuietly(xmlStream);
 		}
@@ -99,7 +99,7 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
 
 	private bool validateMyMoviesFile(File xmlFile)
 	{
-		log.debug_(String.format("Checking if file '%s' is a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+		log.debug_(String_format("Checking if file '%s' is a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
 		InputStream xmlStream = null;
 		try {
 			xmlStream = new FileInputStream(xmlFile);
@@ -107,16 +107,16 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
 			if (rootNode !is null) {
 				Node titleNode = XPathUtil.getNode(rootNode, "Title");
 				if (titleNode !is null) {
-					log.debug_(String.format("File '%s' is a valid MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+					log.debug_(String_format("File '%s' is a valid MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
 					return true;
 				}
 			}
-			log.debug_(String.format("File '%s' is not a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+			log.debug_(String_format("File '%s' is not a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
 			return false;
 		}
 		catch (XPathExpressionException e)
 		{
-			log.error(String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
+			log.error(String_format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
 			return false;
 		} finally {
 			FileUtils.closeQuietly(xmlStream);

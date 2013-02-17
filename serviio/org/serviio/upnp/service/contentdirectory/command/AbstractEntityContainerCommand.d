@@ -57,7 +57,7 @@ public abstract class AbstractEntityContainerCommand(E : PersistedEntity) : Abst
 			Map!(ClassProperties, Object) values = generateValuesForEntity(entity, objectId, Definition.instance().getParentNodeId(objectId), getContainerTitle(entity));
 			return cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, entity.getId());
 		}
-		throw new ObjectNotFoundException(String.format("Object with id %s not found in CDS", cast(Object[])[ objectId ]));
+		throw new ObjectNotFoundException(String_format("Object with id %s not found in CDS", cast(Object[])[ objectId ]));
 	}
 
 	protected abstract List!(E) retrieveEntityList();

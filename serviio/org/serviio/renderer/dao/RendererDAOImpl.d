@@ -32,7 +32,7 @@ public class RendererDAOImpl : RendererDAO
 		if ((newInstance is null) || (ObjectValidator.isEmpty(newInstance.getUuid()))) {
 			throw new InvalidArgumentException("Cannot create Renderer. Required data is missing.");
 		}
-		log.debug_(String.format("Creating a new Renderer (uuid = %s)", cast(Object[])[ newInstance.getUuid() ]));
+		log.debug_(String_format("Creating a new Renderer (uuid = %s)", cast(Object[])[ newInstance.getUuid() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -48,7 +48,7 @@ public class RendererDAOImpl : RendererDAO
 			JdbcUtils.setLongValueOnStatement(ps, 8, newInstance.getAccessGroupId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot create Renderer with uuid %s", cast(Object[])[ newInstance.getUuid() ]), e);
+			throw new PersistenceException(String_format("Cannot create Renderer with uuid %s", cast(Object[])[ newInstance.getUuid() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -57,7 +57,7 @@ public class RendererDAOImpl : RendererDAO
 
 	public void delete_(String uuid)
 	{
-		log.debug_(String.format("Deleting a Renderer (uuid = %s)", cast(Object[])[ uuid ]));
+		log.debug_(String_format("Deleting a Renderer (uuid = %s)", cast(Object[])[ uuid ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -66,7 +66,7 @@ public class RendererDAOImpl : RendererDAO
 			ps.setString(1, uuid);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot delete Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
+			throw new PersistenceException(String_format("Cannot delete Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -84,7 +84,7 @@ public class RendererDAOImpl : RendererDAO
 			ResultSet rs = ps.executeQuery();
 			return mapSingleResult(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
+			throw new PersistenceException(String_format("Cannot read Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -96,7 +96,7 @@ public class RendererDAOImpl : RendererDAO
 		if ((transientObject is null) || (transientObject.getUuid() is null) || (transientObject.getIpAddress() is null)) {
 			throw new InvalidArgumentException("Cannot update Renderer. Required data is missing.");
 		}
-		log.debug_(String.format("Updating Renderer (uuid = %s, ipAddress = %s)", cast(Object[])[ transientObject.getUuid(), transientObject.getIpAddress() ]));
+		log.debug_(String_format("Updating Renderer (uuid = %s, ipAddress = %s)", cast(Object[])[ transientObject.getUuid(), transientObject.getIpAddress() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -113,7 +113,7 @@ public class RendererDAOImpl : RendererDAO
 			ps.setString(8, transientObject.getUuid());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot update Renderer with uuid %s", cast(Object[])[ transientObject.getUuid() ]), e);
+			throw new PersistenceException(String_format("Cannot update Renderer with uuid %s", cast(Object[])[ transientObject.getUuid() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -121,7 +121,7 @@ public class RendererDAOImpl : RendererDAO
 	}
 
 	public List!(Renderer) findByIPAddress(String ipAddress) {
-		log.debug_(String.format("Reading a Renderer with ip address %s", cast(Object[])[ ipAddress ]));
+		log.debug_(String_format("Reading a Renderer with ip address %s", cast(Object[])[ ipAddress ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -131,7 +131,7 @@ public class RendererDAOImpl : RendererDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read Renderer with ip address %s", cast(Object[])[ ipAddress ]), e);
+			throw new PersistenceException(String_format("Cannot read Renderer with ip address %s", cast(Object[])[ ipAddress ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);

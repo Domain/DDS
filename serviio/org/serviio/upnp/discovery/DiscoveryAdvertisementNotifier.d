@@ -58,7 +58,7 @@ public class DiscoveryAdvertisementNotifier : Multicaster , Runnable
 
                     long delay = aliveSentCounter < 3 ? INITIAL_ADV_DELAY : NumberUtils.getRandomInInterval(advertisementDuration * 1000 / 10, advertisementDuration * 1000 / 7);
                     delay -= sendDuration;
-                    log.debug_(String.format("Will advertise again in %s (advertisement duration is %s sec.)", cast(Object[])[ DateUtils.timeToHHMMSS(delay), Integer.valueOf(advertisementDuration) ]));
+                    log.debug_(String_format("Will advertise again in %s (advertisement duration is %s sec.)", cast(Object[])[ DateUtils.timeToHHMMSS(delay), Integer.valueOf(advertisementDuration) ]));
 
                     ThreadUtils.currentThreadSleep(Math.max(0L, delay));
                 }
@@ -81,7 +81,7 @@ public class DiscoveryAdvertisementNotifier : Multicaster , Runnable
     {
         Set!(NetworkInterface) ifaces = getAvailableNICs();
         bool sent = false;
-        log.debug_(String.format("Found %s network interfaces to advertise on", cast(Object[])[ Integer.valueOf(ifaces.size()) ]));
+        log.debug_(String_format("Found %s network interfaces to advertise on", cast(Object[])[ Integer.valueOf(ifaces.size()) ]));
         foreach (NetworkInterface iface ; ifaces) {
             try {
                 sendAliveToSingleInterface(iface);
@@ -123,11 +123,11 @@ public class DiscoveryAdvertisementNotifier : Multicaster , Runnable
                 socket = MultiCastUtils.startMultiCastSocketForSending(multicastInterface, address, 32);
 
                 if ((socket !is null) && (socket.isBound())) {
-                    log.debug_(String.format("Multicasting SSDP alive using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
+                    log.debug_(String_format("Multicasting SSDP alive using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
 
                     List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageBuilderFactory.SSDPMessageType.ALIVE).generateSSDPMessages(Integer.valueOf(advertisementDuration), null);
 
-                    log.debug_(String.format("Sending %s 'alive' messages describing device %s", cast(Object[])[ Integer.valueOf(messages.size()), device.getUuid() ]));
+                    log.debug_(String_format("Sending %s 'alive' messages describing device %s", cast(Object[])[ Integer.valueOf(messages.size()), device.getUuid() ]));
 
                     foreach (String message ; messages)
                         for (int i = 0; i < advertisementSendCount; i++)
@@ -155,7 +155,7 @@ public class DiscoveryAdvertisementNotifier : Multicaster , Runnable
             {
                 socket = MultiCastUtils.startMultiCastSocketForSending(multicastInterface, address, 32);
                 if ((socket !is null) && (socket.isBound())) {
-                    log.debug_(String.format("Multicasting SSDP byebye using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface), address.getHostName(), Integer.valueOf(socket.getSoTimeout()) ]));
+                    log.debug_(String_format("Multicasting SSDP byebye using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface), address.getHostName(), Integer.valueOf(socket.getSoTimeout()) ]));
 
                     List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageBuilderFactory.SSDPMessageType.BYEBYE).generateSSDPMessages(null, null);
 

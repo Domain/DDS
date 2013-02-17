@@ -9,4 +9,10 @@ public class ResultSet
     {
         implMissing();
     }
+
+    public bool next()
+    {
+        implMissing();
+        return false;
+    }
 }

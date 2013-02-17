@@ -51,7 +51,7 @@ public class OutputTextReader : OutputReader
                 }
         }
         catch (IOException e) {
-            log.warn(String.format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
+            log.warn(String_format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
         } finally {
             if (br !is null)
                 try {

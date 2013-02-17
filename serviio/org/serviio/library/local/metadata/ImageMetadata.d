@@ -116,7 +116,7 @@ public class ImageMetadata : LocalItemMetadata
 
   override public String toString()
   {
-    return String.format("ImageMetadata [title=%s, date=%s, filePath=%s, fileSize=%s, container=%s, width=%s, height=%s, colorDepth=%s, sampling=%s]", cast(Object[])[ title, date, filePath, Long.valueOf(fileSize), container, width, height, colorDepth, chromaSubsampling ]);
+    return String_format("ImageMetadata [title=%s, date=%s, filePath=%s, fileSize=%s, container=%s, width=%s, height=%s, colorDepth=%s, sampling=%s]", cast(Object[])[ title, date, filePath, Long.valueOf(fileSize), container, width, height, colorDepth, chromaSubsampling ]);
   }
 }
 

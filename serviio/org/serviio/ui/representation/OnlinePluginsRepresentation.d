@@ -8,7 +8,12 @@ import org.serviio.ui.representation.OnlinePlugin;
 public class OnlinePluginsRepresentation
 {
     //@XStreamImplicit
-    private Set!(OnlinePlugin) plugins = new TreeSet!(OnlinePlugin)();
+    private Set!(OnlinePlugin) plugins;
+
+    public this()
+    {
+        plugins = new TreeSet!(OnlinePlugin)();
+    }
 
     public Set!(OnlinePlugin) getPlugins()
     {

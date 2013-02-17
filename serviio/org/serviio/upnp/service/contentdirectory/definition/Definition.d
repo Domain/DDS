@@ -36,7 +36,7 @@ public class Definition
 			try {
 				_instance = ContentDirectoryDefinitionParser.parseDefinition(definitionStream);
 			} catch (ContentDirectoryDefinitionException e) {
-				throw new RuntimeException(String.format("Cannot initialize ContentDirectory service: %s", cast(Object[])[ e.getMessage() ]), e);
+				throw new RuntimeException(String_format("Cannot initialize ContentDirectory service: %s", cast(Object[])[ e.getMessage() ]), e);
 			}
 		}
 		return _instance;
@@ -139,7 +139,7 @@ public class Definition
 				}
 				if (parentTitles.size() > 0) {
 					Collections.reverse(parentTitles);
-					String parentsTitle = String.format("[%s]", cast(Object[])[ CollectionUtils.listToCSV(parentTitles, "/", true) ]);
+					String parentsTitle = String_format("[%s]", cast(Object[])[ CollectionUtils.listToCSV(parentTitles, "/", true) ]);
 					return parentsTitle;
 				}
 			}

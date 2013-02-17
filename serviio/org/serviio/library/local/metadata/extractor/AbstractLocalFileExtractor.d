@@ -57,7 +57,7 @@ public abstract class AbstractLocalFileExtractor : MetadataExtractor
 			if (metadataFile.exists())
 				retrieveMetadata(metadata, metadataFile, mediaFile);
 			else
-				log.warn(String.format("Metadata file '%s' has not been found", cast(Object[])[ metadataFile.getPath() ]));
+				log.warn(String_format("Metadata file '%s' has not been found", cast(Object[])[ metadataFile.getPath() ]));
 		}
 	}
 

@@ -36,7 +36,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 		if ((newInstance is null) || (newInstance.getRepositoryUrl() is null) || (newInstance.getFileType() is null) || (newInstance.getRepoType() is null)) {
 			throw new InvalidArgumentException("Cannot create OnlineRepository. Required data is missing.");
 		}
-		log.debug_(String.format("Creating a new Repository (url = %s)", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]));
+		log.debug_(String_format("Creating a new Repository (url = %s)", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -58,7 +58,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 			}
 			return repoId.longValue();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot create OnlineRepository for url %s", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]), e);
+			throw new PersistenceException(String_format("Cannot create OnlineRepository for url %s", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -67,7 +67,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
 	public void delete_(Long id)
 	{
-		log.debug_(String.format("Deleting an OnlineRepository (id = %s)", cast(Object[])[ id ]));
+		log.debug_(String_format("Deleting an OnlineRepository (id = %s)", cast(Object[])[ id ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -79,7 +79,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 			ps.setLong(1, id.longValue());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot delete OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot delete OnlineRepository with id = %s", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -88,7 +88,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
 	public OnlineRepository read(Long id)
 	{
-		log.debug_(String.format("Reading an OnlineRepository (id = %s)", cast(Object[])[ id ]));
+		log.debug_(String_format("Reading an OnlineRepository (id = %s)", cast(Object[])[ id ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -98,9 +98,9 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 			ResultSet rs = ps.executeQuery();
 			return mapSingleResult(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
 		} catch (MalformedURLException e) {
-			throw new PersistenceException(String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -113,7 +113,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 		{
 			throw new InvalidArgumentException("Cannot update OnlineRepository. Required data is missing.");
 		}
-		log.debug_(String.format("Updating OnlineRepository (id = %s)", cast(Object[])[ transientObject.getId() ]));
+		log.debug_(String_format("Updating OnlineRepository (id = %s)", cast(Object[])[ transientObject.getId() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -134,7 +134,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 				addAccessGroup(con, transientObject.getId(), accessGroupId);
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot update OnlineRepository with id %s", cast(Object[])[ transientObject.getId() ]), e);
+			throw new PersistenceException(String_format("Cannot update OnlineRepository with id %s", cast(Object[])[ transientObject.getId() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -163,7 +163,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
 	public List!(OnlineRepository) getRepositories(List!(OnlineRepository.OnlineRepositoryType) repoTypes, MediaFileType fileType, AccessGroup accessGroup, bool onlyEnabled)
 	{
-		log.debug_(String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
+		log.debug_(String_format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -182,9 +182,9 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
+			throw new PersistenceException(String_format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
 		} catch (MalformedURLException e) {
-			throw new PersistenceException(String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
+			throw new PersistenceException(String_format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);

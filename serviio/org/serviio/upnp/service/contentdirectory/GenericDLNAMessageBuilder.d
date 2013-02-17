@@ -176,7 +176,7 @@ public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
                 }
 
                 if (mandatory) {
-                    throw new RuntimeException(String.format("Missing required class attribute '%s'", cast(Object[])[ classAttribute ]));
+                    throw new RuntimeException(String_format("Missing required class attribute '%s'", cast(Object[])[ classAttribute ]));
                 }
                 return null;
             }
@@ -205,7 +205,7 @@ public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
                                               return true;
                                           }
                                           if (mandatory) {
-                                              throw new RuntimeException(String.format("Missing required class attribute '%s' on object: %s", cast(Object[])[ classAttribute, object.toString() ]));
+                                              throw new RuntimeException(String_format("Missing required class attribute '%s' on object: %s", cast(Object[])[ classAttribute, object.toString() ]));
                                           }
 
                                       }
@@ -255,7 +255,7 @@ public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
                 getterMethod = findGetter(objectClass, "is" + propertyName);
             }
         } catch (SecurityException e) {
-            log.error(String.format("Cannot access getter for class attribute %s: %s", cast(Object[])[ classAttribute, e.getMessage() ]));
+            log.error(String_format("Cannot access getter for class attribute %s: %s", cast(Object[])[ classAttribute, e.getMessage() ]));
         }
         if (getterMethod !is null) {
             try {
@@ -266,9 +266,9 @@ public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
                 return getterMethod.invoke(object, new Object[0]);
             }
             catch (InvocationTargetException e) {
-                log.error(String.format("Getter for class attribute %s cannot be invoked: %s", cast(Object[])[ classAttribute, e.getTargetException().getMessage() ]));
+                log.error(String_format("Getter for class attribute %s cannot be invoked: %s", cast(Object[])[ classAttribute, e.getTargetException().getMessage() ]));
             } catch (Exception e) {
-                log.error(String.format("Getter for class attribute %s cannot be invoked: %s", cast(Object[])[ classAttribute, e.getMessage() ]));
+                log.error(String_format("Getter for class attribute %s cannot be invoked: %s", cast(Object[])[ classAttribute, e.getMessage() ]));
             }
         }
         return null;

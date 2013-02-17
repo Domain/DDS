@@ -23,7 +23,7 @@ public class LocalContentCacheDecorator : AbstractCacheDecorator, CDSCacheDecora
         BrowseItemsHolder!(DirectoryObject) object = cast(BrowseItemsHolder!(DirectoryObject))cache.get(generateKey(objectID, objectType, browseFlag, filter, startingIndex, requestedCount, sortCriteria, rendererProfile, accessGroup));
 
         if (object !is null) {
-            log.debug_(String.format("Found entry in the cache (%s), returning it", cast(Object[])[ regionName ]));
+            log.debug_(String_format("Found entry in the cache (%s), returning it", cast(Object[])[ regionName ]));
         }
         return object;
     }
@@ -34,9 +34,9 @@ public class LocalContentCacheDecorator : AbstractCacheDecorator, CDSCacheDecora
         {
             cache.put(generateKey(objectID, objectType, browseFlag, filter, startingIndex, requestedCount, sortCriteria, rendererProfile, accessGroup), object);
 
-            log.debug_(String.format("Stored entry in the cache (%s), returning it", cast(Object[])[ regionName ]));
+            log.debug_(String_format("Stored entry in the cache (%s), returning it", cast(Object[])[ regionName ]));
         } catch (CacheException e) {
-            log.warn(String.format("Could not store object to local cache(%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
+            log.warn(String_format("Could not store object to local cache(%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
         }
     }
 

@@ -35,7 +35,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
         {
             throw new InvalidArgumentException("Cannot create MetadataDescriptor. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new MetadataDescriptor (type = %s, mediaItemId = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]));
+        log.debug_(String_format("Creating a new MetadataDescriptor (type = %s, mediaItemId = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -50,7 +50,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             ps.executeUpdate();
             return JdbcUtils.retrieveGeneratedID(ps);
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot create MetadataDescriptor with type %s for mediaItem %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]), e);
+            throw new PersistenceException(String_format("Cannot create MetadataDescriptor with type %s for mediaItem %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]), e);
         }
         finally {
             JdbcUtils.closeStatement(ps);
@@ -60,7 +60,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public void delete_(Long id)
     {
-        log.debug_(String.format("Deleting a MetadataDescriptor (id = %s)", cast(Object[])[ id ]));
+        log.debug_(String_format("Deleting a MetadataDescriptor (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -69,7 +69,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             ps.setLong(1, id.longValue());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot delete MetadataDescriptor with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(String_format("Cannot delete MetadataDescriptor with id = %s", cast(Object[])[ id ]), e);
         } finally {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
@@ -78,7 +78,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public MetadataDescriptor read(Long id)
     {
-        log.debug_(String.format("Reading a MetadataDescriptor (id = %s)", cast(Object[])[ id ]));
+        log.debug_(String_format("Reading a MetadataDescriptor (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -88,7 +88,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             ResultSet rs = ps.executeQuery();
             return mapSingleResult(rs);
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot read MetadataDescriptor with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(String_format("Cannot read MetadataDescriptor with id = %s", cast(Object[])[ id ]), e);
         } finally {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
@@ -102,7 +102,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public void removeMetadataDescriptorsForMedia(Long mediaItemId)
     {
-        log.debug_(String.format("Deleting all MetadataDescriptors for MediaItem (id = %s)", cast(Object[])[ mediaItemId ]));
+        log.debug_(String_format("Deleting all MetadataDescriptors for MediaItem (id = %s)", cast(Object[])[ mediaItemId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -111,7 +111,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             ps.setLong(1, mediaItemId.longValue());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot delete all MetadataDescriptors for MediaItem id = %s", cast(Object[])[ mediaItemId ]), e);
+            throw new PersistenceException(String_format("Cannot delete all MetadataDescriptors for MediaItem id = %s", cast(Object[])[ mediaItemId ]), e);
         } finally {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
@@ -120,7 +120,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public MetadataDescriptor retrieveMetadataDescriptorForMedia(Long mediaItemId, ExtractorType extractorType)
     {
-        log.debug_(String.format("Reading MetadataDescriptor for MediaItem (id = %s) and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]));
+        log.debug_(String_format("Reading MetadataDescriptor for MediaItem (id = %s) and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -131,7 +131,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             ResultSet rs = ps.executeQuery();
             return mapSingleResult(rs);
         } catch (SQLException e) {
-            throw new PersistenceException(String.format("Cannot read MetadataDescriptor for MediaItem id = %s and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]), e);
+            throw new PersistenceException(String_format("Cannot read MetadataDescriptor for MediaItem id = %s and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]), e);
         }
         finally {
             JdbcUtils.closeStatement(ps);

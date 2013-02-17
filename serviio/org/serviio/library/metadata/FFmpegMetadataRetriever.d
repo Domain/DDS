@@ -307,7 +307,7 @@ public class FFmpegMetadataRetriever
     {
         if (metadata.getVideoCodec() == VideoCodec.H264)
             try {
-                log.debug_(String.format("Retrieving H264 profile/level for file '%s'", cast(Object[])[ filePath ]));
+                log.debug_(String_format("Retrieving H264 profile/level for file '%s'", cast(Object[])[ filePath ]));
                 byte[] h264Stream = FFMPEGWrapper.readH264AnnexBHeader(filePath, metadata.getContainer(), context);
                 AVCHeader avcHeader = parseH264Header(h264Stream);
                 if (avcHeader !is null) {
@@ -320,15 +320,15 @@ public class FFmpegMetadataRetriever
                     if (ObjectValidator.isNotEmpty(refFramesLevel)) {
                         metadata.getH264Levels().put(H264LevelType.RF, refFramesLevel);
                     }
-                    log.debug_(String.format("File '%s' has H264 profile %s, levels [%s] and %s ref frames", cast(Object[])[ filePath, metadata.getH264Profile(), metadata.getH264Levels(), avcHeader.getRefFrames() ]));
+                    log.debug_(String_format("File '%s' has H264 profile %s, levels [%s] and %s ref frames", cast(Object[])[ filePath, metadata.getH264Profile(), metadata.getH264Levels(), avcHeader.getRefFrames() ]));
                 }
                 else {
-                    log.warn(String.format("Couldn't resolve H264 profile/level/ref_frames for file '%s' because the header was not recognized", cast(Object[])[ filePath ]));
+                    log.warn(String_format("Couldn't resolve H264 profile/level/ref_frames for file '%s' because the header was not recognized", cast(Object[])[ filePath ]));
                 }
             }
         catch (Exception e)
         {
-            log.warn(String.format("Failed to retrieve H264 profile/level/ref_frames information for file '%s': %s", cast(Object[])[ filePath, e.getMessage() ]));
+            log.warn(String_format("Failed to retrieve H264 profile/level/ref_frames information for file '%s': %s", cast(Object[])[ filePath, e.getMessage() ]));
         }
     }
 

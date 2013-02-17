@@ -25,7 +25,7 @@ public class Resource
 	private Integer colorDepth;
 	private String protocolInfo;
 	private String protection;
-	private Integer protocolInfoIndex = Integer.valueOf(0);
+	private Integer protocolInfoIndex;
 	private DeliveryQuality.QualityType quality;
 	private bool transcoded;
 
@@ -92,7 +92,7 @@ public class Resource
 			int hours = duration.intValue() / 3600;
 			int minutes = hours > 0 ? duration.intValue() % (hours * 3600) / 60 : duration.intValue() / 60;
 			int seconds = duration.intValue() - (hours * 3600 + minutes * 60);
-			return String.format("%d:%02d:%02d.000", cast(Object[])[ Integer.valueOf(hours), Integer.valueOf(minutes), Integer.valueOf(seconds) ]);
+			return String_format("%d:%02d:%02d.000", cast(Object[])[ Integer.valueOf(hours), Integer.valueOf(minutes), Integer.valueOf(seconds) ]);
 		}
 		return null;
 	}

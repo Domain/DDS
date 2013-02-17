@@ -11,12 +11,17 @@ import org.serviio.util.StringUtils;
 
 public class RequestedResourceDescriptor
 {
-    private static enum URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(?<=/[a-zA-Z]{0,25})\\.[a-zA-Z]+");
+    private static immutable Pattern URL_EXTENSION_REMOVAL_PATTERN;
     private Long resourceId;
     private Resource.ResourceType resourceType;
     private String targetProfileName;
     private Integer protocolInfoIndex;
     private DeliveryQuality.QualityType quality;
+
+    static this()
+    {
+        URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(?<=/[a-zA-Z]{0,25})\\.[a-zA-Z]+");
+    }
 
     public this(String requestUri)
     {
@@ -37,7 +42,7 @@ public class RequestedResourceDescriptor
                 quality = DeliveryQuality.QualityType.valueOf(requestFields[3]);
             }
         } catch (Exception e) {
-            throw new InvalidResourceRequestException(String.format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
+            throw new InvalidResourceRequestException(String_format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
         }
     }
 

@@ -45,7 +45,7 @@ public class FeedParser : AbstractOnlineItemParser
 
     public Feed parse(URL feedUrl, Long onlineRepositoryId, MediaFileType fileType)
     {
-        log.debug_(String.format("Parsing feed '%s'", cast(Object[])[ feedUrl ]));
+        log.debug_(String_format("Parsing feed '%s'", cast(Object[])[ feedUrl ]));
         Feed feed = new Feed(onlineRepositoryId);
         try
         {
@@ -67,7 +67,7 @@ public class FeedParser : AbstractOnlineItemParser
         }
         catch (FeedException e)
         {
-            throw new InvalidMetadataException(String.format("Error during feed parsing, provided URL probably doesn't point to a valid RSS/Atom feed. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new InvalidMetadataException(String_format("Error during feed parsing, provided URL probably doesn't point to a valid RSS/Atom feed. Message: %s", cast(Object[])[ e.getMessage() ]), e);
         }
 
         return feed;
@@ -83,12 +83,12 @@ public class FeedParser : AbstractOnlineItemParser
         }
         catch (FeedException e) {
             try {
-                log.debug_(String.format("Feed failed parsing (%s), trying BOM detection", cast(Object[])[ e.getMessage() ]));
+                log.debug_(String_format("Feed failed parsing (%s), trying BOM detection", cast(Object[])[ e.getMessage() ]));
                 feedStream.reset();
                 return input.build(new UnicodeReader(feedStream, "UTF-8"));
             } catch (FeedException e1) {
                 try {
-                    log.debug_(String.format("BOM Feed failed parsing (%s), trying unzipping it", cast(Object[])[ e1.getMessage() ]));
+                    log.debug_(String_format("BOM Feed failed parsing (%s), trying unzipping it", cast(Object[])[ e1.getMessage() ]));
                     feedStream.reset();
                     InputStream unzipped = ZipUtils.unGzipSingleFile(feedStream);
                     try {
@@ -117,7 +117,7 @@ public class FeedParser : AbstractOnlineItemParser
                 {
                     extractContentUrlViaPlugin(suitablePlugin, feedItem);
                 } catch (Throwable e) {
-                    log.debug_(String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), feedItem.getTitle(), e.getMessage() ]));
+                    log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), feedItem.getTitle(), e.getMessage() ]));
 
                     return false;
                 }
@@ -127,15 +127,15 @@ public class FeedParser : AbstractOnlineItemParser
                 feedItem.validateMetadata();
                 alterUrlsWithCredentials(credentials, feedItem);
 
-                log.debug_(String.format("Added feed item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), feedItem.getTitle(), feedItem.getContentUrl() ]));
+                log.debug_(String_format("Added feed item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), feedItem.getTitle(), feedItem.getContentUrl() ]));
                 feed.getItems().add(feedItem);
                 return true;
             }
-            log.debug_(String.format("Skipping feed item '%s' because it's not of type %s", cast(Object[])[ feedItem.getTitle(), fileType ]));
+            log.debug_(String_format("Skipping feed item '%s' because it's not of type %s", cast(Object[])[ feedItem.getTitle(), fileType ]));
             return false;
         }
         catch (InvalidMetadataException e) {
-            log.debug_(String.format("Cannot add feed entry of feed %s because of invalid metadata. Message: %s", cast(Object[])[ feed.getTitle(), e.getMessage() ]));
+            log.debug_(String_format("Cannot add feed entry of feed %s because of invalid metadata. Message: %s", cast(Object[])[ feed.getTitle(), e.getMessage() ]));
         }
         return false;
     }
@@ -153,7 +153,7 @@ public class FeedParser : AbstractOnlineItemParser
                 ImageDescriptor thumbnail = new ImageDescriptor(new URL(image.getUrl()));
                 feed.setThumbnail(thumbnail);
             } catch (MalformedURLException e) {
-                log.warn(String.format("Malformed url of a feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ image.getUrl() ]));
+                log.warn(String_format("Malformed url of a feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ image.getUrl() ]));
             }
     }
 }

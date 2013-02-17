@@ -40,7 +40,7 @@ class DBConnectionPool
         checkedOut -= 1;
         notifyAll();
         if (log.isTraceEnabled())
-            log.trace(String.format("Releasing connection from pool %s", cast(Object[])[ name ]));
+            log.trace(String_format("Releasing connection from pool %s", cast(Object[])[ name ]));
     }
 
     public synchronized Connection getConnection(bool autoCommit)
@@ -51,7 +51,7 @@ class DBConnectionPool
             con = cast(Connection)freeConnections.firstElement();
             freeConnections.removeElementAt(0);
             if (log.isTraceEnabled())
-                log.trace(String.format("Getting pooled connection from pool %s", cast(Object[])[ name ]));
+                log.trace(String_format("Getting pooled connection from pool %s", cast(Object[])[ name ]));
             try
             {
                 if (con.isClosed()) {

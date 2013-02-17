@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ResultRepresentation
 {
-    private Integer errorCode = Integer.valueOf(0);
+    private Integer errorCode;
 
     deprecated private int httpCode;
 
@@ -18,6 +18,7 @@ public class ResultRepresentation
 
     public this()
     {
+        errorCode = Integer.valueOf(0);
     }
 
     public this(Integer errorCode, int httpCode, List!(String) parameters)

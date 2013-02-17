@@ -32,10 +32,10 @@ public class SubtitlesRetrievalStrategy : ResourceRetrievalStrategy
 	{
 		File subtitleFile = SubtitlesService.findSubtitleFile(mediaItemId);
 		if (subtitleFile is null) {
-			throw new FileNotFoundException(String.format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
+			throw new FileNotFoundException(String_format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
 		}
 
-		log.debug_(String.format("Retrieving Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
+		log.debug_(String_format("Retrieving Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
 
 		ResourceInfo resourceInfo = retrieveResourceInfo(mediaItemId, subtitleFile, client);
 		DeliveryContainer container = new StreamDeliveryContainer(new ByteArrayInputStream(FileUtils.readFileBytes(subtitleFile)), resourceInfo);
@@ -46,10 +46,10 @@ public class SubtitlesRetrievalStrategy : ResourceRetrievalStrategy
 	{
 		File subtitleFile = SubtitlesService.findSubtitleFile(mediaItemId);
 		if (subtitleFile is null) {
-			throw new FileNotFoundException(String.format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
+			throw new FileNotFoundException(String_format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
 		}
 
-		log.debug_(String.format("Retrieving info of Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
+		log.debug_(String_format("Retrieving info of Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
 		return retrieveResourceInfo(mediaItemId, subtitleFile, client);
 	}
 

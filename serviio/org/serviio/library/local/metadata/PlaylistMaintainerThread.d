@@ -77,7 +77,7 @@ public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
 
     private bool checkForMissingPlaylistItems(Playlist playlist)
     {
-        log.debug_(String.format("Playlist %s has unresolved items, checking if they are in the library now", cast(Object[])[ playlist.getTitle() ]));
+        log.debug_(String_format("Playlist %s has unresolved items, checking if they are in the library now", cast(Object[])[ playlist.getTitle() ]));
 
         ParsedPlaylist parsedPlaylist = parsePlaylst(playlist.getFilePath());
 
@@ -87,7 +87,7 @@ public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
         foreach (PlaylistItem pi ; parsedPlaylist.getItems()) {
             if (!currentItemIndexes.contains(pi.getSequenceNumber()))
             {
-                log.debug_(String.format("Found playlist item that has not been added yet: %s", cast(Object[])[ pi.getPath() ]));
+                log.debug_(String_format("Found playlist item that has not been added yet: %s", cast(Object[])[ pi.getPath() ]));
                 MediaItem existingMediaItem = MediaService.getMediaItem(pi.getPath(), true);
                 if (existingMediaItem !is null)
                 {
@@ -96,7 +96,7 @@ public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
                     log.debug_("Registered playlist item");
                     updated = true;
                 } else {
-                    log.debug_(String.format("Item '%s' cannot be resolved to an entity in the Serviio library, will try again later", cast(Object[])[ pi.getPath() ]));
+                    log.debug_(String_format("Item '%s' cannot be resolved to an entity in the Serviio library, will try again later", cast(Object[])[ pi.getPath() ]));
                     allItemsPresent = false;
                 }
             }
@@ -110,7 +110,7 @@ public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
     }
 
     private bool addPlaylistItems(Playlist playlist, File playlistFile) {
-        log.debug_(String.format("Playlist %s has changed, updating the library", cast(Object[])[ playlist.getTitle() ]));
+        log.debug_(String_format("Playlist %s has changed, updating the library", cast(Object[])[ playlist.getTitle() ]));
         ParsedPlaylist parsedPlaylist = parsePlaylst(playlist.getFilePath());
 
         PlaylistService.removePlaylistItems(playlist.getId());

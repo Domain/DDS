@@ -50,7 +50,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 		{
 			throw new InvalidArgumentException("Cannot create Video. Required data is missing.");
 		}
-		log.debug_(String.format("Creating a new Video (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
+		log.debug_(String_format("Creating a new Video (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -97,7 +97,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ps.executeUpdate();
 			return JdbcUtils.retrieveGeneratedID(ps);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot create Video with title %s", cast(Object[])[ newInstance.getTitle() ]), e);
+			throw new PersistenceException(String_format("Cannot create Video with title %s", cast(Object[])[ newInstance.getTitle() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -106,7 +106,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public void delete_(Long id)
 	{
-		log.debug_(String.format("Deleting a Video (id = %s)", cast(Object[])[ id ]));
+		log.debug_(String_format("Deleting a Video (id = %s)", cast(Object[])[ id ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -115,7 +115,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ps.setLong(1, id.longValue());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot delete Video with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot delete Video with id = %s", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -124,7 +124,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public Video read(Long id)
 	{
-		log.debug_(String.format("Reading a Video (id = %s)", cast(Object[])[ id ]));
+		log.debug_(String_format("Reading a Video (id = %s)", cast(Object[])[ id ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -135,7 +135,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapSingleResult(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read Video with id = %s", cast(Object[])[ id ]), e);
+			throw new PersistenceException(String_format("Cannot read Video with id = %s", cast(Object[])[ id ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -148,7 +148,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 		{
 			throw new InvalidArgumentException("Cannot update Video. Required data is missing.");
 		}
-		log.debug_(String.format("Updating Video (id = %s)", cast(Object[])[ transientObject.getId() ]));
+		log.debug_(String_format("Updating Video (id = %s)", cast(Object[])[ transientObject.getId() ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -195,7 +195,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ps.setLong(38, transientObject.getId().longValue());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot update Video with id %s", cast(Object[])[ transientObject.getId() ]), e);
+			throw new PersistenceException(String_format("Cannot update Video with id %s", cast(Object[])[ transientObject.getId() ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -204,7 +204,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideos(int type, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos of type %s (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(type), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos of type %s (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(type), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -215,7 +215,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos of type %s", cast(Object[])[ Integer.valueOf(type) ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos of type %s", cast(Object[])[ Integer.valueOf(type) ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -224,7 +224,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosCount(int type, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos of type %s [%s]", cast(Object[])[ Integer.valueOf(type), accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos of type %s [%s]", cast(Object[])[ Integer.valueOf(type), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -241,7 +241,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos of type %s", cast(Object[])[ Integer.valueOf(type) ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos of type %s", cast(Object[])[ Integer.valueOf(type) ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -250,7 +250,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForFolder(Long folderId, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -262,7 +262,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos for folder %s", cast(Object[])[ folderId ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos for folder %s", cast(Object[])[ folderId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -271,7 +271,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForFolderCount(Long folderId, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos for folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos for folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -289,7 +289,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos for folder %s", cast(Object[])[ folderId ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos for folder %s", cast(Object[])[ folderId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -298,7 +298,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForPlaylist(Long playlistId, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -310,7 +310,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos for playlist %s", cast(Object[])[ playlistId ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos for playlist %s", cast(Object[])[ playlistId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -319,7 +319,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForPlaylistCount(Long playlistId, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos for playlist %s [%s]", cast(Object[])[ playlistId, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos for playlist %s [%s]", cast(Object[])[ playlistId, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -337,7 +337,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos for playlist %s", cast(Object[])[ playlistId ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos for playlist %s", cast(Object[])[ playlistId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -346,7 +346,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForGenre(Long genreId, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -358,7 +358,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos for genre %s", cast(Object[])[ genreId ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos for genre %s", cast(Object[])[ genreId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -367,7 +367,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForGenreCount(Long genreId, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos for genre %s [%s]", cast(Object[])[ genreId, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos for genre %s [%s]", cast(Object[])[ genreId, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -385,7 +385,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos for genre %s", cast(Object[])[ genreId ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos for genre %s", cast(Object[])[ genreId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -394,7 +394,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForPerson(Long personId, Person.RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos for person %s with role %s (from=%s, count=%s) [%s]", cast(Object[])[ personId, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos for person %s with role %s (from=%s, count=%s) [%s]", cast(Object[])[ personId, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -407,7 +407,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -416,7 +416,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForPersonCount(Long personId, Person.RoleType role, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos for person %s with role %s [%s]", cast(Object[])[ personId, role, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos for person %s with role %s [%s]", cast(Object[])[ personId, role, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -435,7 +435,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -444,7 +444,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForSeriesSeason(Long seriesId, Integer season, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos for series %s season %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId, season, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos for series %s season %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId, season, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -457,7 +457,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -466,7 +466,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForSeriesSeasonCount(Long seriesId, Integer season, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos for series %s season %s [%s]", cast(Object[])[ seriesId, season, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos for series %s season %s [%s]", cast(Object[])[ seriesId, season, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -485,7 +485,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -494,7 +494,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(String) retrieveVideoInitials(AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of video initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of video initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -518,7 +518,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideoInitialsCount(AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of video initials [%s]", cast(Object[])[ accessGroup ]));
+		log.debug_(String_format("Retrieving number of video initials [%s]", cast(Object[])[ accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -544,7 +544,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveVideosForInitial(String initial, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of videos with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of videos with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -556,7 +556,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of videos with initial %s", cast(Object[])[ initial ]), e);
+			throw new PersistenceException(String_format("Cannot read list of videos with initial %s", cast(Object[])[ initial ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -565,7 +565,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveVideosForInitialCount(String initial, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of videos with initial %s [%s]", cast(Object[])[ initial, accessGroup ]));
+		log.debug_(String_format("Retrieving number of videos with initial %s [%s]", cast(Object[])[ initial, accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -583,7 +583,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of videos with initial %s", cast(Object[])[ initial ]), e);
+			throw new PersistenceException(String_format("Cannot read number of videos with initial %s", cast(Object[])[ initial ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -592,7 +592,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveLastViewedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of %s last viewed videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of %s last viewed videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 
 		int availableCount = maxReturned - startingIndex;
 		if (availableCount < 0) {
@@ -608,7 +608,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of %s last viewed videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
+			throw new PersistenceException(String_format("Cannot read list of %s last viewed videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -617,7 +617,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveLastViewedVideosCount(int maxReturned, AccessGroup accessGroup)
 	{
-		log.debug_(String.format("Retrieving number of %s last viewed videos [%s]", cast(Object[])[ Integer.valueOf(maxReturned), accessGroup ]));
+		log.debug_(String_format("Retrieving number of %s last viewed videos [%s]", cast(Object[])[ Integer.valueOf(maxReturned), accessGroup ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -634,7 +634,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return 0;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read number of %s last viewed videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
+			throw new PersistenceException(String_format("Cannot read number of %s last viewed videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -643,7 +643,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public List!(Video) retrieveLastAddedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
 	{
-		log.debug_(String.format("Retrieving list of %s last added videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+		log.debug_(String_format("Retrieving list of %s last added videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
 
 		int availableCount = maxReturned - startingIndex;
 		if (availableCount < 0) {
@@ -660,7 +660,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			ResultSet rs = ps.executeQuery();
 			return mapResultSet(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read list of %s last added videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
+			throw new PersistenceException(String_format("Cannot read list of %s last added videos", cast(Object[])[ Integer.valueOf(maxReturned) ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);
@@ -669,14 +669,14 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
 	public int retrieveLastAddedVideosCount(int maxReturned, AccessGroup userProfile)
 	{
-		log.debug_(String.format("Retrieving number of %s last added videos", cast(Object[])[ Integer.valueOf(maxReturned) ]));
+		log.debug_(String_format("Retrieving number of %s last added videos", cast(Object[])[ Integer.valueOf(maxReturned) ]));
 		Integer count = Integer.valueOf(retrieveVideosCount(0, userProfile));
 		return count.intValue() < maxReturned ? count.intValue() : maxReturned;
 	}
 
 	public Map!(Long, Integer) retrieveLastViewedEpisode(Long seriesId)
 	{
-		log.debug_(String.format("Retrieving last episode for series %s", cast(Object[])[ seriesId ]));
+		log.debug_(String_format("Retrieving last episode for series %s", cast(Object[])[ seriesId ]));
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -695,7 +695,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 			return null;
 		}
 		catch (SQLException e) {
-			throw new PersistenceException(String.format("Cannot read last episode for series %s", cast(Object[])[ seriesId ]), e);
+			throw new PersistenceException(String_format("Cannot read last episode for series %s", cast(Object[])[ seriesId ]), e);
 		} finally {
 			JdbcUtils.closeStatement(ps);
 			DatabaseManager.releaseConnection(con);

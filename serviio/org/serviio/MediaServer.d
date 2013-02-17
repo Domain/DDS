@@ -109,7 +109,7 @@ public class MediaServer
             }
         }
         catch (RuntimeException e) {
-            log.error(String.format("An unexpected error occured. Ending the application. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(String_format("An unexpected error occured. Ending the application. Message: %s", cast(Object[])[ e.getMessage() ]), e);
             exit();
         }
     }
@@ -201,7 +201,7 @@ public class MediaServer
         ServiioLicense lic = LicensingManager.getInstance().getLicense();
         String licenseInfo = lic.getEdition().toString();
         if (lic.getEdition() == LicensingManager.ServiioEdition.PRO) {
-            licenseInfo = licenseInfo + String.format(" (%s, id: %s)", cast(Object[])[ lic.getType(), lic.getId() ]);
+            licenseInfo = licenseInfo + String_format(" (%s, id: %s)", cast(Object[])[ lic.getType(), lic.getId() ]);
         }
 
         log.info("------------------------------------------------------------------------");

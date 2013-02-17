@@ -24,9 +24,9 @@ public class TechnicalMetadataCacheDecorator : AbstractCacheDecorator, OnlineCac
 		try
 		{
 			cache.put(url, cachedValue);
-			log.debug_(String.format("Stored technical metadata for online item '%s' in the cache (%s), returning it", cast(Object[])[ url, regionName ]));
+			log.debug_(String_format("Stored technical metadata for online item '%s' in the cache (%s), returning it", cast(Object[])[ url, regionName ]));
 		} catch (CacheException e) {
-			log.warn(String.format("Could not store object to local cache (%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
+			log.warn(String_format("Could not store object to local cache (%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
 		}
 	}
 
@@ -35,9 +35,9 @@ public class TechnicalMetadataCacheDecorator : AbstractCacheDecorator, OnlineCac
 		try
 		{
 			cache.remove(url);
-			log.debug_(String.format("Removed technical metadata fro online item '%s' from cache (%s)", cast(Object[])[ url, regionName ]));
+			log.debug_(String_format("Removed technical metadata fro online item '%s' from cache (%s)", cast(Object[])[ url, regionName ]));
 		} catch (CacheException e) {
-			log.warn(String.format("Could not remove feed %s from cache (%s): %s", cast(Object[])[ url, regionName, e.getMessage() ]));
+			log.warn(String_format("Could not remove feed %s from cache (%s): %s", cast(Object[])[ url, regionName, e.getMessage() ]));
 		}
 	}
 }

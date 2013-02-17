@@ -7,14 +7,16 @@ import org.serviio.ui.representation.DataValue;
 
 public class ReferenceDataRepresentation
 {
-    private List!(DataValue) values = new ArrayList!(DataValue)();
+    private List!(DataValue) values;
 
     public this()
     {
+        values = new ArrayList!(DataValue)();
     }
 
     public this(String name, String value)
     {
+        values = new ArrayList!(DataValue)();
         addValue(name, value);
     }
 

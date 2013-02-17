@@ -95,23 +95,23 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
                     if (ObjectValidator.isNotEmpty(bannerFile))
                         try
                         {
-                            String bannerPath = String.format("%s/banners/%s",
+                            String bannerPath = String_format("%s/banners/%s",
                                     cast(Object[])[ getBannerMirror(), bannerFile ]);
                             byte[] bannerBytes = HttpClient.retrieveBinaryFileFromURL(bannerPath);
                             ImageInfo imageInfo = Sanselan.getImageInfo(bannerBytes);
                             ImageDescriptor image = new ImageDescriptor(bannerBytes, imageInfo.getMimeType());
                             videoMetadata.setCoverImage(image);
-                            log.debug_(String.format("Retrieved episode banner: %s", cast(Object[])[ bannerPath ]));
+                            log.debug_(String_format("Retrieved episode banner: %s", cast(Object[])[ bannerPath ]));
                         }
                         catch (Exception e)
                         {
-                            log.warn(String.format("Cannot retrieve episode banner: %s", cast(Object[])[ e.getMessage() ]));
+                            log.warn(String_format("Cannot retrieve episode banner: %s", cast(Object[])[ e.getMessage() ]));
                         }
                 }
             }
             catch (XPathExpressionException e)
             {
-                throw new IOException(String.format("Cannot retrieve metadata for episode %s from tvdb.com, the returned XML is corrupt",
+                throw new IOException(String_format("Cannot retrieve metadata for episode %s from tvdb.com, the returned XML is corrupt",
                                 cast(Object[])[ episodeId ]));
             }
 		}
@@ -145,7 +145,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     {
         if ((xmlMirrors.isEmpty()) || (bannerMirrors.isEmpty()))
         {
-            String path = String.format("%s%s%s/mirrors.xml", cast(Object[])[ MAIN_SERVER_URL, API_BASE_CONTEXT, APIKEY ]);
+            String path = String_format("%s%s%s/mirrors.xml", cast(Object[])[ MAIN_SERVER_URL, API_BASE_CONTEXT, APIKEY ]);
             try
             {
                 String mirrorsXML = retrieveXMLFromUrl(path);
@@ -154,7 +154,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
                     Node rootNode = XPathUtil.getRootNode(mirrorsXML);
                     NodeList mirrorNodes = XPathUtil.getNodeSet(rootNode, "Mirrors/Mirror");
 
-                    log.debug_(String.format("Found %s mirror(s)",
+                    log.debug_(String_format("Found %s mirror(s)",
                             cast(Object[])[ Integer.valueOf(mirrorNodes.getLength()) ]));
 
                     for (int i = 0; i < mirrorNodes.getLength(); i++)
@@ -181,7 +181,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
             }
             catch (Exception e)
             {
-                throw new IOException(String.format("Cannot retrieve list of mirrors for tvdb.com: %s",
+                throw new IOException(String_format("Cannot retrieve list of mirrors for tvdb.com: %s",
                         cast(Object[])[ e.getMessage() ]), e);
             }
         }
@@ -191,12 +191,12 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     {
         if (ObjectValidator.isNotEmpty(seriesName))
         {
-            String seriesNameSearchString = String.format("%s%s", cast(Object[])[
+            String seriesNameSearchString = String_format("%s%s", cast(Object[])[
                     seriesName, year !is null ? " " + year.toString() : "" ]);
-            log.debug_(String.format("Searching for series '%s'", cast(Object[])[ seriesNameSearchString ]));
+            log.debug_(String_format("Searching for series '%s'", cast(Object[])[ seriesNameSearchString ]));
             try
             {
-                String seriesSearchPath = String.format("%s%sGetSeries.php?seriesname=%s&language=all",
+                String seriesSearchPath = String_format("%s%sGetSeries.php?seriesname=%s&language=all",
                         cast(Object[])[ MAIN_SERVER_URL, API_BASE_CONTEXT, URLEncoder.encode(seriesNameSearchString, "UTF-8") ]);
                 String searchResultXML = retrieveXMLFromUrl(seriesSearchPath);
                 if (ObjectValidator.isNotEmpty(searchResultXML))
@@ -210,7 +210,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
 
                             if ((seriesNodes !is null) && (seriesNodes.getLength() > 0))
                             {
-                                log.debug_(String.format("Found %s series (or translations), using the first one",
+                                log.debug_(String_format("Found %s series (or translations), using the first one",
                                                 cast(Object[])[ Integer.valueOf(seriesNodes.getLength()) ]));
                                 Node seriesNode = seriesNodes.item(0);
                                 return XPathUtil.getNodeValue(seriesNode, "seriesid");
@@ -236,7 +236,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
             }
             catch (Exception e)
             {
-                throw new IOException(String.format("Cannot retrieve series search results for tvdb.com: %s",
+                throw new IOException(String_format("Cannot retrieve series search results for tvdb.com: %s",
                                 cast(Object[])[ e.getMessage() ]));
             }
         }
@@ -246,12 +246,12 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     private String getEpisodeDetails(String seriesId, int season, int episode)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String.format("Retrieving details of episode (seriesId = %s, season = %s, episode = %s, language = %s)",
+        log.debug_(String_format("Retrieving details of episode (seriesId = %s, season = %s, episode = %s, language = %s)",
                         cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode), languageCode ]));
 
         try
         {
-            String episodeDetailsPath = String.format("%s%s%s/series/%s/default/%s/%s/%s.xml",
+            String episodeDetailsPath = String_format("%s%s%s/series/%s/default/%s/%s/%s.xml",
                     cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY, seriesId, Integer.valueOf(season), Integer.valueOf(episode), languageCode ]);
 
             episodeXML = retrieveXMLFromUrl(episodeDetailsPath);
@@ -265,12 +265,12 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(String.format("Cannot retrieve episode details (series = %s, season = %s, episode = %s), file not found",
+            throw new IOException(String_format("Cannot retrieve episode details (series = %s, season = %s, episode = %s), file not found",
                             cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode) ]));
         }
         catch (Exception e)
         {
-            throw new IOException(String.format("Cannot retrieve episode details (series = %s, season = %s, episode = %s): %s",
+            throw new IOException(String_format("Cannot retrieve episode details (series = %s, season = %s, episode = %s): %s",
                             cast(Object[])[ seriesId, Integer.valueOf(season), Integer.valueOf(episode), e.getMessage() ]));
         }
     }
@@ -278,22 +278,22 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     private String getSeriesDetails(String seriesId)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String.format("Retrieving details of series (seriesId = %s, language = %s)",
+        log.debug_(String_format("Retrieving details of series (seriesId = %s, language = %s)",
                 cast(Object[])[ seriesId, languageCode ]));
         try
         {
-            String seriesDetailsPath = String.format("%s%s%s/series/%s/%s.xml",
+            String seriesDetailsPath = String_format("%s%s%s/series/%s/%s.xml",
                     cast(Object[])[ getXMLMirror(), API_BASE_CONTEXT, APIKEY, seriesId, languageCode ]);
 
             return retrieveXMLFromUrl(seriesDetailsPath);
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(String.format("Cannot retrieve series details (series = %s), file not found", cast(Object[])[ seriesId ]));
+            throw new IOException(String_format("Cannot retrieve series details (series = %s), file not found", cast(Object[])[ seriesId ]));
         }
         catch (Exception e)
         {
-            throw new IOException(String.format("Cannot retrieve series details (series = %s): %s", cast(Object[])[ seriesId, e.getMessage() ]));
+            throw new IOException(String_format("Cannot retrieve series details (series = %s): %s", cast(Object[])[ seriesId, e.getMessage() ]));
         }
         
     }

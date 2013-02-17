@@ -51,7 +51,7 @@ public class ListSeasonsForSeriesCommand : AbstractCommand!(Container)
 
         foreach (Integer seasonNumber ; seasons) {
             String runtimeId = generateRuntimeObjectId(seasonNumber);
-            String containerTitle = String.format("%s %s%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.equals(seasonNumber)) ? " **" : "" ]);
+            String containerTitle = String_format("%s %s%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.equals(seasonNumber)) ? " **" : "" ]);
             Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(containerTitle, runtimeId, getDisplayedContainerId(objectId), objectType, accessGroup);
             items.add(cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null));
         }
@@ -65,7 +65,7 @@ public class ListSeasonsForSeriesCommand : AbstractCommand!(Container)
 
         Integer lastViewedSeason = getLastViewedSeason(seriesId);
 
-        String containerTitle = String.format("%s %s%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.equals(seasonNumber)) ? " **" : "" ]);
+        String containerTitle = String_format("%s %s%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.equals(seasonNumber)) ? " **" : "" ]);
         Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(containerTitle, objectId, Definition.instance().getParentNodeId(objectId), objectType, accessGroup);
         return cast(Container)DirectoryObjectBuilder.createInstance(containerClassType, values, null, null);
     }

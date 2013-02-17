@@ -45,7 +45,7 @@ public class OnlineRepositoryService : Service
 
         foreach (OnlineRepository existingRepository ; existingRepositories) {
             if (!repositories.contains(existingRepository)) {
-                log.debug_(String.format("Will remove OnlineRepository: %s", cast(Object[])[ existingRepository.toString() ]));
+                log.debug_(String_format("Will remove OnlineRepository: %s", cast(Object[])[ existingRepository.toString() ]));
                 repsToRemove.add(existingRepository);
             }
         }

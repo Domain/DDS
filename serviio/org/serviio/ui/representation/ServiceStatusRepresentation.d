@@ -4,19 +4,24 @@ import org.serviio.MediaServer;
 
 public class ServiceStatusRepresentation
 {
-  private bool serviceStarted = !MediaServer.isServiceInitializationInProcess();
+    private bool serviceStarted;
 
-  public bool isServiceStarted()
-  {
-    return serviceStarted;
-  }
+    public this()
+    {
+        serviceStarted = !MediaServer.isServiceInitializationInProcess();
+    }
 
-  public void setServiceStarted(bool serviceStarted) {
-    this.serviceStarted = serviceStarted;
-  }
+    public bool isServiceStarted()
+    {
+        return serviceStarted;
+    }
+
+    public void setServiceStarted(bool serviceStarted) {
+        this.serviceStarted = serviceStarted;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
- * Qualified Name:     org.serviio.ui.representation.ServiceStatusRepresentation
- * JD-Core Version:    0.6.2
- */
+* Qualified Name:     org.serviio.ui.representation.ServiceStatusRepresentation
+* JD-Core Version:    0.6.2
+*/

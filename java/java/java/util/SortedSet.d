@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Comparator;
 
 interface SortedSet(T) : Set!T {
-    Comparator     comparator();
+    Comparator!T   comparator();
     T              first();
     SortedSet      headSet(T toElement);
     T              last();

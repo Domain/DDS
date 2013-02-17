@@ -16,9 +16,9 @@ public class BrowsingCategoriesMessages
     private static immutable Logger log;
     private static ResourceBundle selectedRb;
     private static ResourceBundle defaultRb;
-    private static Locale defaultLocale = Locale.ENGLISH;
+    private static Locale defaultLocale;
     private static const String BUNDLE = "org.serviio.upnp.service.contentdirectory.definition.i18n.browsingCategories";
-    private static ResourceBundle.Control control = new GetLocalizationMessageBundleControl();
+    private static ResourceBundle.Control control;
 
     public static String getMessage(String key, Object[] args)
     {
@@ -37,12 +37,14 @@ public class BrowsingCategoriesMessages
 
     public static void loadLocale(Locale locale) {
         selectedRb = ResourceBundle.getBundle(BUNDLE, locale, control);
-        log.info(String.format("Loaded browsing categories message bundle for locale: %s", cast(Object[])[ locale.toString() ]));
+        log.info(String_format("Loaded browsing categories message bundle for locale: %s", cast(Object[])[ locale.toString() ]));
     }
 
     static this()
     {
         log = LoggerFactory.getLogger!(BrowsingCategoriesMessages)();
+        control = new GetLocalizationMessageBundleControl();
+        defaultLocale = Locale.ENGLISH;
         defaultRb = ResourceBundle.getBundle(BUNDLE, defaultLocale, control);
         loadLocale(Language.getLocale(Configuration.getBrowseMenuPreferredLanguage()));
     }

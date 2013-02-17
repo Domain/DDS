@@ -157,12 +157,12 @@ public class LibraryManager : AbstractLibraryManager
                     if (isExtractorSupportedByRepository(extractor, repository)) {
                         LocalItemMetadata metadata = extractor.extract(mediaFile, fileType, repository);
                         if (metadata !is null) {
-                            log.debug_(String.format("Metadata found via extractor %s: %s", cast(Object[])[ extractor.getExtractorType(), metadata.toString() ]));
+                            log.debug_(String_format("Metadata found via extractor %s: %s", cast(Object[])[ extractor.getExtractorType(), metadata.toString() ]));
                             metadataList.add(metadata);
                         }
                     }
                 } catch (IOException e) {
-                    log.warn(String.format("Cannot read metadata of file %s via extractor %s. Message: %s", cast(Object[])[ mediaFile.getPath(), extractor.getExtractorType(), e.getMessage() ]));
+                    log.warn(String_format("Cannot read metadata of file %s via extractor %s. Message: %s", cast(Object[])[ mediaFile.getPath(), extractor.getExtractorType(), e.getMessage() ]));
 
                     if (extractor.getExtractorType() == ExtractorType.EMBEDDED)
                     {
@@ -173,14 +173,14 @@ public class LibraryManager : AbstractLibraryManager
             return mergeMetadata(metadataList, fileType);
         }
         catch (InvalidMediaFormatException e) {
-            log.debug_(String.format("Skipping processing metadata for an unsupported file. Message: %s", cast(Object[])[ e.getMessage() ]));
+            log.debug_(String_format("Skipping processing metadata for an unsupported file. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         return null;
     }
 
     public void forceMetadataUpdate(MediaFileType fileType)
     {
-        log.info(String.format("Forcing metadata update for '%s' media files", cast(Object[])[ fileType ]));
+        log.info(String_format("Forcing metadata update for '%s' media files", cast(Object[])[ fileType ]));
         MediaService.markMediaItemsAsDirty(fileType);
     }
 

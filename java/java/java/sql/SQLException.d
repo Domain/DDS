@@ -3,7 +3,7 @@ module java.sql.SQLException;
 
 import java.lang.exceptions;
 
-public class SQLException
+public class SQLException : Exception
 {
     public this()
     {

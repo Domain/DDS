@@ -76,7 +76,7 @@ public static byte[] readFileBytes(File f) {
     long length = f.length();
 
     if (length > 2147483647L) {
-      throw new IOException(String.format("File %s is too long", cast(Object[])[ f.getAbsolutePath() ]));
+      throw new IOException(String_format("File %s is too long", cast(Object[])[ f.getAbsolutePath() ]));
     }
     return readFileBytes(is_, 0, cast(int)length);
   }
@@ -154,7 +154,7 @@ public static byte[] readFileBytes(File f) {
       }
       return new File(relativeDir);
     }
-    throw new RuntimeException(String.format("The provided file path %s doesn't belong to root %s", cast(Object[])[ filePath, rootDir ]));
+    throw new RuntimeException(String_format("The provided file path %s doesn't belong to root %s", cast(Object[])[ filePath, rootDir ]));
   }
 
   public static void closeQuietly(InputStream is_)
@@ -179,7 +179,7 @@ public static byte[] readFileBytes(File f) {
   public static InputStream getStreamFromClasspath(String filePath, Class/*!(Object)*/ clazz) {
     InputStream is_ = clazz.getResourceAsStream(filePath);
     if (is_ is null) {
-      throw new FileNotFoundException(String.format("File %s doesn't exist on the classpath", cast(Object[])[ filePath ]));
+      throw new FileNotFoundException(String_format("File %s doesn't exist on the classpath", cast(Object[])[ filePath ]));
     }
     return is_;
   }

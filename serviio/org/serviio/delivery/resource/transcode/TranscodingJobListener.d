@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class TranscodingJobListener : ProcessListener
 {
-    private static immutable Logger log = LoggerFactory.getLogger!(TranscodingJobListener)();
+    private static immutable Logger log;
     private String transcodingIdentifier;
     private File transcodedFile;
     private PipedInputStream transcodedStream;
@@ -49,7 +49,7 @@ public class TranscodingJobListener : ProcessListener
 
     override public void processEnded(bool success)
     {
-        log.debug_(String.format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
+        log.debug_(String_format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
 
         foreach (TranscodeInputStream stream ; processingStreams) {
             stream.setTranscodeFinished(true);
@@ -85,7 +85,7 @@ public class TranscodingJobListener : ProcessListener
                             timeFilesizeMap.put(txTime, new ProgressData(Long.valueOf(Long.parseLong(size)), Float.valueOf(Float.parseFloat(bitrate))));
                         }
                     } catch (NumberFormatException e) {
-                        log.debug_(String.format("Error updating FFmpeg output for line '%s': %s", cast(Object[])[ updatedLine, e.getMessage() ]));
+                        log.debug_(String_format("Error updating FFmpeg output for line '%s': %s", cast(Object[])[ updatedLine, e.getMessage() ]));
                     }
                 }
             }
@@ -119,7 +119,7 @@ public class TranscodingJobListener : ProcessListener
 
             if (getTranscodedFile() !is null) {
                 bool deleted = getTranscodedFile().delete_();
-                log.debug_(String.format("Deleted temp file '%s': %s", cast(Object[])[ getTranscodedFile(), Boolean.valueOf(deleted) ]));
+                log.debug_(String_format("Deleted temp file '%s': %s", cast(Object[])[ getTranscodedFile(), Boolean.valueOf(deleted) ]));
             }
         }
     }

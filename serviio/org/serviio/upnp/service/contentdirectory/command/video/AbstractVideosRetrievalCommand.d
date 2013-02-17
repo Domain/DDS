@@ -36,7 +36,7 @@ public abstract class AbstractVideosRetrievalCommand : AbstractEntityItemCommand
     {
         if (video.getSeriesId() !is null) {
             Series series = VideoService.getSeries(video.getSeriesId());
-            return String.format("%s (%s/%02d): %s", cast(Object[])[ series.getTitle(), video.getSeasonNumber(), video.getEpisodeNumber(), video.getTitle() ]);
+            return String_format("%s (%s/%02d): %s", cast(Object[])[ series.getTitle(), video.getSeasonNumber(), video.getEpisodeNumber(), video.getTitle() ]);
         }
 
         return video.getTitle();

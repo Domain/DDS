@@ -31,7 +31,7 @@ public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryS
 	{
 		File transcodedFile = jobListener.getTranscodedFile();
 		if (!transcodedFile.exists())
-			throw new IOException(String.format("Transcoded file '%s' cannot be found, FFmpeg execution probably failed", cast(Object[])[ transcodedFile.getPath() ]));
+			throw new IOException(String_format("Transcoded file '%s' cannot be found, FFmpeg execution probably failed", cast(Object[])[ transcodedFile.getPath() ]));
 		if ((jobListener.isFinished()) && (!jobListener.isSuccessful())) {
 			throw new IOException("FFmpeg execution failed");
 		}
@@ -45,7 +45,7 @@ public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryS
 			stream = new StreamDescriptor(fis, null);
 		}
 		else {
-			log.debug_(String.format("Transcoded file '%s' is complete, sending simple stream", cast(Object[])[ transcodedFile ]));
+			log.debug_(String_format("Transcoded file '%s' is complete, sending simple stream", cast(Object[])[ transcodedFile ]));
 			InputStream fis = new FileInputStream(transcodedFile);
 			stream = new StreamDescriptor(fis, Long.valueOf(transcodedFile.length()));
 		}
@@ -81,7 +81,7 @@ public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryS
 		if (!transcodingFolder.exists()) {
 			bool created = transcodingFolder.mkdirs();
 			if (!created) {
-				throw new IOException(String.format("Cannot create transcoding folder: %s", cast(Object[])[ transcodingFolder.getAbsolutePath() ]));
+				throw new IOException(String_format("Cannot create transcoding folder: %s", cast(Object[])[ transcodingFolder.getAbsolutePath() ]));
 			}
 		}
 		return transcodingFolder;
