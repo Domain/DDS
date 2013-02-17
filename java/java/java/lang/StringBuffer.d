@@ -3,6 +3,7 @@ module java.lang.StringBuffer;
 import java.lang.util;
 import java.lang.exceptions;
 import java.lang.String;
+import java.lang.CharSequence;
 
 version(Tango){
     static import tango.text.Text;

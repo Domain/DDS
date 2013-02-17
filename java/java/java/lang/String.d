@@ -1,9 +1,9 @@
 module java.lang.String;
 
 import java.lang.util;
-import java.lang.interfaces;
 import java.lang.exceptions;
 import java.lang.Class;
+import java.lang.CharSequence;
 
 version(Tango){
     static import tango.stdc.stringz;
@@ -115,6 +115,11 @@ String String_valueOf( in wchar[] wstr ){
 
 String String_format(Char, Args...)(in Char[] fmt, Args args){
     return std.string.format(fmt, args);
+}
+
+String toString(String str)
+{
+    return str;
 }
 
 int length( String str ){

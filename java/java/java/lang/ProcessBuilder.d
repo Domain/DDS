@@ -10,66 +10,66 @@ import java.lang.Process;
 
 public final class ProcessBuilder
 {
-	private List/*<String>*/ command;
-	private File directory;
-	private Map/*<String, String>*/ environment;
-	private bool redirectErrorStream;
+	private List!(String) cmd;
+	private File dir;
+	private Map!(String, String) env;
+	private bool redirectErrorStream_;
 
-	public this(List/*<String>*/ paramList)
+	public this(List!(String) paramList)
 	{
 		if (paramList is null)
 			throw new NullPointerException();
-		this.command = paramList;
+		this.cmd = paramList;
 	}
 
 	public this(String[] paramArrayOfString)
 	{
-		this.command = new ArrayList(paramArrayOfString.length);
+		this.cmd = new ArrayList(paramArrayOfString.length);
 		foreach (String str ; paramArrayOfString)
-			this.command.add(str);
+			this.cmd.add(str);
 	}
 
-	public ProcessBuilder command(List/*<String>*/ paramList)
+	public ProcessBuilder command(List!(String) paramList)
 	{
 		if (paramList is null)
 			throw new NullPointerException();
-		this.command = paramList;
+		this.cmd = paramList;
 		return this;
 	}
 
 	public ProcessBuilder command(String[] paramArrayOfString)
 	{
-		this.command = new ArrayList(paramArrayOfString.length);
+		this.cmd = new ArrayList(paramArrayOfString.length);
 		foreach (String str ; paramArrayOfString)
-			this.command.add(str);
+			this.cmd.add(str);
 		return this;
 	}
 
-	public List/*<String>*/ command()
+	public List!(String) command()
 	{
-		return this.command;
+		return this.cmd;
 	}
 
-	public Map/*<String, String>*/ environment()
+	public Map!(String, String) environment()
 	{
 		SecurityManager localSecurityManager = System.getSecurityManager();
 		if (localSecurityManager !is null) {
 			localSecurityManager.checkPermission(new RuntimePermission("getenv.*"));
 		}
-		if (this.environment is null) {
-			this.environment = ProcessEnvironment.environment();
+		if (this.env is null) {
+			this.env = ProcessEnvironment.env();
 		}
-		assert (this.environment !is null);
+		assert (this.env !is null);
 
-		return this.environment;
+		return this.env;
 	}
 
 	ProcessBuilder environment(String[] paramArrayOfString)
 	{
-		assert (this.environment is null);
+		assert (this.env is null);
 		if (paramArrayOfString !is null) {
-			this.environment = ProcessEnvironment.emptyEnvironment(paramArrayOfString.length);
-			assert (this.environment !is null);
+			this.env = ProcessEnvironment.emptyEnvironment(paramArrayOfString.length);
+			assert (this.env !is null);
 
 			foreach (String str ; paramArrayOfString)
 			{
@@ -79,7 +79,7 @@ public final class ProcessBuilder
 				int k = str.indexOf('=', 1);
 
 				if (k != -1) {
-					this.environment.put(str.substring(0, k), str.substring(k + 1));
+					this.env.put(str.substring(0, k), str.substring(k + 1));
 				}
 			}
 		}
@@ -88,29 +88,29 @@ public final class ProcessBuilder
 
 	public File directory()
 	{
-		return this.directory;
+		return this.dir;
 	}
 
 	public ProcessBuilder directory(File paramFile)
 	{
-		this.directory = paramFile;
+		this.dir = paramFile;
 		return this;
 	}
 
 	public bool redirectErrorStream()
 	{
-		return this.redirectErrorStream;
+		return this.redirectErrorStream_;
 	}
 
 	public ProcessBuilder redirectErrorStream(bool paramBoolean)
 	{
-		this.redirectErrorStream = paramBoolean;
+		this.redirectErrorStream_ = paramBoolean;
 		return this;
 	}
 
 	public Process start()
 	{
-		String[] arrayOfString = cast(String[])this.command.toArray(new String[this.command.size()]);
+		String[] arrayOfString = cast(String[])this.cmd.toArray(new String[this.cmd.size()]);
 		arrayOfString = cast(String[])arrayOfString.clone();
 		foreach (Object localObject2 ; arrayOfString) {
 			if (localObject2 is null)
@@ -122,10 +122,10 @@ public final class ProcessBuilder
 		if (localSecurityManager !is null) {
 			localSecurityManager.checkExec(name);
 		}
-		String str = this.directory is null ? null : this.directory.toString();
+		String str = this.dir is null ? null : this.dir.toString();
 		try
 		{
-			return ProcessImpl.start(arrayOfString, this.environment, str, this.redirectErrorStream);
+			return ProcessImpl.start(arrayOfString, this.env, str, this.redirectErrorStream_);
 		}
 		catch (IOException localIOException)
 		{

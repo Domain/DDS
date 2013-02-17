@@ -51,6 +51,19 @@ class Boolean : ValueWrapperT!(bool) {
         }
     }
 
+    public bool boolValue() const
+    {
+        return booleanValue();
+    }
+
+    public static String toString(bool value)
+    {
+        if (value)
+            return "true";
+        else
+            return "false";
+    }
+
     private static Class TYPE_;
     public static Class TYPE(){
         if( TYPE_ is null ){

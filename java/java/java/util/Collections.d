@@ -29,17 +29,23 @@ class Collections {
         }
         return EMPTY_LIST_;
     }
-    private static Map!(Object, Object) EMPTY_MAP_;
-    public static Map!(Object, Object) EMPTY_MAP(){
-        if( EMPTY_MAP_ is null ){
-            synchronized(Collections.classinfo ){
-                if( EMPTY_MAP_ is null ){
-                    EMPTY_MAP_ = new TreeMap!(Object, Object)();
-                }
-            }
-        }
-        return EMPTY_MAP_;
+    //private static Map!(Object, Object) EMPTY_MAP_;
+    //public static Map!(Object, Object) emptyMap(){
+    //    if( EMPTY_MAP_ is null ){
+    //        synchronized(Collections.classinfo ){
+    //            if( EMPTY_MAP_ is null ){
+    //                EMPTY_MAP_ = new TreeMap!(Object, Object)();
+    //            }
+    //        }
+    //    }
+    //    return EMPTY_MAP_;
+    //}
+
+    public static Map!(K, V) emptyMap(K, V)(){
+        Map!(K, V) map = new TreeMap!(K, V)();
+        return map;
     }
+
     private static Set!Object EMPTY_SET_;
     public static Set!Object EMPTY_SET(){
         if( EMPTY_SET_ is null ){

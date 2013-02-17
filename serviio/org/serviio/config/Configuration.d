@@ -1,7 +1,8 @@
 module org.serviio.config.Configuration;
 
-import java.lang.String;
-import java.lang.Integer;
+import std.conv;
+
+import java.lang.all;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -292,7 +293,7 @@ public class Configuration
         if (ObjectValidator.isNotEmpty(value)) {
             return CollectionUtils.CSVToMap(value, ",");
         }
-        return Collections.emptyMap();
+        return Collections.emptyMap!(String, String)();
     }
 
     public static void setBrowseMenuItemOptions(Map!(String, String) itemsMap)
@@ -391,7 +392,7 @@ public class Configuration
     {
         String value = cast(String)cache.get(ONLINE_FEED_PREFERRED_QUALITY);
         if (ObjectValidator.isNotEmpty(value)) {
-            return PreferredQuality.valueOf(value);
+            return to!PreferredQuality(value);//PreferredQuality.valueOf(value);
         }
 
         return PreferredQuality.MEDIUM;
@@ -399,7 +400,7 @@ public class Configuration
 
     public static void setOnlineFeedPreferredQuality(PreferredQuality quality)
     {
-        storeConfigValue(ONLINE_FEED_PREFERRED_QUALITY, quality.toString());
+        storeConfigValue(ONLINE_FEED_PREFERRED_QUALITY, to!String(quality)/*quality.toString()*/);
     }
 
     public static String getCustomerLicense() {
@@ -456,7 +457,7 @@ public class Configuration
     {
         String value = cast(String)cache.get(REMOTE_PREFERRED_DELIVERY_QUALITY);
         if (ObjectValidator.isNotEmpty(value)) {
-            return DeliveryQuality.QualityType.valueOf(value);
+            return to!(DeliveryQuality.QualityType)(value);//DeliveryQuality.QualityType.valueOf(value);
         }
 
         return DeliveryQuality.QualityType.MEDIUM;
@@ -464,7 +465,7 @@ public class Configuration
 
     public static void setRemotePreferredDeliveryQuality(DeliveryQuality.QualityType quality)
     {
-        storeConfigValue(REMOTE_PREFERRED_DELIVERY_QUALITY, quality.toString());
+        storeConfigValue(REMOTE_PREFERRED_DELIVERY_QUALITY, to!String(quality)/*quality.toString()*/);
     }
 
     public static bool isConsoleCheckForUpdatesEnabled()
@@ -508,7 +509,7 @@ public class Configuration
 
     private static void instantiateStorage() {
         try {
-            Class!(Object) storageClass = Class.forName(ApplicationSettings.getStringProperty("configuration_storage_class"));
+            Class/*!(Object)*/ storageClass = Class.forName(ApplicationSettings.getStringProperty("configuration_storage_class"));
             storage = cast(ConfigStorage)storageClass.newInstance();
         } catch (ClassNotFoundException e) {
             log.error(String_format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));

@@ -2,7 +2,7 @@ module org.serviio.library.online.PreferredQuality;
 
 public enum PreferredQuality
 {
-  LOW, MEDIUM, HIGH
+    LOW, MEDIUM, HIGH
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

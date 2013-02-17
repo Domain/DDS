@@ -2,7 +2,6 @@ module java.lang.util;
 
 public import java.lang.wrappers;
 public import java.lang.String;
-public import java.lang.interfaces;
 
 version(Tango){
     static import tango.text.convert.Format;

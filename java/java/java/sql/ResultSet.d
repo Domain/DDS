@@ -2,6 +2,7 @@
 module java.sql.ResultSet;
 
 import java.lang.exceptions;
+import java.lang.String;
 
 public class ResultSet
 {
@@ -14,5 +15,17 @@ public class ResultSet
     {
         implMissing();
         return false;
+    }
+
+    public long getLong(String name)
+    {
+        implMissing();
+        return 0L;
+    }
+
+    public String getString(String name)
+    {
+        implMissing();
+        return "";
     }
 }

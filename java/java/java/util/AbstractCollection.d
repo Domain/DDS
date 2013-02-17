@@ -45,9 +45,9 @@ abstract class AbstractCollection(T) : Collection!T {
     bool        remove(T o){
         throw new UnsupportedOperationException();
     }
-    bool        remove(String o){
-        return remove(stringcast(o));
-    }
+    //bool        remove(String o){
+    //    return remove(stringcast(o));
+    //}
     bool        removeAll(Collection!T c){
         if( c is null ) throw new NullPointerException();
         bool res = false;

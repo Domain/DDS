@@ -265,14 +265,15 @@
     <File path="java\lang\Boolean.d" />
     <File path="java\lang\Byte.d" />
     <File path="java\lang\Character.d" />
+    <File path="java\lang\CharSequence.d" />
     <File path="java\lang\Class.d" />
+    <File path="java\lang\ClassNotFoundException.d" />
     <File path="java\lang\Cloneable.d" />
     <File path="java\lang\Comparable.d" />
     <File path="java\lang\Double.d" />
     <File path="java\lang\exceptions.d" />
     <File path="java\lang\Float.d" />
     <File path="java\lang\Integer.d" />
-    <File path="java\lang\interfaces.d" />
     <File path="java\lang\Long.d" />
     <File path="java\lang\Math.d" />
     <File path="java\lang\Number.d" />
