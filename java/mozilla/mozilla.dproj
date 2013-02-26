@@ -8,8 +8,8 @@
     <ProjectGuid>{7189A91B-3A4E-4E53-86C4-7FA498BE6A14}</ProjectGuid>
     <UseDefaultCompiler>True</UseDefaultCompiler>
     <IncrementalLinking>True</IncrementalLinking>
-    <BaseDirectory>.</BaseDirectory>
     <PreferOneStepBuild>True</PreferOneStepBuild>
+    <Compiler>DMD2</Compiler>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -18,7 +18,7 @@
     <ObjectsDirectory>obj\Debug</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
     <Externalconsole>True</Externalconsole>
-    <Target>Executable</Target>
+    <Target>StaticLibrary</Target>
     <OutputName>mozilla</OutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

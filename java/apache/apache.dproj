@@ -8,8 +8,8 @@
     <ProjectGuid>{11B9E56D-A9EE-4B7B-8CBA-955EF786B7A2}</ProjectGuid>
     <UseDefaultCompiler>True</UseDefaultCompiler>
     <IncrementalLinking>True</IncrementalLinking>
-    <BaseDirectory>.</BaseDirectory>
     <PreferOneStepBuild>True</PreferOneStepBuild>
+    <Compiler>DMD2</Compiler>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -18,7 +18,7 @@
     <ObjectsDirectory>obj\Debug</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
     <Externalconsole>True</Externalconsole>
-    <Target>Executable</Target>
+    <Target>StaticLibrary</Target>
     <OutputName>apache</OutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
