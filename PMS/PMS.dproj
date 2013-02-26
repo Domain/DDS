@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{032B7A51-A65C-4AA2-99E5-64013AA99B03}</ProjectGuid>
+    <UseDefaultCompiler>True</UseDefaultCompiler>
+    <IncrementalLinking>True</IncrementalLinking>
+    <BaseDirectory>.</BaseDirectory>
+    <PreferOneStepBuild>True</PreferOneStepBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Debug</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>PMS</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Release</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>PMS</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Unittest</OutputPath>
+    <UnittestMode>True</UnittestMode>
+    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>PMS</OutputName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="net\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="net\pms\Messages.d" />
+    <Compile Include="net\pms\PMS.d" />
+    <Compile Include="net\pms\configuration\all.d" />
+    <Compile Include="net\pms\configuration\Build.d" />
+    <Compile Include="net\pms\configuration\ConfigurationProgramPaths.d" />
+    <Compile Include="net\pms\configuration\ConfigurationUtil.d" />
+    <Compile Include="net\pms\configuration\FormatConfiguration.d" />
+    <Compile Include="net\pms\configuration\IpFilter.d" />
+    <Compile Include="net\pms\configuration\LinuxDefaultPaths.d" />
+    <Compile Include="net\pms\configuration\MacDefaultPaths.d" />
+    <Compile Include="net\pms\configuration\MapFileConfiguration.d" />
+    <Compile Include="net\pms\configuration\PlatformSpecificDefaultPathsFactory.d" />
+    <Compile Include="net\pms\configuration\PmsConfiguration.d" />
+    <Compile Include="net\pms\configuration\ProgramPathDisabler.d" />
+    <Compile Include="net\pms\configuration\ProgramPaths.d" />
+    <Compile Include="net\pms\configuration\RendererConfiguration.d" />
+    <Compile Include="net\pms\configuration\TempFolder.d" />
+    <Compile Include="net\pms\configuration\WindowsDefaultPaths.d" />
+    <Compile Include="net\pms\configuration\WindowsRegistryProgramPaths.d" />
+    <Compile Include="net\pms\dlna\all.d" />
+    <Compile Include="net\pms\dlna\AudiosFeed.d" />
+    <Compile Include="net\pms\dlna\ChapterFileTranscodeVirtualFolder.d" />
+    <Compile Include="net\pms\dlna\CueFolder.d" />
+    <Compile Include="net\pms\dlna\DLNAMediaAudio.d" />
+    <Compile Include="net\pms\dlna\DLNAMediaDatabase.d" />
+    <Compile Include="net\pms\dlna\DLNAMediaInfo.d" />
+    <Compile Include="net\pms\dlna\DLNAMediaLang.d" />
+    <Compile Include="net\pms\dlna\DLNAMediaSubtitle.d" />
+    <Compile Include="net\pms\dlna\DLNAResource.d" />
+    <Compile Include="net\pms\dlna\DVDISOFile.d" />
+    <Compile Include="net\pms\dlna\DVDISOTitle.d" />
+    <Compile Include="net\pms\dlna\Feed.d" />
+    <Compile Include="net\pms\dlna\FeedItem.d" />
+    <Compile Include="net\pms\dlna\FileTranscodeVirtualFolder.d" />
+    <Compile Include="net\pms\dlna\ImagesFeed.d" />
+    <Compile Include="net\pms\dlna\InputFile.d" />
+    <Compile Include="net\pms\dlna\IPushOutput.d" />
+    <Compile Include="net\pms\dlna\LibMediaInfoParser.d" />
+    <Compile Include="net\pms\dlna\MapFile.d" />
+    <Compile Include="net\pms\dlna\MediaInfo.d" />
+    <Compile Include="net\pms\dlna\PlaylistFolder.d" />
+    <Compile Include="net\pms\dlna\Range.d" />
+    <Compile Include="net\pms\dlna\RarredEntry.d" />
+    <Compile Include="net\pms\dlna\RarredFile.d" />
+    <Compile Include="net\pms\dlna\RealFile.d" />
+    <Compile Include="net\pms\dlna\RootFolder.d" />
+    <Compile Include="net\pms\dlna\VideosFeed.d" />
+    <Compile Include="net\pms\dlna\WebAudioStream.d" />
+    <Compile Include="net\pms\dlna\WebStream.d" />
+    <Compile Include="net\pms\dlna\WebVideoStream.d" />
+    <Compile Include="net\pms\dlna\ZippedEntry.d" />
+    <Compile Include="net\pms\dlna\ZippedFile.d" />
+    <Compile Include="net\pms\dlna\virtual\all.d" />
+    <Compile Include="net\pms\dlna\virtual\MediaLibrary.d" />
+    <Compile Include="net\pms\dlna\virtual\MediaLibraryFolder.d" />
+    <Compile Include="net\pms\dlna\virtual\TranscodeVirtualFolder.d" />
+    <Compile Include="net\pms\dlna\virtual\VirtualFolder.d" />
+    <Compile Include="net\pms\dlna\virtual\VirtualVideoAction.d" />
+    <Compile Include="net\pms\encoders\all.d" />
+    <Compile Include="net\pms\encoders\AviDemuxerInputStream.d" />
+    <Compile Include="net\pms\encoders\FFMpegAudio.d" />
+    <Compile Include="net\pms\encoders\FFMpegAviSynthVideo.d" />
+    <Compile Include="net\pms\encoders\FFMpegDVRMSRemux.d" />
+    <Compile Include="net\pms\encoders\FFMpegVideo.d" />
+    <Compile Include="net\pms\encoders\FFMpegWebVideo.d" />
+    <Compile Include="net\pms\encoders\MEncoderAviSynth.d" />
+    <Compile Include="net\pms\encoders\MEncoderVideo.d" />
+    <Compile Include="net\pms\encoders\MEncoderWebVideo.d" />
+    <Compile Include="net\pms\encoders\MPlayerAudio.d" />
+    <Compile Include="net\pms\encoders\MPlayerWebAudio.d" />
+    <Compile Include="net\pms\encoders\MPlayerWebVideoDump.d" />
+    <Compile Include="net\pms\encoders\Player.d" />
+    <Compile Include="net\pms\encoders\PlayerFactory.d" />
+    <Compile Include="net\pms\encoders\RAWThumbnailer.d" />
+    <Compile Include="net\pms\encoders\Track.d" />
+    <Compile Include="net\pms\encoders\TsMuxerAudio.d" />
+    <Compile Include="net\pms\encoders\TSMuxerVideo.d" />
+    <Compile Include="net\pms\encoders\VideoLanAudioStreaming.d" />
+    <Compile Include="net\pms\encoders\VideoLanVideoStreaming.d" />
+    <Compile Include="net\pms\external\AdditionalFolderAtRoot.d" />
+    <Compile Include="net\pms\external\AdditionalFoldersAtRoot.d" />
+    <Compile Include="net\pms\external\AdditionalResourceFolderListener.d" />
+    <Compile Include="net\pms\external\all.d" />
+    <Compile Include="net\pms\external\ExternalFactory.d" />
+    <Compile Include="net\pms\external\ExternalListener.d" />
+    <Compile Include="net\pms\external\FinalizeTranscoderArgsListener.d" />
+    <Compile Include="net\pms\external\StartStopListener.d" />
+    <Compile Include="net\pms\external\StartStopListenerDelegate.d" />
+    <Compile Include="net\pms\formats\all.d" />
+    <Compile Include="net\pms\formats\AudioAsVideo.d" />
+    <Compile Include="net\pms\formats\DVRMS.d" />
+    <Compile Include="net\pms\formats\FLAC.d" />
+    <Compile Include="net\pms\formats\Format.d" />
+    <Compile Include="net\pms\formats\FormatFactory.d" />
+    <Compile Include="net\pms\formats\GIF.d" />
+    <Compile Include="net\pms\formats\ISO.d" />
+    <Compile Include="net\pms\formats\JPG.d" />
+    <Compile Include="net\pms\formats\M4A.d" />
+    <Compile Include="net\pms\formats\MKV.d" />
+    <Compile Include="net\pms\formats\MP3.d" />
+    <Compile Include="net\pms\formats\MPG.d" />
+    <Compile Include="net\pms\formats\OGG.d" />
+    <Compile Include="net\pms\formats\PNG.d" />
+    <Compile Include="net\pms\formats\RAW.d" />
+    <Compile Include="net\pms\formats\TIF.d" />
+    <Compile Include="net\pms\formats\WAV.d" />
+    <Compile Include="net\pms\formats\WEB.d" />
+    <Compile Include="net\pms\formats\v2\all.d" />
+    <Compile Include="net\pms\formats\v2\AudioAttribute.d" />
+    <Compile Include="net\pms\formats\v2\AudioProperties.d" />
+    <Compile Include="net\pms\formats\v2\AudioUtils.d" />
+    <Compile Include="net\pms\formats\v2\SubtitleType.d" />
+    <Compile Include="net\pms\formats\v2\SubtitleUtils.d" />
+    <Compile Include="net\pms\gui\all.d" />
+    <Compile Include="net\pms\gui\DummyFrame.d" />
+    <Compile Include="net\pms\gui\IFrame.d" />
+    <Compile Include="net\pms\io\all.d" />
+    <Compile Include="net\pms\io\BasicSystemUtils.d" />
+    <Compile Include="net\pms\io\BlockerFileInputStream.d" />
+    <Compile Include="net\pms\io\BufferedOutputFile.d" />
+    <Compile Include="net\pms\io\BufferedOutputFileImpl.d" />
+    <Compile Include="net\pms\io\Gob.d" />
+    <Compile Include="net\pms\io\InternalJavaProcessImpl.d" />
+    <Compile Include="net\pms\io\MacSystemUtils.d" />
+    <Compile Include="net\pms\io\OutputBufferConsumer.d" />
+    <Compile Include="net\pms\io\OutputConsumer.d" />
+    <Compile Include="net\pms\io\OutputParams.d" />
+    <Compile Include="net\pms\io\OutputTextConsumer.d" />
+    <Compile Include="net\pms\io\OutputTextLogger.d" />
+    <Compile Include="net\pms\io\PipeIPCProcess.d" />
+    <Compile Include="net\pms\io\PipeProcess.d" />
+    <Compile Include="net\pms\io\ProcessWrapper.d" />
+    <Compile Include="net\pms\io\ProcessWrapperImpl.d" />
+    <Compile Include="net\pms\io\ProcessWrapperLiteImpl.d" />
+    <Compile Include="net\pms\io\SizeLimitInputStream.d" />
+    <Compile Include="net\pms\io\SolarisUtils.d" />
+    <Compile Include="net\pms\io\StreamModifier.d" />
+    <Compile Include="net\pms\io\SystemUtils.d" />
+    <Compile Include="net\pms\io\UnbufferedOutputFile.d" />
+    <Compile Include="net\pms\io\UnusedInputStream.d" />
+    <Compile Include="net\pms\io\UnusedProcess.d" />
+    <Compile Include="net\pms\io\WaitBufferedInputStream.d" />
+    <Compile Include="net\pms\io\WindowsNamedPipe.d" />
+    <Compile Include="net\pms\io\WinUtils.d" />
+    <Compile Include="net\pms\logging\all.d" />
+    <Compile Include="net\pms\logging\DebugLogPathDefiner.d" />
+    <Compile Include="net\pms\logging\FrameAppender.d" />
+    <Compile Include="net\pms\logging\LoggingConfigFileLoader.d" />
+    <Compile Include="net\pms\network\all.d" />
+    <Compile Include="net\pms\network\HTMLConsole.d" />
+    <Compile Include="net\pms\network\HTTPResource.d" />
+    <Compile Include="net\pms\network\HTTPResourceAuthenticator.d" />
+    <Compile Include="net\pms\network\HTTPServer.d" />
+    <Compile Include="net\pms\network\HttpServerPipelineFactory.d" />
+    <Compile Include="net\pms\network\HTTPXMLHelper.d" />
+    <Compile Include="net\pms\network\NetworkConfiguration.d" />
+    <Compile Include="net\pms\network\Proxy.d" />
+    <Compile Include="net\pms\network\ProxyServer.d" />
+    <Compile Include="net\pms\network\Request.d" />
+    <Compile Include="net\pms\network\RequestHandler.d" />
+    <Compile Include="net\pms\network\RequestHandlerV2.d" />
+    <Compile Include="net\pms\network\RequestV2.d" />
+    <Compile Include="net\pms\network\SpeedStats.d" />
+    <Compile Include="net\pms\network\UPNPHelper.d" />
+    <Compile Include="net\pms\newgui\AboutTab.d" />
+    <Compile Include="net\pms\newgui\all.d" />
+    <Compile Include="net\pms\newgui\FontFileFilter.d" />
+    <Compile Include="net\pms\newgui\GeneralTab.d" />
+    <Compile Include="net\pms\newgui\HelpTab.d" />
+    <Compile Include="net\pms\newgui\ImagePanel.d" />
+    <Compile Include="net\pms\newgui\LooksFrame.d" />
+    <Compile Include="net\pms\newgui\MyComboBoxModel.d" />
+    <Compile Include="net\pms\newgui\NavigationShareTab.d" />
+    <Compile Include="net\pms\newgui\ProfileChooser.d" />
+    <Compile Include="net\pms\newgui\RestrictedFileSystemView.d" />
+    <Compile Include="net\pms\newgui\StatusTab.d" />
+    <Compile Include="net\pms\newgui\TracesTab.d" />
+    <Compile Include="net\pms\newgui\TranscodingTab.d" />
+    <Compile Include="net\pms\newgui\TreeNodeSettings.d" />
+    <Compile Include="net\pms\newgui\TreeRenderer.d" />
+    <Compile Include="net\pms\newgui\update\all.d" />
+    <Compile Include="net\pms\newgui\update\AutoUpdateDialog.d" />
+    <Compile Include="net\pms\update\all.d" />
+    <Compile Include="net\pms\update\AutoUpdater.d" />
+    <Compile Include="net\pms\update\AutoUpdaterServerProperties.d" />
+    <Compile Include="net\pms\update\OperatingSystem.d" />
+    <Compile Include="net\pms\update\UpdateException.d" />
+    <Compile Include="net\pms\util\all.d" />
+    <Compile Include="net\pms\util\AVCHeader.d" />
+    <Compile Include="net\pms\util\CodecUtil.d" />
+    <Compile Include="net\pms\util\CoverUtil.d" />
+    <Compile Include="net\pms\util\DTSAudioOutputStream.d" />
+    <Compile Include="net\pms\util\FileUtil.d" />
+    <Compile Include="net\pms\util\FlowParserOutputStream.d" />
+    <Compile Include="net\pms\util\FormLayoutUtil.d" />
+    <Compile Include="net\pms\util\H264AnnexBInputStream.d" />
+    <Compile Include="net\pms\util\ImagesUtil.d" />
+    <Compile Include="net\pms\util\Iso639.d" />
+    <Compile Include="net\pms\util\KeyedComboBoxModel.d" />
+    <Compile Include="net\pms\util\MpegUtil.d" />
+    <Compile Include="net\pms\util\NaturalComparator.d" />
+    <Compile Include="net\pms\util\PCMAudioOutputStream.d" />
+    <Compile Include="net\pms\util\PmsProperties.d" />
+    <Compile Include="net\pms\util\PMSUtil.d" />
+    <Compile Include="net\pms\util\ProcessUtil.d" />
+    <Compile Include="net\pms\util\PropertiesUtil.d" />
+    <Compile Include="net\pms\util\StringUtil.d" />
+    <Compile Include="net\pms\util\SystemErrWrapper.d" />
+    <Compile Include="net\pms\util\TaskRunner.d" />
+    <Compile Include="net\pms\util\UriRetriever.d" />
+    <Compile Include="net\pms\util\UriRetrieverCallback.d" />
+    <Compile Include="net\pms\util\Version.d" />
+    <Compile Include="net\pms\xmlwise\all.d" />
+    <Compile Include="net\pms\xmlwise\Plist.d" />
+    <Compile Include="net\pms\xmlwise\XmlElement.d" />
+    <Compile Include="net\pms\xmlwise\XmlElementAttributes.d" />
+    <Compile Include="net\pms\xmlwise\XmlParseException.d" />
+    <Compile Include="net\pms\xmlwise\Xmlwise.d" />
+    <Compile Include="main.d" />
+  </ItemGroup>
+</Project>

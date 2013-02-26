@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{11B9E56D-A9EE-4B7B-8CBA-955EF786B7A2}</ProjectGuid>
+    <UseDefaultCompiler>True</UseDefaultCompiler>
+    <IncrementalLinking>True</IncrementalLinking>
+    <BaseDirectory>.</BaseDirectory>
+    <PreferOneStepBuild>True</PreferOneStepBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Debug</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>apache</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Release</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>apache</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Unittest</OutputPath>
+    <UnittestMode>True</UnittestMode>
+    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>apache</OutputName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="org\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="org\apache\commons\configuration\Configuration.d" />
+    <Compile Include="org\apache\commons\io\FilenameUtils.d" />
+    <Compile Include="org\apache\commons\io\FileUtils.d" />
+    <Compile Include="org\apache\commons\io\IOUtils.d" />
+    <Compile Include="org\apache\commons\io\LineIterator.d" />
+    <Compile Include="org\apache\commons\lang\BooleanUtils.d" />
+    <Compile Include="org\apache\commons\lang\StringUtils.d" />
+    <Compile Include="org\apache\commons\lang\WordUtils.d" />
+    <Compile Include="org\apache\http\ConnectionClosedException.d" />
+    <Compile Include="org\apache\http\ConnectionReuseStrategy.d" />
+    <Compile Include="org\apache\http\Header.d" />
+    <Compile Include="org\apache\http\HttpEntity.d" />
+    <Compile Include="org\apache\http\HttpEntityEnclosingRequest.d" />
+    <Compile Include="org\apache\http\HttpException.d" />
+    <Compile Include="org\apache\http\HttpHost.d" />
+    <Compile Include="org\apache\http\HttpRequest.d" />
+    <Compile Include="org\apache\http\HttpRequestFactory.d" />
+    <Compile Include="org\apache\http\HttpResponse.d" />
+    <Compile Include="org\apache\http\HttpResponseFactory.d" />
+    <Compile Include="org\apache\http\HttpVersion.d" />
+    <Compile Include="org\apache\http\MethodNotSupportedException.d" />
+    <Compile Include="org\apache\http\ProtocolVersion.d" />
+    <Compile Include="org\apache\http\RequestLine.d" />
+    <Compile Include="org\apache\http\entity\AbstractHttpEntity.d" />
+    <Compile Include="org\apache\http\entity\ByteArrayEntity.d" />
+    <Compile Include="org\apache\http\entity\InputStreamEntity.d" />
+    <Compile Include="org\apache\http\entity\StringEntity.d" />
+    <Compile Include="org\apache\http\impl\DefaultConnectionReuseStrategy.d" />
+    <Compile Include="org\apache\http\impl\DefaultHttpClientConnection.d" />
+    <Compile Include="org\apache\http\impl\DefaultHttpRequestFactory.d" />
+    <Compile Include="org\apache\http\impl\DefaultHttpResponseFactory.d" />
+    <Compile Include="org\apache\http\impl\DefaultHttpServerConnection.d" />
+    <Compile Include="org\apache\http\impl\io\AbstractSessionInputBuffer.d" />
+    <Compile Include="org\apache\http\impl\io\AbstractSessionOutputBuffer.d" />
+    <Compile Include="org\apache\http\impl\io\HttpRequestParser.d" />
+    <Compile Include="org\apache\http\impl\io\HttpRequestWriter.d" />
+    <Compile Include="org\apache\http\impl\io\HttpResponseParser.d" />
+    <Compile Include="org\apache\http\impl\io\HttpResponseWriter.d" />
+    <Compile Include="org\apache\http\io\HttpMessageWriter.d" />
+    <Compile Include="org\apache\http\io\SessionInputBuffer.d" />
+    <Compile Include="org\apache\http\io\SessionOutputBuffer.d" />
+    <Compile Include="org\apache\http\message\BasicHttpEntityEnclosingRequest.d" />
+    <Compile Include="org\apache\http\message\BasicHttpRequest.d" />
+    <Compile Include="org\apache\http\message\BasicHttpResponse.d" />
+    <Compile Include="org\apache\http\message\BasicLineFormatter.d" />
+    <Compile Include="org\apache\http\message\BasicLineParser.d" />
+    <Compile Include="org\apache\http\params\BasicHttpParams.d" />
+    <Compile Include="org\apache\http\params\HttpParams.d" />
+    <Compile Include="org\apache\http\protocol\BasicHttpContext.d" />
+    <Compile Include="org\apache\http\protocol\BasicHttpProcessor.d" />
+    <Compile Include="org\apache\http\protocol\HttpContext.d" />
+    <Compile Include="org\apache\http\protocol\HttpProcessor.d" />
+    <Compile Include="org\apache\http\protocol\HttpRequestExecutor.d" />
+    <Compile Include="org\apache\http\protocol\HttpRequestHandler.d" />
+    <Compile Include="org\apache\http\protocol\HttpRequestHandlerResolver.d" />
+    <Compile Include="org\apache\http\protocol\HttpService.d" />
+    <Compile Include="org\apache\http\protocol\RequestContent.d" />
+    <Compile Include="org\apache\http\protocol\RequestTargetHost.d" />
+    <Compile Include="org\apache\http\protocol\ResponseConnControl.d" />
+    <Compile Include="org\apache\http\protocol\ResponseContent.d" />
+    <Compile Include="org\apache\http\protocol\ResponseDate.d" />
+    <Compile Include="org\apache\http\protocol\ResponseServer.d" />
+    <Compile Include="org\apache\http\util\EntityUtils.d" />
+    <Compile Include="org\apache\jcs\JCS.d" />
+    <Compile Include="org\apache\jcs\access\exception\CacheException.d" />
+    <Compile Include="org\apache\sanselan\ImageFormat.d" />
+    <Compile Include="org\apache\sanselan\ImageInfo.d" />
+    <Compile Include="org\apache\sanselan\ImageReadException.d" />
+    <Compile Include="org\apache\sanselan\Sanselan.d" />
+    <Compile Include="org\apache\sanselan\common\BinaryFileParser.d" />
+    <Compile Include="org\apache\sanselan\common\IImageMetadata.d" />
+    <Compile Include="org\apache\sanselan\common\byteSources\ByteSource.d" />
+    <Compile Include="org\apache\sanselan\common\byteSources\ByteSourceArray.d" />
+    <Compile Include="org\apache\sanselan\common\byteSources\ByteSourceFile.d" />
+    <Compile Include="org\apache\sanselan\common\byteSources\ByteSourceInputStream.d" />
+    <Compile Include="org\apache\sanselan\formats\jpeg\JpegImageMetadata.d" />
+    <Compile Include="org\apache\sanselan\formats\jpeg\JpegUtils.d" />
+    <Compile Include="org\apache\sanselan\formats\tiff\TiffField.d" />
+    <Compile Include="org\apache\sanselan\formats\tiff\constants\TiffConstants.d" />
+  </ItemGroup>
+</Project>

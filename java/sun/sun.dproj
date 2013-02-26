@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5802B5D-19DF-4547-8D62-DA0410CC1ABB}</ProjectGuid>
+    <UseDefaultCompiler>True</UseDefaultCompiler>
+    <IncrementalLinking>True</IncrementalLinking>
+    <BaseDirectory>.</BaseDirectory>
+    <PreferOneStepBuild>True</PreferOneStepBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Debug</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>sun</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Release</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>sun</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Unittest</OutputPath>
+    <UnittestMode>True</UnittestMode>
+    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>sun</OutputName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="com\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="com\sun\jna\Library.d" />
+    <Compile Include="com\sun\jna\Memory.d" />
+    <Compile Include="com\sun\jna\Native.d" />
+    <Compile Include="com\sun\jna\Platform.d" />
+    <Compile Include="com\sun\jna\Pointer.d" />
+    <Compile Include="com\sun\jna\Structure.d" />
+    <Compile Include="com\sun\jna\WString.d" />
+    <Compile Include="com\sun\jna\ptr\IntByReference.d" />
+    <Compile Include="com\sun\jna\ptr\LongByReference.d" />
+    <Compile Include="com\sun\jna\win32\StdCallLibrary.d" />
+    <Compile Include="com\sun\syndication\feed\modules\Module.d" />
+    <Compile Include="com\sun\syndication\feed\modules\ModuleImpl.d" />
+    <Compile Include="com\sun\syndication\feed\modules\itunes\EntryInformation.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\MediaEntryModule.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\types\MediaContent.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\types\MediaGroup.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\types\Metadata.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\types\Thumbnail.d" />
+    <Compile Include="com\sun\syndication\feed\modules\mediarss\types\UrlReference.d" />
+    <Compile Include="com\sun\syndication\feed\synd\SyndEnclosure.d" />
+    <Compile Include="com\sun\syndication\feed\synd\SyndEntry.d" />
+    <Compile Include="com\sun\syndication\feed\synd\SyndFeed.d" />
+    <Compile Include="com\sun\syndication\feed\synd\SyndImage.d" />
+    <Compile Include="com\sun\syndication\feed\synd\SyndLink.d" />
+    <Compile Include="com\sun\syndication\io\FeedException.d" />
+    <Compile Include="com\sun\syndication\io\ModuleParser.d" />
+    <Compile Include="com\sun\syndication\io\SyndFeedInput.d" />
+    <Compile Include="com\sun\syndication\io\impl\Base64.d" />
+  </ItemGroup>
+</Project>

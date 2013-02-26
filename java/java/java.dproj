@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B50CC451-138E-4A65-B82F-576A55A7434A}</ProjectGuid>
+    <UseDefaultCompiler>True</UseDefaultCompiler>
+    <IncrementalLinking>True</IncrementalLinking>
+    <BaseDirectory>.</BaseDirectory>
+    <PreferOneStepBuild>True</PreferOneStepBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Debug</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>java</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <UnittestMode>False</UnittestMode>
+    <ObjectsDirectory>obj\Release</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>java</OutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <OutputPath>bin\Unittest</OutputPath>
+    <UnittestMode>True</UnittestMode>
+    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
+    <DebugLevel>0</DebugLevel>
+    <Externalconsole>True</Externalconsole>
+    <Target>Executable</Target>
+    <OutputName>java</OutputName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="java\" />
+    <Folder Include="javax\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="java\awt\Dimension.d" />
+    <Compile Include="java\awt\Graphics2D.d" />
+    <Compile Include="java\awt\GraphicsEnvironment.d" />
+    <Compile Include="java\awt\RenderingHints.d" />
+    <Compile Include="java\awt\geom\AffineTransform.d" />
+    <Compile Include="java\awt\image\BufferedImage.d" />
+    <Compile Include="java\beans\all.d" />
+    <Compile Include="java\beans\BeanDescriptor.d" />
+    <Compile Include="java\beans\BeanInfo.d" />
+    <Compile Include="java\beans\FeatureDescriptor.d" />
+    <Compile Include="java\beans\IntrospectionException.d" />
+    <Compile Include="java\beans\Introspector.d" />
+    <Compile Include="java\beans\PropertyChangeEvent.d" />
+    <Compile Include="java\beans\PropertyChangeListener.d" />
+    <Compile Include="java\beans\PropertyChangeSupport.d" />
+    <Compile Include="java\beans\PropertyDescriptor.d" />
+    <Compile Include="java\io\all.d" />
+    <Compile Include="java\io\BufferedInputStream.d" />
+    <Compile Include="java\io\BufferedReader.d" />
+    <Compile Include="java\io\ByteArrayInputStream.d" />
+    <Compile Include="java\io\ByteArrayOutputStream.d" />
+    <Compile Include="java\io\File.d" />
+    <Compile Include="java\io\FileFilter.d" />
+    <Compile Include="java\io\FileInputStream.d" />
+    <Compile Include="java\io\FilenameFilter.d" />
+    <Compile Include="java\io\FileNotFoundException.d" />
+    <Compile Include="java\io\FileOutputStream.d" />
+    <Compile Include="java\io\FilterInputStream.d" />
+    <Compile Include="java\io\InputStream.d" />
+    <Compile Include="java\io\InputStreamReader.d" />
+    <Compile Include="java\io\InterruptedIOException.d" />
+    <Compile Include="java\io\IOException.d" />
+    <Compile Include="java\io\OutputStream.d" />
+    <Compile Include="java\io\PipedInputStream.d" />
+    <Compile Include="java\io\PipedOutputStream.d" />
+    <Compile Include="java\io\PrintStream.d" />
+    <Compile Include="java\io\PrintWriter.d" />
+    <Compile Include="java\io\PushbackInputStream.d" />
+    <Compile Include="java\io\PushbackReader.d" />
+    <Compile Include="java\io\RandomAccessFile.d" />
+    <Compile Include="java\io\Reader.d" />
+    <Compile Include="java\io\Serializable.d" />
+    <Compile Include="java\io\StringReader.d" />
+    <Compile Include="java\io\StringWriter.d" />
+    <Compile Include="java\io\UnsupportedEncodingException.d" />
+    <Compile Include="java\io\Writer.d" />
+    <Compile Include="java\lang\all.d" />
+    <Compile Include="java\lang\Boolean.d" />
+    <Compile Include="java\lang\Byte.d" />
+    <Compile Include="java\lang\Character.d" />
+    <Compile Include="java\lang\CharSequence.d" />
+    <Compile Include="java\lang\Class.d" />
+    <Compile Include="java\lang\ClassNotFoundException.d" />
+    <Compile Include="java\lang\Cloneable.d" />
+    <Compile Include="java\lang\Comparable.d" />
+    <Compile Include="java\lang\Double.d" />
+    <Compile Include="java\lang\exceptions.d" />
+    <Compile Include="java\lang\Float.d" />
+    <Compile Include="java\lang\Integer.d" />
+    <Compile Include="java\lang\Long.d" />
+    <Compile Include="java\lang\Math.d" />
+    <Compile Include="java\lang\Number.d" />
+    <Compile Include="java\lang\Process.d" />
+    <Compile Include="java\lang\ProcessBuilder.d" />
+    <Compile Include="java\lang\Runnable.d" />
+    <Compile Include="java\lang\RuntimeException.d" />
+    <Compile Include="java\lang\Short.d" />
+    <Compile Include="java\lang\String.d" />
+    <Compile Include="java\lang\StringBuffer.d" />
+    <Compile Include="java\lang\StringBuilder.d" />
+    <Compile Include="java\lang\System.d" />
+    <Compile Include="java\lang\Thread.d" />
+    <Compile Include="java\lang\ThreadGroup.d" />
+    <Compile Include="java\lang\ThreadLocal.d" />
+    <Compile Include="java\lang\UnsupportedOperationException.d" />
+    <Compile Include="java\lang\util.d" />
+    <Compile Include="java\lang\wrappers.d" />
+    <Compile Include="java\lang\annotation\Annotation.d" />
+    <Compile Include="java\lang\annotation\Retention.d" />
+    <Compile Include="java\lang\annotation\RetentionPolicy.d" />
+    <Compile Include="java\lang\annotation\Target.d" />
+    <Compile Include="java\lang\reflect\AccessibleObject.d" />
+    <Compile Include="java\lang\reflect\all.d" />
+    <Compile Include="java\lang\reflect\Array.d" />
+    <Compile Include="java\lang\reflect\Constructor.d" />
+    <Compile Include="java\lang\reflect\Field.d" />
+    <Compile Include="java\lang\reflect\InvocationTargetException.d" />
+    <Compile Include="java\lang\reflect\Method.d" />
+    <Compile Include="java\lang\reflect\Package.d" />
+    <Compile Include="java\math\all.d" />
+    <Compile Include="java\math\BigDecimal.d" />
+    <Compile Include="java\math\BigInteger.d" />
+    <Compile Include="java\net\all.d" />
+    <Compile Include="java\net\Authenticator.d" />
+    <Compile Include="java\net\DatagramPacket.d" />
+    <Compile Include="java\net\DatagramSocket.d" />
+    <Compile Include="java\net\Inet4Address.d" />
+    <Compile Include="java\net\InetAddress.d" />
+    <Compile Include="java\net\InetSocketAddress.d" />
+    <Compile Include="java\net\MalformedURLException.d" />
+    <Compile Include="java\net\MulticastSocket.d" />
+    <Compile Include="java\net\NetworkInterface.d" />
+    <Compile Include="java\net\PasswordAuthentication.d" />
+    <Compile Include="java\net\ServerSocket.d" />
+    <Compile Include="java\net\Socket.d" />
+    <Compile Include="java\net\SocketAddress.d" />
+    <Compile Include="java\net\SocketException.d" />
+    <Compile Include="java\net\SocketTimeoutException.d" />
+    <Compile Include="java\net\UnknownHostException.d" />
+    <Compile Include="java\net\URI.d" />
+    <Compile Include="java\net\URISyntaxException.d" />
+    <Compile Include="java\net\URL.d" />
+    <Compile Include="java\net\URLClassLoader.d" />
+    <Compile Include="java\net\URLConnection.d" />
+    <Compile Include="java\net\URLDecoder.d" />
+    <Compile Include="java\net\URLEncoder.d" />
+    <Compile Include="java\nio\ByteBuffer.d" />
+    <Compile Include="java\nio\CharBuffer.d" />
+    <Compile Include="java\nio\channels\FileChannel\MapMode.d" />
+    <Compile Include="java\nio\charset\Charset.d" />
+    <Compile Include="java\nonstandard\all.d" />
+    <Compile Include="java\nonstandard\Locale.d" />
+    <Compile Include="java\nonstandard\RuntimeTraits.d" />
+    <Compile Include="java\nonstandard\SafeUtf.d" />
+    <Compile Include="java\nonstandard\SharedLib.d" />
+    <Compile Include="java\nonstandard\UnsafeUtf.d" />
+    <Compile Include="java\nonstandard\UtfBase.d" />
+    <Compile Include="java\nonstandard\WeakRef.d" />
+    <Compile Include="java\nonstandard\XmlTranscode.d" />
+    <Compile Include="java\security\Key.d" />
+    <Compile Include="java\security\MessageDigest.d" />
+    <Compile Include="java\sql\Blob.d" />
+    <Compile Include="java\sql\Connection.d" />
+    <Compile Include="java\sql\DriverManager.d" />
+    <Compile Include="java\sql\PreparedStatement.d" />
+    <Compile Include="java\sql\ResultSet.d" />
+    <Compile Include="java\sql\SQLDataException.d" />
+    <Compile Include="java\sql\SQLException.d" />
+    <Compile Include="java\sql\Statement.d" />
+    <Compile Include="java\sql\Timestamp.d" />
+    <Compile Include="java\text\all.d" />
+    <Compile Include="java\text\AttributedCharacterIterator.d" />
+    <Compile Include="java\text\CharacterIterator.d" />
+    <Compile Include="java\text\Collator.d" />
+    <Compile Include="java\text\DateFormat.d" />
+    <Compile Include="java\text\DecimalFormat.d" />
+    <Compile Include="java\text\FieldPosition.d" />
+    <Compile Include="java\text\Format.d" />
+    <Compile Include="java\text\MessageFormat.d" />
+    <Compile Include="java\text\Normalizer.d" />
+    <Compile Include="java\text\NumberFormat.d" />
+    <Compile Include="java\text\ParseException.d" />
+    <Compile Include="java\text\ParsePosition.d" />
+    <Compile Include="java\text\SimpleDateFormat.d" />
+    <Compile Include="java\text\Normalizer\Form.d" />
+    <Compile Include="java\util\AbstractCollection.d" />
+    <Compile Include="java\util\AbstractList.d" />
+    <Compile Include="java\util\AbstractMap.d" />
+    <Compile Include="java\util\AbstractSet.d" />
+    <Compile Include="java\util\all.d" />
+    <Compile Include="java\util\ArrayList.d" />
+    <Compile Include="java\util\Arrays.d" />
+    <Compile Include="java\util\Calendar.d" />
+    <Compile Include="java\util\Collection.d" />
+    <Compile Include="java\util\Collections.d" />
+    <Compile Include="java\util\Comparator.d" />
+    <Compile Include="java\util\Currency.d" />
+    <Compile Include="java\util\Date.d" />
+    <Compile Include="java\util\Dictionary.d" />
+    <Compile Include="java\util\Enumeration.d" />
+    <Compile Include="java\util\EventListener.d" />
+    <Compile Include="java\util\EventObject.d" />
+    <Compile Include="java\util\GregorianCalendar.d" />
+    <Compile Include="java\util\HashMap.d" />
+    <Compile Include="java\util\HashSet.d" />
+    <Compile Include="java\util\Hashtable.d" />
+    <Compile Include="java\util\IdentityHashMap.d" />
+    <Compile Include="java\util\Iterator.d" />
+    <Compile Include="java\util\LinkedHashMap.d" />
+    <Compile Include="java\util\LinkedHashSet.d" />
+    <Compile Include="java\util\LinkedList.d" />
+    <Compile Include="java\util\List.d" />
+    <Compile Include="java\util\ListIterator.d" />
+    <Compile Include="java\util\Locale.d" />
+    <Compile Include="java\util\Map.d" />
+    <Compile Include="java\util\MissingResourceException.d" />
+    <Compile Include="java\util\Observable.d" />
+    <Compile Include="java\util\Observer.d" />
+    <Compile Include="java\util\Properties.d" />
+    <Compile Include="java\util\Queue.d" />
+    <Compile Include="java\util\Random.d" />
+    <Compile Include="java\util\ResourceBundle.d" />
+    <Compile Include="java\util\Set.d" />
+    <Compile Include="java\util\SortedMap.d" />
+    <Compile Include="java\util\SortedSet.d" />
+    <Compile Include="java\util\Stack.d" />
+    <Compile Include="java\util\StringTokenizer.d" />
+    <Compile Include="java\util\Timer.d" />
+    <Compile Include="java\util\TimerTask.d" />
+    <Compile Include="java\util\TimeZone.d" />
+    <Compile Include="java\util\TreeMap.d" />
+    <Compile Include="java\util\TreeSet.d" />
+    <Compile Include="java\util\UUID.d" />
+    <Compile Include="java\util\Vector.d" />
+    <Compile Include="java\util\WeakHashMap.d" />
+    <Compile Include="java\util\concurrent\Callable.d" />
+    <Compile Include="java\util\concurrent\CancellationException.d" />
+    <Compile Include="java\util\concurrent\ConcurrentLinkedQueue.d" />
+    <Compile Include="java\util\concurrent\ConcurrentSkipListSet.d" />
+    <Compile Include="java\util\concurrent\ExecutionException.d" />
+    <Compile Include="java\util\concurrent\Executors.d" />
+    <Compile Include="java\util\concurrent\ExecutorService.d" />
+    <Compile Include="java\util\concurrent\Future.d" />
+    <Compile Include="java\util\concurrent\ScheduledExecutorService.d" />
+    <Compile Include="java\util\concurrent\ScheduledFuture.d" />
+    <Compile Include="java\util\concurrent\ThreadFactory.d" />
+    <Compile Include="java\util\concurrent\TimeoutException.d" />
+    <Compile Include="java\util\concurrent\TimeUnit.d" />
+    <Compile Include="java\util\concurrent\atomic\AtomicBoolean.d" />
+    <Compile Include="java\util\concurrent\atomic\AtomicInteger.d" />
+    <Compile Include="java\util\concurrent\atomic\AtomicReference.d" />
+    <Compile Include="java\util\logging\Handler.d" />
+    <Compile Include="java\util\logging\Level.d" />
+    <Compile Include="java\util\logging\LogManager.d" />
+    <Compile Include="java\util\Map\Entry.d" />
+    <Compile Include="java\util\prefs\Preferences.d" />
+    <Compile Include="java\util\regex\all.d" />
+    <Compile Include="java\util\regex\Matcher.d" />
+    <Compile Include="java\util\regex\Pattern.d" />
+    <Compile Include="java\util\regex\PatternSyntaxException.d" />
+    <Compile Include="java\util\ResourceBundle\Control.d" />
+    <Compile Include="java\util\zip\all.d" />
+    <Compile Include="java\util\zip\DeflaterOutputStream.d" />
+    <Compile Include="java\util\zip\GZIPInputStream.d" />
+    <Compile Include="java\util\zip\InflaterInputStream.d" />
+    <Compile Include="java\util\zip\ZipEntry.d" />
+    <Compile Include="java\util\zip\ZipException.d" />
+    <Compile Include="java\util\zip\ZipFile.d" />
+    <Compile Include="java\util\zip\ZipInputStream.d" />
+    <Compile Include="javax\crypto\Cipher.d" />
+    <Compile Include="javax\crypto\Mac.d" />
+    <Compile Include="javax\crypto\spec\SecretKeySpec.d" />
+    <Compile Include="javax\imageio\ImageIO.d" />
+    <Compile Include="javax\xml\namespace\NamespaceContext.d" />
+    <Compile Include="javax\xml\namespace\QName.d" />
+    <Compile Include="javax\xml\parsers\DocumentBuilder.d" />
+    <Compile Include="javax\xml\parsers\DocumentBuilderFactory.d" />
+    <Compile Include="javax\xml\parsers\ParserConfigurationException.d" />
+    <Compile Include="javax\xml\soap\Detail.d" />
+    <Compile Include="javax\xml\soap\DetailEntry.d" />
+    <Compile Include="javax\xml\soap\MessageFactory.d" />
+    <Compile Include="javax\xml\soap\MimeHeaders.d" />
+    <Compile Include="javax\xml\soap\SOAPBody.d" />
+    <Compile Include="javax\xml\soap\SOAPBodyElement.d" />
+    <Compile Include="javax\xml\soap\SOAPElement.d" />
+    <Compile Include="javax\xml\soap\SOAPEnvelope.d" />
+    <Compile Include="javax\xml\soap\SOAPException.d" />
+    <Compile Include="javax\xml\soap\SOAPFault.d" />
+    <Compile Include="javax\xml\soap\SOAPMessage.d" />
+    <Compile Include="javax\xml\transform\Source.d" />
+    <Compile Include="javax\xml\transform\Transformer.d" />
+    <Compile Include="javax\xml\transform\TransformerException.d" />
+    <Compile Include="javax\xml\transform\TransformerFactory.d" />
+    <Compile Include="javax\xml\transform\dom\DOMSource.d" />
+    <Compile Include="javax\xml\transform\stream\StreamResult.d" />
+    <Compile Include="javax\xml\transform\stream\StreamSource.d" />
+    <Compile Include="javax\xml\validation\Schema.d" />
+    <Compile Include="javax\xml\validation\SchemaFactory.d" />
+    <Compile Include="javax\xml\validation\Validator.d" />
+    <Compile Include="javax\xml\xpath\XPath.d" />
+    <Compile Include="javax\xml\xpath\XPathConstants.d" />
+    <Compile Include="javax\xml\xpath\XPathExpressionException.d" />
+    <Compile Include="javax\xml\xpath\XPathFactory.d" />
+  </ItemGroup>
+</Project>
