@@ -39,7 +39,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 public class StatusTab {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!StatusTab();
+	private static Logger LOGGER = LoggerFactory.getLogger!StatusTab();
 
 	private static const int MAX_RENDERERS = 10;
 	private ImagePanel imagePanel;

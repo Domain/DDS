@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistParser
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int ONLINE_MAX_BYTES_TO_READ = 102400;
     private static PlaylistParser instance;
 

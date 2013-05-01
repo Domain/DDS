@@ -12,7 +12,7 @@ import org.serviio.external.ProcessExecutor;
 
 public class DCRawWrapper : AbstractExecutableWrapper
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     protected static AtomicReference!(bool) present;
 

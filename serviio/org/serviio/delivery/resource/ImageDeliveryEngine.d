@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image)
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	private static immutable List!(MediaFormatProfile) JPEG_PROFILES;
 

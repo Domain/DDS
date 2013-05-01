@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoverySearchResponder : Runnable
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private static const int MAX_MX = 120;
 	private int advertisementDuration;
 	private SocketAddress sourceAddress;

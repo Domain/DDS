@@ -42,7 +42,7 @@ import java.util.all;
 import org.apache.commons.lang.StringUtils : isNotBlank;
 
 public class Request : HTTPResource {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!Request();
+	private static Logger LOGGER = LoggerFactory.getLogger!Request();
 
 	private const static String CRLF = "\r\n";
 	private const static String HTTP_200_OK = "HTTP/1.1 200 OK";

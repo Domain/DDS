@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

@@ -41,7 +41,7 @@ public class ExternalFactory {
 	/**
 	 * For logging messages.
 	 */
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!ExternalFactory();
+	private static Logger LOGGER = LoggerFactory.getLogger!ExternalFactory();
 
 	/**
 	 * List of external listener class instances.

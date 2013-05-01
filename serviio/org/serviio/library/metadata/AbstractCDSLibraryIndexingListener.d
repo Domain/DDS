@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListener
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int UPDATE_THREAD_INTERVAL_SECONDS = 5;
     private int threadUpdateInterval;
 

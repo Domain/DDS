@@ -26,7 +26,7 @@ import org.serviio.external.ProcessListener;
 
 public class ProcessExecutor : Thread
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int OUTPUT_STREAM_TIMEOUT = 5000;
     private String[] commandArguments;
     private bool destroyed = false;

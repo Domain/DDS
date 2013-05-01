@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMediaInfo, MusicTrack)
 {
 	private static AudioDeliveryEngine instance;
-	private static immutable Logger log;
+	private static Logger log;
 
 	static this()
 	{

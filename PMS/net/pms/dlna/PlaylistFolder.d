@@ -9,7 +9,7 @@ import java.io.all;
 import java.util.ArrayList;
 
 public class PlaylistFolder : DLNAResource {
-	private static immutable Logger logger = LoggerFactory.getLogger!PlaylistFolder();
+	private static Logger logger = LoggerFactory.getLogger!PlaylistFolder();
 	private File playlistfile;
 	private bool valid = true;
 

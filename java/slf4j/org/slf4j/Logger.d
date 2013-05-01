@@ -79,10 +79,10 @@ public class Logger {
     * @param msg the message string to be logged
     * @since 1.4
     */
-    public void trace(string file = __FILE__, int line = __LINE__, T...)(lazy T args)
-    {
-        org.slf4j.log.info.write!(file, line)(args);
-    }
+    //public void trace(string file = __FILE__, int line = __LINE__, T...)(lazy T args)
+    //{
+    //    org.slf4j.log.info.write!(file, line)(args);
+    //}
 
     /**
     * Log a message at the TRACE level.

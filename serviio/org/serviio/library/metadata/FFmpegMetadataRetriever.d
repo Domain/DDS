@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class FFmpegMetadataRetriever
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable Pattern streamIndexPattern;
     private static const String CONTAINER = "container";

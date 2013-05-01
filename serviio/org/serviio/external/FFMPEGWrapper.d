@@ -51,7 +51,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static immutable String videoQualityFactor;
 
-    private static immutable Logger log;
+    private static Logger log;
     private static const int DEFAULT_AUDIO_FREQUENCY = 48000;
     private static const int MIN_AUDIO_FREQUENCY = 44100;
     private static const int RTMP_BUFFER_SIZE = 100000000;

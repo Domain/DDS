@@ -26,7 +26,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class OutputBufferConsumer : OutputConsumer {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!OutputBufferConsumer();
+	private static Logger LOGGER = LoggerFactory.getLogger!OutputBufferConsumer();
 	private BufferedOutputFile outputBuffer;
 	
 	/**

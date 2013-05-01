@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class EventSubscriptionExpirationChecker : Runnable
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int CHECK_FREQUENCY = 2000;
     private bool workerRunning = false;
 

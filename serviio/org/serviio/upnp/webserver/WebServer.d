@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 public class WebServer
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static RequestListenerThread webServerThread;
     public static immutable Integer WEBSERVER_PORT;
     public static const String CONTEXT_PARAM_REMOTE_IP = "remote_ip_address";

@@ -17,7 +17,7 @@ import org.serviio.library.dao.CoverImageDAO;
 
 public class CoverImageDAOImpl : CoverImageDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

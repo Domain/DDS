@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 public class ContentDirectoryDefinitionParser
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const String TAG_ACTION = "action";
     private static const String TAG_CONTAINER = "container";
 

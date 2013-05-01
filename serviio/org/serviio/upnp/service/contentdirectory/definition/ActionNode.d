@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ActionNode : ContainerNode
 {
-    private static immutable Logger log;
+    private static Logger log;
     private String commandClass;
     private String idPrefix;
     private bool recursive;

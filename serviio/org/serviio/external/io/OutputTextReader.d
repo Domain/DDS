@@ -16,7 +16,7 @@ import org.serviio.external.io.OutputReader;
 
 public class OutputTextReader : OutputReader
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     private List!(String) lines;
     private Object linesLock;

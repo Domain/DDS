@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 public class ImageDAOImpl : AbstractSortableItemDao, ImageDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

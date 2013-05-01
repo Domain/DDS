@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class MetadataServerResource : AbstractServerResource , MetadataResource
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const String DESCRIPTIVE_METADATA_EXTRACTOR_NONE = "NONE";
 
     static this()

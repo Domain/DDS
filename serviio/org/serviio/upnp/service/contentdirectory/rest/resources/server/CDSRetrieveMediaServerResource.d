@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResource, CDSRetrieveMediaResource
 {
     public static const String RESOURCE_CONTEXT = "/resource";
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
     private Profile profile;

@@ -28,7 +28,7 @@ import org.w3c.dom.Node;
 
 public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static DocumentBuilder xmlBuilder;
     private Set!(String) includedFields;
 

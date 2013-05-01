@@ -47,7 +47,7 @@ public final class PlayerFactory {
 	/**
 	 * Logger used for all logging.
 	 */
-	private static immutable Logger LOGGER = LoggerFactory
+	private static Logger LOGGER = LoggerFactory
 			.getLogger!FormatFactory();
 
 	/**

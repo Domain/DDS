@@ -35,7 +35,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
 {
     private static const String APIKEY = "33a37a299fe4bef416e347c2fca2494c";
     private static const String API_BASE_CONTEXT = "http://api.themoviedb.org/2.1/";
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable DateFormat releaseDateFormat;
 

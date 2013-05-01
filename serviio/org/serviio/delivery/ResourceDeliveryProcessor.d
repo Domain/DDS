@@ -38,7 +38,7 @@ public class ResourceDeliveryProcessor
     private static const Long TRANSCODED_AUDIO_CONTENT_LENGTH;
     private static const Long TRANSCODED_IMAGE_CONTENT_LENGTH;
 
-    private static immutable Logger log;
+    private static Logger log;
     private ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
 
     static this()

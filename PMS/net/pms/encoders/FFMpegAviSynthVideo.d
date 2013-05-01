@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * This class handles the Windows specific AviSynth/FFmpeg player combination. 
  */
 public class FFMpegAviSynthVideo : FFMpegVideo {
-	private static immutable Logger logger = LoggerFactory.getLogger!FFMpegAviSynthVideo();
+	private static Logger logger = LoggerFactory.getLogger!FFMpegAviSynthVideo();
 	public static const String ID      = "avsffmpeg";
 
 	override

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class BrowsingCategoriesMessages
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static ResourceBundle selectedRb;
     private static ResourceBundle defaultRb;
     private static Locale defaultLocale;

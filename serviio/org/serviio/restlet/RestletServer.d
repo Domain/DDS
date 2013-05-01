@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class RestletServer
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     private static Component apiComponent;
     private static Component cdsComponent;

@@ -40,7 +40,7 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     private static List!(String) xmlMirrors;
     private static List!(String) bannerMirrors;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable DateFormat firstAiredDateFormat;
     private String seriesId;

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMediaInfo, Video)
 {
     private static VideoDeliveryEngine instance;
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

@@ -38,7 +38,7 @@ import org.w3c.dom.Node;
 
 public class ServiceInvoker
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private static MessageFactory messageFactory;
 	private static const String QUERY_STATE_VARIABLE = "QueryStateVariable";
 

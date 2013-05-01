@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
 
 public class UpdateChecker
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable String XML_URL;
     private static const int VERSION_CHECKER_INTERVAL_HOURS = 24;

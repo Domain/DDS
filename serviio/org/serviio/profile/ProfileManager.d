@@ -25,7 +25,7 @@ public class ProfileManager
 	public static const String DEFAULT_PROFILE_ID = "1";
 	private static const String PROFILES_XML_PATH = "/profiles.xml";
 	private static const String APP_PROFILES_XML_PATH = "/application-profiles.xml";
-	private static immutable Logger log;
+	private static Logger log;
 
 	static this()
 	{

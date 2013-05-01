@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	private static const String[] AUDIO_FILES = [ "folder.jpg", "cover.jpg", "front_cover.jpg", ".*\\[front\\].jpg", "albumart.jpg" ];
 

@@ -90,6 +90,10 @@ class Long : Number {
         return TYPE_;
     }
 
+    public int hashCode() nothrow @safe
+    {
+        return cast(int)(this.value ^ this.value >>> 32);
+    }
 }
 alias Long ValueWrapperLong;
 

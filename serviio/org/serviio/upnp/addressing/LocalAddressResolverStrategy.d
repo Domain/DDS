@@ -24,7 +24,7 @@ public class LocalAddressResolverStrategy
 
     private static immutable List!(String) INVALID_NIC_NAMES;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

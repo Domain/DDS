@@ -37,7 +37,7 @@ public class RendererManager
     private static const String UNKNOWN_DEVICE_NAME = "Unrecognized device";
     private static const bool RENDERER_ENABLED_BY_DEFAULT = true;
     private static RendererManager instance;
-    private static immutable Logger log;
+    private static Logger log;
 
     private static immutable UPnPDeviceNamespaceContext nsContext;
 

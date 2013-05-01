@@ -31,7 +31,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
     private static const int THREAD_SLEEP_PERIOD = 60 * 60 * 1000;
     private static List!(ExtractorType) automaticExtractors;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

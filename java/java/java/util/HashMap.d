@@ -75,9 +75,9 @@ class HashMap(K, V) : Map!(K, V) {
             return false;
         }
     }
-	//public bool containsKey(String key){
-	//    return containsKey(stringcast(key));
-	//}
+    //public bool containsKey(String key){
+    //    return containsKey(stringcast(key));
+    //}
     public bool containsValue(V value){
         version(Tango){
             ObjRef valuer = ObjRef(value);
@@ -131,9 +131,9 @@ class HashMap(K, V) : Map!(K, V) {
             return null;
         }
     }
-	//public Object get(String key){
-	//    return get(stringcast(key));
-	//}
+    //public Object get(String key){
+    //    return get(stringcast(key));
+    //}
     public override hash_t toHash(){
         return super.toHash();
     }
@@ -172,15 +172,15 @@ class HashMap(K, V) : Map!(K, V) {
             return null;
         }
     }
-	//public Object put(String key, Object value){
-	//    return put( stringcast(key), value );
-	//}
-	//public Object put(Object key, String value){
-	//    return put( key, stringcast(value) );
-	//}
-	//public Object put(String key, String value){
-	//    return put( stringcast(key), stringcast(value) );
-	//}
+    //public Object put(String key, Object value){
+    //    return put( stringcast(key), value );
+    //}
+    //public Object put(Object key, String value){
+    //    return put( key, stringcast(value) );
+    //}
+    //public Object put(String key, String value){
+    //    return put( stringcast(key), stringcast(value) );
+    //}
     public void   putAll(Map!(K, V) t){
         version(Tango){
             foreach( k, v; t ){
@@ -204,9 +204,9 @@ class HashMap(K, V) : Map!(K, V) {
             return null;
         }
     }
-	//public Object remove(String key){
-	//    return remove(stringcast(key));
-	//}
+    //public Object remove(String key){
+    //    return remove(stringcast(key));
+    //}
     public int    size(){
         version(Tango){
             return map.size();

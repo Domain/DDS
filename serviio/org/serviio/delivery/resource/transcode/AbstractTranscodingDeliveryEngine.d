@@ -41,7 +41,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
     private static TranscodingDeliveryStrategy!(File) fileBasedStrategy;
     private static TranscodingDeliveryStrategy!(OutputStream) streamBasedStrategy;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     public static this()
     {

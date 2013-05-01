@@ -25,7 +25,7 @@ import java.lang.exceptions;
 import java.io.InputStream;
 
 public abstract class UnusedInputStream : InputStream {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!UnusedInputStream();
+	private static Logger LOGGER = LoggerFactory.getLogger!UnusedInputStream();
 	private InputStream inputStream;
 	private UnusedProcess processToTerminate;
 	private int timeout;

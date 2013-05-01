@@ -273,6 +273,7 @@
     <File path="java\lang\Double.d" />
     <File path="java\lang\exceptions.d" />
     <File path="java\lang\Float.d" />
+    <File path="java\lang\InstantiationException.d" />
     <File path="java\lang\Integer.d" />
     <File path="java\lang\Long.d" />
     <File path="java\lang\Math.d" />

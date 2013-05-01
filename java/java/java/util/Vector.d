@@ -34,9 +34,9 @@ class Vector(T) : AbstractList!T, List!T {
         used++;
         return true;
     }
-    override public bool    add(String o){
-        return add(stringcast(o));
-    }
+    //override public bool    add(String o){
+    //    return add(stringcast(o));
+    //}
     override public bool    addAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
@@ -62,9 +62,9 @@ class Vector(T) : AbstractList!T, List!T {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    override public bool    contains(String str){
-        return contains(stringcast(str));
-    }
+    //override public bool    contains(String str){
+    //    return contains(stringcast(str));
+    //}
     override public bool    containsAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
@@ -149,9 +149,9 @@ class Vector(T) : AbstractList!T, List!T {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    override public bool remove(String key){
-        return remove(stringcast(key));
-    }
+    //override public bool remove(String key){
+    //    return remove(stringcast(key));
+    //}
     override public bool    removeAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;

@@ -57,7 +57,7 @@ import org.w3c.dom.NodeList;
 
 public class ProfilesDefinitionParser
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const String PROFILES_XSD = "Profiles.xsd";
     private static const String TAG_PROFILES = "Profiles";
     private static const String TAG_PROFILE = "Profile";

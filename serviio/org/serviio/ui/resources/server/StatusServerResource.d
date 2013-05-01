@@ -34,7 +34,7 @@ public class StatusServerResource : AbstractServerResource , StatusResource
 {
     static immutable Pattern ipAddressPattern;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

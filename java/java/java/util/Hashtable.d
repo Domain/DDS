@@ -3,31 +3,15 @@ module java.util.Hashtable;
 import java.lang.all;
 import java.util.Dictionary;
 import java.util.Map;
+import java.util.Map : Entry;
 import java.util.Enumeration;
 import java.util.Collection;
 import java.util.Set;
 
 // no nulls
 // synchronized
-class Hashtable : Dictionary, Map {
-
-    public Object get(String key){
-        return super.get(key);
-    }
-    public Object put(String key, Object value){
-        return super.put(key, value);
-    }
-    public Object put(Object key, String value){
-        return super.put(key, value);
-    }
-    public Object put(String key, String value){
-        return super.put(key, value);
-    }
-    public Object remove(String key){
-        return super.remove(key);
-    }
-
-    Object[Object] map;
+class Hashtable(K, V) : Dictionary!(K, V), Map!(K, V) {
+    V[K] map;
 
     // The HashMap  class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.
     public this(){
@@ -38,36 +22,36 @@ class Hashtable : Dictionary, Map {
     public this(int initialCapacity, float loadFactor){
         implMissing( __FILE__, __LINE__ );
     }
-    public this(Map t){
+    public this(Map!(K, V) t){
         implMissing( __FILE__, __LINE__ );
     }
 
-    class ObjectEnumeration : Enumeration {
-        Object[] values;
+    class ObjectEnumeration(T) : Enumeration!T {
+        T[] values;
         int index = 0;
-        this( Object[] values ){
+        this( T[] values ){
             this.values = values;
         }
         public bool hasMoreElements(){
             return index < values.length;
         }
-        public Object nextElement(){
-            Object res = values[index];
+        public T nextElement(){
+            T res = values[index];
             index++;
             return res;
         }
     }
 
-    Enumeration  elements(){
-        return new ObjectEnumeration( map.values );
+    override Enumeration!V  elements(){
+        return new ObjectEnumeration!V( map.values );
     }
-    Enumeration        keys() {
-        return new ObjectEnumeration( map.keys );
+    override Enumeration!K        keys() {
+        return new ObjectEnumeration!K( map.keys );
     }
     public void clear(){
         synchronized map = null;
     }
-    public bool containsKey(Object key){
+    public bool containsKey(K key){
         synchronized {
             if( auto v = key in map ){
                 return true;
@@ -75,10 +59,7 @@ class Hashtable : Dictionary, Map {
             return false;
         }
     }
-    public bool containsKey(String key){
-        synchronized return containsKey(stringcast(key));
-    }
-    public bool containsValue(Object value){
+    public bool containsValue(V value){
         synchronized {
              foreach( k, v; map ){
                  if( v == value ){
@@ -88,7 +69,7 @@ class Hashtable : Dictionary, Map {
              return false;
         }
     }
-    public Set  entrySet(){
+    public Set!(Entry!(K, V))  entrySet(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
@@ -96,7 +77,7 @@ class Hashtable : Dictionary, Map {
         implMissing( __FILE__, __LINE__ );
         return 0;
     }
-    public Object get(Object key){
+    override public V get(K key){
         synchronized {
             if( auto v = key in map ){
                 return *v;
@@ -104,20 +85,20 @@ class Hashtable : Dictionary, Map {
             return null;
         }
     }
-    public hash_t toHash(){
+    override public hash_t toHash(){
         implMissingSafe( __FILE__, __LINE__ );
         return 0;
     }
-    public bool isEmpty(){
+    override public bool isEmpty(){
         synchronized return map.length is 0;
     }
-    public Set    keySet(){
+    override public Set!K    keySet(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    public Object put(Object key, Object value){
+    override public V put(K key, V value){
         synchronized {
-            Object res = null;
+            V res = null;
             if( auto v = key in map ){
                 res = *v;
             }
@@ -128,30 +109,30 @@ class Hashtable : Dictionary, Map {
 //     public Object put(String key, Object value)
 //     public Object put(Object key, String value)
 //     public Object put(String key, String value)
-    public void   putAll(Map t){
+    override public void   putAll(Map!(K, V) t){
         synchronized
         implMissing( __FILE__, __LINE__ );
     }
-    public Object remove(Object key){
+    override public V remove(K key){
         synchronized
         implMissing( __FILE__, __LINE__ );
         return null;
     }
 //     public Object remove(String key)
-    public int    size(){
+    override public int    size(){
         synchronized return map.length;
     }
-    public Collection values(){
+    override public Collection!V values(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
 
     // only for D
-    public int opApply (int delegate(ref Object value) dg){
+    public int opApply (int delegate(ref V value) dg){
         implMissing( __FILE__, __LINE__ );
         return 0;
     }
-    public int opApply (int delegate(ref Object key, ref Object value) dg){
+    public int opApply (int delegate(ref K key, ref V value) dg){
         implMissing( __FILE__, __LINE__ );
         return 0;
     }

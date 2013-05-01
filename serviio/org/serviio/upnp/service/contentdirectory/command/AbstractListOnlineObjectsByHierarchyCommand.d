@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractCommand!(DirectoryObject)
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private static const String FOLDER_PREFIX = "FD";
 	private static const String ITEM_PREFIX = "OI";
 	protected MediaFileType fileType;

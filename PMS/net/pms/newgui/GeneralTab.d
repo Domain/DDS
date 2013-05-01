@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class GeneralTab {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!GeneralTab();
+	private static Logger LOGGER = LoggerFactory.getLogger!GeneralTab();
 
 	private static const String COL_SPEC = "left:pref, 2dlu, p, 2dlu , p, 2dlu, p, 2dlu, pref:grow";
 	private static const String ROW_SPEC = "p, 0dlu, p, 0dlu, p, 3dlu, p, 3dlu, p, 3dlu,p, 3dlu, p, 15dlu, p, 3dlu,p, 3dlu, p,  3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p,3dlu, p, 3dlu, p, 15dlu, p,3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 15dlu, p, 3dlu, p";

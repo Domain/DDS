@@ -24,7 +24,7 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
     private static const String AUTH_HEADER = "Authorization";
     private static immutable Pattern authHeaderPattern;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     private static Map!(String, Date) storedTokens;
 

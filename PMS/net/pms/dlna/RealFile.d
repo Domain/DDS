@@ -31,7 +31,7 @@ import java.io.all;
 import java.util.ArrayList;
 
 public class RealFile : MapFile {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!RealFile();
+	private static Logger LOGGER = LoggerFactory.getLogger!RealFile();
 
 	public this(File file) {
 		getConf().getFiles().add(file);

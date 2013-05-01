@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class ContainerNode : DefinitionNode
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     protected List!(DefinitionNode) childNodes;
 

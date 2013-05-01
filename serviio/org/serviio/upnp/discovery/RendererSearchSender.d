@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class RendererSearchSender : Multicaster
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private int mx;
 	private int searchSendCount;
 

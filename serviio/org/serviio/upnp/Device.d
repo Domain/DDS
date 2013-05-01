@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class Device
 {
     private static Device instance;
-    private static immutable Logger log;
+    private static Logger log;
     private String uuid;
     private String deviceType = "urn:schemas-upnp-org:device:MediaServer:1";
     private InetAddress bindAddress;

@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
 import java.lang.exceptions;
 
 public class TreeNodeSettings : DefaultMutableTreeNode {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!TreeNodeSettings();
+	private static Logger LOGGER = LoggerFactory.getLogger!TreeNodeSettings();
 	private static const long serialVersionUID = -337606760204027449L;
 	private Player p;
 	private JComponent otherConfigPanel;

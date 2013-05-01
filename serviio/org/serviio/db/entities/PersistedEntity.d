@@ -29,13 +29,14 @@ public abstract class PersistedEntity
       return true;
     if (obj is null)
       return false;
-    if (getClass() != obj.getClass())
+    //if (getClass() != obj.getClass())
+    if (this != obj)
       return false;
     PersistedEntity other = cast(PersistedEntity)obj;
     if (id is null) {
       if (other.id !is null)
         return false;
-    } else if (!id.equals(other.id))
+    } else if (!id.opEquals(other.id))
       return false;
     return true;
   }

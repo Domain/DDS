@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 public class FeedUpdaterThread : AbstractLibraryCheckerThread
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int FEED_UPDATER_CHECK_INTERVAL = 1;
     private OnlineLibraryManager onlineManager;
 

@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoveryAdvertisementNotifier : Multicaster , Runnable
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int INITIAL_ADV_DELAY = 10000;
     private int advertisementDuration;
     private int advertisementSendCount;

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 public class PluginCompilerThread : Thread
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int PLUGIN_COMPILER_CHECK_INTERVAL = 10;
     private File pluginsFolder;
     private Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) urlExtractorsp;

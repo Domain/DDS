@@ -39,7 +39,7 @@ import java.io.File;
 import java.util.Locale;
 
 public class NavigationShareTab {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!NavigationShareTab();
+	private static Logger LOGGER = LoggerFactory.getLogger!NavigationShareTab();
 	public static String ALL_DRIVES = Messages.getString("FoldTab.0");
 
 	private static const String PANEL_COL_SPEC = "left:pref, 50dlu, pref, 150dlu, pref, 25dlu, pref, 25dlu, pref, default:grow";

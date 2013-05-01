@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConnectionManager : Service
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int CONNECTION_ID = 0;
     private static const String VAR_A_ARG_TYPE_ProtocolInfo = "A_ARG_TYPE_ProtocolInfo";
     private static const String VAR_A_ARG_TYPE_ConnectionStatus = "A_ARG_TYPE_ConnectionStatus";

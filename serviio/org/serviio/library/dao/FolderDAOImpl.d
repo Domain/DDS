@@ -26,7 +26,7 @@ import org.serviio.library.dao.FolderDAO;
 
 public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

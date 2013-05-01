@@ -76,7 +76,7 @@ public class PMS {
 	public static const String AVS_SEPARATOR = "\1";
 
 	// (innot): The logger used for all logging.
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!PMS();
+	private static Logger LOGGER = LoggerFactory.getLogger!PMS();
 
 	// TODO(tcox):  This shouldn't be static
 	private static PmsConfiguration configuration;

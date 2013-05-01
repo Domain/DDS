@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public class Profile : Comparable!(Profile)
 {
-    private static immutable Logger log;
+    private static Logger log;
     public static const String DETECTION_FIELD_SERVER = "Server";
     public static const String DETECTION_FIELD_MODEL_NAME = "ModelName";
     public static const String DETECTION_FIELD_FRIENDLY_NAME = "FriendlyName";

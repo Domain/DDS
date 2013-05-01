@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class BundledLicenseProvider : LicenseProvider
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	private static immutable String BUNDLED_LICENSE_CONTENT;
 

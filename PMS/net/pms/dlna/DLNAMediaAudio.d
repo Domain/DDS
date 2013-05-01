@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * removed.
  */
 public class DLNAMediaAudio : DLNAMediaLang , Cloneable {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!DLNAMediaAudio();
+	private static Logger LOGGER = LoggerFactory.getLogger!DLNAMediaAudio();
 	private AudioProperties audioProperties = new AudioProperties();
 
 	/**

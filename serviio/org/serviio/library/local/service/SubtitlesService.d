@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class SubtitlesService : Service
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	private static const String[] subtitleFileExtensions = [ "srt" ];
 

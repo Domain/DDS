@@ -19,7 +19,7 @@ import org.serviio.profile.DeliveryQuality;
 
 public class Configuration
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const String SEARCH_HIDDEN_FILES = "search_hidden_files";
     private static const String SEARCH_FOR_UPDATED_FILES = "search_updated_files";
     private static const String RETRIEVE_ART_FROM_ONLINE_SOURCES = "retireve_art_from_online_sources";

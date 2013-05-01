@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class ITunesRssModuleParser : ModuleParser
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private static immutable SimpleDateFormat DATE_FORMAT;
 	private static immutable Namespace NS;
 	private static immutable Namespace ATOM_NS;

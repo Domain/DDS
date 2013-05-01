@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int REFRESH_INTERVAL_IN_MINUTES = 5;
 
     static this()

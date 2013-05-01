@@ -24,7 +24,7 @@ public class RequestExecutor
 {
     private static HttpParams params;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     public static HttpResponse send(HttpRequest request, URL deliveryURL)
     {

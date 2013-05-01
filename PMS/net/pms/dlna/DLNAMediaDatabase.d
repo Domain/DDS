@@ -52,7 +52,7 @@ import org.apache.commons.lang.StringUtils : isBlank;
  * later.
  */
 public class DLNAMediaDatabase : Runnable {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!DLNAMediaDatabase();
+	private static Logger LOGGER = LoggerFactory.getLogger!DLNAMediaDatabase();
 	private String url;
 	private String dbDir;
 	private String dbName;

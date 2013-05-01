@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class TranscodingTab {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!TranscodingTab();
+	private static Logger LOGGER = LoggerFactory.getLogger!TranscodingTab();
 	private static const String COMMON_COL_SPEC = "left:pref, 2dlu, pref:grow";
 	private static const String COMMON_ROW_SPEC = "p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 9dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 9dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 9dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p, 2dlu, p";
 	private static const String EMPTY_COL_SPEC = "left:pref, 2dlu, pref:grow";

@@ -13,6 +13,16 @@ public class RuntimeException : Exception {
         super(e.toString);
         next = e;
     }
+    this(String paramString, Throwable paramThrowable)
+    {
+        super(paramString, paramThrowable);
+    }
+
+    this(Throwable paramThrowable)
+    {
+        super(paramThrowable);
+    }
+
     public String getMessage(){
         return msg;
     }

@@ -28,7 +28,7 @@ import org.serviio.upnp.eventing.Subscription;
 
 public class EventDispatcher : Runnable
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const int RESPONSE_TIMEOUT = 500;
     private static Map!(Service, Queue!(EventContainer)) eventQueues;
     private bool workerRunning;

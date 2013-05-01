@@ -7,7 +7,7 @@ import java.lang.exceptions;
 import java.io.InputStream;
 
 public class H264AnnexBInputStream : InputStream {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!H264AnnexBInputStream();
+	private static Logger LOGGER = LoggerFactory.getLogger!H264AnnexBInputStream();
 	private InputStream source;
 	private int nextTarget;
 	private bool firstHeader;

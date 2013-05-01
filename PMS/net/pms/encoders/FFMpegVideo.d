@@ -67,7 +67,7 @@ import org.slf4j.LoggerFactory;
  * both of these parameters are unused.
  */
 public class FFMpegVideo : Player {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!FFMpegVideo();
+	private static Logger LOGGER = LoggerFactory.getLogger!FFMpegVideo();
 	private JTextField ffmpeg;
 	private static const String DEFAULT_QSCALE = "3";
 

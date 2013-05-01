@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 class DBConnectionPool
 {
-    private static immutable Logger log;
+    private static Logger log;
     private int checkedOut;
     private Vector!(Connection) freeConnections;
     private int maxConn;

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author mfranco
  */
 public class MapFileConfiguration {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!MapFileConfiguration();
+	private static Logger LOGGER = LoggerFactory.getLogger!MapFileConfiguration();
 	private String name;
 	private String thumbnailIcon;
 	private List/*<MapFileConfiguration>*/ children;
@@ -97,7 +97,7 @@ public class MapFileConfiguration {
 }
 
 //class FileSerializer : JsonSerializer<File>, JsonDeserializer<File> {
-//    private static immutable Logger LOGGER = LoggerFactory.getLogger!FileSerializer();
+//    private static Logger LOGGER = LoggerFactory.getLogger!FileSerializer();
 //
 //    public JsonElement serialize(File src, Type typeOfSrc, JsonSerializationContext context) {
 //        return new JsonPrimitive(src.getAbsolutePath());

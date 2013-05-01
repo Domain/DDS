@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoveryManager
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static DiscoveryManager _instance;
     private DiscoveryAdvertisementNotifier discoveryNotifier;
     private DiscoverySSDPMessageListener discoverySSDPMessageListener;

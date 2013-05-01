@@ -18,7 +18,7 @@ import org.serviio.library.dao.AccessGroupDAO;
 
 public class AccessGroupDAOImpl : AccessGroupDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

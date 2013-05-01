@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class HttpMessageBuilder
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	static this()
 	{

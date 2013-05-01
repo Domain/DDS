@@ -11,7 +11,7 @@ import org.serviio.external.io.OutputReader;
 
 public class OutputBytesReader : OutputReader
 {
-    private static immutable Logger log;
+    private static Logger log;
     private ByteArrayOutputStream outputStream;
 
     static this()

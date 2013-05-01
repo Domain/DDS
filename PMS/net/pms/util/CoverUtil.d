@@ -29,7 +29,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class CoverUtil : HTTPResource {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!CoverUtil();
+	private static Logger LOGGER = LoggerFactory.getLogger!CoverUtil();
 
 	/**
 	 * Use www.discogs.com as backend for cover lookups.

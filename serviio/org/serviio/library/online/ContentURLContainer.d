@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class ContentURLContainer
 {
-    private static immutable Logger log;
+    private static Logger log;
     private String contentUrl;
     private String thumbnailUrl;
     private MediaFileType fileType = MediaFileType.VIDEO;

@@ -48,7 +48,7 @@ public class SpeedStats {
 		return instance;
 	}
 
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!SpeedStats();
+	private static Logger LOGGER = LoggerFactory.getLogger!SpeedStats();
 
 	private Map/*<String, Future<Integer>>*/ speedStats = new HashMap/*<String, Future<Integer>>*/();
 

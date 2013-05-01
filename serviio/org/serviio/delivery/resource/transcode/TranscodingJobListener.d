@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class TranscodingJobListener : ProcessListener
 {
-    private static immutable Logger log;
+    private static Logger log;
     private String transcodingIdentifier;
     private File transcodedFile;
     private PipedInputStream transcodedStream;

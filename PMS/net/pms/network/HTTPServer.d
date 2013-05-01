@@ -37,7 +37,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.util.concurrent.Executors;
 
 public class HTTPServer : Runnable {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!HTTPServer();
+	private static Logger LOGGER = LoggerFactory.getLogger!HTTPServer();
 	private int port;
 	private String hostname;
 	private ServerSocketChannel serverSocketChannel;

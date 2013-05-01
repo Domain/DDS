@@ -29,7 +29,7 @@ import java.io.InputStream;
 // "Gob": a cryptic name for (e.g.) StreamGobbler - i.e. a stream
 // consumer that reads and discards the stream
 public class Gob : Thread {
-	private static immutable Logger logger = LoggerFactory.getLogger!Gob();
+	private static Logger logger = LoggerFactory.getLogger!Gob();
 	BufferedReader _in;
 
 	public this(InputStream _in) {

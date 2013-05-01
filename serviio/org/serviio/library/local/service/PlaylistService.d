@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistService : Service
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

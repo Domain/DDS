@@ -26,7 +26,7 @@ public class OnlineItemService
 {
     private static OnlineLibraryManager onlineLibraryManager;
 
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

@@ -32,7 +32,7 @@ public final class FormatFactory {
 	/**
 	 * Logger used for all logging.
 	 */
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!FormatFactory();
+	private static Logger LOGGER = LoggerFactory.getLogger!FormatFactory();
 
 	/**
 	 * Initial list of known formats.

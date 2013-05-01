@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineLibraryManager : AbstractLibraryManager
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static OnlineLibraryManager instance;
     private OnlineCacheDecorator!(OnlineCachable) onlineCache;
     private OnlineCacheDecorator!(CoverImage) thumbnailCache;

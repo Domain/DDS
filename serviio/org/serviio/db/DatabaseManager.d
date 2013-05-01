@@ -13,7 +13,7 @@ public class DatabaseManager
 {
     private static const int MAX_POOL_CONNECTION = 20;
     private static const long CONNECTION_TIMEOUT = 2000L;
-    private static immutable Logger log;
+    private static Logger log;
     private static String DB_SCHEMA_URL;
     private static DBConnectionPool pool;
 
@@ -40,7 +40,7 @@ public class DatabaseManager
             releasePool();
             DriverManager.getConnection("jdbc:derby:;shutdown=true");
         } catch (SQLException e) {
-            log.debug_("DB shutdown returned: " + e.getMessage());
+            log.debug_("DB shutdown returned: " ~ e.getMessage());
         }
     }
 

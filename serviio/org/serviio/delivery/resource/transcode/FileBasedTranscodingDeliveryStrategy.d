@@ -20,7 +20,7 @@ import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 
 public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(File)
 {
-	private static immutable Logger log;
+	private static Logger log;
 
 	static this()
 	{

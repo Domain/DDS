@@ -24,7 +24,7 @@ public class StreamBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliver
 {
 	private static immutable int PIPE_BUFFER_BYTES;
 
-	private static immutable Logger log;
+	private static Logger log;
 
 	static this()
 	{

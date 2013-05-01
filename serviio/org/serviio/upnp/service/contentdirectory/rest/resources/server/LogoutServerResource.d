@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class LogoutServerResource : AbstractRestrictedCDSServerResource, LogoutResource
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {

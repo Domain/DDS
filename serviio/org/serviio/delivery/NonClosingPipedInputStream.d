@@ -23,7 +23,7 @@ public class NonClosingPipedInputStream : PipedInputStream
 
 	private static immutable int CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC;
 
-	private static immutable Logger log;
+	private static Logger log;
 
 	private /*final*/ ScheduledExecutorService scheduler;
 	private ScheduledFuture!(Object) scheduledFuture;

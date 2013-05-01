@@ -36,7 +36,7 @@ import javax.imageio.ImageIO;
 import java.lang.exceptions;
 
 public class AboutTab {
-	private static immutable Logger LOGGER = LoggerFactory.getLogger!AboutTab();
+	private static Logger LOGGER = LoggerFactory.getLogger!AboutTab();
 
 	private ImagePanel imagePanel;
 	private JLabel jl;

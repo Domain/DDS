@@ -30,7 +30,7 @@ public abstract class AbstractUrlExtractor
 {
     protected static const int ITEM_LIST_TIMEOUT_MS = 30000;
     protected static const int URL_EXTRACTION_TIMEOUT_MS = 30000;
-    protected static immutable Logger logger;
+    protected static Logger logger;
 
     static this()
     {

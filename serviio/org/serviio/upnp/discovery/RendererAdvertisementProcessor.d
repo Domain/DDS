@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class RendererAdvertisementProcessor : Runnable
 {
-	private static immutable Logger log;
+	private static Logger log;
 	private String deviceIPAddress;
 	private String nts;
 	private int timeToKeep;

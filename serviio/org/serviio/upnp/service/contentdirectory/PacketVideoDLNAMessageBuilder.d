@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 
 public class PacketVideoDLNAMessageBuilder : GenericDLNAMessageBuilder
 {
-    private static immutable Logger log;
+    private static Logger log;
     private static const String PV_NAMESPACE_URL = "http://www.pv.com/pvns/";
 
     static this()

@@ -8,6 +8,8 @@ import std.exception;
 import std.array;
 import std.regex;
 import std.algorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 void generateAllFile(string dir, string prefix)
 {
@@ -197,8 +199,28 @@ void j2d(string filename, string jdir, string ddir)
     return;
 }
 
+string String_format(Char, Args...)(in Char[] fmt, Args args){
+    return std.string.format(fmt, args);
+}
+
+void testTemp(string file = __FILE__, int line = __LINE__, T...)(lazy string fmt, lazy T args)
+{
+    //auto writer = appender!string();
+    //formattedWrite(writer, "%1:$s", args);
+    writeln(line);
+    writefln(fmt, args);
+}
+
 void printHelp()
 {
+}
+
+void test()
+{
+    testTemp("abc");
+    testTemp(String_format("a%d", 1));
+    auto log = LoggerFactory.getLogger!(LoggerFactory)();
+    log.error("test%s", "abc");
 }
 
 int main(string[] argv)
@@ -210,6 +232,7 @@ int main(string[] argv)
     bool genAll = false;
     bool genMissing = false;
     bool showHelp = false;
+    bool testCode = false;
 
     try
     {
@@ -220,7 +243,8 @@ int main(string[] argv)
                "convert|c", &convert,
                "genAll|a", &genAll,
                "genMissing|m", &genMissing,
-               "help|h", &showHelp);
+               "help|h", &showHelp,
+               "test|t", &testCode);
     }
     catch(Exception e)
     {
@@ -231,6 +255,12 @@ int main(string[] argv)
     {
         writeln("Unrecognized option: ", argv[1..$]);
         return 1;
+    }
+
+    if (testCode)
+    {
+        test();
+        return 0;
     }
 
     if (!convert && !genAll && !genMissing)

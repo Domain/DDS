@@ -23,7 +23,7 @@ import org.serviio.library.dao.GenreDAO;
 
 public class GenreDAOImpl : GenreDAO
 {
-    private static immutable Logger log;
+    private static Logger log;
 
     static this()
     {
