@@ -23,8 +23,16 @@ class Vector(T) : AbstractList!T, List!T {
     public this(int initialCapacity, int capacityIncrement){
         implMissing( __FILE__, __LINE__ );
     }
-    override public void   add(int index, T element){
+    override public synchronized void   add(int index, T element){
         implMissing( __FILE__, __LINE__ );
+    }
+    override public synchronized bool    add(T o){
+        if( used + 1 >= vect.length ){
+            vect.length = vect.length + capacityIncrement;
+        }
+        vect[used] = cast(shared(T))o;
+        used++;
+        return true;
     }
     override public bool    add(T o){
         if( used + 1 >= vect.length ){
@@ -37,24 +45,24 @@ class Vector(T) : AbstractList!T, List!T {
     //override public bool    add(String o){
     //    return add(stringcast(o));
     //}
-    override public bool    addAll(Collection!T c){
+    override public synchronized bool    addAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    override public bool    addAll(int index, Collection!T c){
+    override public synchronized bool    addAll(int index, Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public void   addElement(T obj){
+    public synchronized void   addElement(T obj){
         add(obj);
     }
-    public int    capacity(){
+    public synchronized int    capacity(){
         return vect.length;
     }
     override public void   clear(){
         used = 0;
     }
-    public T     clone(){
+    public synchronized T     clone(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
@@ -75,25 +83,25 @@ class Vector(T) : AbstractList!T, List!T {
     //public void   copyInto(T[] anArray){
     //    implMissing( __FILE__, __LINE__ );
     //}
-    public T     elementAt(int index){
+    public synchronized T     elementAt(int index){
         return get(index);
     }
-    public Enumeration!T    elements(){
+    public synchronized Enumeration!T    elements(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-   public  void   ensureCapacity(int minCapacity){
+   public  synchronized void   ensureCapacity(int minCapacity){
         implMissing( __FILE__, __LINE__ );
     }
     override public equals_t opEquals(T o){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public T     firstElement(){
+    public synchronized T     firstElement(){
         implMissing( __FILE__, __LINE__ );
         return null;
     }
-    override public T     get(int index){
+    override public synchronized T     get(int index){
         if( index >= used || index < 0 ){
             throw new ArrayIndexOutOfBoundsException( __FILE__, __LINE__ );
         }
@@ -156,14 +164,14 @@ class Vector(T) : AbstractList!T, List!T {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public void   removeAllElements(){
+    public synchronized void   removeAllElements(){
         implMissing( __FILE__, __LINE__ );
     }
     public bool    removeElement(T obj){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    public void   removeElementAt(int index){
+    public synchronized void   removeElementAt(int index){
         implMissing( __FILE__, __LINE__ );
     }
     override protected  void     removeRange(int fromIndex, int toIndex){
@@ -182,6 +190,9 @@ class Vector(T) : AbstractList!T, List!T {
     }
     public void   setSize(int newSize){
         implMissing( __FILE__, __LINE__ );
+    }
+    override public synchronized int    size(){
+        return used;
     }
     override public int    size(){
         return used;

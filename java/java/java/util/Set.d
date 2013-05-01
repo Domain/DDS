@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 interface Set(T) : Collection!T {
+    override public synchronized bool     add(T o);
     override public bool     add(T o);
     //override public bool     add(String o);
+    override public synchronized bool     addAll(Collection!T c);
     override public bool     addAll(Collection!T c);
     override public void     clear();
     override public bool     contains(T o);
@@ -20,7 +22,7 @@ interface Set(T) : Collection!T {
     //override public bool     remove(String o);
     override public bool     removeAll(Collection!T c);
     override public bool     retainAll(Collection!T c);
-    override public int      size();
+    override public synchronized int      size();
     override public T[] toArray();
     override public T[] toArray(T[] a);
     override public String   toString();
