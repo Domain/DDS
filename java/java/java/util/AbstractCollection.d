@@ -7,15 +7,7 @@ import java.util.Iterator;
 abstract class AbstractCollection(T) : Collection!T {
     this(){
     }
-    synchronized bool        add(T o){
-        implMissing( __FILE__, __LINE__ );
-        return false;
-    }
     bool        add(T o){
-        implMissing( __FILE__, __LINE__ );
-        return false;
-    }
-    synchronized bool        addAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
@@ -68,7 +60,6 @@ abstract class AbstractCollection(T) : Collection!T {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    abstract  synchronized int   size();
     abstract  int   size();
     T[]       toArray(){
         implMissing( __FILE__, __LINE__ );

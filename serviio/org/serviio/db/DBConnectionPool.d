@@ -14,7 +14,7 @@ class DBConnectionPool
 {
     private static Logger log;
     private int checkedOut;
-    private shared(Vector!(Connection)) freeConnections;
+    private Vector!(Connection) freeConnections;
     private int maxConn;
     private String name;
     private String URL;
@@ -26,7 +26,7 @@ class DBConnectionPool
 
     public this(String name, String URL, int maxConn)
     {
-        freeConnections = new shared(Vector!(Connection))();
+        freeConnections = new Vector!(Connection)();
         this.name = name;
         this.URL = URL;
         this.maxConn = maxConn;
@@ -112,7 +112,7 @@ class DBConnectionPool
         freeConnections.removeAllElements();
     }
 
-    private synchronized Connection newConnection()
+    private Connection newConnection()
     {
         Connection con = null;
         try {

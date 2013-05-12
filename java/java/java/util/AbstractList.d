@@ -11,30 +11,17 @@ abstract class AbstractList(T) : AbstractCollection!T, List!T {
     this(){
     }
 
-    public synchronized void add(int index, T element){
-        throw new UnsupportedOperationException();
-    }
     public void add(int index, T element){
         throw new UnsupportedOperationException();
     }
     /*override public bool add(String o){
         return add(stringcast(o));
     }*/
-    override public synchronized bool add(T o){
-        add(size(), o);
-        return true;
-    }
     override public bool add(T o){
         add(size(), o);
         return true;
     }
-    override public synchronized bool addAll(Collection!T c){
-        throw new UnsupportedOperationException();
-    }
     override public bool addAll(Collection!T c){
-        throw new UnsupportedOperationException();
-    }
-    override public synchronized bool addAll(int index, Collection!T c){
         throw new UnsupportedOperationException();
     }
     override public bool addAll(int index, Collection!T c){

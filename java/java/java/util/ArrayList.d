@@ -17,22 +17,13 @@ class ArrayList(T) : AbstractList!T, List!T {
         data.length = 0;
     }
     this(Collection!T col){
-        this(cast(int)((cast(shared(Collection!T))col).size*1.1));
-        (cast(shared)this).addAll(col);
-    }
-    override synchronized void   add(int index, T element){
-        data.length = data.length +1;
-        System.arraycopy( data, index, data, index+1, data.length - index -1 );
-        data[index] = cast(shared(T))element;
+        this(cast(int)(col.size*1.1));
+        addAll(col);
     }
     override void   add(int index, T element){
         data.length = data.length +1;
         System.arraycopy( data, index, data, index+1, data.length - index -1 );
         data[index] = element;
-    }
-    override synchronized bool    add(T o){
-        data ~= cast(shared(T))o;
-        return true;
     }
     override bool    add(T o){
         data ~= o;
@@ -41,27 +32,14 @@ class ArrayList(T) : AbstractList!T, List!T {
     /*override public bool    add(String o){
         return add(stringcast(o));
     }*/
-    override synchronized bool    addAll(Collection!T c){
-        if( (cast(shared(Collection!T))c).size() is 0 ) return false;
-        uint idx = data.length;
-        data.length = data.length + (cast(shared(Collection!T))c).size();
-        foreach( o; c ){
-            data[ idx++ ] = cast(shared(T))o;
-        }
-        return true;
-    }
     override bool    addAll(Collection!T c){
-        if( (cast(shared(Collection!T))c).size() is 0 ) return false;
+        if( c.size() is 0 ) return false;
         uint idx = data.length;
-        data.length = data.length + (cast(shared(Collection!T))c).size();
+        data.length = data.length + c.size();
         foreach( o; c ){
             data[ idx++ ] = o;
         }
         return true;
-    }
-    override synchronized bool    addAll(int index, Collection!T c){
-        implMissing( __FILE__, __LINE__ );
-        return false;
     }
     override bool    addAll(int index, Collection!T c){
         implMissing( __FILE__, __LINE__ );
@@ -270,9 +248,6 @@ class ArrayList(T) : AbstractList!T, List!T {
         T res = data[index];
         data[index] = element;
         return res;
-    }
-    override synchronized int    size(){
-        return data.length;
     }
     override int    size(){
         return data.length;

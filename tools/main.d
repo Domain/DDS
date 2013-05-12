@@ -8,6 +8,8 @@ import std.exception;
 import std.array;
 import std.regex;
 import std.algorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 void generateAllFile(string dir, string prefix)
 {
@@ -197,46 +199,28 @@ void j2d(string filename, string jdir, string ddir)
     return;
 }
 
+string String_format(Char, Args...)(in Char[] fmt, Args args){
+    return std.string.format(fmt, args);
+}
+
+void testTemp(string file = __FILE__, int line = __LINE__, T...)(lazy string fmt, lazy T args)
+{
+    //auto writer = appender!string();
+    //formattedWrite(writer, "%1:$s", args);
+    writeln(line);
+    writefln(fmt, args);
+}
+
 void printHelp()
 {
 }
 
-class A
-{
-    public synchronized int size()
-    {
-        return 0;
-    }
-}
-
-class B
-{
-    private A[] arr;
-
-    public this(A a)
-    {
-        (cast(shared)this).test(a);
-    }
-
-    public synchronized void test(A a)
-    {
-        writeln("size %d", (cast(shared(A))a).size());
-    }
-
-    public void test(A a)
-    {
-        arr ~= a;
-        writeln("non");
-    }
-}
-
 void test()
 {
-    auto a = new A();//new shared(A)();
-    auto b = new shared(B)(a);
-    auto c = new B(a);
-    b.test(a);
-    c.test(a);
+    testTemp("abc");
+    testTemp(String_format("a%d", 1));
+    auto log = LoggerFactory.getLogger!(LoggerFactory)();
+    log.error("test%s", "abc");
 }
 
 int main(string[] argv)

@@ -1,7 +1,6 @@
 module org.serviio.db.DatabaseManager;
 
 import java.lang.String;
-import java.lang.System;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ public class DatabaseManager
     private static const long CONNECTION_TIMEOUT = 2000L;
     private static Logger log;
     private static String DB_SCHEMA_URL;
-    private static shared DBConnectionPool pool;
+    private static DBConnectionPool pool;
 
     public static Connection getConnection()
     {
@@ -41,7 +40,7 @@ public class DatabaseManager
             releasePool();
             DriverManager.getConnection("jdbc:derby:;shutdown=true");
         } catch (SQLException e) {
-            log.debug_("DB shutdown returned: " ~ e/*.getMessage()*/);
+            log.debug_("DB shutdown returned: " ~ e.getMessage());
         }
     }
 
@@ -53,7 +52,7 @@ public class DatabaseManager
     static this()
     {
         log = LoggerFactory.getLogger!(DatabaseManager)();
-        pool = new shared(DBConnectionPool)("Serviio DB Pool", DB_SCHEMA_URL, MAX_POOL_CONNECTION);
+        pool = new DBConnectionPool("Serviio DB Pool", DB_SCHEMA_URL, MAX_POOL_CONNECTION);
         String systemURL = System.getProperty("dbURL");
         if (systemURL !is null)
             DB_SCHEMA_URL = systemURL;
