@@ -93,6 +93,10 @@ class Vector(T) : AbstractList!T, List!T {
         implMissing( __FILE__, __LINE__ );
         return null;
     }
+    public T     nextElement(){
+        implMissing( __FILE__, __LINE__ );
+        return null;
+    }
     override public T     get(int index){
         if( index >= used || index < 0 ){
             throw new ArrayIndexOutOfBoundsException( __FILE__, __LINE__ );

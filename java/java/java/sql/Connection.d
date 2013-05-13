@@ -21,4 +21,19 @@ public class Connection
     {
         return new PreparedStatement();
     }
+
+    public bool isClosed()
+    {
+        implMissing();
+    }
+
+    public void setAutoCommit(bool autoCommit)
+    {
+        implMissgin();
+    }
+
+    public void close()
+    {
+        implMissing();
+    }
 }

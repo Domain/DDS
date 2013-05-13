@@ -1,6 +1,7 @@
 module org.serviio.db.DBConnectionPool;
 
 import java.lang.String;
+import java.lang.InterruptedException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -35,10 +36,10 @@ class DBConnectionPool
     public synchronized void freeConnection(Connection con)
     {
         if (con !is null) {
-            freeConnections.addElement(con);
+            (cast(Vector!Connection)freeConnections).addElement(con);
         }
         checkedOut -= 1;
-        notifyAll();
+        //notifyAll();
         if (log.isTraceEnabled())
             log.trace(String_format("Releasing connection from pool %s", cast(Object[])[ name ]));
     }
@@ -46,10 +47,10 @@ class DBConnectionPool
     public synchronized Connection getConnection(bool autoCommit)
     {
         Connection con = null;
-        if (freeConnections.size() > 0)
+        if ((cast(Vector!Connection)freeConnections).size() > 0)
         {
-            con = cast(Connection)freeConnections.firstElement();
-            freeConnections.removeElementAt(0);
+            con = cast(Connection)(cast(Vector!Connection)freeConnections).firstElement();
+            (cast(Vector!Connection)freeConnections).removeElementAt(0);
             if (log.isTraceEnabled())
                 log.trace(String_format("Getting pooled connection from pool %s", cast(Object[])[ name ]));
             try
@@ -85,7 +86,7 @@ class DBConnectionPool
         Connection con;
         while ((con = getConnection(autoCommit)) is null) {
             try {
-                wait(timeout);
+                //wait(timeout);
             } catch (InterruptedException e) {
             }
             if ((new Date()).getTime() - startTime >= timeout)
@@ -99,29 +100,29 @@ class DBConnectionPool
 
     public synchronized void release()
     {
-        Enumeration!(Connection) allConnections = freeConnections.elements();
+        Enumeration!(Connection) allConnections = (cast(Vector!Connection)freeConnections).elements();
         while (allConnections.hasMoreElements()) {
-            Connection con = cast(Connection)allConnections.nextElement();
+            Connection con = cast(Connection)((cast(Vector!Connection)freeConnections).nextElement());
             try {
                 con.close();
-                log.debug_("Closed connection for pool " + name);
+                log.debug_("Closed connection for pool " ~ name);
             } catch (SQLException e) {
-                log.debug_("Can't close connection for pool " + name, e);
+                log.debug_("Can't close connection for pool " ~ name, e);
             }
         }
-        freeConnections.removeAllElements();
+        (cast(Vector!Connection)freeConnections).removeAllElements();
     }
 
-    private Connection newConnection()
+    private synchronized Connection newConnection()
     {
         Connection con = null;
         try {
             con = DriverManager.getConnection(URL);
             if (log.isTraceEnabled())
-                log.trace("Created a new connection in pool " + name);
+                log.trace("Created a new connection in pool " ~ name);
         }
         catch (SQLException e) {
-            log.warn("Can't create a new connection for " + URL, e);
+            log.warn("Can't create a new connection for " ~ URL, e);
             return null;
         }
         return con;

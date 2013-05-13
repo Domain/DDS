@@ -2,7 +2,7 @@ module org.serviio.profile.OnlineContentType;
 
 public enum OnlineContentType
 {
-  LIVE, VOD, ANY
+    LIVE, VOD, ANY
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
