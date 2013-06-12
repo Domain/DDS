@@ -441,6 +441,24 @@ public class MediaFormatProfile
     {
         return Arrays.asList(values());
     }
+
+    public override bool opEquals(Object o)
+    {
+        if (is(o : MediaFormatProfile))
+        {
+            return this.mediaFormatProfile == cast(MediaFormatProfile)o.mediaFormatProfile;
+        }
+        else if (is(o : MediaFormatProfileEnum))
+        {
+            return this.mediaFormatProfile == o;
+        }
+        return false;
+    }
+
+    public bool opEquals(MediaFormatProfileEnum rhs)
+    {
+        return this.mediaFormatProfile == rhs;
+    }
 }
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar

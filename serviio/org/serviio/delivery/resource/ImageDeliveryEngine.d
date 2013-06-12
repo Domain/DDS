@@ -105,7 +105,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
 	override protected DeliveryContainer retrieveTranscodedResource(Image mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
 	{
-		log.debug_(String_format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion ]));
+		log.debug_(String_format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion.toString() ]));
 		byte[] transcodedImageBytes = null;
 		synchronized (transcodingCache) {
 			if (transcodingCache.isInCache(mediaItem.getId(), selectedVersion)) {
@@ -185,7 +185,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 		return (originalTranscoded) || (imageRotated);
 	}
 
-	private ImageMediaInfo createTranscodedImageInfoForProfile(Image originalImage, MediaFormatProfile selectedVersion, Long fileSize, Profile rendererProfile)
+	private ImageMediaInfo createTranscodedImageInfoForProfile(Image originalImage, MediaFormatProfile.MediaFormatProfileEnum selectedVersion, Long fileSize, Profile rendererProfile)
 	{
 		if (isTranscodingValid(originalImage, selectedVersion))
 		{
@@ -215,7 +215,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 		throw new UnsupportedDLNAMediaFileFormatException("Images can only be transformed to JPEG continer");
 	}
 
-	private DeliveryQuality.QualityType getQualityType(MediaFormatProfile mediaFormatProfile)
+	private DeliveryQuality.QualityType getQualityType(MediaFormatProfile.MediaFormatProfileEnum  mediaFormatProfile)
 	{
 		if (mediaFormatProfile == MediaFormatProfile.JPEG_SM)
 			return DeliveryQuality.QualityType.LOW;

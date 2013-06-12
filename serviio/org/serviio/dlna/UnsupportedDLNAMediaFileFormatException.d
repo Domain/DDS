@@ -1,6 +1,7 @@
 module org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 
 import java.lang.String;
+public import java.lang.exceptions;
 
 public class UnsupportedDLNAMediaFileFormatException : Exception
 {
