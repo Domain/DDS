@@ -41,8 +41,8 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
     private static const String TRANSCODING_SUBFOLDER_NAME = "Serviio";
     private static const String TRANSCODED_FILE_EXTENSION = ".stf";
     private static Map!(Client, TranscodingJobListener) transcodeJobs;
-    private static TranscodingDeliveryStrategy!(File) fileBasedStrategy;
-    private static TranscodingDeliveryStrategy!(OutputStream) streamBasedStrategy;
+    private static TranscodingDeliveryStrategy/*!(File)*/ fileBasedStrategy;
+    private static TranscodingDeliveryStrategy/*!(OutputStream)*/ streamBasedStrategy;
 
     private static Logger log;
 
@@ -249,7 +249,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         }
     }
 
-    private TranscodingDeliveryStrategy!(Object) getDeliveryStrategy(MI mediaItem) {
+    private TranscodingDeliveryStrategy/*!(Object)*/ getDeliveryStrategy(MI mediaItem) {
         if (mediaItem.isLive()) {
             return streamBasedStrategy;
         }

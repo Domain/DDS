@@ -32,6 +32,13 @@ interface IDwtLogger {
     void fatal( String file, ulong line, String fmt, ... );
 }
 
+interface IObject {
+    string   toString();
+    size_t   toHash() @trusted nothrow;
+    int      opCmp(Object o);
+    bool     opEquals(Object o);
+}
+
 version(Tango){
     class DwtLogger : IDwtLogger {
         tango.util.log.Log.Logger logger;

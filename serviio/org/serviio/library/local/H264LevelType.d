@@ -36,6 +36,13 @@ public class H264LevelType
         return type;
     }
 
+    public static H264LevelType valueOf(H264LevelTypeEnum e)
+    {
+        H264LevelType type = new H264LevelType();
+        type.h264LevelType = e;
+        return type;
+    }
+
     public static Map!(H264LevelType, String) parseFromString(String identifiersCSV)
     {
         return converter.convert(identifiersCSV);

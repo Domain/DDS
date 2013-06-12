@@ -12,6 +12,7 @@ version(Tango){
     static import tango.text.convert.Utf;
 } else { // Phobos
     static import std.array;
+    static import std.algorithm;
     static import std.string;
     static import std.conv;
     static import std.exception;
@@ -574,6 +575,11 @@ static String toHex(uint i){
     } else { // Phobos
         return std.conv.to!(String)(i, 16);
     }
+}
+
+public String[] split(String content, String delim)
+{
+    return splitter(content, delim);
 }
 
 /++

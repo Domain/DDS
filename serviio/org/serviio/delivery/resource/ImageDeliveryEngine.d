@@ -2,6 +2,7 @@ module org.serviio.delivery.resource.ImageDeliveryEngine;
 
 import java.lang.Long;
 import java.lang.Double;
+import java.lang.String;
 import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -40,7 +41,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 {
 	private static Logger log;
 
-	private static immutable List!(MediaFormatProfile) JPEG_PROFILES;
+	private static List!(MediaFormatProfile) JPEG_PROFILES;
 
 	private static TranscodingCache transcodingCache;
 	private static ImageDeliveryEngine instance;

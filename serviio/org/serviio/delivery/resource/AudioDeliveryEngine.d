@@ -2,6 +2,7 @@ module org.serviio.delivery.resource.AudioDeliveryEngine;
 
 import java.lang.Integer;
 import java.lang.Long;
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -73,12 +74,12 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
 				{
 					MediaFormatProfile transcodedProfile = MediaFormatProfileResolver.resolveAudioFormat(mediaItem.getFileName(), trDef.getTargetContainer(), targetBitrate, targetSamplerate, targetChannels);
 
-					log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile ]));
+					log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile.toString() ]));
 
 					transcodedMI.put(qualityType, Collections.singletonList(new AudioMediaInfo(mediaItem.getId(), transcodedProfile, fileSize, true, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(transcodedProfile), targetChannels, targetSamplerate, targetBitrate, qualityType)));
 				}
 				catch (UnsupportedDLNAMediaFileFormatException e) {
-					log.warn(String_format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), e.getMessage() ]));
+					log.warn(String_format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), e.toString() ]));
 				}
 			}
 			return transcodedMI;

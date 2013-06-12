@@ -21,7 +21,7 @@ interface Collection(T) {
     public int    size();
     public T[]   toArray();
     public T[]   toArray(T[] a);
-	public String   toString();
+    public String   toString();
 
     // only for D
     public int opApply (int delegate(ref T value) dg);

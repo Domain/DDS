@@ -201,38 +201,51 @@ void printHelp()
 {
 }
 
-class A
+interface I
 {
-    protected void Foo(string str)
+    void foo();
+}
+
+abstract class CA : I
+{
+    public void foo()
     {
-        writeln(str);
     }
 }
 
-interface B
+class A : CA
 {
-    void Foo(int i);
-}
-
-class C : A, B
-{
-    override void Foo(int i)
+    override public void foo()
     {
-        writeln(i);
-        A.Foo("test");
     }
 }
 
-class D(T)
+class C : CA
 {
-    public static void test()
+    override public void foo()
+    {
+    }
+}
+
+class B
+{
+    private static void bar(C a)
+    {
+    }
+
+    private static void bar(A a)
+    {
+    }
+
+    public static void bar(I i, bool b)
     {
     }
 }
 
 void test()
 {
-    D!int.test();
+    A a;
+    B.bar(a, true);
 }
 
 int main(string[] argv)

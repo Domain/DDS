@@ -2,6 +2,7 @@ module org.serviio.delivery.resource.transcode.VideoTranscodingMatch;
 
 import java.lang.String;
 import java.lang.Float;
+import java.lang.NumberFormatException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,8 +40,8 @@ public class VideoTranscodingMatch
 
     public this(VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, H264Profile h264Profile, Float h264LevelGT, String ftypNotIn, OnlineContentType onlineContentType, bool squarePixels, String vFourCC, H264LevelCheckType h264LevelCheckType)
     {
-        ftypNotIn = new ArrayList!(String)();
-        vFourCC = new ArrayList!(String)();
+        this.ftypNotIn = new ArrayList!(String)();
+        this.vFourCC = new ArrayList!(String)();
 
         this.container = container;
         this.videoCodec = videoCodec;
@@ -60,7 +61,7 @@ public class VideoTranscodingMatch
 
     public bool matches(VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, H264Profile h264Profile, Map!(H264LevelType, String) h264Levels, String ftyp, OnlineContentType onlineContentType, bool squarePixels, String vFourCC)
     {
-        if (((container == this.container) || (this.container == VideoContainer.ANY)) && ((this.videoCodec is null) || (videoCodec == this.videoCodec)) && ((this.audioCodec is null) || (audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType)) && ((this.squarePixels is null) || (this.squarePixels.equals(bool.valueOf(squarePixels)))))
+        if (((container == this.container) || (this.container == VideoContainer.ANY)) && ((this.videoCodec is null) || (videoCodec == this.videoCodec)) && ((this.audioCodec is null) || (audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType)) && (/*(this.squarePixels is null) || */(this.squarePixels == squarePixels)))
         {
             return true;
         }
@@ -109,12 +110,12 @@ public class VideoTranscodingMatch
 
     private String getLevelToMatch(Map!(H264LevelType, String) videoH264Levels) {
         if (h264LevelCheckType == H264LevelCheckType.FILE_ATTRIBUTES)
-            return cast(String)videoH264Levels.get(H264LevelType.RF);
+            return cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.RF));
         if (h264LevelCheckType == H264LevelCheckType.HEADER) {
-            return cast(String)videoH264Levels.get(H264LevelType.H);
+            return cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.H));
         }
 
-        return selectHigherH264Level(cast(String)videoH264Levels.get(H264LevelType.H), cast(String)videoH264Levels.get(H264LevelType.RF));
+        return selectHigherH264Level(cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.H)), cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.RF)));
     }
 
     private String selectHigherH264Level(String headerLevel, String refFramesLevel)

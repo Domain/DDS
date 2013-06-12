@@ -3,7 +3,8 @@ module org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import java.lang.String;
 import java.lang.Double;
 import java.lang.Float;
-import java.lang.Long;import java.lang.NumberFormatException;
+import java.lang.Long;
+import java.lang.NumberFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import org.serviio.delivery.Client;
 import org.serviio.external.ProcessListener;
+import org.serviio.external.ProcessExecutor;
 import org.serviio.util.DateUtils;
 import org.serviio.util.FileUtils;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
@@ -97,7 +99,7 @@ public class TranscodingJobListener : ProcessListener
         Iterator!(TranscodeInputStream) i = processingStreams.iterator();
         while (i.hasNext()) {
             TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
-            if (tis.getClient().equals(client)) {
+            if (tis.getClient().opEquals(client)) {
                 try {
                     tis.close();
                 } catch (IOException e) {
@@ -111,15 +113,16 @@ public class TranscodingJobListener : ProcessListener
     {
         if (!shuttingDown) {
             shuttingDown = true;
-            closeFFmpegConsumer();
+            (cast(TranscodingJobListener)this).closeFFmpegConsumer();
 
-            getExecutor().stopProcess(true);
+            (cast(ProcessExecutor)((cast(TranscodingJobListener)this).getExecutor())).stopProcess(true);
 
-            closeAllStreams();
+            (cast(TranscodingJobListener)this).closeAllStreams();
 
-            if (getTranscodedFile() !is null) {
-                bool deleted = getTranscodedFile().delete_();
-                log.debug_(String_format("Deleted temp file '%s': %s", cast(Object[])[ getTranscodedFile(), Boolean.valueOf(deleted) ]));
+            File transcodedFile = (cast(TranscodingJobListener)this).getTranscodedFile();
+            if (transcodedFile !is null) {
+                bool deleted = transcodedFile.delete_();
+                log.debug_(String_format("Deleted temp file '%s': %s", cast(Object[])[ transcodedFile.toString(), String_valueOf(deleted) ]));
             }
         }
     }
@@ -175,7 +178,7 @@ public class TranscodingJobListener : ProcessListener
     {
         int prime = 31;
         int result = 1;
-        result = prime * result + (transcodingIdentifier is null ? 0 : transcodingIdentifier.hashCode());
+        result = prime * result + (transcodingIdentifier is null ? 0 : transcodingIdentifier.toHash());
         return result;
     }
 
@@ -185,8 +188,8 @@ public class TranscodingJobListener : ProcessListener
             return true;
         if (obj is null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        //if (getClass() != obj.getClass())
+        //    return false;
         TranscodingJobListener other = cast(TranscodingJobListener)obj;
         if (transcodingIdentifier is null) {
             if (other.transcodingIdentifier !is null)

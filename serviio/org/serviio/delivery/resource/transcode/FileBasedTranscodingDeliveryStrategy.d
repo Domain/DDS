@@ -22,7 +22,7 @@ import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 
-public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(File)
+public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy/*!(File)*/
 {
     private static Logger log;
 

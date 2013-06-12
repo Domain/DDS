@@ -20,7 +20,7 @@ import org.serviio.delivery.resource.transcode.StreamDescriptor;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 
-public class StreamBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(OutputStream)
+public class StreamBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy/*!(OutputStream)*/
 {
 	private static immutable int PIPE_BUFFER_BYTES;
 

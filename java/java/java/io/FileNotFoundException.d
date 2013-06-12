@@ -1,12 +1,22 @@
-/// Generate by tools
 module java.io.FileNotFoundException;
 
-import java.lang.exceptions;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.io.IOException;
 
-public class FileNotFoundException
+public class FileNotFoundException : IOException
 {
     public this()
     {
-        implMissing();
+    }
+
+    public this(String paramString)
+    {
+        super(paramString);
+    }
+
+    private this(String paramString1, String paramString2)
+    {
+        super(paramString1 ~ (paramString2 == null ? "" : (new StringBuilder()).append(" (").append(paramString2).append(")").toString()));
     }
 }

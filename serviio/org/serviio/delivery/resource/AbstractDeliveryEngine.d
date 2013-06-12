@@ -161,7 +161,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
 
     protected RI findMediaInfoForFileProfile(Collection!(RI) infos, MediaFormatProfile selectedVersion) { 
-        foreach (MediaFormatProfileResource mi ; infos) {
+        foreach (/*MediaFormatProfileResource*/ mi ; infos) {
             if (mi.getFormatProfile() == selectedVersion) {
                 return cast(RI) mi;
             }
@@ -183,7 +183,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
                     log.warn("Cannot extract expired URL, using previous one which might not work");
                 }
             } catch (Throwable t) {
-                log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.getMessage() ]));
+                log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.toString() ]));
             }
         }
     }
