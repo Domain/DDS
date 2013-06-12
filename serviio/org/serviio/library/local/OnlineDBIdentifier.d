@@ -14,12 +14,17 @@ public class OnlineDBIdentifier
     OnlineDBIdentifierEnum onlineDBIdentifier;
     alias onlineDBIdentifier this;
 
-    private static EnumMapConverter!(OnlineDBIdentifier) converter = new class() EnumMapConverter!(OnlineDBIdentifier)
+    private static EnumMapConverter!(OnlineDBIdentifier) converter;
+
+    public static this()
     {
-        override protected OnlineDBIdentifier enumValue(String name) {
-            return OnlineDBIdentifier.valueOf(name);
-        }
-    };
+        converter = new class() EnumMapConverter!(OnlineDBIdentifier)
+        {
+            override protected OnlineDBIdentifier enumValue(String name) {
+                return OnlineDBIdentifier.valueOf(name);
+            }
+        };
+    }
 
     public static OnlineDBIdentifier valueOf(String name)
     {

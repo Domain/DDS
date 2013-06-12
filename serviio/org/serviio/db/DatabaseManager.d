@@ -53,7 +53,7 @@ public class DatabaseManager
     static this()
     {
         log = LoggerFactory.getLogger!(DatabaseManager)();
-        pool = new shared(DBConnectionPool)("Serviio DB Pool", DB_SCHEMA_URL, MAX_POOL_CONNECTION);
+        pool = cast(shared(DBConnectionPool))new DBConnectionPool("Serviio DB Pool", DB_SCHEMA_URL, MAX_POOL_CONNECTION);
         String systemURL = System.getProperty("dbURL");
         if (systemURL !is null)
             DB_SCHEMA_URL = systemURL;

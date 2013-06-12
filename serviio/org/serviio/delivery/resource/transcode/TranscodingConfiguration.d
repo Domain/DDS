@@ -25,7 +25,7 @@ public class TranscodingConfiguration
         if (result !is null) {
             return Collections.unmodifiableList(cast(List!(TranscodingDefinition))config.get(fileType));
         }
-        return Collections.emptyList();
+        return Collections.EMPTY_LIST!TranscodingDefinition();
     }
 
     public List!(TranscodingDefinition) getDefinitions()

@@ -20,6 +20,10 @@ class ArrayList(T) : AbstractList!T, List!T {
         this(cast(int)(col.size*1.1));
         addAll(col);
     }
+    this(T[] a) {
+        this(a.length);
+        addAll(a);
+    }
     override void   add(int index, T element){
         data.length = data.length +1;
         System.arraycopy( data, index, data, index+1, data.length - index -1 );
@@ -30,7 +34,7 @@ class ArrayList(T) : AbstractList!T, List!T {
         return true;
     }
     /*override public bool    add(String o){
-        return add(stringcast(o));
+    return add(stringcast(o));
     }*/
     override bool    addAll(Collection!T c){
         if( c.size() is 0 ) return false;
@@ -44,6 +48,14 @@ class ArrayList(T) : AbstractList!T, List!T {
     override bool    addAll(int index, Collection!T c){
         implMissing( __FILE__, __LINE__ );
         return false;
+    }
+    bool addAll(T[] a) {
+        uint idx = data.length;
+        data.length += a.length;
+        foreach( o; a ) {
+            data[ idx++ ] = o;
+        }
+        return true;
     }
     override void   clear(){
         data.length = 0;
@@ -67,7 +79,7 @@ class ArrayList(T) : AbstractList!T, List!T {
         return false;
     }
     /*bool    contains(String o){
-        return contains(stringcast(o));
+    return contains(stringcast(o));
     }*/
     override bool    containsAll(Collection!T c){
         implMissing( __FILE__, __LINE__ );

@@ -78,6 +78,14 @@ class Double : Number {
     override public double doubleValue(){
         return cast(double)value;
     }
+
+    public static Double valueOf(double i) {
+        return new Double(i);
+    }
+
+    override public String toString() {
+        return String_valueOf(value);
+    }
 }
 
 

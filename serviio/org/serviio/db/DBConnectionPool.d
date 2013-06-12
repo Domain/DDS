@@ -32,7 +32,7 @@ class DBConnectionPool
         this.URL = URL;
         this.maxConn = maxConn;
     }
-
+    
     public synchronized void freeConnection(Connection con)
     {
         if (con !is null) {

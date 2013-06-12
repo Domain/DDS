@@ -85,21 +85,21 @@ public class NonClosingPipedInputStream : PipedInputStream
 		this.forceClosing = forceClosing;
 	}
 
-	public synchronized int read()
+	override public /*synchronized*/ int read()
 	{
 		lastBytesRead.set(new Date());
 		resetReadTimeoutScheduler(CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC);
 		return super.read();
 	}
 
-	public synchronized int read(byte[] b, int off, int len)
+	override public /*synchronized*/ int read(byte[] b, int off, int len)
 	{
 		lastBytesRead.set(new Date());
 		resetReadTimeoutScheduler(CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC);
 		return super.read(b, off, len);
 	}
 
-	public synchronized void close()
+	override public /*synchronized*/ void close()
 	{
 		if (!closed)
 			if ((forceClosing) && (!processListener.isFinished()))

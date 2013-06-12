@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
+import org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamDescriptor;
 
 public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem) : AbstractDeliveryEngine!(RI, MI), DeliveryListener
 {
@@ -56,7 +59,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         log.info("Cleaning transcode engine and its data");
         foreach (TranscodingJobListener listener ; transcodeJobs.values())
         {
-            listener.releaseResources();
+            (cast(shared(TranscodingJobListener))listener).releaseResources();
         }
 
         deleteTranscodeFiles();
@@ -82,10 +85,10 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         if (trDef !is null) {
             String transcodingIdentifier = null;
             if (timeOffsetInSeconds !is null) {
-                transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s-%s-%s%s", cast(Object[])[ mediaItem.getId(), client.getRendererProfile().getId(), selectedQuality.toString(), timeOffsetInSeconds, Double.valueOf(durationInSeconds !is null ? durationInSeconds.doubleValue() : 0.0), TRANSCODED_FILE_EXTENSION ]);
+                transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s-%s-%s%s", cast(Object[])[ mediaItem.getId().toString(), client.getRendererProfile().getId().toString(), selectedQuality.toString(), timeOffsetInSeconds.toString(), Double.valueOf(durationInSeconds !is null ? durationInSeconds.doubleValue() : 0.0).toString(), TRANSCODED_FILE_EXTENSION ]);
             }
             else {
-                transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s%s", cast(Object[])[ mediaItem.getId(), client.getRendererProfile().getId(), selectedQuality.toString(), TRANSCODED_FILE_EXTENSION ]);
+                transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s%s", cast(Object[])[ mediaItem.getId().toString(), client.getRendererProfile().getId().toString(), selectedQuality.toString(), TRANSCODED_FILE_EXTENSION ]);
             }
 
             TranscodingJobListener jobListener = startTranscodeJob(mediaItem, transcodingIdentifier, timeOffsetInSeconds, durationInSeconds, client, trDef);
@@ -158,7 +161,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
             if (closeStream) {
                 log.debug_(String_format("Stopping previous transcoding job of file '%s'", cast(Object[])[ existingJobListener.getTranscodingIdentifier() ]));
 
-                existingJobListener.releaseResources();
+                (cast(shared(TranscodingJobListener))existingJobListener).releaseResources();
 
                 deliveryComplete(client);
             }
@@ -176,7 +179,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         return c;
     }
 
-    private synchronized TranscodingJobListener startTranscodeJob(MI mediaItem, String transcodingIdentifier, Double timeOffsetInSeconds, Double durationInSeconds, Client client, TranscodingDefinition trDef)
+    private /*synchronized*/ TranscodingJobListener startTranscodeJob(MI mediaItem, String transcodingIdentifier, Double timeOffsetInSeconds, Double durationInSeconds, Client client, TranscodingDefinition trDef)
     {
         prepareClientStream(client, transcodingIdentifier, trDef);
 
@@ -221,7 +224,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
                 return Collections.singleton(transcodeJobs.get(client));
             }
 
-            return Collections.emptySet();
+            return Collections.EMPTY_SET!TranscodingJobListener();
         }
     }
 
@@ -241,7 +244,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
             });
             foreach (File f ; transcodedFiles) {
                 bool result = f.delete_();
-                log.debug_(String_format("Deleted file %s: %s", cast(Object[])[ f, Boolean.valueOf(result) ]));
+                log.debug_(String_format("Deleted file %s: %s", cast(Object[])[ f.toString(), String_valueOf(result) ]));
             }
         }
     }

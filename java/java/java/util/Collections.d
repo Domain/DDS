@@ -19,7 +19,7 @@ class Collections {
     }
 
     private static List!Object EMPTY_LIST_;
-    public static List!Object EMPTY_LIST(){
+    public static List!T EMPTY_LIST(T)(){
         if( EMPTY_LIST_ is null ){
             synchronized(Collections.classinfo ){
                 if( EMPTY_LIST_ is null ){
@@ -27,27 +27,28 @@ class Collections {
                 }
             }
         }
-        return EMPTY_LIST_;
+        return cast(List!T)EMPTY_LIST_;
     }
-    //private static Map!(Object, Object) EMPTY_MAP_;
-    //public static Map!(Object, Object) emptyMap(){
-    //    if( EMPTY_MAP_ is null ){
-    //        synchronized(Collections.classinfo ){
-    //            if( EMPTY_MAP_ is null ){
-    //                EMPTY_MAP_ = new TreeMap!(Object, Object)();
-    //            }
-    //        }
-    //    }
-    //    return EMPTY_MAP_;
+
+    private static Map!(Object, Object) EMPTY_MAP_;
+    public static Map!(K, V) emptyMap(K, V)(){
+        if( EMPTY_MAP_ is null ){
+            synchronized(Collections.classinfo ){
+                if( EMPTY_MAP_ is null ){
+                    EMPTY_MAP_ = new TreeMap!(Object, Object)();
+                }
+            }
+        }
+        return cast(Map!(K, V))EMPTY_MAP_;
+    }
+
+    //public static Map!(K, V) emptyMap(K, V)(){
+    //    Map!(K, V) map = new TreeMap!(K, V)();
+    //    return map;
     //}
 
-    public static Map!(K, V) emptyMap(K, V)(){
-        Map!(K, V) map = new TreeMap!(K, V)();
-        return map;
-    }
-
     private static Set!Object EMPTY_SET_;
-    public static Set!Object EMPTY_SET(){
+    public static Set!T EMPTY_SET(T)(){
         if( EMPTY_SET_ is null ){
             synchronized(Collections.classinfo ){
                 if( EMPTY_SET_ is null ){
@@ -55,7 +56,7 @@ class Collections {
                 }
             }
         }
-        return EMPTY_SET_;
+        return cast(Set!T)EMPTY_SET_;
     }
     static class UnmodifiableIterator(T) : Iterator!T {
         Iterator!T it;
@@ -144,13 +145,13 @@ class Collections {
         public bool     containsAll(Collection!T c){
             return list.containsAll(c);
         }
-        public equals_t      opEquals(Object o){
+        override public equals_t      opEquals(T o){
             return cast(equals_t)list.opEquals(o);
         }
-        public Object   get(int index){
+        public T get(int index){
             return list.get(index);
         }
-        public hash_t   toHash(){
+        override public hash_t   toHash(){
             return list.toHash();
         }
         public int      indexOf(T o){
@@ -198,7 +199,7 @@ class Collections {
         public int      size(){
             return list.size();
         }
-        public List     subList(int fromIndex, int toIndex){
+        public List!T     subList(int fromIndex, int toIndex){
             return new UnmodifieableList!T( list.subList(fromIndex,toIndex));
         }
         public T[] toArray(){
@@ -218,7 +219,7 @@ class Collections {
         //    implMissing(__FILE__, __LINE__ );
         //    return 0;
         //}
-        public String toString(){
+        override public String toString(){
             return list.toString();
         }
     }
@@ -231,7 +232,7 @@ class Collections {
         return 0;
     }
     public static List!T unmodifiableList(T)( List!T list ){
-        return new UnmodifieableList(list);
+        return new UnmodifieableList!T(list);
     }
     public static Map!(K, V) unmodifiableMap(K, V)( Map!(K, V) list ){
         implMissing( __FILE__, __LINE__ );

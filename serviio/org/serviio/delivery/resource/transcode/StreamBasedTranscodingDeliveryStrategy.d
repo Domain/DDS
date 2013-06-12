@@ -56,7 +56,7 @@ public class StreamBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliver
 	{
 		TranscodingJobListener jobListener = new TranscodingJobListener(transcodingIdentifier);
 
-		OutputStream transcodedOutput = invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, null, trDef, jobListener);
+		OutputStream transcodedOutput = super.invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, null, trDef, jobListener);
 		if (transcodedOutput !is null) {
 			jobListener.setTranscodedStream(new NonClosingPipedInputStream(cast(PipedOutputStream)transcodedOutput, PIPE_BUFFER_BYTES, jobListener, client, deliveryListener, !trDef.getTranscodingConfiguration().isKeepStreamOpen()));
 

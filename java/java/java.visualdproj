@@ -275,12 +275,14 @@
     <File path="java\lang\Double.d" />
     <File path="java\lang\exceptions.d" />
     <File path="java\lang\Float.d" />
+    <File path="java\lang\IllegalArgumentException.d" />
     <File path="java\lang\InstantiationException.d" />
     <File path="java\lang\Integer.d" />
     <File path="java\lang\InterruptedException.d" />
     <File path="java\lang\Long.d" />
     <File path="java\lang\Math.d" />
     <File path="java\lang\Number.d" />
+    <File path="java\lang\NumberFormatException.d" />
     <File path="java\lang\Process.d" />
     <File path="java\lang\ProcessBuilder.d" />
     <File path="java\lang\Runnable.d" />

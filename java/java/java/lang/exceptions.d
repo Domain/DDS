@@ -22,12 +22,6 @@ version(Tango){
         }
     }
 
-    class IllegalArgumentException : Exception {
-        this( String e = null ){
-            super(e);
-        }
-    }
-
     class NoSuchElementException : Exception {
         this( String e = null ){
             super(e);
@@ -118,18 +112,6 @@ class NullPointerException : Exception {
     }
     this( Exception e ){
         super(e.toString);
-    }
-}
-
-class NumberFormatException : IllegalArgumentException {
-    this( String e ){
-        super(e);
-    }
-    this( Exception e ){
-        super(e.toString);
-    }
-    public String getMessage(){
-        return msg;
     }
 }
 

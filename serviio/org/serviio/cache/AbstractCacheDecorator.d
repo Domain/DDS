@@ -10,7 +10,7 @@ import org.serviio.cache.CacheDecorator;
 
 public abstract class AbstractCacheDecorator : CacheDecorator
 {
-    protected Logger log;
+    protected static Logger log;
     protected JCS cache;
     protected String regionName;
 

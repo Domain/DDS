@@ -82,6 +82,10 @@ class Float : Number {
     override public double doubleValue(){
         return cast(double)value;
     }
+
+    public static Float valueOf(float i) {
+        return new Float(i);
+    }
 }
 
 

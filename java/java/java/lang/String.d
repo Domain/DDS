@@ -117,13 +117,18 @@ String String_format(Char, Args...)(in Char[] fmt, Args args){
     return std.string.format(fmt, args);
 }
 
-String toString(String str)
+String toString(S)(S str) if (is(S == string))
 {
     return str;
 }
 
 int length( String str ){
     return str.length;
+}
+
+String toString(E)(E e) if (is(E == enum))
+{
+    return std.string.format("%s", e);
 }
 
 /// Extension to String

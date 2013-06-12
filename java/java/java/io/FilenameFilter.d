@@ -1,12 +1,10 @@
 /// Generate by tools
 module java.io.FilenameFilter;
 
-import java.lang.exceptions;
+import java.lang.String;
+import java.io.File;
 
-public class FilenameFilter
+public interface FilenameFilter
 {
-    public this()
-    {
-        implMissing();
-    }
+    bool accept(File paramFile, String paramString);
 }

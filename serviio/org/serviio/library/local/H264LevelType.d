@@ -14,12 +14,17 @@ public class H264LevelType
     H264LevelTypeEnum h264LevelType;
     alias h264LevelType this;
 
-    private static EnumMapConverter!(H264LevelType) converter = new class() EnumMapConverter!(H264LevelType)
+    private static EnumMapConverter!(H264LevelType) converter;
+
+    public static this()
     {
-        override protected H264LevelType enumValue(String name) {
-            return H264LevelType.valueOf(name);
-        }
-    };
+        converter = new class() EnumMapConverter!(H264LevelType)
+        {
+            override protected H264LevelType enumValue(String name) {
+                return H264LevelType.valueOf(name);
+            }
+        };
+    }
 
     public static H264LevelType valueOf(String name)
     {

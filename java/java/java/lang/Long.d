@@ -74,6 +74,11 @@ class Long : Number {
             }
         }
     }
+
+    override public String toString(){
+        return toString(this.value);
+    }
+
     public static String toString( long i ){
         return String_valueOf(i);
     }

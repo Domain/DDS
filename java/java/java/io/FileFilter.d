@@ -1,11 +1,8 @@
 module java.io.FileFilter;
 
-import java.lang.all;
+import java.io.File;
 
 public class FileFilter
 {
-	public this()
-	{
-		implMissing();
-	}
+	bool accept(File paramFile);
 }

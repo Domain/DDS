@@ -6,17 +6,23 @@ import java.util.Comparator;
 
 public final class StringComparators
 {
-    private static const Comparator!(String) NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
-        public int compare(String o1, String o2) {
-            return StringComparators.compareNaturalAscii(o1, o2);
-        }
-    };
+    private static const Comparator!(String) NATURAL_COMPARATOR_ASCII;
 
-    private static const Comparator!(String) IGNORE_CASE_NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
-        public int compare(String o1, String o2) {
-            return StringComparators.compareNaturalIgnoreCaseAscii(o1, o2);
-        }
-    };
+    private static const Comparator!(String) IGNORE_CASE_NATURAL_COMPARATOR_ASCII;
+
+    public static this()
+    {
+        NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
+            public int compare(String o1, String o2) {
+                return StringComparators.compareNaturalAscii(o1, o2);
+            }
+        };
+        IGNORE_CASE_NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
+            public int compare(String o1, String o2) {
+                return StringComparators.compareNaturalIgnoreCaseAscii(o1, o2);
+            }
+        };
+    }
 
     public static Comparator!(String) getNaturalComparator()
     {
@@ -24,7 +30,7 @@ public final class StringComparators
         return getNaturalComparator(collator);
     }
 
-    public static Comparator!(String) getNaturalComparator(final Collator collator)
+    public static Comparator!(String) getNaturalComparator(immutable Collator collator)
     {
         if (collator is null)
         {

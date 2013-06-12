@@ -3,7 +3,7 @@ module org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import java.lang.String;
 import java.lang.Double;
 import java.lang.Float;
-import java.lang.Long;
+import java.lang.Long;import java.lang.NumberFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PipedInputStream;
@@ -49,7 +49,7 @@ public class TranscodingJobListener : ProcessListener
 
     override public void processEnded(bool success)
     {
-        log.debug_(String_format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
+        log.debug_(String_format("Transcoding finished; successful: %s", success));
 
         foreach (TranscodeInputStream stream ; processingStreams) {
             stream.setTranscodeFinished(true);

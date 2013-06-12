@@ -4,6 +4,8 @@
 module java.io.File;
 
 import java.lang.all;
+import java.io.FilenameFilter;
+import java.io.FileFilter;
 
 version(Tango){
     static import tango.io.model.IFile;
@@ -190,7 +192,7 @@ public class File {
         return false;
     }
 
-    public bool delete_KEYWORDESCAPE(){
+    public bool delete_(){
         implMissing( __FILE__, __LINE__ );
         return false;
     }
@@ -205,6 +207,16 @@ public class File {
     }
 
     public java.io.File.File[] listFiles(){
+        implMissing( __FILE__, __LINE__ );
+        return null;
+    }
+
+    public java.io.File.File[] listFiles(FilenameFilter paramFilenameFilter){
+        implMissing( __FILE__, __LINE__ );
+        return null;
+    }
+
+    public java.io.File.File[] listFiles(FileFilter paramFileFilter){
         implMissing( __FILE__, __LINE__ );
         return null;
     }

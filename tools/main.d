@@ -201,8 +201,38 @@ void printHelp()
 {
 }
 
+class A
+{
+    protected void Foo(string str)
+    {
+        writeln(str);
+    }
+}
+
+interface B
+{
+    void Foo(int i);
+}
+
+class C : A, B
+{
+    override void Foo(int i)
+    {
+        writeln(i);
+        A.Foo("test");
+    }
+}
+
+class D(T)
+{
+    public static void test()
+    {
+    }
+}
+
 void test()
 {
+    D!int.test();
 }
 
 int main(string[] argv)
