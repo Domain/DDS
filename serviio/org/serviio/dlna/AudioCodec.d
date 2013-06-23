@@ -4,6 +4,7 @@ import java.lang.String;
 
 enum AudioCodec
 {
+    NONE,
     MP3,
     MP2,
     MP1,

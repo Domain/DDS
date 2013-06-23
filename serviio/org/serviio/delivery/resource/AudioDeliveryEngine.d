@@ -15,6 +15,7 @@ import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine
 import org.serviio.delivery.resource.transcode.AudioTranscodingDefinition;
 import org.serviio.delivery.resource.transcode.AudioTranscodingMatch;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
+import org.serviio.dlna.AudioCodec;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.MediaFormatProfileResolver;
@@ -69,7 +70,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
 
 				Integer targetSamplerate = FFMPEGWrapper.getAudioFrequency(trDef, mediaItem.getSampleFrequency(), trDef.getTargetContainer() == AudioContainer.LPCM);
 				Integer targetBitrate = FFMPEGWrapper.getAudioBitrate(mediaItem.getBitrate(), trDef);
-				Integer targetChannels = FFMPEGWrapper.getAudioChannelNumber(mediaItem.getChannels(), null, true, false);
+				Integer targetChannels = FFMPEGWrapper.getAudioChannelNumber(mediaItem.getChannels(), AudioCodec.NONE, true, false);
 				try
 				{
 					MediaFormatProfile transcodedProfile = MediaFormatProfileResolver.resolveAudioFormat(mediaItem.getFileName(), trDef.getTargetContainer(), targetBitrate, targetSamplerate, targetChannels);

@@ -18,6 +18,8 @@ import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.delivery.StreamDeliveryContainer;
+import org.serviio.delivery.ImageMediaInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

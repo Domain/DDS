@@ -48,8 +48,8 @@ public class Client
     {
         int prime = 31;
         int result = 1;
-        result = prime * result + (ipAddress is null ? 0 : ipAddress.hashCode());
-        result = prime * result + (rendererProfile is null ? 0 : rendererProfile.hashCode());
+        result = prime * result + (ipAddress is null ? 0 : ipAddress.toHash()/*hashCode()*/);
+        result = prime * result + (rendererProfile is null ? 0 : rendererProfile.toHash()/*hashCode()*/);
         return result;
     }
 
@@ -59,25 +59,25 @@ public class Client
             return true;
         if (obj is null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        //if (getClass() != obj.getClass())
+        //    return false;
         Client other = cast(Client)obj;
         if (ipAddress is null) {
             if (other.ipAddress !is null)
                 return false;
-        } else if (!ipAddress.equals(other.ipAddress))
+        } else if (!ipAddress.opEquals(other.ipAddress))
             return false;
         if (rendererProfile is null) {
             if (other.rendererProfile !is null)
                 return false;
-        } else if (!rendererProfile.equals(other.rendererProfile))
+        } else if (!rendererProfile.opEquals(other.rendererProfile))
             return false;
         return true;
     }
 
     override public String toString()
     {
-        return String_format("IPAddress=%s, Profile=%s", cast(Object[])[ ipAddress, rendererProfile ]);
+        return String_format("IPAddress=%s, Profile=%s", cast(Object[])[ ipAddress.toString(), rendererProfile.toString() ]);
     }
 }
 

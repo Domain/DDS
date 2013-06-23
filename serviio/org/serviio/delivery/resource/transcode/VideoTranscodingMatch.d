@@ -85,18 +85,18 @@ public class VideoTranscodingMatch
 
     private bool checkH264Profile(VideoCodec videoCodec, H264Profile videoH264Profile, Map!(H264LevelType, String) videoH264Levels) {
         if (videoCodec == VideoCodec.H264) {
-            if (h264Profile is null)
-            {
-                return true;
-            }
+            //if (h264Profile is null)
+            //{
+            //    return true;
+            //}
             if (h264LevelGT is null)
             {
-                return (videoH264Profile !is null) && (h264Profile == videoH264Profile);
+                return /*(videoH264Profile !is null) && */(h264Profile == videoH264Profile);
             }
 
             String videoH264Level = getLevelToMatch(videoH264Levels);
             try {
-                return (videoH264Profile !is null) && (videoH264Level !is null) && (h264Profile == videoH264Profile) && ((new Float(videoH264Level)).floatValue() > h264LevelGT.floatValue());
+                return /*(videoH264Profile !is null) && (videoH264Level !is null) &&*/ (h264Profile == videoH264Profile) && ((new Float(videoH264Level)).floatValue() > h264LevelGT.floatValue());
             }
             catch (NumberFormatException e) {
                 log.warn(String_format("H264 level of the file is not a valid number: %s", cast(Object[])[ videoH264Level ]));
@@ -110,12 +110,12 @@ public class VideoTranscodingMatch
 
     private String getLevelToMatch(Map!(H264LevelType, String) videoH264Levels) {
         if (h264LevelCheckType == H264LevelCheckType.FILE_ATTRIBUTES)
-            return cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.RF));
+            return cast(String)videoH264Levels.get(H264LevelType.RF);
         if (h264LevelCheckType == H264LevelCheckType.HEADER) {
-            return cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.H));
+            return cast(String)videoH264Levels.get(H264LevelType.H);
         }
 
-        return selectHigherH264Level(cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.H)), cast(String)videoH264Levels.get(H264LevelType.valueOf(H264LevelType.RF)));
+        return selectHigherH264Level(cast(String)videoH264Levels.get(H264LevelType.H), cast(String)videoH264Levels.get(H264LevelType.RF));
     }
 
     private String selectHigherH264Level(String headerLevel, String refFramesLevel)

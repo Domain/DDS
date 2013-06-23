@@ -4,6 +4,7 @@ import java.lang.String;
 
 enum VideoCodec
 {
+    NONE,
     H264, 
     H263, 
     VC1, 

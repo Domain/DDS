@@ -4,7 +4,7 @@ import java.lang.String;
 
 public class DeliveryContext
 {
-    public static immutable DeliveryContext LOCAL;
+    public static DeliveryContext LOCAL;
     private bool localContent;
     private String userAgent;
 

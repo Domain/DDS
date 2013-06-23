@@ -310,7 +310,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
 	private bool imageWillRotate(Image image, Profile profile, bool willBeResized)
 	{
-		if ((image.getRotation() !is null) && (!image.getRotation().equals(new Integer(0))) && ((profile.isAutomaticImageRotation()) || (willBeResized))) {
+		if ((image.getRotation() !is null) && (!image.getRotation().opEquals(new Integer(0))) && ((profile.isAutomaticImageRotation()) || (willBeResized))) {
 			return true;
 		}
 		return false;
