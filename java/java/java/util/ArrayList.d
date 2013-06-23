@@ -66,12 +66,12 @@ class ArrayList(T) : AbstractList!T, List!T {
     }
     override bool    contains(T o){
         foreach( v; data ){
-            if( o is v ){
-                return true;
-            }
-            if(( o is null ) || ( v is null )){
-                continue;
-            }
+            //if( o is v ){
+            //    return true;
+            //}
+            //if(( o is null ) || ( v is null )){
+            //    continue;
+            //}
             if( o == v ){
                 return true;
             }
@@ -91,12 +91,12 @@ class ArrayList(T) : AbstractList!T, List!T {
                 return false;
             }
             for( int i = 0; i < data.length; i++ ){
-                if( data[i] is other.data[i] ){
-                    continue;
-                }
-                if(( data[i] is null ) || ( other.data[i] is null )){
-                    return false;
-                }
+                //if( data[i] is other.data[i] ){
+                //    continue;
+                //}
+                //if(( data[i] is null ) || ( other.data[i] is null )){
+                //    return false;
+                //}
                 if( data[i] == other.data[i] ){
                     continue;
                 }
@@ -114,18 +114,20 @@ class ArrayList(T) : AbstractList!T, List!T {
         hash_t hashCode = 1;
         for( int i = 0; i < data.length; i++ ){
             T obj = data[i];
-            hashCode = 31 * hashCode + (obj is null ? 0 : obj.toHash());
+            hashCode = 31 * hashCode;
+            static if (is(T == class))
+                hashCode += (obj is null ? 0 : obj.toHash());
         }
         return hashCode;
     }
     override int    indexOf(T o){
         foreach( i, v; data ){
-            if( data[i] is o ){
-                return i;
-            }
-            if(( data[i] is null ) || ( o is null )){
-                continue;
-            }
+            //if( data[i] is o ){
+            //    return i;
+            //}
+            //if(( data[i] is null ) || ( o is null )){
+            //    continue;
+            //}
             if( data[i] == o ){
                 return i;
             }
@@ -162,8 +164,11 @@ class ArrayList(T) : AbstractList!T, List!T {
             if( data[i] is o ){
                 return i;
             }
-            if(( data[i] is null ) || ( o is null )){
-                continue;
+            static if (is(T == class))
+            {
+                if(( data[i] is null ) || ( o is null )){
+                    continue;
+                }
             }
             if( data[i] == o ){
                 return i;
@@ -228,7 +233,7 @@ class ArrayList(T) : AbstractList!T, List!T {
     override bool    remove(T o){
         int idx = -1;
         for( int i = 0; i < data.length; i++ ){
-            if( data[i] is null ? o is null : data[i] == o ){
+            if( /*data[i] is null ? o is null :*/ data[i] == o ){
                 idx = i;
                 break;
             }
@@ -279,7 +284,7 @@ class ArrayList(T) : AbstractList!T, List!T {
             return data.dup;
         }
         if( data.length < a.length ){
-            a[data.length] = null;
+            a[data.length] = T.init;
         }
         return a;
     }

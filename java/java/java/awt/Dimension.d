@@ -9,4 +9,16 @@ public class Dimension
     {
         implMissing();
     }
+
+    public double getWidth()
+    {
+        implMissing();
+        return 0.0;
+    }
+
+    public double getHeight()
+    {
+        implMissing();
+        return 0.0;
+    }
 }

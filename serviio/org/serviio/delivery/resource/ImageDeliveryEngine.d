@@ -3,6 +3,8 @@ module org.serviio.delivery.resource.ImageDeliveryEngine;
 import java.lang.Long;
 import java.lang.Double;
 import java.lang.String;
+import java.lang.Integer;
+import java.lang.RuntimeException;
 import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -131,7 +133,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
 		bool imageWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, selectedQuality);
 
-		if ((selectedVersion is null) || (fileProfiles.contains(selectedVersion))) {
+		if (/*(selectedVersion is null) ||*/ (fileProfiles.contains(selectedVersion))) {
 			if (!imageWillBeTransformed) {
 				return false;
 			}
@@ -185,7 +187,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 		return (originalTranscoded) || (imageRotated);
 	}
 
-	private ImageMediaInfo createTranscodedImageInfoForProfile(Image originalImage, MediaFormatProfile.MediaFormatProfileEnum selectedVersion, Long fileSize, Profile rendererProfile)
+	private ImageMediaInfo createTranscodedImageInfoForProfile(Image originalImage, MediaFormatProfile selectedVersion, Long fileSize, Profile rendererProfile)
 	{
 		if (isTranscodingValid(originalImage, selectedVersion))
 		{
@@ -215,7 +217,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 		throw new UnsupportedDLNAMediaFileFormatException("Images can only be transformed to JPEG continer");
 	}
 
-	private DeliveryQuality.QualityType getQualityType(MediaFormatProfile.MediaFormatProfileEnum  mediaFormatProfile)
+	private DeliveryQuality.QualityType getQualityType(MediaFormatProfile mediaFormatProfile)
 	{
 		if (mediaFormatProfile == MediaFormatProfile.JPEG_SM)
 			return DeliveryQuality.QualityType.LOW;
@@ -249,7 +251,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 			}
 			catch (Throwable e)
 			{
-				throw new IOException("Cannot transcode image: " + e.getMessage(), e);
+				throw new IOException("Cannot transcode image: " ~ e.toString(), e);
 			}
 		}
 		throw new UnsupportedDLNAMediaFileFormatException("Only JPEG can be usedas a target container for image trancoding at the moment");

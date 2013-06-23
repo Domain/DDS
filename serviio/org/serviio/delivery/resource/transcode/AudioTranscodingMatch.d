@@ -16,7 +16,7 @@ public class AudioTranscodingMatch
 
     public bool matches(AudioContainer container, OnlineContentType onlineContentType)
     {
-        if (((container == this.container) || (this.container == AudioContainer.AudioContainerEnum.ANY)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType))) {
+        if (((container == this.container) || (this.container == AudioContainer.ANY)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType))) {
             return true;
         }
         return false;

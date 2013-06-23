@@ -61,7 +61,7 @@ public class VideoTranscodingMatch
 
     public bool matches(VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, H264Profile h264Profile, Map!(H264LevelType, String) h264Levels, String ftyp, OnlineContentType onlineContentType, bool squarePixels, String vFourCC)
     {
-        if (((container == this.container) || (this.container == VideoContainer.ANY)) && ((this.videoCodec is null) || (videoCodec == this.videoCodec)) && ((this.audioCodec is null) || (audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType)) && (/*(this.squarePixels is null) || */(this.squarePixels == squarePixels)))
+        if (((container == this.container) || (this.container == VideoContainer.ANY)) && (/*(this.videoCodec is null) || */(videoCodec == this.videoCodec)) && (/*(this.audioCodec is null) || */(audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType)) && (/*(this.squarePixels is null) || */(this.squarePixels == squarePixels)))
         {
             return true;
         }

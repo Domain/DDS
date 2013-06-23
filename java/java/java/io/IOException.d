@@ -12,8 +12,8 @@ else {
     static import core.exception;
 
     class IOException : Exception {
-        this( String e = null ){
-            super(e);
+        this( String e = null, Throwable t = null ){
+            super(e, t);
         }
     }
 }

@@ -1,6 +1,8 @@
 module org.serviio.delivery.resource.VideoDeliveryEngine;
 
 import java.lang.Long;
+import java.lang.Integer;
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;

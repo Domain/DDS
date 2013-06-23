@@ -44,7 +44,7 @@ abstract class AbstractList(T) : AbstractCollection!T, List!T {
         int idx = 0;
         while(it.hasNext()){
             auto t = it.next();
-            if( t is null ? o is null : t == o){
+            if( /*t is null ? o is null :*/ t == o){
                 return idx;
             }
             idx++;

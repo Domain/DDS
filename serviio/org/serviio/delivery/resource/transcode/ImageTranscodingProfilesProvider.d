@@ -12,7 +12,7 @@ import org.serviio.dlna.MediaFormatProfile;
 
 public class ImageTranscodingProfilesProvider
 {
-    private static Map!(MediaFormatProfile.MediaFormatProfileEnum, List!(MediaFormatProfile)) transcodingConfig;
+    private static Map!(MediaFormatProfile, List!(MediaFormatProfile)) transcodingConfig;
 
     public static List!(MediaFormatProfile) getAvailableTranscodingProfiles(List!(MediaFormatProfile) profiles)
     {
@@ -27,7 +27,7 @@ public class ImageTranscodingProfilesProvider
 
     static this()
     {
-        transcodingConfig = new HashMap!(MediaFormatProfile.MediaFormatProfileEnum, List!(MediaFormatProfile))();
+        transcodingConfig = new HashMap!(MediaFormatProfile, List!(MediaFormatProfile))();
         transcodingConfig.put(MediaFormatProfile.JPEG_MED, Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.JPEG_SM ]));
         transcodingConfig.put(MediaFormatProfile.JPEG_LRG, Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.JPEG_SM, MediaFormatProfile.JPEG_MED ]));
         transcodingConfig.put(MediaFormatProfile.PNG_LRG, Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.JPEG_LRG ]));

@@ -3,6 +3,7 @@ module org.serviio.delivery.CoverImageRetrievalStrategy;
 import java.lang.Long;
 import java.lang.String;
 import java.lang.Double;
+import java.lang.Integer;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
