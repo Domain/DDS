@@ -2,30 +2,50 @@ module org.serviio.licensing.LicenseProperties;
 
 import java.lang.String;
 
-public class LicenseProperties
+enum LicenseProperties : String
 {
-	enum LicensePropertiesEnum : String
-	{
-		TYPE = "type", 
+    TYPE = "type", 
 
-		EDITION = "edition", 
+    EDITION = "edition", 
 
-		VERSION = "version", 
+    VERSION = "version", 
 
-		ID = "id", 
+    ID = "id", 
 
-		NAME = "name", 
+    NAME = "name", 
 
-		EMAIL = "email",
-	}
-	LicensePropertiesEnum licenseProperties;
-	alias licenseProperties this;
-
-	public String getName()
-	{
-		return cast(String)licenseProperties;
-	}
+    EMAIL = "email",
 }
+
+public String getName(LicenseProperties licenseProperties)
+{
+    return cast(String)licenseProperties;
+}
+
+//public class LicenseProperties
+//{
+//    enum LicensePropertiesEnum : String
+//    {
+//        TYPE = "type", 
+//
+//        EDITION = "edition", 
+//
+//        VERSION = "version", 
+//
+//        ID = "id", 
+//
+//        NAME = "name", 
+//
+//        EMAIL = "email",
+//    }
+//    LicensePropertiesEnum licenseProperties;
+//    alias licenseProperties this;
+//
+//    public String getName()
+//    {
+//        return cast(String)licenseProperties;
+//    }
+//}
 
 /* Location:           D:\Program Files\Serviio\lib\serviio.jar
 * Qualified Name:     org.serviio.licensing.LicenseProperties

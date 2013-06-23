@@ -16,7 +16,7 @@ public class ImageTranscodingMatch
 
   public bool matches(ImageContainer container, SamplingMode chromaSubsampling)
   {
-    if ((container == this.container) && ((this.chromaSubsampling is null) || (chromaSubsampling == this.chromaSubsampling))) {
+    if ((container == this.container) && (/*(this.chromaSubsampling is null) ||*/ (chromaSubsampling == this.chromaSubsampling))) {
       return true;
     }
     return false;
