@@ -1,54 +1,53 @@
 module org.serviio.external.io.OutputBytesReader;
 
-import java.lang.String;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.serviio.external.io.OutputReader;
 
-public class OutputBytesReader : OutputReader
+public class OutputBytesReader
+  : OutputReader
 {
-    private static Logger log;
-    private ByteArrayOutputStream outputStream;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(OutputBytesReader);
+  private ByteArrayOutputStream outputStream;
+  
+  public this(InputStream inputStream)
+  {
+    super(inputStream);
+    this.outputStream = new ByteArrayOutputStream();
+  }
+  
+  protected void processOutput()
+  {
+    try
     {
-        log = LoggerFactory.getLogger!(OutputBytesReader)();
+      byte[] buf = new byte[500000];
+      int n = 0;
+      while ((n = this.inputStream.read(buf)) > 0) {
+        this.outputStream.write(buf, 0, n);
+      }
     }
-
-    public this(InputStream inputStream)
+    catch (IOException e)
     {
-        super(inputStream);
-        outputStream = new ByteArrayOutputStream();
+      log.warn(String.format("Error reading bytes stream from external process: %s", cast(Object[])[ e.getMessage() ]));
     }
-
-    override protected void processOutput()
-    {
-        try
-        {
-            byte[] buf = new byte[500000];
-            int n = 0;
-            while ((n = inputStream.read(buf)) > 0)
-                outputStream.write(buf, 0, n);
-        }
-        catch (IOException e) {
-            log.warn(String_format("Error reading bytes stream from external process: %s" + e.getMessage(), new Object[0]));
-        }
-    }
-
-    override public ByteArrayOutputStream getOutputStream() {
-        return outputStream;
-    }
-
-    override public List!(String) getResults() {
-        return null;
-    }
+  }
+  
+  public ByteArrayOutputStream getOutputStream()
+  {
+    return this.outputStream;
+  }
+  
+  public List!(String) getResults()
+  {
+    return null;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.external.io.OutputBytesReader
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.external.io.OutputBytesReader
+ * JD-Core Version:    0.7.0.1
+ */

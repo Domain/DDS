@@ -1,5 +1,5 @@
 /// Generate by tools
-module ResourceType;
+module org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
 
 import java.lang.exceptions;
 

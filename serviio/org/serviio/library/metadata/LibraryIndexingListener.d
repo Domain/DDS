@@ -1,19 +1,18 @@
 module org.serviio.library.metadata.LibraryIndexingListener;
 
-import java.lang.String;
-
 public abstract interface LibraryIndexingListener
 {
-  public abstract void itemAdded(String paramString);
-
-  public abstract void itemUpdated(String paramString);
-
-  public abstract void itemDeleted(String paramString);
-
+  public abstract void itemAdded(MediaFileType paramMediaFileType, String paramString);
+  
+  public abstract void itemUpdated(MediaFileType paramMediaFileType, String paramString);
+  
+  public abstract void itemDeleted(MediaFileType paramMediaFileType, String paramString);
+  
   public abstract void resetForAdding();
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.metadata.LibraryIndexingListener
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

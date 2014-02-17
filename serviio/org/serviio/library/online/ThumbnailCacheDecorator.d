@@ -1,48 +1,55 @@
 module org.serviio.library.online.ThumbnailCacheDecorator;
 
-import java.lang.String;
+import org.apache.jcs.JCS;
 import org.apache.jcs.access.exception.CacheException;
 import org.serviio.cache.AbstractCacheDecorator;
 import org.serviio.library.entities.CoverImage;
-import org.serviio.library.online.OnlineCacheDecorator;
+import org.slf4j.Logger;
 
-public class ThumbnailCacheDecorator : AbstractCacheDecorator, OnlineCacheDecorator!(CoverImage)
+public class ThumbnailCacheDecorator
+  : AbstractCacheDecorator
+  , OnlineCacheDecorator!(CoverImage)
 {
-	public this(String regionName)
-	{
-		super(regionName);
-	}
-
-	public CoverImage retrieve(String url)
-	{
-		CoverImage object = cast(CoverImage)cache.get(url);
-		return object;
-	}
-
-	public void store(String url, CoverImage cachedValue)
-	{
-		try
-		{
-			cache.put(url, cachedValue);
-			log.debug_(String_format("Stored entry in the cache (%s), returning it", cast(Object[])[ regionName ]));
-		} catch (CacheException e) {
-			log.warn(String_format("Could not store object to local cache(%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
-		}
-	}
-
-	public void evict(String url)
-	{
-		try
-		{
-			cache.remove(url);
-			log.debug_(String_format("Removed thumbnail %s from cache (%s)", cast(Object[])[ url, regionName ]));
-		} catch (CacheException e) {
-			log.warn(String_format("Could not remove thumbnail %s from cache (%s): %s", cast(Object[])[ url, regionName, e.getMessage() ]));
-		}
-	}
+  public this(String regionName)
+  {
+    super(regionName);
+  }
+  
+  public CoverImage retrieve(String url)
+  {
+    CoverImage object = cast(CoverImage)this.cache.get(url);
+    return object;
+  }
+  
+  public void store(String url, CoverImage cachedValue)
+  {
+    try
+    {
+      this.cache.put(url, cachedValue);
+      this.log.debug_(String.format("Stored entry in the cache (%s), returning it", cast(Object[])[ this.regionName ]));
+    }
+    catch (CacheException e)
+    {
+      this.log.warn(String.format("Could not store object to local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+    }
+  }
+  
+  public void evict(String url)
+  {
+    try
+    {
+      this.cache.remove(url);
+      this.log.debug_(String.format("Removed thumbnail %s from cache (%s)", cast(Object[])[ url, this.regionName ]));
+    }
+    catch (CacheException e)
+    {
+      this.log.warn(String.format("Could not remove thumbnail %s from cache (%s): %s", cast(Object[])[ url, this.regionName, e.getMessage() ]));
+    }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.online.ThumbnailCacheDecorator
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.online.ThumbnailCacheDecorator
+ * JD-Core Version:    0.7.0.1
+ */

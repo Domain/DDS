@@ -1,53 +1,45 @@
 module org.serviio.cache.AbstractCacheDecorator;
 
-import java.lang.String;
-import java.lang.RuntimeException;
 import org.apache.jcs.JCS;
 import org.apache.jcs.access.exception.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.serviio.cache.CacheDecorator;
 
-public abstract class AbstractCacheDecorator : CacheDecorator
+public abstract class AbstractCacheDecorator
+  : CacheDecorator
 {
-    protected static Logger log;
-    protected JCS cache;
-    protected String regionName;
-
-    static this()
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+  protected JCS cache;
+  protected String regionName;
+  
+  public this(String regionName)
+  {
+    try
     {
-        log = LoggerFactory.getLogger!(AbstractCacheDecorator)();
+      this.cache = JCS.getInstance(regionName);
+      this.regionName = regionName;
     }
-
-    public this(String regionName)
+    catch (CacheException e)
     {
-        try
-        {
-            cache = JCS.getInstance(regionName);
-            this.regionName = regionName;
-        } catch (CacheException e) {
-            throw new RuntimeException(e);
-        }
+      throw new RuntimeException(e);
     }
-
-    public void evictAll()
+  }
+  
+  public void evictAll()
+  {
+    try
     {
-        try
-        {
-            cache.clear();
-            log.debug_(String_format("Cleared cache (%s)", cast(Object[])[ regionName ]));
-        } catch (CacheException e) {
-            log.warn(String_format("Could not clean local cache (%s): %s", cast(Object[])[ regionName, e.getMessage() ]));
-        }
+      this.cache.clear();
+      this.log.debug_(String.format("Cleared cache (%s)", cast(Object[])[ this.regionName ]));
     }
-
-    public void shutdown()
+    catch (CacheException e)
     {
-        cache.dispose();
+      this.log.warn(String.format("Could not clean local cache (%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
     }
+  }
+  
+  public void shutdown()
+  {
+    this.cache.dispose();
+  }
 }
-
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.cache.AbstractCacheDecorator
-* JD-Core Version:    0.6.2
-*/

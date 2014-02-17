@@ -1,14 +1,11 @@
 module org.serviio.library.local.metadata.AudioMetadata;
 
-import java.lang.String;
-import java.lang.Integer;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.library.metadata.InvalidMetadataException;
 import org.serviio.util.ObjectValidator;
-import org.serviio.library.local.metadata.LocalItemMetadata;
-import org.serviio.library.local.metadata.ImageDescriptor;
 
-public class AudioMetadata : LocalItemMetadata
+public class AudioMetadata
+  : LocalItemMetadata
 {
   private AudioContainer container;
   private String genre;
@@ -18,191 +15,220 @@ public class AudioMetadata : LocalItemMetadata
   private Integer duration;
   private String albumArtist;
   private String artist;
+  private Integer discNumber;
   private Integer bitrate;
   private Integer channels;
   private Integer sampleFrequency;
-  private ImageDescriptor coverImage;
-
-  override public void merge(LocalItemMetadata additionalMetadata)
+  
+  public void merge(LocalItemMetadata additionalMetadata)
   {
-    if (( cast(AudioMetadata)additionalMetadata !is null )) {
+    if (( cast(AudioMetadata)additionalMetadata !is null ))
+    {
       AudioMetadata additionalAudioMetadata = cast(AudioMetadata)additionalMetadata;
-
+      
       super.merge(additionalAudioMetadata);
-
-      if (container is null) {
+      if (this.container is null) {
         setContainer(additionalAudioMetadata.getContainer());
       }
-      if (ObjectValidator.isEmpty(genre)) {
+      if (ObjectValidator.isEmpty(this.genre)) {
         setGenre(additionalAudioMetadata.getGenre());
       }
-      if (releaseYear is null) {
+      if (this.releaseYear is null) {
         setReleaseYear(additionalAudioMetadata.getReleaseYear());
       }
-      if (ObjectValidator.isEmpty(album)) {
+      if (ObjectValidator.isEmpty(this.album)) {
         setAlbum(additionalAudioMetadata.getAlbum());
       }
-      if (trackNumber is null) {
+      if (this.trackNumber is null) {
         setTrackNumber(additionalAudioMetadata.getTrackNumber());
       }
-      if (duration is null) {
+      if (this.duration is null) {
         setDuration(additionalAudioMetadata.getDuration());
       }
-      if (ObjectValidator.isEmpty(albumArtist)) {
+      if (ObjectValidator.isEmpty(this.albumArtist)) {
         setAlbumArtist(additionalAudioMetadata.getAlbumArtist());
       }
-      if (ObjectValidator.isEmpty(artist)) {
+      if (ObjectValidator.isEmpty(this.artist)) {
         setArtist(additionalAudioMetadata.getArtist());
       }
-      if (bitrate is null) {
+      if (this.bitrate is null) {
         setBitrate(additionalAudioMetadata.getBitrate());
       }
-      if (channels is null) {
+      if (this.channels is null) {
         setChannels(additionalAudioMetadata.getChannels());
       }
-      if (sampleFrequency is null) {
+      if (this.sampleFrequency is null) {
         setSampleFrequency(additionalAudioMetadata.getSampleFrequency());
       }
-      if (coverImage is null)
-        setCoverImage(additionalAudioMetadata.getCoverImage());
+      if (this.discNumber is null) {
+        setDiscNumber(additionalAudioMetadata.getDiscNumber());
+      }
     }
   }
-
-  override public void fillInUnknownEntries()
+  
+  public void fillInUnknownEntries()
   {
     super.fillInUnknownEntries();
-
-    if (ObjectValidator.isEmpty(genre)) {
+    if (ObjectValidator.isEmpty(this.genre)) {
       setGenre("Unknown");
     }
-    if (ObjectValidator.isEmpty(album)) {
+    if (ObjectValidator.isEmpty(this.album)) {
       setAlbum("Unknown");
     }
-    if (ObjectValidator.isEmpty(albumArtist)) {
+    if (ObjectValidator.isEmpty(this.albumArtist)) {
       setAlbumArtist("Unknown");
     }
-    if (ObjectValidator.isEmpty(artist))
+    if (ObjectValidator.isEmpty(this.artist)) {
       setAlbumArtist("Unknown");
+    }
   }
-
-  override public void validateMetadata()
+  
+  public void validateMetadata()
   {
     super.validateMetadata();
-
-    if (container is null) {
+    if (this.container is null) {
       throw new InvalidMetadataException("Unknown audio file type.");
     }
-    if (bitrate is null)
+    if (this.bitrate is null) {
       throw new InvalidMetadataException("Unknown bit rate.");
+    }
   }
-
+  
   public String getGenre()
   {
-    return genre;
+    return this.genre;
   }
-
-  public void setGenre(String genre) {
+  
+  public void setGenre(String genre)
+  {
     this.genre = genre;
   }
-
-  public Integer getReleaseYear() {
-    return releaseYear;
+  
+  public Integer getReleaseYear()
+  {
+    return this.releaseYear;
   }
-
-  public void setReleaseYear(Integer year) {
-    releaseYear = year;
+  
+  public void setReleaseYear(Integer year)
+  {
+    this.releaseYear = year;
   }
-
-  public String getAlbum() {
-    return album;
+  
+  public String getAlbum()
+  {
+    return this.album;
   }
-
-  public void setAlbum(String album) {
+  
+  public void setAlbum(String album)
+  {
     this.album = album;
   }
-
-  public Integer getTrackNumber() {
-    return trackNumber;
+  
+  public Integer getTrackNumber()
+  {
+    return this.trackNumber;
   }
-
-  public void setTrackNumber(Integer trackNumber) {
+  
+  public void setTrackNumber(Integer trackNumber)
+  {
     this.trackNumber = trackNumber;
   }
-
-  public Integer getDuration() {
-    return duration;
+  
+  public Integer getDuration()
+  {
+    return this.duration;
   }
-
-  public void setDuration(Integer duration) {
+  
+  public void setDuration(Integer duration)
+  {
     this.duration = duration;
   }
-
-  public String getAlbumArtist() {
-    return albumArtist;
+  
+  public String getAlbumArtist()
+  {
+    return this.albumArtist;
   }
-
-  public void setAlbumArtist(String albumArtist) {
+  
+  public void setAlbumArtist(String albumArtist)
+  {
     this.albumArtist = albumArtist;
   }
-
-  public Integer getBitrate() {
-    return bitrate;
+  
+  public Integer getBitrate()
+  {
+    return this.bitrate;
   }
-
-  public void setBitrate(Integer bitrate) {
+  
+  public void setBitrate(Integer bitrate)
+  {
     this.bitrate = bitrate;
   }
-
-  override public ImageDescriptor getCoverImage() {
-    return coverImage;
+  
+  public Integer getChannels()
+  {
+    return this.channels;
   }
-
-  override public void setCoverImage(ImageDescriptor coverImage) {
-    this.coverImage = coverImage;
-  }
-
-  public Integer getChannels() {
-    return channels;
-  }
-
-  public void setChannels(Integer channels) {
+  
+  public void setChannels(Integer channels)
+  {
     this.channels = channels;
   }
-
-  public Integer getSampleFrequency() {
-    return sampleFrequency;
+  
+  public Integer getSampleFrequency()
+  {
+    return this.sampleFrequency;
   }
-
-  public void setSampleFrequency(Integer sampleFrequency) {
+  
+  public void setSampleFrequency(Integer sampleFrequency)
+  {
     this.sampleFrequency = sampleFrequency;
   }
-
-  public AudioContainer getContainer() {
-    return container;
+  
+  public AudioContainer getContainer()
+  {
+    return this.container;
   }
-
-  public void setContainer(AudioContainer container) {
+  
+  public void setContainer(AudioContainer container)
+  {
     this.container = container;
   }
-
-  public String getArtist() {
-    return artist;
+  
+  public String getArtist()
+  {
+    return this.artist;
   }
-
-  public void setArtist(String artist) {
+  
+  public void setArtist(String artist)
+  {
     this.artist = artist;
   }
-
-  override public String toString()
+  
+  public Integer getDiscNumber()
+  {
+    return this.discNumber;
+  }
+  
+  public void setDiscNumber(Integer discNumber)
+  {
+    this.discNumber = discNumber;
+  }
+  
+  public String toString()
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("AudioMetadata [album=").append(album).append(", title=").append(title).append(", albumArtist=").append(albumArtist).append(", artist=").append(artist).append(", genre=").append(genre).append(", releaseYear=").append(releaseYear).append(", trackNumber=").append(trackNumber).append(", container=").append(container).append(", duration=").append(duration).append(", bitrate=").append(bitrate).append(", channels=").append(channels).append(", sampleFrequency=").append(sampleFrequency).append("]");
+    builder.append("AudioMetadata [container=").append(this.container).append(", genre=").append(this.genre).append(", releaseYear=").append(this.releaseYear).append(", album=").append(this.album).append(", trackNumber=").append(this.trackNumber).append(", duration=").append(this.duration).append(", albumArtist=").append(this.albumArtist).append(", artist=").append(this.artist).append(", discNumber=").append(this.discNumber).append(", bitrate=").append(this.bitrate).append(", channels=").append(this.channels).append(", sampleFrequency=").append(this.sampleFrequency).append("]");
+    
+
+
+
 
     return builder.toString();
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.local.metadata.AudioMetadata
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

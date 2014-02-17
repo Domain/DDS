@@ -1,5 +1,5 @@
 /// Generate by tools
-module QualityType;
+module org.serviio.profile.DeliveryQuality.QualityType;
 
 import java.lang.exceptions;
 

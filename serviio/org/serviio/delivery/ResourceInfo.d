@@ -1,9 +1,5 @@
 module org.serviio.delivery.ResourceInfo;
 
-import java.lang.Long;
-import java.lang.String;
-import java.lang.Integer;
-
 public abstract class ResourceInfo
 {
   protected Long resourceId;
@@ -12,55 +8,64 @@ public abstract class ResourceInfo
   protected bool live;
   protected Integer duration;
   protected String mimeType;
-
+  
   public this(Long resourceId)
   {
     this.resourceId = resourceId;
   }
-
+  
   public Long getFileSize()
   {
-    return fileSize;
+    return this.fileSize;
   }
-
-  public bool isTranscoded() {
-    return transcoded;
+  
+  public bool isTranscoded()
+  {
+    return this.transcoded;
   }
-
-  public Long getResourceId() {
-    return resourceId;
+  
+  public Long getResourceId()
+  {
+    return this.resourceId;
   }
-
-  public Integer getDuration() {
-    return duration;
+  
+  public Integer getDuration()
+  {
+    return this.duration;
   }
-
-  public String getMimeType() {
-    return mimeType;
+  
+  public String getMimeType()
+  {
+    return this.mimeType;
   }
-
-  public void setFileSize(Long fileSize) {
+  
+  public void setFileSize(Long fileSize)
+  {
     this.fileSize = fileSize;
   }
-
-  public void setTranscoded(bool transcoded) {
+  
+  public void setTranscoded(bool transcoded)
+  {
     this.transcoded = transcoded;
   }
-
-  public bool isLive() {
-    return live;
+  
+  public bool isLive()
+  {
+    return this.live;
   }
-
-  override public String toString()
+  
+  public String toString()
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("ResourceInfo [resourceId=").append(resourceId).append(", fileSize=").append(fileSize).append(", duration=").append(duration).append(", mimeType=").append(mimeType).append(", transcoded=").append(transcoded).append("]");
+    builder.append("ResourceInfo [resourceId=").append(this.resourceId).append(", fileSize=").append(this.fileSize).append(", duration=").append(this.duration).append(", mimeType=").append(this.mimeType).append(", transcoded=").append(this.transcoded).append("]");
+    
 
     return builder.toString();
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.delivery.ResourceInfo
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

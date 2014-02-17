@@ -1,5 +1,5 @@
 /// Generate by tools
-module OnlineRepositoryType;
+module org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
 
 import java.lang.exceptions;
 

@@ -1,82 +1,79 @@
 module org.serviio.library.metadata.AbstractLibraryCheckerThread;
 
-import java.lang.Thread;
-import java.lang.String;
 import java.util.HashSet;
 import java.util.Set;
-import org.serviio.library.metadata.LibraryIndexingListener;
 
-public abstract class AbstractLibraryCheckerThread : Thread
+public abstract class AbstractLibraryCheckerThread
+  : Thread
 {
-    protected bool workerRunning = false;
-
-    protected bool searchingForFiles = false;
-
-    protected bool isSleeping = false;
-
-    protected bool dontSleep = false;
-
-    private Set!(LibraryIndexingListener) listeners;
-
-    public this()
-    {
-        listeners = new HashSet!(LibraryIndexingListener)();
+  protected bool workerRunning = false;
+  protected bool searchingForFiles = false;
+  protected bool isSleeping = false;
+  protected bool dontSleep = false;
+  private Set!(LibraryIndexingListener) listeners = new HashSet();
+  
+  public void stopWorker()
+  {
+    this.workerRunning = false;
+    
+    interrupt();
+  }
+  
+  public void invoke()
+  {
+    if (this.isSleeping) {
+      interrupt();
+    } else {
+      this.dontSleep = true;
     }
-
-    public void stopWorker()
-    {
-        workerRunning = false;
-
-        interrupt();
+  }
+  
+  public bool isWorkerRunning()
+  {
+    return this.workerRunning;
+  }
+  
+  public bool isSearchingForFiles()
+  {
+    return this.searchingForFiles;
+  }
+  
+  public void addListener(LibraryIndexingListener listener)
+  {
+    this.listeners.add(listener);
+  }
+  
+  protected void notifyListenersAdd(MediaFileType fileType, String item)
+  {
+    foreach (LibraryIndexingListener l ; this.listeners) {
+      l.itemAdded(fileType, item);
     }
-
-    public void invoke()
-    {
-        if (isSleeping)
-            interrupt();
-        else
-            dontSleep = true;
+  }
+  
+  protected void notifyListenersUpdate(MediaFileType fileType, String item)
+  {
+    foreach (LibraryIndexingListener l ; this.listeners) {
+      l.itemUpdated(fileType, item);
     }
-
-    public bool isWorkerRunning()
-    {
-        return workerRunning;
+  }
+  
+  protected void notifyListenersRemove(MediaFileType fileType, String item)
+  {
+    foreach (LibraryIndexingListener l ; this.listeners) {
+      l.itemDeleted(fileType, item);
     }
-
-    public bool isSearchingForFiles() {
-        return searchingForFiles;
+  }
+  
+  protected void notifyListenersResetForAdding()
+  {
+    foreach (LibraryIndexingListener l ; this.listeners) {
+      l.resetForAdding();
     }
-
-    public void addListener(LibraryIndexingListener listener) {
-        listeners.add(listener);
-    }
-
-    protected void notifyListenersAdd(String item)
-    {
-        foreach (LibraryIndexingListener l ; listeners)
-            l.itemAdded(item);
-    }
-
-    protected void notifyListenersUpdate(String item)
-    {
-        foreach (LibraryIndexingListener l ; listeners)
-            l.itemUpdated(item);
-    }
-
-    protected void notifyListenersRemove(String item)
-    {
-        foreach (LibraryIndexingListener l ; listeners)
-            l.itemDeleted(item);
-    }
-
-    protected void notifyListenersResetForAdding()
-    {
-        foreach (LibraryIndexingListener l ; listeners)
-            l.resetForAdding();
-    }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.metadata.AbstractLibraryCheckerThread
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.metadata.AbstractLibraryCheckerThread
+ * JD-Core Version:    0.7.0.1
+ */

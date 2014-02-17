@@ -1,35 +1,34 @@
 module org.serviio.delivery.ImageMediaInfo;
 
-import java.lang.Integer;
-import java.lang.Long;
-import java.lang.String;
 import org.serviio.dlna.MediaFormatProfile;
-import org.serviio.profile.DeliveryQuality;
-import org.serviio.delivery.MediaFormatProfileResource;
+import org.serviio.profile.DeliveryQuality.QualityType;
 
-public class ImageMediaInfo : MediaFormatProfileResource
+public class ImageMediaInfo
+  : MediaFormatProfileResource
 {
-	protected Integer width;
-	protected Integer height;
-
-	public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, bool transcoded, String mimeType, DeliveryQuality.QualityType quality)
-	{
-		super(resourceId, profile, fileSize, transcoded, false, null, mimeType, quality);
-		this.width = width;
-		this.height = height;
-	}
-
-	public Integer getWidth()
-	{
-		return width;
-	}
-
-	public Integer getHeight() {
-		return height;
-	}
+  protected Integer width;
+  protected Integer height;
+  
+  public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, bool transcoded, String mimeType, DeliveryQuality.QualityType quality)
+  {
+    super(resourceId, profile, fileSize, transcoded, false, null, mimeType, quality);
+    this.width = width;
+    this.height = height;
+  }
+  
+  public Integer getWidth()
+  {
+    return this.width;
+  }
+  
+  public Integer getHeight()
+  {
+    return this.height;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.delivery.ImageMediaInfo
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.delivery.ImageMediaInfo
+ * JD-Core Version:    0.7.0.1
+ */

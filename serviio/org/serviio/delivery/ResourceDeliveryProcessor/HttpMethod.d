@@ -1,5 +1,5 @@
 /// Generate by tools
-module HttpMethod;
+module org.serviio.delivery.ResourceDeliveryProcessor.HttpMethod;
 
 import java.lang.exceptions;
 

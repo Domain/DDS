@@ -2,10 +2,13 @@ module org.serviio.library.local.metadata.TransportStreamTimestamp;
 
 public enum TransportStreamTimestamp
 {
-    NONE, ZERO, VALID
+  NONE,  ZERO,  VALID;
+  
+  private this() {}
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.local.metadata.TransportStreamTimestamp
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.local.metadata.TransportStreamTimestamp
+ * JD-Core Version:    0.7.0.1
+ */

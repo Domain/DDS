@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.RemoteAccessServerResource;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import org.restlet.data.Method;
@@ -9,47 +10,87 @@ import org.serviio.restlet.ResultRepresentation;
 import org.serviio.restlet.ValidationException;
 import org.serviio.ui.representation.RemoteAccessRepresentation;
 import org.serviio.ui.resources.RemoteAccessResource;
+import org.serviio.upnp.service.contentdirectory.ContentDirectory;
+import org.serviio.upnp.service.contentdirectory.rest.access.PortMapper;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.LoginServerResource;
+import org.serviio.util.HttpUtils;
 import org.serviio.util.ObjectValidator;
+import org.serviio.util.StringUtils;
+import org.slf4j.Logger;
 
-public class RemoteAccessServerResource : AbstractProEditionServerResource
-, RemoteAccessResource
+public class RemoteAccessServerResource
+  : AbstractProEditionServerResource
+  , RemoteAccessResource
 {
-    public ResultRepresentation save(RemoteAccessRepresentation representation)
-    {
-        bool cleanCache = false;
-
-        if (ObjectValidator.isEmpty(representation.getRemoteUserPassword())) {
-            throw new ValidationException(504);
-        }
-        Configuration.setWebPassword(representation.getRemoteUserPassword());
-
-        if (Configuration.getRemotePreferredDeliveryQuality() != representation.getPreferredRemoteDeliveryQuality()) {
-            Configuration.setRemotePreferredDeliveryQuality(representation.getPreferredRemoteDeliveryQuality());
-            cleanCache = true;
-        }
-
-        if (cleanCache) {
-            getCDS().incrementUpdateID();
-        }
-
-        return responseOk();
+  public ResultRepresentation save(RemoteAccessRepresentation representation)
+  {
+    bool cleanCache = false;
+    if (ObjectValidator.isEmpty(representation.getRemoteUserPassword())) {
+      throw new ValidationException(504);
     }
-
-    public RemoteAccessRepresentation load()
+    if ((Configuration.getWebPassword() is null) || (!Configuration.getWebPassword().equals(representation.getRemoteUserPassword())))
     {
-        RemoteAccessRepresentation rar = new RemoteAccessRepresentation();
-        rar.setRemoteUserPassword(Configuration.getWebPassword());
-        rar.setPreferredRemoteDeliveryQuality(Configuration.getRemotePreferredDeliveryQuality());
-        return rar;
+      this.log.debug_("Remote access password updated");
+      Configuration.setWebPassword(StringUtils.trim(representation.getRemoteUserPassword()));
+      LoginServerResource.removeAllTokens();
     }
-
-    override protected List!(Method) getRestrictedMethods()
+    try
     {
-        return Collections.singletonList(Method.PUT);
+      Configuration.setRemoteExternalAddress(HttpUtils.getHostName(StringUtils.trim(representation.getExternalAddress())));
     }
+    catch (URISyntaxException e)
+    {
+      throw new ValidationException(503, Collections.singletonList(representation.getExternalAddress()));
+    }
+    if (Configuration.getRemotePreferredDeliveryQuality() != representation.getPreferredRemoteDeliveryQuality())
+    {
+      Configuration.setRemotePreferredDeliveryQuality(representation.getPreferredRemoteDeliveryQuality());
+      cleanCache = true;
+    }
+    updatePortMapping(representation);
+    if (cleanCache) {
+      getCDS().incrementUpdateID();
+    }
+    return responseOk();
+  }
+  
+  public RemoteAccessRepresentation load()
+  {
+    RemoteAccessRepresentation rar = new RemoteAccessRepresentation();
+    rar.setRemoteUserPassword(Configuration.getWebPassword());
+    rar.setPreferredRemoteDeliveryQuality(Configuration.getRemotePreferredDeliveryQuality());
+    rar.setPortMappingEnabled(Configuration.isRemotePortForwardingEnabled());
+    rar.setExternalAddress(Configuration.getRemoteExternalAddress());
+    return rar;
+  }
+  
+  protected List!(Method) getRestrictedMethods()
+  {
+    return Collections.singletonList(Method.PUT);
+  }
+  
+  private void updatePortMapping(RemoteAccessRepresentation representation)
+  {
+    bool changed = Configuration.isRemotePortForwardingEnabled() != representation.isPortMappingEnabled();
+    if (changed)
+    {
+      Configuration.setRemotePortForwardingEnabled(representation.isPortMappingEnabled());
+      if (representation.isPortMappingEnabled())
+      {
+        PortMapper.getInstance().addPortMapping();
+        PortMapper.getInstance().startLeaserRenewer();
+      }
+      else
+      {
+        PortMapper.getInstance().shutdownLeaseRenewer();
+        PortMapper.getInstance().removePortMapping();
+      }
+    }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.ui.resources.server.RemoteAccessServerResource
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.ui.resources.server.RemoteAccessServerResource
+ * JD-Core Version:    0.7.0.1
+ */

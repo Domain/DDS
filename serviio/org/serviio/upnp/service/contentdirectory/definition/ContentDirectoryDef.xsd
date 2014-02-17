@@ -25,6 +25,25 @@
 			<xsd:enumeration value="MOVIE"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+
+	<xsd:simpleType name="SearchableCategoryEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MOVIES"/>
+			<xsd:enumeration value="EPISODES"/>
+			<xsd:enumeration value="SERIES"/>
+			<xsd:enumeration value="FOLDERS"/>
+			<xsd:enumeration value="FILES"/>
+			<xsd:enumeration value="ALBUMS"/>
+			<xsd:enumeration value="MUSIC_TRACKS"/>
+			<xsd:enumeration value="ALBUM_ARTISTS"/>
+			<xsd:enumeration value="ONLINE_CONTAINERS"/>
+			<xsd:enumeration value="ONLINE_ITEMS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SearchableCategoryType">
+		<xsd:list itemType="SearchableCategoryEnumType"/>
+	</xsd:simpleType>
 	
 	<xsd:complexType name="ContainerType">
 		<xsd:choice>
@@ -48,6 +67,7 @@
 		<xsd:attribute name="itemClass" type="ItemClassType" use="optional" />
 		<xsd:attribute name="recursive" type="xsd:boolean" use="optional"/>
 		<xsd:attribute name="cacheRegion" type="xsd:string"	use="required"/>
+		<xsd:attribute name="searchCategory" type="SearchableCategoryType" use="optional"/>
 	</xsd:complexType>
 
 	<xsd:element name="container" type="ContainerType"/>

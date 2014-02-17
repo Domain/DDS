@@ -1,83 +1,88 @@
 module org.serviio.external.FFmpegCLBuilder;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.serviio.external.DCRawCLBuilder;
-import org.serviio.external.AbstractCLBuilder;
 
-public class FFmpegCLBuilder : AbstractCLBuilder
+public class FFmpegCLBuilder
+  : AbstractCLBuilder
 {
-    static String executablePath;
-
-    private /*final*/ List!(String) _globalOptions;
-    private /*final*/ List!(String) _inFileOptions;
-    private String _inFile;
-    private /*final*/ List!(String) _outFileOptions;
-    private String _outFile;
-
-    static this()
+  private final List!(ProcessExecutorParameter) globalOptions = new ArrayList();
+  private final List!(ProcessExecutorParameter) inFileOptions = new ArrayList();
+  private final List!(ProcessExecutorParameter) outFileOptions = new ArrayList();
+  static String executablePath = setupExecutablePath("ffmpeg.location", "ffmpeg_executable");
+  private ProcessExecutorParameter inFile;
+  private ProcessExecutorParameter outFile;
+  
+  public ProcessExecutorParameter[] build()
+  {
+    List!(ProcessExecutorParameter) args = new ArrayList();
+    args.add(new ProcessExecutorParameter(executablePath));
+    args.addAll(this.globalOptions);
+    if (this.inFile !is null)
     {
-        executablePath = setupExecutablePath("ffmpeg.location", "ffmpeg_executable");
+      args.addAll(this.inFileOptions);
+      args.add(new ProcessExecutorParameter("-i"));
+      args.add(this.inFile);
     }
-
-    public this()
+    if (this.outFile !is null)
     {
-        _globalOptions = new ArrayList!(String)();
-        _inFileOptions = new ArrayList!(String)();
-        _outFileOptions = new ArrayList!(String)();
+      args.addAll(this.outFileOptions);
+      args.add(this.outFile);
     }
-
-    override public String[] build()
-    {
-        List!(String) args = new ArrayList!(String)();
-        args.add(executablePath);
-        args.addAll(_globalOptions);
-        if (_inFile !is null) {
-            args.addAll(_inFileOptions);
-            args.add("-i");
-            args.add(_inFile);
-        }
-        if (_outFile !is null) {
-            args.addAll(_outFileOptions);
-            args.add(_outFile);
-        }
-        String[] ffmpegArgs = new String[args.size()];
-        return cast(String[])args.toArray(ffmpegArgs);
-    }
-
-    public FFmpegCLBuilder globalOptions(String[] options) {
-        Collections.addAll(_globalOptions, options);
-        return this;
-    }
-
-    public FFmpegCLBuilder inFileOptions(String[] options) {
-        Collections.addAll(_inFileOptions, options);
-        return this;
-    }
-
-    public FFmpegCLBuilder outFileOptions(String[] options) {
-        Collections.addAll(_outFileOptions, options);
-        return this;
-    }
-
-    public FFmpegCLBuilder inFile(String inFile) {
-        this._inFile = inFile;
-        return this;
-    }
-
-    public FFmpegCLBuilder outFile(String outFile) {
-        this._outFile = outFile;
-        return this;
-    }
-
-    List!(String) getOutFileOptions() {
-        return Collections.unmodifiableList(_outFileOptions);
-    }
+    ProcessExecutorParameter[] ffmpegArgs = new ProcessExecutorParameter[args.size()];
+    return cast(ProcessExecutorParameter[])args.toArray(ffmpegArgs);
+  }
+  
+  public FFmpegCLBuilder globalOptions(String... options)
+  {
+    Collections.addAll(this.globalOptions, ProcessExecutorParameter.parameters(options));
+    return this;
+  }
+  
+  public FFmpegCLBuilder inFileOptions(String... options)
+  {
+    Collections.addAll(this.inFileOptions, ProcessExecutorParameter.parameters(options));
+    return this;
+  }
+  
+  public FFmpegCLBuilder outFileOptions(String... options)
+  {
+    Collections.addAll(this.outFileOptions, ProcessExecutorParameter.parameters(options));
+    return this;
+  }
+  
+  public FFmpegCLBuilder outFileOption(String option, bool isQuoted)
+  {
+    Collections.addAll(this.outFileOptions, cast(ProcessExecutorParameter[])[ new ProcessExecutorParameter(option, isQuoted) ]);
+    return this;
+  }
+  
+  public FFmpegCLBuilder inFile(String inFile)
+  {
+    this.inFile = new ProcessExecutorParameter(inFile);
+    return this;
+  }
+  
+  public FFmpegCLBuilder outFile(String outFile)
+  {
+    this.outFile = new ProcessExecutorParameter(outFile);
+    return this;
+  }
+  
+  List!(String) getOutFileOptions()
+  {
+    return Collections.unmodifiableList(ProcessExecutorParameter.stringParameters(this.outFileOptions));
+  }
+  
+  List!(String) getInFileOptions()
+  {
+    return Collections.unmodifiableList(ProcessExecutorParameter.stringParameters(this.inFileOptions));
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.external.FFmpegCLBuilder
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.external.FFmpegCLBuilder
+ * JD-Core Version:    0.7.0.1
+ */

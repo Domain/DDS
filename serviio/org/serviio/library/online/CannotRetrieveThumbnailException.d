@@ -1,30 +1,30 @@
 module org.serviio.library.online.CannotRetrieveThumbnailException;
 
-import java.lang.String;
-
-public class CannotRetrieveThumbnailException : Exception
+public class CannotRetrieveThumbnailException
+  : Exception
 {
-    private static const long serialVersionUID = 3818361224060004057L;
-
-    public this()
-    {
-    }
-
-    public this(String message, Throwable cause)
-    {
-        super(message, cause);
-    }
-
-    public this(String message) {
-        super(message);
-    }
-
-    public this(Throwable cause) {
-        super(cause);
-    }
+  private static final long serialVersionUID = 3818361224060004057L;
+  
+  public this() {}
+  
+  public this(String message, Throwable cause)
+  {
+    super(message, cause);
+  }
+  
+  public this(String message)
+  {
+    super(message);
+  }
+  
+  public this(Throwable cause)
+  {
+    super(cause);
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.online.CannotRetrieveThumbnailException
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.online.CannotRetrieveThumbnailException
+ * JD-Core Version:    0.7.0.1
+ */

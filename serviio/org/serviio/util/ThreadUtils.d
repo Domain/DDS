@@ -8,13 +8,17 @@ public class ThreadUtils
     {
       Thread.sleep(milliseconds);
     }
-    catch (InterruptedException e)
-    {
-    }
+    catch (InterruptedException e) {}
+  }
+  
+  public static void runAsynchronously(Runnable runnable)
+  {
+    ServiioThreadFactory.getInstance().newThread(runnable).start();
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.util.ThreadUtils
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

@@ -1,6 +1,5 @@
 module org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 
-import java.lang.String;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
@@ -13,39 +12,42 @@ public abstract class DefinitionNode
   protected ObjectClassType itemClass;
   protected DefinitionNode parent;
   protected String cacheRegion;
-
+  
   public this(ObjectClassType containerClass, DefinitionNode parent, String cacheRegion)
   {
     this.containerClass = containerClass;
     this.parent = parent;
     this.cacheRegion = cacheRegion;
   }
-
-  public abstract DirectoryObject retrieveDirectoryObject(String paramString, ObjectType paramObjectType, Profile paramProfile, AccessGroup paramAccessGroup);
-
+  
+  public abstract DirectoryObject retrieveDirectoryObject(String paramString, ObjectType paramObjectType, Profile paramProfile, AccessGroup paramAccessGroup, bool paramBoolean);
+  
   public void validate()
-  {
-  }
-
+  {}
+  
   public ObjectClassType getContainerClass()
   {
-    return containerClass;
+    return this.containerClass;
   }
-
-  public ObjectClassType getItemClass() {
-    return itemClass;
+  
+  public ObjectClassType getItemClass()
+  {
+    return this.itemClass;
   }
-
-  public DefinitionNode getParent() {
-    return parent;
+  
+  public DefinitionNode getParent()
+  {
+    return this.parent;
   }
-
-  public String getCacheRegion() {
-    return cacheRegion;
+  
+  public String getCacheRegion()
+  {
+    return this.cacheRegion;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.service.contentdirectory.definition.DefinitionNode
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

@@ -22,58 +22,56 @@ import org.slf4j.LoggerFactory;
 
 public class RequestExecutor
 {
-    private static HttpParams params;
-
-    private static Logger log;
-
-    public static HttpResponse send(HttpRequest request, URL deliveryURL)
+  private static HttpParams params = new BasicHttpParams();
+  private static final Logger log = LoggerFactory.getLogger!(RequestExecutor);
+  
+  static this()
+  {
+    params.setIntParameter("http.socket.timeout", 30000);
+    
+    params.setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
+    
+    params.setParameter("http.protocol.content-charset", "UTF-8");
+  }
+  
+  public static HttpResponse send(HttpRequest request, URL deliveryURL)
+  {
+    BasicHttpProcessor httpproc = new BasicHttpProcessor();
+    
+    httpproc.addInterceptor(new RequestContent());
+    httpproc.addInterceptor(new RequestTargetHost());
+    
+    HttpRequestExecutor httpexecutor = new HttpRequestExecutor();
+    HttpHost host = new HttpHost(deliveryURL.getHost(), deliveryURL.getPort() != -1 ? deliveryURL.getPort() : 80);
+    DefaultHttpClientConnection conn = new DefaultHttpClientConnection();
+    
+    HttpContext context = new BasicHttpContext(null);
+    context.setAttribute("http.connection", conn);
+    context.setAttribute("http.target_host", host);
+    try
     {
-        BasicHttpProcessor httpproc = new BasicHttpProcessor();
-
-        httpproc.addInterceptor(new RequestContent());
-        httpproc.addInterceptor(new RequestTargetHost());
-
-        HttpRequestExecutor httpexecutor = new HttpRequestExecutor();
-        HttpHost host = new HttpHost(deliveryURL.getHost(), deliveryURL.getPort() != -1 ? deliveryURL.getPort() : 80);
-        DefaultHttpClientConnection conn = new DefaultHttpClientConnection();
-
-        HttpContext context = new BasicHttpContext(null);
-        context.setAttribute("http.connection", conn);
-        context.setAttribute("http.target_host", host);
-        try
-        {
-            log.debug_(String_format("Sending HTTP request to %s:%s", cast(Object[])[ host.getHostName(), Integer.valueOf(host.getPort()) ]));
-            Socket socket = new Socket(host.getHostName(), host.getPort());
-            conn.bind(socket, params);
-
-            request.setParams(params);
-            httpexecutor.preProcess(request, httpproc, context);
-            HttpResponse response = httpexecutor.execute(request, conn, context);
-            response.setParams(params);
-            httpexecutor.postProcess(response, httpproc, context);
-
-            socket.close();
-            return response;
-        } finally {
-            conn.close();
-        }
+      log.debug_(String.format("Sending HTTP request to %s:%s", cast(Object[])[ host.getHostName(), Integer.valueOf(host.getPort()) ]));
+      Socket socket = new Socket(host.getHostName(), host.getPort());
+      conn.bind(socket, params);
+      
+      request.setParams(params);
+      httpexecutor.preProcess(request, httpproc, context);
+      HttpResponse response = httpexecutor.execute(request, conn, context);
+      response.setParams(params);
+      httpexecutor.postProcess(response, httpproc, context);
+      
+      socket.close();
+      return response;
     }
-
-    static this()
+    finally
     {
-        params = new BasicHttpParams();
-
-        log = LoggerFactory.getLogger!(RequestExecutor)();
-
-        params.setIntParameter("http.socket.timeout", 30000);
-
-        params.setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
-
-        params.setParameter("http.protocol.content-charset", "UTF-8");
+      conn.close();
     }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.upnp.protocol.http.RequestExecutor
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.upnp.protocol.http.RequestExecutor
+ * JD-Core Version:    0.7.0.1
+ */

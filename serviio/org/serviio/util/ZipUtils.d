@@ -9,9 +9,9 @@ import java.util.zip.ZipInputStream;
 
 public class ZipUtils
 {
-  public static InputStream unZipSingleFile(InputStream is_)
+  public static InputStream unZipSingleFile(InputStream is)
   {
-    ZipInputStream zis = new ZipInputStream(is_);
+    ZipInputStream zis = new ZipInputStream(is);
     ZipEntry entry = zis.getNextEntry();
     if (entry is null) {
       throw new IOException("Invalid zip file");
@@ -19,15 +19,17 @@ public class ZipUtils
     byte[] unpackedFile = FileUtils.readFileBytes(zis);
     return new ByteArrayInputStream(unpackedFile);
   }
-
-  public static InputStream unGzipSingleFile(InputStream is_) {
-    GZIPInputStream zis = new GZIPInputStream(is_);
+  
+  public static InputStream unGzipSingleFile(InputStream is)
+  {
+    GZIPInputStream zis = new GZIPInputStream(is);
     byte[] unpackedFile = FileUtils.readFileBytes(zis);
     return new ByteArrayInputStream(unpackedFile);
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.util.ZipUtils
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

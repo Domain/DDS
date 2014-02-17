@@ -1,6 +1,5 @@
 module org.serviio.upnp.protocol.http.HttpMessageParser;
 
-import java.lang.String;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.apache.http.HttpException;
@@ -22,19 +21,21 @@ public class HttpMessageParser
     try
     {
       org.apache.http.io.HttpMessageParser requestParser = new HttpRequestParser(inbuffer, new BasicLineParser(), new UniversalHttpRequestFactory(), new BasicHttpParams());
+      
 
       HttpRequest request = cast(HttpRequest)requestParser.parse();
       return request;
-    } finally {
-      try {
+    }
+    finally
+    {
+      try
+      {
         stream.close();
       }
-      catch (IOException e)
-      {
-      }
+      catch (IOException e) {}
     }
   }
-
+  
   public static HttpResponse parseHttpResponse(String message)
   {
     ByteArrayInputStream stream = new ByteArrayInputStream(message.getBytes());
@@ -42,21 +43,24 @@ public class HttpMessageParser
     try
     {
       org.apache.http.io.HttpMessageParser responseParser = new HttpResponseParser(inbuffer, new BasicLineParser(), new DefaultHttpResponseFactory(), new BasicHttpParams());
+      
 
       HttpResponse response = cast(HttpResponse)responseParser.parse();
       return response;
-    } finally {
-      try {
+    }
+    finally
+    {
+      try
+      {
         stream.close();
       }
-      catch (IOException e)
-      {
-      }
+      catch (IOException e) {}
     }
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.protocol.http.HttpMessageParser
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

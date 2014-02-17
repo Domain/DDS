@@ -1,5 +1,5 @@
 /// Generate by tools
-module RoleType;
+module org.serviio.library.entities.Person.RoleType;
 
 import java.lang.exceptions;
 

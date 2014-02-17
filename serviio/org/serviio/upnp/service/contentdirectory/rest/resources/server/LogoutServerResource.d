@@ -2,28 +2,27 @@ module org.serviio.upnp.service.contentdirectory.rest.resources.server.LogoutSer
 
 import org.serviio.restlet.ResultRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.LogoutResource;
-import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class LogoutServerResource : AbstractRestrictedCDSServerResource, LogoutResource
+public class LogoutServerResource
+  : AbstractRestrictedCDSServerResource
+  , LogoutResource
 {
-    private static Logger log;
-
-    static this()
-    {
-        log = LoggerFactory.getLogger!(LogoutServerResource)();
-    }
-
-    public ResultRepresentation logout()
-    {
-        log.debug_("Logging out using token " ~ getToken());
-        LoginServerResource.removeToken(getToken());
-        return responseOk();
-    }
+  protected bool isValidTokenNeeded()
+  {
+    return false;
+  }
+  
+  public ResultRepresentation logout()
+  {
+    this.log.debug_("Logging out using token " + getToken());
+    LoginServerResource.removeToken(getToken());
+    return responseOk();
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.LogoutServerResource
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.LogoutServerResource
+ * JD-Core Version:    0.7.0.1
+ */

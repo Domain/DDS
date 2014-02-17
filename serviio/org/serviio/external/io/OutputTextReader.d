@@ -1,6 +1,5 @@
 module org.serviio.external.io.OutputTextReader;
 
-import java.lang.String;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,77 +9,97 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.serviio.external.ProcessExecutor;
+import org.serviio.util.CollectionUtils;
+import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.serviio.external.io.OutputReader;
 
-public class OutputTextReader : OutputReader
+public class OutputTextReader
+  : OutputReader
 {
-    private static Logger log;
-
-    private List!(String) lines;
-    private Object linesLock;
-    private ProcessExecutor executor;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(OutputTextReader);
+  private List!(String) lines = new ArrayList();
+  private Object linesLock;
+  private ProcessExecutor executor;
+  
+  public this(ProcessExecutor executor, InputStream inputStream)
+  {
+    super(inputStream);
+    this.linesLock = new Object();
+    this.executor = executor;
+  }
+  
+  protected void processOutput()
+  {
+    BufferedReader br = null;
+    try
     {
-        log = LoggerFactory.getLogger!(OutputTextReader)();
+      br = new BufferedReader(new InputStreamReader(this.inputStream, Charset.defaultCharset()));
+      String line = null;
+      while ((line = br.readLine()) !is null) {
+        if (line.length() > 0)
+        {
+          addLine(line);
+          
+          this.executor.notifyListenersOutputUpdated(line);
+          
+          log.trace(line);
+        }
+      }
+      return;
     }
-
-    public this(ProcessExecutor executor, InputStream inputStream)
+    catch (IOException e)
     {
-        lines = new ArrayList!(String)();
-        super(inputStream);
-        linesLock = new Object();
-        this.executor = executor;
+      log.warn(String.format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
     }
-
-    override protected void processOutput()
+    finally
     {
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
-            String line = null;
-            while ((line = br.readLine()) !is null)
-                if (line.length() > 0) {
-                    addLine(line);
-
-                    executor.notifyListenersOutputUpdated(line);
-
-                    log.trace(line);
-                }
+      if (br !is null) {
+        try
+        {
+          br.close();
         }
-        catch (IOException e) {
-            log.warn(String_format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
-        } finally {
-            if (br !is null)
-                try {
-                    br.close(); } catch (Exception e) {
-                    }
-        }
+        catch (Exception e) {}
+      }
     }
-
-    override public ByteArrayOutputStream getOutputStream() {
-        return null;
-    }
-
-    override public List!(String) getResults() {
-        List!(String) clonedResults = new ArrayList!(String)();
-        synchronized (linesLock) {
-            clonedResults.addAll(lines);
-        }
-        return clonedResults;
-    }
-
-    private void addLine(String line)
+  }
+  
+  public ByteArrayOutputStream getOutputStream()
+  {
+    return null;
+  }
+  
+  public List!(String) getResults()
+  {
+    List!(String) clonedResults = new ArrayList();
+    synchronized (this.linesLock)
     {
-        synchronized (linesLock) {
-            lines.add(line);
-        }
+      clonedResults.addAll(this.lines);
     }
+    return clonedResults;
+  }
+  
+  public String getLast5Lines()
+  {
+    List!(String) all = getResults();
+    if ((all is null) || (all.size() == 0)) {
+      return null;
+    }
+    int start = Math.max(0, all.size() - 5);
+    return CollectionUtils.listToCSV(all.subList(start, all.size()), StringUtils.LINE_SEPARATOR, true);
+  }
+  
+  private void addLine(String line)
+  {
+    synchronized (this.linesLock)
+    {
+      this.lines.add(line);
+    }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.external.io.OutputTextReader
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.external.io.OutputTextReader
+ * JD-Core Version:    0.7.0.1
+ */

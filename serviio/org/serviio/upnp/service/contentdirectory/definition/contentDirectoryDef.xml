@@ -4,6 +4,11 @@
     title_key="serviio_media_library" id="0" containerClass="CONTAINER" cacheRegion="no_cache">
     
 	<container title_key="audio" id="A" editable="true" containerClass="CONTAINER" cacheRegion="no_cache"> <!-- see org.serviio.upnp.service.contentdirectory.definition.Definition for container id -->
+        <container title_key="albums" id="A_ALB" editable="true" containerClass="CONTAINER" cacheRegion="local_default">      
+            <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAllAlbumsCommand" idPrefix="ALB" containerClass="MUSIC_ALBUM" cacheRegion="local_default" searchCategory="ALBUMS">
+                <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default" searchCategory="MUSIC_TRACKS" />              
+            </action>               
+        </container>
 		<container title_key="artists" id="A_A" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
 			<action command="org.serviio.upnp.service.contentdirectory.command.person.ListArtistInitialsCommand" idPrefix="INI" containerClass="CONTAINER" cacheRegion="local_default">
 				<action command="org.serviio.upnp.service.contentdirectory.command.person.ListArtistsForInitialCommand" idPrefix="ART" containerClass="MUSIC_ARTIST" cacheRegion="local_default">
@@ -15,7 +20,7 @@
 		</container>
 		<container title_key="album_artists" id="AL_A" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
 			<action command="org.serviio.upnp.service.contentdirectory.command.person.ListAlbumArtistInitialsCommand" idPrefix="INI" containerClass="CONTAINER" cacheRegion="local_default">
-				<action command="org.serviio.upnp.service.contentdirectory.command.person.ListAlbumArtistsForInitialCommand" idPrefix="ART" containerClass="MUSIC_ARTIST" cacheRegion="local_default">
+				<action command="org.serviio.upnp.service.contentdirectory.command.person.ListAlbumArtistsForInitialCommand" idPrefix="ART" containerClass="MUSIC_ARTIST" cacheRegion="local_default" searchCategory="ALBUM_ARTISTS">
 					<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAlbumsForAlbumArtistCommand" idPrefix="A" containerClass="MUSIC_ALBUM" cacheRegion="local_default">						
 						<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default" />
 					</action>
@@ -23,7 +28,7 @@
 			</action>
 		</container>				
 		<container title_key="folders" id="A_F" editable="true" containerClass="CONTAINER" cacheRegion="local_default">	
-			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="MUSIC_TRACK" cacheRegion="local_default"/>				
+			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="MUSIC_TRACK" cacheRegion="local_default" searchCategory="FOLDERS FILES"/>				
 		</container>	
 		<container title_key="genres" id="A_G" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
 			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioGenresByNameCommand" idPrefix="GEN" containerClass="MUSIC_GENRE" cacheRegion="local_default">				
@@ -44,16 +49,26 @@
 				<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForInitialCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default"/>
 			</action>					
 		</container> 	
-		<container title_key="random" id="A_R" editable="true" containerClass="CONTAINER" cacheRegion="no_cache">	
+		<container title_key="random_music" id="A_R" editable="true" containerClass="CONTAINER" cacheRegion="no_cache">	
 			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListRandomSongsCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="no_cache" />					
 		</container>
+		<container title_key="random_albums" id="A_RA" editable="true" containerClass="CONTAINER" cacheRegion="no_cache"> 
+             <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListRandomAlbumsCommand" idPrefix="ALB" containerClass="MUSIC_ALBUM" cacheRegion="no_cache">
+                <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="no_cache" />              
+            </action>                     
+        </container>
+        <container title_key="last_listened_albums" id="A_LVA" editable="true" containerClass="CONTAINER" cacheRegion="local_resetafterplay"> 
+             <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListLastViewedAlbumsCommand" idPrefix="ALB" containerClass="MUSIC_ALBUM" cacheRegion="local_resetafterplay">
+                <action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_resetafterplay" />              
+            </action>                     
+        </container>
 		<container title_key="playlists" id="A_PL" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
 			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioPlaylistsCommand" idPrefix="PL" containerClass="PLAYLIST_CONTAINER" cacheRegion="local_default">
 				<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForPlaylistCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default"/>
 			</action>
 		</container>	 
 		<container title_key="online" id="A_OF" editable="true" containerClass="CONTAINER" cacheRegion="no_cache">
-			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="MUSIC_TRACK" cacheRegion="no_cache"/>
+			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAudioOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="MUSIC_TRACK" cacheRegion="no_cache" searchCategory="ONLINE_CONTAINERS ONLINE_ITEMS"/>
 		</container>	 
 		
 		<!-- XBOX360 search only categories  -->
@@ -65,11 +80,12 @@
 				<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForArtistCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default" />				
 			</action>
 		</container>	
-		<container title_key="All albums" id="A_ALB" containerClass="CONTAINER" browsable="false" cacheRegion="local_default">		
-			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAllAlbumsCommand" idPrefix="ALB" containerClass="MUSIC_ALBUM" cacheRegion="local_default">
-				<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="local_default" />				
-			</action>				
-		</container>			
+		<container title_key="Artist Albums" id="A_AA" containerClass="CONTAINER" browsable="false" cacheRegion="no_cache">								
+			<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListAlbumsForArtistNameCommand" idPrefix="ALB" containerClass="MUSIC_ALBUM" cacheRegion="no_cache">
+				<action command="org.serviio.upnp.service.contentdirectory.command.audio.ListSongsForAlbumCommand" idPrefix="S" itemClass="MUSIC_TRACK" cacheRegion="no_cache" />
+			</action>								
+		</container> 		
+		
 	</container>
 	<container title_key="image" id="I" editable="true" containerClass="CONTAINER" cacheRegion="no_cache"> <!-- see org.serviio.upnp.service.contentdirectory.definition.Definition for container id -->
 		<container title_key="albums" id="I_A" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
@@ -78,7 +94,7 @@
 			</action>
 		</container>	
 		<container title_key="folders" id="I_F" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
-			<action command="org.serviio.upnp.service.contentdirectory.command.image.ListImageFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="PHOTO" cacheRegion="local_default" />				
+			<action command="org.serviio.upnp.service.contentdirectory.command.image.ListImageFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="PHOTO" cacheRegion="local_default" searchCategory="FOLDERS FILES"/>				
 		</container>	
 		<container title_key="year" id="I_Y" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
 			<action command="org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationYearsCommand" idPrefix="YEAR" containerClass="CONTAINER" cacheRegion="local_default">				
@@ -98,7 +114,7 @@
 			</action>
 		</container>	 
 		<container title_key="online" id="I_OF" editable="true" containerClass="CONTAINER" cacheRegion="no_cache">
-			<action command="org.serviio.upnp.service.contentdirectory.command.image.ListImageOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="PHOTO" cacheRegion="no_cache"/>			
+			<action command="org.serviio.upnp.service.contentdirectory.command.image.ListImageOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="PHOTO" cacheRegion="no_cache" searchCategory="ONLINE_CONTAINERS ONLINE_ITEMS"/>			
 		</container>		
 		<!-- XBOX360 search only categories -->
 		<container title_key="All images" id="I_AI" containerClass="CONTAINER" browsable="false" cacheRegion="local_default">								
@@ -112,17 +128,17 @@
 			</action>					
 		</container>
 		<container title_key="movies" id="V_M" editable="true" containerClass="CONTAINER" cacheRegion="local_default">	
-			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListMovieVideosByNameCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default" />				
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListMovieVideosByNameCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default" searchCategory="MOVIES" />				
 		</container> 				
 		<container title_key="series" id="V_S" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
-			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListSeriesByNameCommand" idPrefix="SER" containerClass="CONTAINER" cacheRegion="local_resetafterplay">
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListSeriesByNameCommand" idPrefix="SER" containerClass="CONTAINER" cacheRegion="local_resetafterplay" searchCategory="SERIES">
 				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListSeasonsForSeriesCommand" idPrefix="SSN" containerClass="CONTAINER" cacheRegion="local_resetafterplay">				
-					<action command="org.serviio.upnp.service.contentdirectory.command.video.ListEpisodesForSeriesSeasonCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_resetafterplay"/>
+					<action command="org.serviio.upnp.service.contentdirectory.command.video.ListEpisodesForSeriesSeasonCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_resetafterplay" searchCategory="EPISODES" />
 				</action>								
 			</action>
 		</container>
 		<container title_key="folders" id="V_F" editable="true" containerClass="CONTAINER" cacheRegion="local_default">	
-			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="VIDEO_ITEM" cacheRegion="local_default"/>				
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoFoldersByNameCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="VIDEO_ITEM" cacheRegion="local_default" searchCategory="FOLDERS FILES" />				
 		</container>
 		<container title_key="last_viewed" id="V_LV" editable="true" containerClass="CONTAINER" cacheRegion="local_resetafterplay">	
 			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListLastViewedVideosCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_resetafterplay"/>				
@@ -133,6 +149,11 @@
 		<container title_key="genres" id="V_G" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
 			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoGenresByNameCommand" idPrefix="GEN" containerClass="CONTAINER" cacheRegion="local_default">				
 				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideosForGenreCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default" />
+			</action>
+		</container>
+		<container title_key="ratings" id="V_R" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoRatingsByNameCommand" idPrefix="RAT" containerClass="CONTAINER" cacheRegion="local_default">				
+				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListMovieVideosForRatingCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default" />
 			</action>
 		</container>
 		<container title_key="actors" id="V_A" editable="true" containerClass="CONTAINER" cacheRegion="local_default">		
@@ -156,13 +177,18 @@
 				</action>
 			</action>
 		</container>
+		<container title_key="release_years" id="V_RY" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoReleaseYearsCommand" idPrefix="Y" containerClass="CONTAINER" cacheRegion="local_default">
+				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListMovieVideosForReleaseYearCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default"/>
+			</action>
+		</container>
 		<container title_key="playlists" id="V_PL" editable="true" containerClass="CONTAINER" cacheRegion="local_default">
 			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoPlaylistsCommand" idPrefix="PL" containerClass="PLAYLIST_CONTAINER" cacheRegion="local_default">
-				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideosForPlaylistCommand" idPrefix="S" itemClass="VIDEO_ITEM" cacheRegion="local_default"/>
+				<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideosForPlaylistCommand" idPrefix="V" itemClass="VIDEO_ITEM" cacheRegion="local_default"/>
 			</action>
 		</container>	 
 		<container title_key="online" id="V_OF" editable="true" containerClass="CONTAINER" cacheRegion="no_cache">
-			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="VIDEO_ITEM" cacheRegion="no_cache"/>			
+			<action command="org.serviio.upnp.service.contentdirectory.command.video.ListVideoOnlineContentCommand" idPrefix="FOL" recursive="true" containerClass="STORAGE_FOLDER" itemClass="VIDEO_ITEM" cacheRegion="no_cache" searchCategory="ONLINE_CONTAINERS ONLINE_ITEMS"/>			
 		</container>	 
 	</container>
 </container>

@@ -1,8 +1,5 @@
 module org.serviio.delivery.MediaResourceRetrievalStrategy;
 
-import java.lang.Long;
-import java.lang.Double;
-import java.lang.String;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -22,107 +19,107 @@ import org.serviio.library.local.service.VideoService;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.library.online.OnlineItemService;
 import org.serviio.library.online.metadata.OnlineItem;
-import org.serviio.profile.DeliveryQuality;
+import org.serviio.profile.DeliveryQuality.QualityType;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ContentDirectoryEngine;
-import org.serviio.delivery.ResourceInfo;
-import org.serviio.delivery.ResourceRetrievalStrategy;
-import org.serviio.delivery.DeliveryContainer;
-import org.serviio.delivery.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
+public class MediaResourceRetrievalStrategy
+  : ResourceRetrievalStrategy
 {
-    private static Logger log;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy);
+  
+  public static List/*!(? : ResourceInfo)*/ getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
+  {
+    bool isLocalMedia = mediaItem.isLocalMedia();
+    if (mediaItem.getFileType() == MediaFileType.IMAGE)
     {
-        log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy)();
+      Image image = isLocalMedia ? ImageService.getImage(mediaItem.getId()) : cast(Image)mediaItem;
+      return ImageDeliveryEngine.getInstance().getMediaInfoForProfile(image, rendererProfile);
     }
-
-    public static List!(ResourceInfo) getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
+    if (mediaItem.getFileType() == MediaFileType.AUDIO)
     {
-        bool isLocalMedia = mediaItem.isLocalMedia();
-        if (mediaItem.getFileType() == MediaFileType.IMAGE) {
-            Image image = isLocalMedia ? ImageService.getImage(mediaItem.getId()) : cast(Image)mediaItem;
-            return ImageDeliveryEngine.getInstance().getMediaInfoForProfile(image, rendererProfile);
-        }if (mediaItem.getFileType() == MediaFileType.AUDIO) {
-            MusicTrack track = isLocalMedia ? AudioService.getSong(mediaItem.getId()) : cast(MusicTrack)mediaItem;
-            return AudioDeliveryEngine.getInstance().getMediaInfoForProfile(track, rendererProfile);
-        }
-        Video video = isLocalMedia ? VideoService.getVideo(mediaItem.getId()) : cast(Video)mediaItem;
-        return VideoDeliveryEngine.getInstance().getMediaInfoForProfile(video, rendererProfile);
+      MusicTrack track = isLocalMedia ? AudioService.getSong(mediaItem.getId()) : cast(MusicTrack)mediaItem;
+      return AudioDeliveryEngine.getInstance().getMediaInfoForProfile(track, rendererProfile);
     }
-
-    public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+    Video video = isLocalMedia ? VideoService.getVideo(mediaItem.getId()) : cast(Video)mediaItem;
+    return VideoDeliveryEngine.getInstance().getMediaInfoForProfile(video, rendererProfile);
+  }
+  
+  public static MediaItem loadMediaItem(Long mediaItemId)
+  {
+    MediaItem mediaItem = null;
+    bool localMedia = MediaItem.isLocalMedia(mediaItemId);
+    log.debug_(String.format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId, localMedia ? "local" : "online" ]));
+    if (localMedia)
     {
-        //if (selectedVersion is null) {
-        //    throw new FileNotFoundException("The request did not provide required version of the resource");
-        //}
-        MediaItem mediaItem = getMediaItem(mediaItemId, selectedVersion);
-        bool isLocalMedia = mediaItem.isLocalMedia();
-        DeliveryContainer deliveryContainer = null;
-        if (mediaItem.getFileType() == MediaFileType.IMAGE) {
-            Image image = isLocalMedia ? ImageService.getImage(mediaItem.getId()) : cast(Image)mediaItem;
-            deliveryContainer = ImageDeliveryEngine.getInstance().deliver(image, selectedVersion, selectedQuality, null, null, client);
-        } else if (mediaItem.getFileType() == MediaFileType.AUDIO) {
-            MusicTrack track = isLocalMedia ? AudioService.getSong(mediaItem.getId()) : cast(MusicTrack)mediaItem;
-            deliveryContainer = AudioDeliveryEngine.getInstance().deliver(track, selectedVersion, selectedQuality, timeOffsetInSeconds, durationInSeconds, client);
-        } else {
-            Video video = isLocalMedia ? VideoService.getVideo(mediaItem.getId()) : cast(Video)mediaItem;
-            deliveryContainer = VideoDeliveryEngine.getInstance().deliver(video, selectedVersion, selectedQuality, timeOffsetInSeconds, durationInSeconds, client);
-        }
-
-        if ((isLocalMedia) && (markAsRead) && (mediaItem.getFileType() != MediaFileType.IMAGE)) {
-            MediaService.markMediaItemAsRead(mediaItemId);
-
-            ContentDirectoryEngine cds = ContentDirectoryEngine.getInstance();
-            cds.evictItemsAfterPlay();
-        }
-        return deliveryContainer;
+      mediaItem = MediaService.readMediaItemById(mediaItemId);
+      if (mediaItem.getFileType() == MediaFileType.IMAGE) {
+        mediaItem = ImageService.getImage(mediaItem.getId());
+      } else if (mediaItem.getFileType() == MediaFileType.AUDIO) {
+        mediaItem = AudioService.getSong(mediaItem.getId());
+      } else {
+        mediaItem = VideoService.getVideo(mediaItem.getId());
+      }
     }
-
-    public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Client client)
+    else
     {
-        //if (selectedVersion is null) {
-        //    throw new FileNotFoundException("The request did not provide required version of the resource");
-        //}
-        MediaItem mediaItem = getMediaItem(mediaItemId, selectedVersion);
-        bool isLocalMedia = mediaItem.isLocalMedia();
-        Profile rendererProfile = client.getRendererProfile();
-        if (mediaItem.getFileType() == MediaFileType.IMAGE) {
-            Image image = isLocalMedia ? ImageService.getImage(mediaItem.getId()) : cast(Image)mediaItem;
-            return ImageDeliveryEngine.getInstance().getMediaInfoForMediaItem(image, selectedVersion, selectedQuality, rendererProfile);
-        }if (mediaItem.getFileType() == MediaFileType.AUDIO) {
-            MusicTrack track = isLocalMedia ? AudioService.getSong(mediaItem.getId()) : cast(MusicTrack)mediaItem;
-            return AudioDeliveryEngine.getInstance().getMediaInfoForMediaItem(track, selectedVersion, selectedQuality, rendererProfile);
-        }
-        Video video = isLocalMedia ? VideoService.getVideo(mediaItem.getId()) : cast(Video)mediaItem;
-        return VideoDeliveryEngine.getInstance().getMediaInfoForMediaItem(video, selectedVersion, selectedQuality, rendererProfile);
+      OnlineItem onlineItem = OnlineItemService.findOnlineItemById(mediaItemId);
+      if (onlineItem !is null) {
+        mediaItem = onlineItem.toMediaItem();
+      }
     }
-
-    private MediaItem getMediaItem(Long mediaItemId, MediaFormatProfile selectedVersion)
+    if (mediaItem is null) {
+      throw new FileNotFoundException(String.format("Media item %s cannot be found", cast(Object[])[ mediaItemId ]));
+    }
+    return mediaItem;
+  }
+  
+  public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+  {
+    if (selectedVersion is null) {
+      throw new FileNotFoundException("The request did not provide required version of the resource");
+    }
+    MediaItem mediaItem = loadMediaItem(mediaItemId);
+    bool isLocalMedia = mediaItem.isLocalMedia();
+    DeliveryContainer deliveryContainer = null;
+    if (mediaItem.getFileType() == MediaFileType.IMAGE) {
+      deliveryContainer = ImageDeliveryEngine.getInstance().deliver(cast(Image)mediaItem, selectedVersion, selectedQuality, null, null, client);
+    } else if (mediaItem.getFileType() == MediaFileType.AUDIO) {
+      deliveryContainer = AudioDeliveryEngine.getInstance().deliver(cast(MusicTrack)mediaItem, selectedVersion, selectedQuality, timeOffsetInSeconds, durationInSeconds, client);
+    } else {
+      deliveryContainer = VideoDeliveryEngine.getInstance().deliver(cast(Video)mediaItem, selectedVersion, selectedQuality, timeOffsetInSeconds, durationInSeconds, client);
+    }
+    if ((isLocalMedia) && (markAsRead) && (mediaItem.getFileType() != MediaFileType.IMAGE))
     {
-        MediaItem mediaItem = null;
-        bool localMedia = MediaItem.isLocalMedia(mediaItemId);
-        log.debug_(String_format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId.toString(), localMedia ? "local" : "online" ]));
-        if (localMedia) {
-            mediaItem = MediaService.readMediaItemById(mediaItemId);
-        } else {
-            OnlineItem onlineItem = OnlineItemService.findOnlineItemById(mediaItemId);
-            if (onlineItem !is null) {
-                mediaItem = onlineItem.toMediaItem();
-            }
-        }
-        if (mediaItem is null) {
-            throw new FileNotFoundException(String_format("Media item %s cannot be found", cast(Object[])[ mediaItemId.toString() ]));
-        }
-        return mediaItem;
+      MediaService.markMediaItemAsRead(mediaItemId);
+      
+      ContentDirectoryEngine cds = ContentDirectoryEngine.getInstance();
+      cds.evictItemsAfterPlay();
     }
+    return deliveryContainer;
+  }
+  
+  public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+  {
+    if (selectedVersion is null) {
+      throw new FileNotFoundException("The request did not provide required version of the resource");
+    }
+    MediaItem mediaItem = loadMediaItem(mediaItemId);
+    Profile rendererProfile = client.getRendererProfile();
+    if (mediaItem.getFileType() == MediaFileType.IMAGE) {
+      return ImageDeliveryEngine.getInstance().getMediaInfoForMediaItem(cast(Image)mediaItem, selectedVersion, selectedQuality, rendererProfile);
+    }
+    if (mediaItem.getFileType() == MediaFileType.AUDIO) {
+      return AudioDeliveryEngine.getInstance().getMediaInfoForMediaItem(cast(MusicTrack)mediaItem, selectedVersion, selectedQuality, rendererProfile);
+    }
+    return VideoDeliveryEngine.getInstance().getMediaInfoForMediaItem(cast(Video)mediaItem, selectedVersion, selectedQuality, rendererProfile);
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.delivery.MediaResourceRetrievalStrategy
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.delivery.MediaResourceRetrievalStrategy
+ * JD-Core Version:    0.7.0.1
+ */

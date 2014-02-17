@@ -2,189 +2,22 @@ module org.serviio.library.local.metadata.extractor.ExtractorType;
 
 import org.serviio.library.local.metadata.extractor.embedded.EmbeddedMetadataExtractor;
 import org.serviio.library.local.metadata.extractor.video.OnlineVideoSourcesMetadataExtractor;
-import org.serviio.library.local.metadata.extractor.MetadataExtractor;
 
-enum ExtractorType
+public enum ExtractorType
 {
-    EMBEDDED, 
-    COVER_IMAGE_IN_FOLDER, 
-    ONLINE_VIDEO_SOURCES, 
-    SWISSCENTER, 
-    XBMC, 
-    MYMOVIES,
+  EMBEDDED,  COVER_IMAGE_IN_FOLDER,  ONLINE_VIDEO_SOURCES,  SWISSCENTER,  XBMC,  MYMOVIES;
+  
+  private this() {}
+  
+  public abstract MetadataExtractor getExtractorInstance();
+  
+  public abstract int getDefaultPriority();
+  
+  public abstract bool isDescriptiveMetadataExtractor();
 }
 
-public MetadataExtractor getExtractorInstance(ExtractorType extractorType)
-{
-    switch (extractorType)
-    {
-        case EMBEDDED:
-            return new EmbeddedMetadataExtractor(); 
 
-        case COVER_IMAGE_IN_FOLDER:
-            return new CoverImageInFolderExtractor(); 
-
-        case ONLINE_VIDEO_SOURCES:
-            return new OnlineVideoSourcesMetadataExtractor(); 
-
-        case SWISSCENTER:
-            return new SwissCenterExtractor(); 
-
-        case XBMC:
-            return new XBMCExtractor(); 
-
-        case MYMOVIES:
-            return new MyMoviesExtractor();
-    }
-    return null;
-}
-
-public int getDefaultPriority(ExtractorType extractorType)
-{
-    switch (extractorType)
-    {
-        case EMBEDDED:
-            return 0; 
-
-        case COVER_IMAGE_IN_FOLDER:
-            return 10; 
-
-        case ONLINE_VIDEO_SOURCES:
-            return 1; 
-
-        case SWISSCENTER:
-            return 2; 
-
-        case XBMC:
-            return 2; 
-
-        case MYMOVIES:
-            return 2;
-    }
-
-    return 0;
-}
-
-public bool isDescriptiveMetadataExtractor(ExtractorType extractorType)
-{
-    switch (extractorType)
-    {
-        case EMBEDDED:
-            return false; 
-
-        case COVER_IMAGE_IN_FOLDER:
-            return false; 
-
-        case ONLINE_VIDEO_SOURCES:
-            return true; 
-
-        case SWISSCENTER:
-            return true; 
-
-        case XBMC:
-            return true; 
-
-        case MYMOVIES:
-            return true;
-    }
-
-    return false;
-}
-
-//public class ExtractorType
-//{
-//    enum ExtractorTypeEnum
-//    {
-//        EMBEDDED, 
-//        COVER_IMAGE_IN_FOLDER, 
-//        ONLINE_VIDEO_SOURCES, 
-//        SWISSCENTER, 
-//        XBMC, 
-//        MYMOVIES,
-//    }
-//
-//    ExtractorTypeEnum extractorType;
-//    alias extractorType this;
-//
-//  public MetadataExtractor getExtractorInstance()
-//  {
-//      switch (extractorType)
-//      {
-//          case EMBEDDED:
-//              return new EmbeddedMetadataExtractor(); 
-//
-//          case COVER_IMAGE_IN_FOLDER:
-//              return new CoverImageInFolderExtractor(); 
-//
-//          case ONLINE_VIDEO_SOURCES:
-//              return new OnlineVideoSourcesMetadataExtractor(); 
-//
-//          case SWISSCENTER:
-//              return new SwissCenterExtractor(); 
-//
-//          case XBMC:
-//              return new XBMCExtractor(); 
-//
-//          case MYMOVIES:
-//              return new MyMoviesExtractor();
-//      }
-//      return null;
-//  }
-//
-//  public int getDefaultPriority()
-//  {
-//      switch (extractorType)
-//      {
-//          case EMBEDDED:
-//              return 0; 
-//
-//          case COVER_IMAGE_IN_FOLDER:
-//              return 10; 
-//
-//          case ONLINE_VIDEO_SOURCES:
-//              return 1; 
-//
-//          case SWISSCENTER:
-//              return 2; 
-//
-//          case XBMC:
-//              return 2; 
-//
-//          case MYMOVIES:
-//              return 2;
-//      }
-//
-//      return 0;
-//  }
-//
-//  public bool isDescriptiveMetadataExtractor()
-//  {
-//      switch (extractorType)
-//      {
-//          case EMBEDDED:
-//              return false; 
-//
-//          case COVER_IMAGE_IN_FOLDER:
-//              return false; 
-//
-//          case ONLINE_VIDEO_SOURCES:
-//              return true; 
-//
-//          case SWISSCENTER:
-//              return true; 
-//
-//          case XBMC:
-//              return true; 
-//
-//          case MYMOVIES:
-//              return true;
-//      }
-//
-//      return false;
-//  }
-//}
-
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.local.metadata.extractor.ExtractorType
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

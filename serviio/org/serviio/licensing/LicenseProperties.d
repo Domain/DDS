@@ -1,53 +1,16 @@
 module org.serviio.licensing.LicenseProperties;
 
-import java.lang.String;
-
-enum LicenseProperties : String
+public enum LicenseProperties
 {
-    TYPE = "type", 
-
-    EDITION = "edition", 
-
-    VERSION = "version", 
-
-    ID = "id", 
-
-    NAME = "name", 
-
-    EMAIL = "email",
+  TYPE,  EDITION,  VERSION,  ID,  NAME,  EMAIL;
+  
+  private this() {}
+  
+  public abstract String getName();
 }
 
-public String getName(LicenseProperties licenseProperties)
-{
-    return cast(String)licenseProperties;
-}
 
-//public class LicenseProperties
-//{
-//    enum LicensePropertiesEnum : String
-//    {
-//        TYPE = "type", 
-//
-//        EDITION = "edition", 
-//
-//        VERSION = "version", 
-//
-//        ID = "id", 
-//
-//        NAME = "name", 
-//
-//        EMAIL = "email",
-//    }
-//    LicensePropertiesEnum licenseProperties;
-//    alias licenseProperties this;
-//
-//    public String getName()
-//    {
-//        return cast(String)licenseProperties;
-//    }
-//}
-
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.licensing.LicenseProperties
-* JD-Core Version:    0.6.2
-*/
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.licensing.LicenseProperties
+ * JD-Core Version:    0.7.0.1
+ */

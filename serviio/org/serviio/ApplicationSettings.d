@@ -1,44 +1,42 @@
-module org.serviio.ApplicationSettings;
 
-import java.lang.String;
-import java.lang.Integer;
-import java.util.Properties;
 
-public class ApplicationSettings
-{
-	private static Properties properties;
+java.util.Properties
 
-	public static Properties getProperties()
-	{
-		return properties;
-	}
+ApplicationSettings
 
-	public static String getStringProperty(String name) {
-		return cast(String)(getProperties().get(name));
-	}
+  properties = ()
+  
+  static
+  
+    
+    
+      propertiesloadgetResourceAsStream"/serviio.properties"
+    
+     ( {}
+  
+  
+  getProperties
+  
+    properties
+  
+  
+  getStringProperty
+  
+    getProperties()get
+  
+  
+  getIntegerProperty
+  
+     = getStringProperty
+     (!= {
+      valueOf
+    
+    
+  
 
-	public static Integer getIntegerProperty(String name) {
-		String strValue = getStringProperty(name);
-		if (strValue !is null) {
-			return Integer.valueOf(strValue);
-		}
-		return null;
-	}
 
-	static this()
-	{
-		properties = new Properties();
-		try
-		{
-			properties.load(ApplicationSettings.class_.getResourceAsStream("/serviio.properties"));
-		}
-		catch (Exception e)
-		{
-		}
-	}
-}
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.ApplicationSettings
-* JD-Core Version:    0.6.2
-*/
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.ApplicationSettings
+ * JD-Core Version:    0.7.0.1
+ */

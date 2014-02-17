@@ -1,11 +1,11 @@
 module org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
 
-import java.lang.String;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpVersion;
 import org.apache.http.message.BasicHttpRequest;
 import org.serviio.upnp.Device;
-import org.serviio.upnp.protocol.ssdp.SSDPMessageBuilder;
 
 public abstract class SSDPRequestMessageBuilder
   : SSDPMessageBuilder
@@ -15,12 +15,13 @@ public abstract class SSDPRequestMessageBuilder
     Device device = Device.getInstance();
     HttpRequest request = new BasicHttpRequest(method, "*", HttpVersion.HTTP_1_1);
     request.addHeader("HOST", device.getMulticastGroupAddress().getAddress().getHostAddress() + ":" + device.getMulticastGroupAddress().getPort());
-
+    
     return request;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

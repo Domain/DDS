@@ -1,6 +1,5 @@
 module org.serviio.library.metadata.ImageMetadataRetriever;
 
-import java.lang.String;
 import java.io.IOException;
 import org.serviio.external.DCRawWrapper;
 import org.serviio.library.local.metadata.ImageMetadata;
@@ -10,29 +9,27 @@ import org.slf4j.LoggerFactory;
 
 public class ImageMetadataRetriever
 {
-    private static Logger log;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(ImageMetadataRetriever);
+  
+  public static void retrieveImageMetadata(ImageMetadata md, String imageLocation, bool local)
+  {
+    try
     {
-        log = LoggerFactory.getLogger!(ImageMetadataRetriever)();
+      SanselanMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
     }
-
-    public static void retrieveImageMetadata(ImageMetadata md, String imageLocation, bool local)
+    catch (InvalidMediaFormatException e)
     {
-        try
-        {
-            SanselanMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
-        }
-        catch (InvalidMediaFormatException e) {
-            if (DCRawWrapper.dcrawPresent()) {
-                log.debug_("Unknown image format, trying raw format");
-                DCRawMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
-            }
-        }
+      if (DCRawWrapper.dcrawPresent())
+      {
+        log.debug_("Unknown image format, trying raw format");
+        DCRawMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
+      }
     }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.metadata.ImageMetadataRetriever
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.metadata.ImageMetadataRetriever
+ * JD-Core Version:    0.7.0.1
+ */

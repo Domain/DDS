@@ -13,45 +13,56 @@ import org.serviio.util.ServiioThreadFactory;
 public abstract class PluginExecutionProcessor(T)
 {
   private static ExecutorService executor = Executors.newCachedThreadPool(ServiioThreadFactory.getInstance());
-
+  
   public static void shutdown()
   {
     executor.shutdownNow();
   }
-
+  
   public T execute(int millisecondsTimeout)
   {
-    Future!(T) future = executor.submit(new class() Callable!(T) {
-      public T call() {
-        return executePluginMethod();
+    Future!(T) future = executor.submit(new class() Callable {
+      public T call()
+      {
+        return this.outer.executePluginMethod();
       }
-
     });
     try
     {
-      return cast(T) future.get(millisecondsTimeout, TimeUnit.MILLISECONDS);
-    } catch (ExecutionException e) {
-      throw e.getCause();
-    } catch (InterruptedException e) {
-      throw new RuntimeException("The operation has been interrupted.");
-    } catch (CancellationException e) {
-      throw new RuntimeException("The operation has been cancelled.");
-    } catch (TimeoutException e) {
-      throw new RuntimeException(String_format("The operation took more than %s ms and has been cancelled.", cast(Object[])[ Integer.valueOf(millisecondsTimeout) ]));
+      return future.get(millisecondsTimeout, TimeUnit.MILLISECONDS);
     }
-    finally {
+    catch (ExecutionException e)
+    {
+      throw e.getCause();
+    }
+    catch (InterruptedException e)
+    {
+      throw new RuntimeException("The operation has been interrupted.");
+    }
+    catch (CancellationException e)
+    {
+      throw new RuntimeException("The operation has been cancelled.");
+    }
+    catch (TimeoutException e)
+    {
+      throw new RuntimeException(String.format("The operation took more than %s ms and has been cancelled.", cast(Object[])[ Integer.valueOf(millisecondsTimeout) ]));
+    }
+    finally
+    {
       cancel(future);
     }
   }
-
+  
   protected abstract T executePluginMethod();
-
-  private void cancel(Future!(T) future) {
+  
+  private void cancel(Future!(T) future)
+  {
     future.cancel(true);
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.online.PluginExecutionProcessor
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

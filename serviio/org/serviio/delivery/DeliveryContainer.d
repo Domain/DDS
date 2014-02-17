@@ -1,34 +1,36 @@
 module org.serviio.delivery.DeliveryContainer;
 
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
-import org.serviio.delivery.ResourceInfo;
 
 public abstract class DeliveryContainer
 {
   private ResourceInfo resourceInfo;
   private TranscodingJobListener jobListener;
-
+  
   public this(ResourceInfo resourceInfo)
   {
     this.resourceInfo = resourceInfo;
   }
-
-  public this(ResourceInfo resourceInfo, TranscodingJobListener jobListener) {
+  
+  public this(ResourceInfo resourceInfo, TranscodingJobListener jobListener)
+  {
     this(resourceInfo);
     this.jobListener = jobListener;
   }
-
+  
   public ResourceInfo getResourceInfo()
   {
-    return resourceInfo;
+    return this.resourceInfo;
   }
-
-  public TranscodingJobListener getTranscodingJobListener() {
-    return jobListener;
+  
+  public TranscodingJobListener getTranscodingJobListener()
+  {
+    return this.jobListener;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.delivery.DeliveryContainer
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

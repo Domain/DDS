@@ -1,9 +1,9 @@
 module org.serviio.library.dao.AbstractAccessibleDao;
 
-import java.lang.String;
 import org.serviio.library.entities.AccessGroup;
 
 public abstract class AbstractAccessibleDao
+  : AbstractDao
 {
   protected String accessGroupTable(AccessGroup accessGroup)
   {
@@ -12,7 +12,7 @@ public abstract class AbstractAccessibleDao
     }
     return ", repository_access_group ";
   }
-
+  
   protected String onlineAccessGroupTable(AccessGroup accessGroup)
   {
     if (accessGroup == AccessGroup.ANY) {
@@ -20,35 +20,40 @@ public abstract class AbstractAccessibleDao
     }
     return ", online_repository_access_group ";
   }
-
+  
   protected String accessGroupConditionForMediaItem(AccessGroup accessGroup)
   {
     return generateAccessGroupCondition(accessGroup, "media_item.repository_id");
   }
-
-  protected String accessGroupConditionForOnlineRepository(AccessGroup accessGroup) {
+  
+  protected String accessGroupConditionForOnlineRepository(AccessGroup accessGroup)
+  {
     return generateOnlineAccessGroupCondition(accessGroup, "online_repository.id");
   }
-
-  protected String accessGroupConditionForRepository(AccessGroup accessGroup) {
+  
+  protected String accessGroupConditionForRepository(AccessGroup accessGroup)
+  {
     return generateAccessGroupCondition(accessGroup, "repository.id");
   }
-
-  protected String accessGroupConditionForFolder(AccessGroup accessGroup) {
+  
+  protected String accessGroupConditionForFolder(AccessGroup accessGroup)
+  {
     return generateAccessGroupCondition(accessGroup, "folder.repository_id");
   }
-
-  protected String accessGroupConditionForPlaylist(AccessGroup accessGroup) {
+  
+  protected String accessGroupConditionForPlaylist(AccessGroup accessGroup)
+  {
     return generateAccessGroupCondition(accessGroup, "playlist.repository_id");
   }
-
-  private String generateAccessGroupCondition(AccessGroup accessGroup, String tableAndRepoIdName) {
+  
+  private String generateAccessGroupCondition(AccessGroup accessGroup, String tableAndRepoIdName)
+  {
     if (accessGroup == AccessGroup.ANY) {
       return " ";
     }
     return " AND repository_access_group.repository_id = " + tableAndRepoIdName + " AND repository_access_group.access_group_id = " + accessGroup.getId() + " ";
   }
-
+  
   private String generateOnlineAccessGroupCondition(AccessGroup accessGroup, String tableAndRepoIdName)
   {
     if (accessGroup == AccessGroup.ANY) {
@@ -58,7 +63,8 @@ public abstract class AbstractAccessibleDao
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.dao.AbstractAccessibleDao
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

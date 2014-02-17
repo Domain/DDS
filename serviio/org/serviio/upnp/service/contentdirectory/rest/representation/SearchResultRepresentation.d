@@ -1,0 +1,28 @@
+module org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultRepresentation;
+
+public class SearchResultRepresentation
+  : AbstractCDSObjectRepresentation
+{
+  private String context;
+  
+  public this(AbstractCDSObjectRepresentation.DirectoryObjectType type, String title, String id)
+  {
+    super(type, title, id);
+  }
+  
+  public String getContext()
+  {
+    return this.context;
+  }
+  
+  public void setContext(String context)
+  {
+    this.context = context;
+  }
+}
+
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultRepresentation
+ * JD-Core Version:    0.7.0.1
+ */

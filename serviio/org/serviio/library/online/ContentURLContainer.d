@@ -1,6 +1,5 @@
 module org.serviio.library.online.ContentURLContainer;
 
-import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -10,115 +9,135 @@ import org.slf4j.LoggerFactory;
 
 public class ContentURLContainer
 {
-    private static Logger log;
-    private String contentUrl;
-    private String thumbnailUrl;
-    private MediaFileType fileType = MediaFileType.VIDEO;
-    private Date expiresOn;
-    private bool expiresImmediately = false;
-    private String cacheKey;
-    private bool live = false;
-    private String userAgent;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(ContentURLContainer);
+  private String contentUrl;
+  private String thumbnailUrl;
+  private MediaFileType fileType = MediaFileType.VIDEO;
+  private Date expiresOn;
+  private bool expiresImmediately = false;
+  private String cacheKey;
+  private bool live = false;
+  private String userAgent;
+  
+  public String getContentUrl()
+  {
+    return this.contentUrl;
+  }
+  
+  public URL getThumbnailUrl()
+  {
+    try
     {
-        log = LoggerFactory.getLogger!(ContentURLContainer)();
+      return this.thumbnailUrl !is null ? new URL(this.thumbnailUrl) : null;
     }
-
-    public String getContentUrl()
+    catch (MalformedURLException e)
     {
-        return contentUrl;
+      log.debug_("Cannot parse thumbnail URL: " + e.getMessage());
     }
-
-    public URL getThumbnailUrl() {
-        try {
-            return thumbnailUrl !is null ? new URL(thumbnailUrl) : null;
-        } catch (MalformedURLException e) {
-            log.debug_((new StringBuilder()).append("Cannot parse thumbnail URL: ").append(e.getMessage()).toString());
-        }return null;
+    return null;
+  }
+  
+  public MediaFileType getFileType()
+  {
+    return this.fileType;
+  }
+  
+  public void setContentUrl(String contentUrl)
+  {
+    this.contentUrl = contentUrl;
+  }
+  
+  public void setThumbnailUrl(String thumbnailUrl)
+  {
+    this.thumbnailUrl = thumbnailUrl;
+  }
+  
+  public void setFileType(MediaFileType fileType)
+  {
+    this.fileType = fileType;
+  }
+  
+  public Date getExpiresOn()
+  {
+    return this.expiresOn;
+  }
+  
+  public void setExpiresOn(Date expiresIn)
+  {
+    this.expiresOn = expiresIn;
+  }
+  
+  public bool isExpiresImmediately()
+  {
+    return this.expiresImmediately;
+  }
+  
+  public void setExpiresImmediately(bool expiresImmediately)
+  {
+    this.expiresImmediately = expiresImmediately;
+  }
+  
+  public String getCacheKey()
+  {
+    return this.cacheKey;
+  }
+  
+  public void setCacheKey(String cacheKey)
+  {
+    this.cacheKey = cacheKey;
+  }
+  
+  public bool isLive()
+  {
+    return this.live;
+  }
+  
+  public void setLive(bool live)
+  {
+    this.live = live;
+  }
+  
+  public String getUserAgent()
+  {
+    return this.userAgent;
+  }
+  
+  public void setUserAgent(String userAgent)
+  {
+    this.userAgent = userAgent;
+  }
+  
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("ContentURLContainer [");
+    if (this.fileType !is null) {
+      builder.append("fileType=").append(this.fileType).append(", ");
     }
-
-    public MediaFileType getFileType()
-    {
-        return fileType;
+    if (this.contentUrl !is null) {
+      builder.append("contentUrl=").append(this.contentUrl).append(", ");
     }
-
-    public void setContentUrl(String contentUrl) {
-        this.contentUrl = contentUrl;
+    if (this.thumbnailUrl !is null) {
+      builder.append("thumbnailUrl=").append(this.thumbnailUrl).append(", ");
     }
-
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    if (this.expiresOn !is null) {
+      builder.append("expiresOn=").append(this.expiresOn).append(", ");
     }
-
-    public void setFileType(MediaFileType fileType) {
-        this.fileType = fileType;
+    builder.append("expiresImmediately=").append(this.expiresImmediately).append(", ");
+    if (this.cacheKey !is null) {
+      builder.append("cacheKey=").append(this.cacheKey).append(", ");
     }
-
-    public Date getExpiresOn() {
-        return expiresOn;
+    builder.append("live=").append(this.live).append(", ");
+    if (this.userAgent !is null) {
+      builder.append("userAgent=").append(this.userAgent);
     }
-
-    public void setExpiresOn(Date expiresIn) {
-        expiresOn = expiresIn;
-    }
-
-    public bool isExpiresImmediately() {
-        return expiresImmediately;
-    }
-
-    public void setExpiresImmediately(bool expiresImmediately) {
-        this.expiresImmediately = expiresImmediately;
-    }
-
-    public String getCacheKey() {
-        return cacheKey;
-    }
-
-    public void setCacheKey(String cacheKey) {
-        this.cacheKey = cacheKey;
-    }
-
-    public bool isLive() {
-        return live;
-    }
-
-    public void setLive(bool live) {
-        this.live = live;
-    }
-
-    public String getUserAgent() {
-        return userAgent;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
-
-    override public String toString()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.append("ContentURLContainer [");
-        if (fileType !is null)
-            builder.append("fileType=").append(fileType).append(", ");
-        if (contentUrl !is null)
-            builder.append("contentUrl=").append(contentUrl).append(", ");
-        if (thumbnailUrl !is null)
-            builder.append("thumbnailUrl=").append(thumbnailUrl).append(", ");
-        if (expiresOn !is null)
-            builder.append("expiresOn=").append(expiresOn).append(", ");
-        builder.append("expiresImmediately=").append(expiresImmediately).append(", ");
-        if (cacheKey !is null)
-            builder.append("cacheKey=").append(cacheKey).append(", ");
-        builder.append("live=").append(live).append(", ");
-        if (userAgent !is null)
-            builder.append("userAgent=").append(userAgent);
-        builder.append("]");
-        return builder.toString();
-    }
+    builder.append("]");
+    return builder.toString();
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.online.ContentURLContainer
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.online.ContentURLContainer
+ * JD-Core Version:    0.7.0.1
+ */

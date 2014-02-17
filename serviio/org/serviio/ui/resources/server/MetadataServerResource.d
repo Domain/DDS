@@ -1,6 +1,5 @@
 module org.serviio.ui.resources.server.MetadataServerResource;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import org.serviio.config.Configuration;
@@ -16,139 +15,140 @@ import org.serviio.ui.representation.MetadataRepresentation;
 import org.serviio.ui.resources.MetadataResource;
 import org.serviio.util.ServiioThreadFactory;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class MetadataServerResource : AbstractServerResource , MetadataResource
+public class MetadataServerResource
+  : AbstractServerResource
+  , MetadataResource
 {
-    private static Logger log;
-    private static const String DESCRIPTIVE_METADATA_EXTRACTOR_NONE = "NONE";
-
-    static this()
+  private static immutable String DESCRIPTIVE_METADATA_EXTRACTOR_NONE = "NONE";
+  
+  public MetadataRepresentation load()
+  {
+    MetadataRepresentation rep = new MetadataRepresentation();
+    initAudioExtractors(rep);
+    initVideoExtractors(rep);
+    rep.setVideoOnlineArtExtractorEnabled(Configuration.isRetrieveArtFromOnlineSources());
+    rep.setVideoGenerateLocalThumbnailEnabled(Configuration.isGenerateLocalThumbnailForVideos());
+    rep.setImageGenerateLocalThumbnailEnabled(Configuration.isGenerateLocalThumbnailForImages());
+    rep.setMetadataLanguage(Configuration.getMetadataPreferredLanguage());
+    rep.setRetrieveOriginalTitle(Configuration.isMetadataUseOriginalTitle());
+    return rep;
+  }
+  
+  public ResultRepresentation save(MetadataRepresentation representation)
+  {
+    List!(ExtractorType) newVideoExtractors = createNewVideoExtractors(representation);
+    bool audioExtractorsUpdated = MediaService.updateMetadataExtractorConfigs(createNewAudioExtractors(representation), MediaFileType.AUDIO);
+    bool videoExtractorsUpdated = MediaService.updateMetadataExtractorConfigs(newVideoExtractors, MediaFileType.VIDEO);
+    bool imageExtractorsUpdated = false;
+    if ((newVideoExtractors.contains(ExtractorType.ONLINE_VIDEO_SOURCES)) && (Configuration.isRetrieveArtFromOnlineSources() != representation.isVideoOnlineArtExtractorEnabled()))
     {
-        log = LoggerFactory.getLogger!(MetadataServerResource)();
+      Configuration.setRetrieveArtFromOnlineSources(representation.isVideoOnlineArtExtractorEnabled());
+      videoExtractorsUpdated = true;
     }
-
-    public MetadataRepresentation load()
+    if (Configuration.isGenerateLocalThumbnailForVideos() != representation.isVideoGenerateLocalThumbnailEnabled())
     {
-        MetadataRepresentation rep = new MetadataRepresentation();
-        initAudioExtractors(rep);
-        initVideoExtractors(rep);
-        rep.setVideoOnlineArtExtractorEnabled(Configuration.isRetrieveArtFromOnlineSources());
-        rep.setVideoGenerateLocalThumbnailEnabled(Configuration.isGenerateLocalThumbnailForVideos());
-        rep.setImageGenerateLocalThumbnailEnabled(Configuration.isGenerateLocalThumbnailForImages());
-        rep.setMetadataLanguage(Configuration.getMetadataPreferredLanguage());
-        rep.setRetrieveOriginalTitle(Configuration.isMetadataUseOriginalTitle());
-        return rep;
+      Configuration.setGenerateLocalThumbnailForVideos(representation.isVideoGenerateLocalThumbnailEnabled());
+      videoExtractorsUpdated = true;
     }
-
-    public ResultRepresentation save(MetadataRepresentation representation)
+    if (Configuration.isGenerateLocalThumbnailForImages() != representation.isImageGenerateLocalThumbnailEnabled())
     {
-        List!(ExtractorType) newVideoExtractors = createNewVideoExtractors(representation);
-        bool audioExtractorsUpdated = MediaService.updateMetadataExtractorConfigs(createNewAudioExtractors(representation), MediaFileType.AUDIO);
-        bool videoExtractorsUpdated = MediaService.updateMetadataExtractorConfigs(newVideoExtractors, MediaFileType.VIDEO);
-        bool imageExtractorsUpdated = false;
-
-        if ((newVideoExtractors.contains(ExtractorType.ONLINE_VIDEO_SOURCES)) && (Configuration.isRetrieveArtFromOnlineSources() != representation.isVideoOnlineArtExtractorEnabled()))
+      Configuration.setGenerateLocalThumbnailForImages(representation.isImageGenerateLocalThumbnailEnabled());
+      imageExtractorsUpdated = true;
+    }
+    Configuration.setMetadataPreferredLanguage(representation.getMetadataLanguage());
+    Configuration.setMetadataUseOriginalTitle(representation.isRetrieveOriginalTitle());
+    if ((audioExtractorsUpdated) || (videoExtractorsUpdated) || (imageExtractorsUpdated))
+    {
+      final bool vu = videoExtractorsUpdated;
+      final bool au = audioExtractorsUpdated;
+      final bool iu = imageExtractorsUpdated;
+      ServiioThreadFactory.getInstance().newThread(new class() Runnable {
+        public void run()
         {
-            Configuration.setRetrieveArtFromOnlineSources(representation.isVideoOnlineArtExtractorEnabled());
-            videoExtractorsUpdated = true;
+          MetadataExtractorFactory.getInstance().configure();
+          
+
+          LibraryManager.getInstance().pauseUpdates();
+          if (au) {
+            MediaService.markMediaItemsAsDirty(MediaFileType.AUDIO);
+          }
+          if (vu) {
+            MediaService.markMediaItemsAsDirty(MediaFileType.VIDEO);
+          }
+          if (iu) {
+            MediaService.markMediaItemsAsDirty(MediaFileType.IMAGE);
+          }
+          LibraryManager.getInstance().resumeUpdates();
         }
-
-        if (Configuration.isGenerateLocalThumbnailForVideos() != representation.isVideoGenerateLocalThumbnailEnabled()) {
-            Configuration.setGenerateLocalThumbnailForVideos(representation.isVideoGenerateLocalThumbnailEnabled());
-            videoExtractorsUpdated = true;
-        }
-
-        if (Configuration.isGenerateLocalThumbnailForImages() != representation.isImageGenerateLocalThumbnailEnabled()) {
-            Configuration.setGenerateLocalThumbnailForImages(representation.isImageGenerateLocalThumbnailEnabled());
-            imageExtractorsUpdated = true;
-        }
-
-        Configuration.setMetadataPreferredLanguage(representation.getMetadataLanguage());
-        Configuration.setMetadataUseOriginalTitle(representation.isRetrieveOriginalTitle());
-
-        if ((audioExtractorsUpdated) || (videoExtractorsUpdated) || (imageExtractorsUpdated)) {
-            immutable bool vu = videoExtractorsUpdated;
-            immutable bool au = audioExtractorsUpdated;
-            immutable bool iu = imageExtractorsUpdated;
-            ServiioThreadFactory.getInstance().newThread(new class() Runnable {
-                public void run() {
-                    MetadataExtractorFactory.getInstance().configure();
-
-                    LibraryManager.getInstance().pauseUpdates();
-
-                    if (au) {
-                        MediaService.markMediaItemsAsDirty(MediaFileType.AUDIO);
-                    }
-                    if (vu) {
-                        MediaService.markMediaItemsAsDirty(MediaFileType.VIDEO);
-                    }
-                    if (iu) {
-                        MediaService.markMediaItemsAsDirty(MediaFileType.IMAGE);
-                    }
-
-                    LibraryManager.getInstance().resumeUpdates();
-                }
-            }).start();
-        }
-
-        return responseOk();
+      }).start();
     }
-
-    private void initAudioExtractors(MetadataRepresentation representation)
-    {
-        List!(MetadataExtractorConfig) configs = MediaService.getMetadataExtractorConfigs(MediaFileType.AUDIO);
-        foreach (MetadataExtractorConfig config ; configs)
-            if (config.getExtractorType() == ExtractorType.COVER_IMAGE_IN_FOLDER)
-                representation.setAudioLocalArtExtractorEnabled(true);
+    return responseOk();
+  }
+  
+  private void initAudioExtractors(MetadataRepresentation representation)
+  {
+    List!(MetadataExtractorConfig) configs = MediaService.getMetadataExtractorConfigs(MediaFileType.AUDIO);
+    foreach (MetadataExtractorConfig config ; configs) {
+      if (config.getExtractorType() == ExtractorType.COVER_IMAGE_IN_FOLDER) {
+        representation.setAudioLocalArtExtractorEnabled(true);
+      }
     }
-
-    private void initVideoExtractors(MetadataRepresentation representation)
-    {
-        List!(MetadataExtractorConfig) configs = MediaService.getMetadataExtractorConfigs(MediaFileType.VIDEO);
-        bool descriptiveMetadataExtractorSelected = false;
-        foreach (MetadataExtractorConfig config ; configs) {
-            if (config.getExtractorType() == ExtractorType.COVER_IMAGE_IN_FOLDER) {
-                representation.setVideoLocalArtExtractorEnabled(true);
-            } else if (config.getExtractorType().isDescriptiveMetadataExtractor()) {
-                representation.setDescriptiveMetadataExtractor(config.getExtractorType().toString());
-                descriptiveMetadataExtractorSelected = true;
-            }
-        }
-        if (!descriptiveMetadataExtractorSelected)
-            representation.setDescriptiveMetadataExtractor(DESCRIPTIVE_METADATA_EXTRACTOR_NONE);
+  }
+  
+  private void initVideoExtractors(MetadataRepresentation representation)
+  {
+    List!(MetadataExtractorConfig) configs = MediaService.getMetadataExtractorConfigs(MediaFileType.VIDEO);
+    bool descriptiveMetadataExtractorSelected = false;
+    foreach (MetadataExtractorConfig config ; configs) {
+      if (config.getExtractorType() == ExtractorType.COVER_IMAGE_IN_FOLDER)
+      {
+        representation.setVideoLocalArtExtractorEnabled(true);
+      }
+      else if (config.getExtractorType().isDescriptiveMetadataExtractor())
+      {
+        representation.setDescriptiveMetadataExtractor(config.getExtractorType().toString());
+        descriptiveMetadataExtractorSelected = true;
+      }
     }
-
-    private List!(ExtractorType) createNewAudioExtractors(MetadataRepresentation rep)
-    {
-        List!(ExtractorType) configs = new ArrayList!(ExtractorType)();
-        if (rep.isAudioLocalArtExtractorEnabled()) {
-            configs.add(ExtractorType.COVER_IMAGE_IN_FOLDER);
-        }
-        return configs;
+    if (!descriptiveMetadataExtractorSelected) {
+      representation.setDescriptiveMetadataExtractor("NONE");
     }
-
-    private List!(ExtractorType) createNewVideoExtractors(MetadataRepresentation rep)
-    {
-        List!(ExtractorType) configs = new ArrayList!(ExtractorType)();
-        if (rep.isVideoLocalArtExtractorEnabled()) {
-            configs.add(ExtractorType.COVER_IMAGE_IN_FOLDER);
-        }
-        String descriptiveMDExtractor = rep.getDescriptiveMetadataExtractor();
-        if (!descriptiveMDExtractor.equals("NONE")) {
-            try {
-                ExtractorType et = ExtractorType.valueOf(descriptiveMDExtractor);
-                configs.add(et);
-            }
-            catch (Exception e) {
-                log.warn(String_format("Unrecognised extractor type '%s', using NONE", cast(Object[])[ descriptiveMDExtractor ]));
-            }
-        }
-        return configs;
+  }
+  
+  private List!(ExtractorType) createNewAudioExtractors(MetadataRepresentation rep)
+  {
+    List!(ExtractorType) configs = new ArrayList();
+    if (rep.isAudioLocalArtExtractorEnabled()) {
+      configs.add(ExtractorType.COVER_IMAGE_IN_FOLDER);
     }
+    return configs;
+  }
+  
+  private List!(ExtractorType) createNewVideoExtractors(MetadataRepresentation rep)
+  {
+    List!(ExtractorType) configs = new ArrayList();
+    if (rep.isVideoLocalArtExtractorEnabled()) {
+      configs.add(ExtractorType.COVER_IMAGE_IN_FOLDER);
+    }
+    String descriptiveMDExtractor = rep.getDescriptiveMetadataExtractor();
+    if (!descriptiveMDExtractor.equals("NONE")) {
+      try
+      {
+        ExtractorType et = ExtractorType.valueOf(descriptiveMDExtractor);
+        configs.add(et);
+      }
+      catch (Exception e)
+      {
+        this.log.warn(String.format("Unrecognised extractor type '%s', using NONE", cast(Object[])[ descriptiveMDExtractor ]));
+      }
+    }
+    return configs;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.ui.resources.server.MetadataServerResource
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.ui.resources.server.MetadataServerResource
+ * JD-Core Version:    0.7.0.1
+ */

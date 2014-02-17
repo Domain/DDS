@@ -7,11 +7,12 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LicenseUploadResource
 {
-    //@Put("txt:xml|txt:json")
-    public abstract ResultRepresentation save(InputRepresentation paramInputRepresentation);
+  @Put("txt:xml|txt:json")
+  public abstract ResultRepresentation save(InputRepresentation paramInputRepresentation);
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.LicenseUploadResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

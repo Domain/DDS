@@ -6,11 +6,12 @@ import org.restlet.resource.Get;
 
 public abstract interface CDSRetrieveMediaResource
 {
-    //@Get("xml|json")
-    public abstract StreamRepresentation deliver();
+  @Get("xml|json")
+  public abstract StreamRepresentation deliver();
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.CDSRetrieveMediaResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

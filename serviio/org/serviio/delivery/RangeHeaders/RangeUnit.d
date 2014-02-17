@@ -1,5 +1,5 @@
 /// Generate by tools
-module RangeUnit;
+module org.serviio.delivery.RangeHeaders.RangeUnit;
 
 import java.lang.exceptions;
 

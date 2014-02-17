@@ -2,10 +2,13 @@ module org.serviio.profile.H264LevelCheckType;
 
 public enum H264LevelCheckType
 {
-  HEADER, FILE_ATTRIBUTES, ANY
+  HEADER,  FILE_ATTRIBUTES,  ANY;
+  
+  private this() {}
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.profile.H264LevelCheckType
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

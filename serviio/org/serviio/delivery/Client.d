@@ -1,87 +1,102 @@
 module org.serviio.delivery.Client;
 
-import java.lang.String;
-import java.net.InetAddress;
 import org.serviio.profile.Profile;
 
 public class Client
 {
-    private InetAddress ipAddress;
-    private Profile rendererProfile;
-    private bool expectsClosedConnection = false;
-
-    private bool supportsRandomTimeSeek = false;
-
-    public this(InetAddress ipAddress, Profile rendererProfile)
+  private immutable String clientIdentifier;
+  private final Profile rendererProfile;
+  private final HostInfo hostInfo;
+  private bool expectsClosedConnection = false;
+  private bool supportsRandomTimeSeek = false;
+  
+  public this(String clientIdentifier, Profile rendererProfile, HostInfo hostInfo)
+  {
+    this.clientIdentifier = clientIdentifier;
+    this.rendererProfile = rendererProfile;
+    this.hostInfo = hostInfo;
+  }
+  
+  public Profile getRendererProfile()
+  {
+    return this.rendererProfile;
+  }
+  
+  public bool isExpectsClosedConnection()
+  {
+    return this.expectsClosedConnection;
+  }
+  
+  public void setExpectsClosedConnection(bool expectsClosedConnection)
+  {
+    this.expectsClosedConnection = expectsClosedConnection;
+  }
+  
+  public bool isSupportsRandomTimeSeek()
+  {
+    return this.supportsRandomTimeSeek;
+  }
+  
+  public void setSupportsRandomTimeSeek(bool supportsRandomTimeSeek)
+  {
+    this.supportsRandomTimeSeek = supportsRandomTimeSeek;
+  }
+  
+  public HostInfo getHostInfo()
+  {
+    return this.hostInfo;
+  }
+  
+  public override hash_t toHash()
+  {
+    int prime = 31;
+    int result = 1;
+    result = 31 * result + (this.clientIdentifier is null ? 0 : this.clientIdentifier.hashCode());
+    result = 31 * result + (this.rendererProfile is null ? 0 : this.rendererProfile.hashCode());
+    return result;
+  }
+  
+  public override equals_t opEquals(Object obj)
+  {
+    if (this == obj) {
+      return true;
+    }
+    if (obj is null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    Client other = cast(Client)obj;
+    if (this.clientIdentifier is null)
     {
-        this.ipAddress = ipAddress;
-        this.rendererProfile = rendererProfile;
+      if (other.clientIdentifier !is null) {
+        return false;
+      }
     }
-
-    public InetAddress getIpAddress()
+    else if (!this.clientIdentifier.equals(other.clientIdentifier)) {
+      return false;
+    }
+    if (this.rendererProfile is null)
     {
-        return ipAddress;
+      if (other.rendererProfile !is null) {
+        return false;
+      }
     }
-
-    public Profile getRendererProfile() {
-        return rendererProfile;
+    else if (!this.rendererProfile.equals(other.rendererProfile)) {
+      return false;
     }
-
-    public bool isExpectsClosedConnection() {
-        return expectsClosedConnection;
-    }
-
-    public void setExpectsClosedConnection(bool expectsClosedConnection) {
-        this.expectsClosedConnection = expectsClosedConnection;
-    }
-
-    public bool isSupportsRandomTimeSeek()
-    {
-        return supportsRandomTimeSeek;
-    }
-
-    public void setSupportsRandomTimeSeek(bool supportsRandomTimeSeek) {
-        this.supportsRandomTimeSeek = supportsRandomTimeSeek;
-    }
-
-    public override hash_t toHash()
-    {
-        int prime = 31;
-        int result = 1;
-        result = prime * result + (ipAddress is null ? 0 : ipAddress.toHash()/*hashCode()*/);
-        result = prime * result + (rendererProfile is null ? 0 : rendererProfile.toHash()/*hashCode()*/);
-        return result;
-    }
-
-    public override equals_t opEquals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj is null)
-            return false;
-        //if (getClass() != obj.getClass())
-        //    return false;
-        Client other = cast(Client)obj;
-        if (ipAddress is null) {
-            if (other.ipAddress !is null)
-                return false;
-        } else if (!ipAddress.opEquals(other.ipAddress))
-            return false;
-        if (rendererProfile is null) {
-            if (other.rendererProfile !is null)
-                return false;
-        } else if (!rendererProfile.opEquals(other.rendererProfile))
-            return false;
-        return true;
-    }
-
-    override public String toString()
-    {
-        return String_format("IPAddress=%s, Profile=%s", cast(Object[])[ ipAddress.toString(), rendererProfile.toString() ]);
-    }
+    return true;
+  }
+  
+  public String toString()
+  {
+    return String.format("Identifier=%s, Profile=%s", cast(Object[])[ this.clientIdentifier, this.rendererProfile ]);
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.delivery.Client
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.delivery.Client
+ * JD-Core Version:    0.7.0.1
+ */

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="unqualified">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
 
 
 	<xsd:complexType name="ProfilesType">
@@ -35,15 +34,18 @@
 			<xsd:element name="H264LevelCheck" type="H264LevelCheckType" maxOccurs="1" minOccurs="0"/>
 			<xsd:element name="Transcoding" type="TranscodingType" maxOccurs="1" minOccurs="0"/>
 			<xsd:element name="OnlineTranscoding" type="OnlineTranscodingType" maxOccurs="1" minOccurs="0"/>
+			<xsd:element name="HardSubsTranscoding" type="HardSubsTranscodingType" maxOccurs="1" minOccurs="0"/>
 			<xsd:element name="AlternativeQualities" type="QualitiesType" maxOccurs="1" minOccurs="0"/>
 			<xsd:element name="AutomaticImageRotation" type="xsd:boolean" maxOccurs="1" minOccurs="0" nillable="false"/>
+			<xsd:element name="AllowedImageResolutions" type="AvailableImageResolutionsType" maxOccurs="1" minOccurs="0"/>
 			<xsd:element name="LimitImageResolution" type="xsd:boolean" maxOccurs="1" minOccurs="0" nillable="false"/>
-			<xsd:element name="SubtitlesMimeType" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+			<xsd:element name="Subtitles" type="SubtitlesType" maxOccurs="1" minOccurs="0"/>
+			<xsd:element name="ThumbnailsResolution" type="thumbnailResolutionType" maxOccurs="1" minOccurs="0" nillable="false"/>
 		</xsd:all>
 		<xsd:attribute name="id" use="required">
 			<xsd:simpleType>
 				<xsd:restriction base="xsd:string">
-					<xsd:maxLength value="10" />
+					<xsd:maxLength value="20" />
 				</xsd:restriction>
 			</xsd:simpleType>
 		</xsd:attribute>
@@ -66,7 +68,8 @@
 	<xsd:complexType name="QualityType">
 		<xsd:all>
 			<xsd:element name="Transcoding" type="TranscodingType" maxOccurs="1" minOccurs="0"/>
-			<xsd:element name="OnlineTranscoding" type="OnlineTranscodingType" maxOccurs="1" minOccurs="0"/>		
+			<xsd:element name="OnlineTranscoding" type="OnlineTranscodingType" maxOccurs="1" minOccurs="0"/>	
+			<xsd:element name="HardSubsTranscoding" type="HardSubsTranscodingType" maxOccurs="1" minOccurs="0"/>
 		</xsd:all>
 		<xsd:attribute name="type" type="qualityTypeEnumType" use="required"/>
 	</xsd:complexType>
@@ -110,6 +113,12 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
+	<xsd:complexType name="HardSubsTranscodingType">
+		<xsd:sequence>
+			<xsd:element name="Video" type="HardSubsVideoTranscodingType" maxOccurs="1" minOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
 	<xsd:complexType name="OnlineTranscodingType">
 		<xsd:sequence>
 			<xsd:element name="Video" type="OnlineVideoTranscodingType" maxOccurs="unbounded" minOccurs="0"/>
@@ -135,6 +144,12 @@
 		<xsd:attribute name="forceVTranscoding" type="xsd:boolean"/>
 		<xsd:attribute name="forceStereo" type="xsd:boolean"/>
 		<xsd:attribute name="DAR" type="darEnumType"/>		
+	</xsd:complexType>
+	
+	<xsd:complexType name="HardSubsVideoTranscodingType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractVideoTranscodingType" />
+		</xsd:complexContent>	
 	</xsd:complexType>
 	
 	<xsd:complexType name="LocalVideoTranscodingType">
@@ -188,7 +203,7 @@
 		</xsd:sequence>		
 		<xsd:attribute name="forceInheritance" type="xsd:boolean"/>
 	</xsd:complexType>
-	
+		
 	<xsd:complexType name="VideoTranscodingMatcherType">
 		<xsd:attribute name="container" type="containerEnumType" use="required"/>
 		<xsd:attribute name="vCodec" type="videoCodecEnumType" use="optional"/>
@@ -235,6 +250,7 @@
 	
 	<xsd:simpleType name="h264ProfileEnumType">
 		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="c_baseline"/>
 			<xsd:enumeration value="baseline"/>
 			<xsd:enumeration value="main"/>
 			<xsd:enumeration value="extended"/>
@@ -288,13 +304,17 @@
 			<xsd:enumeration value="mp4"/>
 			<xsd:enumeration value="asf"/>
 			<xsd:enumeration value="mp3"/>
+			<xsd:enumeration value="mp2"/>
 			<xsd:enumeration value="lpcm"/>
 			<xsd:enumeration value="flac"/>
 			<xsd:enumeration value="ogg"/>
 			<xsd:enumeration value="flv"/>
 			<xsd:enumeration value="rtp"/>
 			<xsd:enumeration value="rtsp"/>
-			<xsd:enumeration value="adts"/>				
+			<xsd:enumeration value="adts"/>	
+			<xsd:enumeration value="wavpack"/>	
+			<xsd:enumeration value="mpc"/>
+			<xsd:enumeration value="ape"/>			
 		</xsd:restriction>
 	</xsd:simpleType>
 
@@ -306,6 +326,7 @@
 			<xsd:enumeration value="mpegts"/>
 			<xsd:enumeration value="m2ts"/>
 			<xsd:enumeration value="flv"/>
+			<xsd:enumeration value="applehttp"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
@@ -376,6 +397,7 @@
 			<xsd:enumeration value="mpeg2video"/>
 			<xsd:enumeration value="wmv2"/>
 			<xsd:enumeration value="flv"/>
+			<xsd:enumeration value="h264"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
@@ -409,5 +431,41 @@
     		<xsd:any minOccurs="1" maxOccurs="1" processContents="skip"/>
     	</xsd:sequence>
     </xsd:complexType>
+    
+    <xsd:complexType name="SubtitlesType">
+		<xsd:all>
+			<xsd:element name="SoftSubs" type="SubtitlesSoftSubsType" minOccurs="0"/>
+			<xsd:element name="HardSubs" type="SubtitlesHardSubsType" minOccurs="0"/>
+		</xsd:all>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SubtitlesSoftSubsType">
+		<xsd:attribute name="mime-type" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SubtitlesHardSubsType">
+		<xsd:sequence>
+    		<xsd:element name="RequiredFor" type="hardSubsRequiredForType" maxOccurs="unbounded" minOccurs="0" />    		
+    	</xsd:sequence>
+    	<xsd:attribute name="supported" type="xsd:boolean" use="optional" default="true"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="hardSubsRequiredForType">
+		<xsd:attribute name="container" type="containerEnumType" use="required" />
+	</xsd:complexType>
+	
+	<xsd:simpleType name="thumbnailResolutionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DLNA"/>
+			<xsd:enumeration value="HD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="AvailableImageResolutionsType">
+        <xsd:attribute name="large" type="xsd:string" use="required" />
+        <xsd:attribute name="medium" type="xsd:string" use="required" />
+        <xsd:attribute name="small" type="xsd:string" use="required" />
+    </xsd:complexType>
+	
 
 </xsd:schema>

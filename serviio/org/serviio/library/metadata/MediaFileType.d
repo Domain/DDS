@@ -7,156 +7,65 @@ import org.serviio.util.CollectionUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 
-import java.lang.String;
-
-enum MediaFileType
+public enum MediaFileType
 {
-    IMAGE, 
-    VIDEO, 
-    AUDIO,
-}
-
-public String[] supportedFileExtensions(MediaFileType mediaFileType)
-{
-    switch (mediaFileType)
+  IMAGE,  VIDEO,  AUDIO;
+  
+  private this() {}
+  
+  public abstract String[] supportedFileExtensions();
+  
+  public static MediaFileType findMediaFileTypeByExtension(String extension)
+  {
+    for (MediaFileType mediaFileType : ) {
+      foreach (String supportedExtension ; mediaFileType.supportedFileExtensions()) {
+        if (extension.equalsIgnoreCase(supportedExtension)) {
+          return mediaFileType;
+        }
+      }
+    }
+    return null;
+  }
+  
+  public static MediaFileType findMediaFileTypeByMimeType(String mimeType)
+  {
+    if (ObjectValidator.isNotEmpty(mimeType))
     {
-        case IMAGE:
-            return cast(String[])[ "jpg", "jpeg", "png", "gif", "arw", "cr2", "crw", "dng", "raf", "raw", "rw2", "mrw", "nef", "nrw", "pef", "srf", "orf" ]; 
-
-        case VIDEO:
-            return cast(String[])[ "mpg", "mpeg", "vob", "avi", "mp4", "m4v", "ts", "wmv", "asf", "mkv", "divx", "m2ts", "mts", "mov", "mod", "tp", "trp", "vdr", "flv", "f4v", "dvr", "dvr-ms", "wtv", "ogv", "ogm", "3gp", "rm", "rmvb" ]; 
-
-        case AUDIO:
-            return cast(String[])[ "mp3", "wma", "m4a", "flac", "ogg", "oga" ];
+      String mimeTypeLC = StringUtils.localeSafeToLowercase(mimeType);
+      if (mimeTypeLC.startsWith("audio")) {
+        return AUDIO;
+      }
+      if (mimeTypeLC.startsWith("image")) {
+        return IMAGE;
+      }
+      if (mimeTypeLC.startsWith("video")) {
+        return VIDEO;
+      }
     }
     return null;
-}
-
-public MediaFileType findMediaFileTypeByExtension(String extension)
-{
-    foreach (MediaFileType mediaFileType ; values()) {
-        foreach (String supportedExtension ; mediaFileType.supportedFileExtensions()) {
-            if (extension.equalsIgnoreCase(supportedExtension)) {
-                return mediaFileType;
-            }
-        }
-    }
-    return null;
-}
-
-public MediaFileType findMediaFileTypeByMimeType(String mimeType)
-{
-    if (ObjectValidator.isNotEmpty(mimeType)) {
-        String mimeTypeLC = StringUtils.localeSafeToLowercase(mimeType);
-        if (mimeTypeLC.startsWith("audio"))
-            return AUDIO;
-        if (mimeTypeLC.startsWith("image"))
-            return IMAGE;
-        if (mimeTypeLC.startsWith("video")) {
-            return VIDEO;
-        }
-    }
-    return null;
-}
-
-public Set!(MediaFileType) parseMediaFileTypesFromString(String fileTypesCSV) {
-    Set!(MediaFileType) result = new HashSet!(MediaFileType)();
-    if (ObjectValidator.isNotEmpty(fileTypesCSV)) {
-        String[] fileTypes = fileTypesCSV.split(",");
-        foreach (String fileType ; fileTypes) {
-            result.add(valueOf(StringUtils.localeSafeToUppercase(fileType.trim())));
-        }
+  }
+  
+  public static Set!(MediaFileType) parseMediaFileTypesFromString(String fileTypesCSV)
+  {
+    Set!(MediaFileType) result = new HashSet();
+    if (ObjectValidator.isNotEmpty(fileTypesCSV))
+    {
+      String[] fileTypes = fileTypesCSV.split(",");
+      foreach (String fileType ; fileTypes) {
+        result.add(valueOf(StringUtils.localeSafeToUppercase(fileType.trim())));
+      }
     }
     return result;
+  }
+  
+  public static String parseMediaFileTypesToString(Set!(MediaFileType) fileTypes)
+  {
+    return CollectionUtils.listToCSV(new ArrayList(fileTypes), ",", true);
+  }
 }
 
-public String parseMediaFileTypesToString(Set!(MediaFileType) fileTypes) {
-    return CollectionUtils.listToCSV(new ArrayList!(MediaFileType)(fileTypes), ",", true);
-}
 
-//public struct MediaFileType
-//{
-//    enum MediaFileTypeEnum
-//    {
-//        IMAGE, 
-//        VIDEO, 
-//        AUDIO,
-//    }
-//
-//    MediaFileTypeEnum mediaFileType;
-//    alias mediaFileType this;
-//
-//    public this(MediaFileTypeEnum type)
-//    {
-//        this.mediaFileType = type;
-//    }
-//
-//    public MediaFileType opAssign(MediaFileTypeEnum type)
-//    {
-//        this.mediaFileType = type;
-//        return this;
-//    }
-//
-//    public String[] supportedFileExtensions()
-//    {
-//        switch (mediaFileType)
-//        {
-//            case IMAGE:
-//                return cast(String[])[ "jpg", "jpeg", "png", "gif", "arw", "cr2", "crw", "dng", "raf", "raw", "rw2", "mrw", "nef", "nrw", "pef", "srf", "orf" ]; 
-//
-//            case VIDEO:
-//                return cast(String[])[ "mpg", "mpeg", "vob", "avi", "mp4", "m4v", "ts", "wmv", "asf", "mkv", "divx", "m2ts", "mts", "mov", "mod", "tp", "trp", "vdr", "flv", "f4v", "dvr", "dvr-ms", "wtv", "ogv", "ogm", "3gp", "rm", "rmvb" ]; 
-//
-//            case AUDIO:
-//                return cast(String[])[ "mp3", "wma", "m4a", "flac", "ogg", "oga" ];
-//        }
-//        return null;
-//    }
-//
-//    public static MediaFileType findMediaFileTypeByExtension(String extension)
-//    {
-//        foreach (MediaFileType mediaFileType ; values()) {
-//            foreach (String supportedExtension ; mediaFileType.supportedFileExtensions()) {
-//                if (extension.equalsIgnoreCase(supportedExtension)) {
-//                    return mediaFileType;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public static MediaFileType findMediaFileTypeByMimeType(String mimeType)
-//    {
-//        if (ObjectValidator.isNotEmpty(mimeType)) {
-//            String mimeTypeLC = StringUtils.localeSafeToLowercase(mimeType);
-//            if (mimeTypeLC.startsWith("audio"))
-//                return AUDIO;
-//            if (mimeTypeLC.startsWith("image"))
-//                return IMAGE;
-//            if (mimeTypeLC.startsWith("video")) {
-//                return VIDEO;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public static Set!(MediaFileType) parseMediaFileTypesFromString(String fileTypesCSV) {
-//        Set!(MediaFileType) result = new HashSet!(MediaFileType)();
-//        if (ObjectValidator.isNotEmpty(fileTypesCSV)) {
-//            String[] fileTypes = fileTypesCSV.split(",");
-//            foreach (String fileType ; fileTypes) {
-//                result.add(valueOf(StringUtils.localeSafeToUppercase(fileType.trim())));
-//            }
-//        }
-//        return result;
-//    }
-//
-//    public static String parseMediaFileTypesToString(Set!(MediaFileType) fileTypes) {
-//        return CollectionUtils.listToCSV(new ArrayList!(MediaFileType)(fileTypes), ",", true);
-//    }
-//}
-
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.metadata.MediaFileType
-* JD-Core Version:    0.6.2
-*/
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.metadata.MediaFileType
+ * JD-Core Version:    0.7.0.1
+ */

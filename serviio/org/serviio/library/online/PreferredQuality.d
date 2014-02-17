@@ -2,10 +2,13 @@ module org.serviio.library.online.PreferredQuality;
 
 public enum PreferredQuality
 {
-    LOW, MEDIUM, HIGH
+  LOW,  MEDIUM,  HIGH;
+  
+  private this() {}
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.online.PreferredQuality
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

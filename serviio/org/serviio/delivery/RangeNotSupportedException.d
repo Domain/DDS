@@ -1,30 +1,30 @@
 module org.serviio.delivery.RangeNotSupportedException;
 
-import java.lang.String;
-
-public class RangeNotSupportedException : Exception
+public class RangeNotSupportedException
+  : Exception
 {
-  private static const long serialVersionUID = -1350679542734185819L;
-
-  public this()
-  {
-  }
-
+  private static final long serialVersionUID = -1350679542734185819L;
+  
+  public this() {}
+  
   public this(String message, Throwable cause)
   {
     super(message, cause);
   }
-
-  public this(String message) {
+  
+  public this(String message)
+  {
     super(message);
   }
-
-  public this(Throwable cause) {
+  
+  public this(Throwable cause)
+  {
     super(cause);
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.delivery.RangeNotSupportedException
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

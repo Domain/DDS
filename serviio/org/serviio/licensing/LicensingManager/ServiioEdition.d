@@ -1,5 +1,5 @@
 /// Generate by tools
-module ServiioEdition;
+module org.serviio.licensing.LicensingManager.ServiioEdition;
 
 import java.lang.exceptions;
 

@@ -7,14 +7,15 @@ import org.serviio.ui.representation.RepositoryRepresentation;
 
 public abstract interface RepositoryResource
 {
-    //@Get("xml|json")
-    public abstract RepositoryRepresentation load();
-
-    //@Put("xml|json")
-    public abstract ResultRepresentation save(RepositoryRepresentation paramRepositoryRepresentation);
+  @Get("xml|json")
+  public abstract RepositoryRepresentation load();
+  
+  @Put("xml|json")
+  public abstract ResultRepresentation save(RepositoryRepresentation paramRepositoryRepresentation);
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.RepositoryResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

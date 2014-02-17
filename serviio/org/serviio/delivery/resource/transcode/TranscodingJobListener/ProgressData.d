@@ -1,5 +1,5 @@
 /// Generate by tools
-module ProgressData;
+module org.serviio.delivery.resource.transcode.TranscodingJobListener.ProgressData;
 
 import java.lang.exceptions;
 

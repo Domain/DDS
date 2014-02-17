@@ -4,7 +4,8 @@ import org.serviio.restlet.AbstractServerResource;
 import org.serviio.restlet.ResultRepresentation;
 import org.serviio.ui.resources.PingResource;
 
-public class PingServerResource : AbstractServerResource
+public class PingServerResource
+  : AbstractServerResource
   , PingResource
 {
   public ResultRepresentation ping()
@@ -13,7 +14,8 @@ public class PingServerResource : AbstractServerResource
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.server.PingServerResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

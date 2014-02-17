@@ -9,15 +9,15 @@ public class ResizeDefinition
   bool darChanged;
   bool sarChangedToSquarePixels;
   bool heightChanged;
-
+  
   public this(int width, int height)
   {
     this.width = width;
     this.height = height;
-    contentWidth = width;
-    contentHeight = height;
+    this.contentWidth = width;
+    this.contentHeight = height;
   }
-
+  
   public this(int width, int height, int contentWidth, int contentHeight, bool darChanged, bool sarChanged, bool heightChanged)
   {
     this.width = makeWidthMultiplyOf2(width);
@@ -25,25 +25,28 @@ public class ResizeDefinition
     this.contentWidth = makeWidthMultiplyOf2(contentWidth);
     this.contentHeight = contentHeight;
     this.darChanged = darChanged;
-    sarChangedToSquarePixels = sarChanged;
+    this.sarChangedToSquarePixels = sarChanged;
     this.heightChanged = heightChanged;
   }
-
-  public bool changed() {
-    return (darChanged) || (sarChangedToSquarePixels) || (heightChanged);
+  
+  public bool changed()
+  {
+    return (this.darChanged) || (this.sarChangedToSquarePixels) || (this.heightChanged);
   }
-
-  public bool physicalDimensionsChanged() {
-    return (heightChanged) || (sarChangedToSquarePixels);
+  
+  public bool physicalDimensionsChanged()
+  {
+    return (this.heightChanged) || (this.sarChangedToSquarePixels);
   }
-
+  
   private int makeWidthMultiplyOf2(int width)
   {
     return (width + 1) / 2 * 2;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.external.ResizeDefinition
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

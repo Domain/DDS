@@ -22,14 +22,14 @@ void generateAllFile(string dir, string prefix)
         {
             auto filename = baseName(entry.name, ".d");
 
-            if (filename != "all")
+            if (filename != "package")
                 files.put("public import " ~ path ~ "." ~ filename ~";\n");
         }
     }
     if (files.data != "")
     {
-        auto f = File("all.d", "w");
-        f.writeln("module " ~ path ~ ".all;\n");
+        auto f = File("package.d", "w");
+        f.writeln("module " ~ path ~ ";\n");
         f.write(files.data);
         f.close();
     }
@@ -45,9 +45,9 @@ void generateMissingFiles(string filename, string base)
         string modName = c[1];
         writeln(modName);
         string modFile = buildPath(base, modName.replace(".", dirSeparator)) ~ ".d";
-        if (!modFile.exists)
+        if (!exists(modFile))
         {
-            if (!dirName(modFile).exists)
+            if (!exists(dirName(modFile)))
                 dirName(modFile).mkdirRecurse();
             auto className = modFile.baseName().stripExtension();
             auto app = appender!string();
@@ -73,7 +73,7 @@ void j2d(string filename, string jdir, string ddir)
     auto rpath = relativePath(filename, jdir);
     auto dname = ddir ~ rpath;
 
-    if (!dirName(dname).exists)
+    if (!exists(dirName(dname)))
         dirName(dname).mkdirRecurse();
 
     if (filename.extension() != ".java")
@@ -85,9 +85,11 @@ void j2d(string filename, string jdir, string ddir)
     auto src = File(filename, "r");
     scope(exit) src.close();
     auto content = appender!string();
+    auto commentR = regex(`^/\*[\s:\d]*\*/ `, "g");
     foreach (line; src.byLine(KeepTerminator.yes))
     {
         auto newLine = line;
+        newLine = std.regex.replace(newLine, commentR, "");
         if (newLine.startsWith("package "))
         {
             newLine = newLine.replace("package ", "module ");
@@ -117,6 +119,9 @@ void j2d(string filename, string jdir, string ddir)
 
     auto hashR = regex(`\bint\b(\s*)hashCode(\s*\()`, "g");
     text = std.regex.replace(text, hashR, "override hash_t$1toHash$2");
+
+    auto stringR = regex(`\bfinal\b(\s*)String(\s*)`, "g");
+    text = std.regex.replace(text, stringR, "immutable String$2");
 
     auto equalsR = regex(`\bbool\b(\s*)equals(\s*\()`, "g");
     text = std.regex.replace(text, equalsR, "override equals_t$1opEquals$2");
@@ -166,8 +171,8 @@ void j2d(string filename, string jdir, string ddir)
     auto questionR = regex(`!\([^\)]*\?[^\)]*\)`, "g");
     text = std.regex.replace(text, questionR, "/*$&*/");
 
-    auto newCallR = regex(`(new\s+[_a-zA-Z][_a-zA-Z0-9]*\((?:[_a-zA-Z0-9\-]*)?\))\.`, "g");
-    text = std.regex.replace(text, newCallR, "($1).");
+    //auto newCallR = regex(`(new\s+[_a-zA-Z][_a-zA-Z0-9]*\((?:[_a-zA-Z0-9\-]*)?\))\.`, "g");
+    //text = std.regex.replace(text, newCallR, "($1).");
 
     auto digitR = regex(`(\d+\.\d+)D`, "g");
     text = std.regex.replace(text, digitR, "$1");

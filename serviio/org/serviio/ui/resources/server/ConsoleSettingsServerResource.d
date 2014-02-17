@@ -6,7 +6,8 @@ import org.serviio.restlet.ResultRepresentation;
 import org.serviio.ui.representation.ConsoleSettingsRepresentation;
 import org.serviio.ui.resources.ConsoleSettingsResource;
 
-public class ConsoleSettingsServerResource : AbstractServerResource
+public class ConsoleSettingsServerResource
+  : AbstractServerResource
   , ConsoleSettingsResource
 {
   public ConsoleSettingsRepresentation load()
@@ -17,24 +18,22 @@ public class ConsoleSettingsServerResource : AbstractServerResource
     rep.setCheckForUpdates(Boolean.valueOf(Configuration.isConsoleCheckForUpdatesEnabled()));
     return rep;
   }
-
+  
   public ResultRepresentation save(ConsoleSettingsRepresentation rep)
   {
     if (rep.getLanguage() !is null) {
       Configuration.setConsolePreferredLanguage(rep.getLanguage());
     }
-
     Configuration.setConsoleSecurityPin(rep.getSecurityPin());
-
     if (rep.getCheckForUpdates() !is null) {
       Configuration.setConsoleCheckForUpdatesEnabled(rep.getCheckForUpdates().boolValue());
     }
-
     return responseOk();
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.server.ConsoleSettingsServerResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

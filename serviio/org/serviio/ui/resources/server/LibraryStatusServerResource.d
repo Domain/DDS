@@ -5,7 +5,8 @@ import org.serviio.restlet.AbstractServerResource;
 import org.serviio.ui.representation.LibraryStatusRepresentation;
 import org.serviio.ui.resources.LibraryStatusResource;
 
-public class LibraryStatusServerResource : AbstractServerResource
+public class LibraryStatusServerResource
+  : AbstractServerResource
   , LibraryStatusResource
 {
   public LibraryStatusRepresentation load()
@@ -20,7 +21,8 @@ public class LibraryStatusServerResource : AbstractServerResource
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.server.LibraryStatusServerResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

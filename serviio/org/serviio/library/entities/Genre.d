@@ -1,29 +1,31 @@
 module org.serviio.library.entities.Genre;
 
-import java.lang.String;
 import org.serviio.db.entities.PersistedEntity;
 
-public class Genre : PersistedEntity
+public class Genre
+  : PersistedEntity
 {
-  public static const int NAME_MAX_LENGTH = 128;
+  public static final int NAME_MAX_LENGTH = 128;
   private String name;
-
+  
   public this(String name)
   {
     this.name = name;
   }
-
+  
   public String getName()
   {
-    return name;
+    return this.name;
   }
-
-  public void setName(String name) {
+  
+  public void setName(String name)
+  {
     this.name = name;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.library.entities.Genre
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

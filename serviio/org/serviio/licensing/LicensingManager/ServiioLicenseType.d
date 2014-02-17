@@ -1,5 +1,5 @@
 /// Generate by tools
-module ServiioLicenseType;
+module org.serviio.licensing.LicensingManager.ServiioLicenseType;
 
 import java.lang.exceptions;
 

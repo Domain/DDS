@@ -1,24 +1,39 @@
 module org.serviio.upnp.discovery.Multicaster;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Set;
+import java.io.IOException;
+import java.net.InetAddress;
 import org.serviio.upnp.Device;
-import org.serviio.util.CollectionUtils;
 import org.serviio.util.MultiCastUtils;
+import org.serviio.util.NicIP;
+import org.serviio.util.Tupple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class Multicaster
 {
-  protected Set!(NetworkInterface) getAvailableNICs()
+  protected final Logger log = LoggerFactory.getLogger(getClass());
+  
+  protected synchronized NicIP getBoundNIC()
   {
-    Set!(NetworkInterface) ifaces = MultiCastUtils.findAllAvailableInterfaces();
-    ifaces.add(NetworkInterface.getByInetAddress(Device.getInstance().getBindAddress()));
-    CollectionUtils.removeNulls(ifaces);
-    return ifaces;
+    try
+    {
+      Tupple!(NicIP, Boolean) nicIpResult = MultiCastUtils.findNicIPWithRetry(Device.getInstance().getBindAddress());
+      if ((cast(Boolean)nicIpResult.getValueB()).boolValue()) {
+        DiscoveryManager.instance().restartDiscoveryEngine();
+      }
+      return cast(NicIP)nicIpResult.getValueA();
+    }
+    catch (IOException e)
+    {
+      this.log.warn(String.format("Cannot acquire NIC for current bound IP address %s, will re-acquire new IP", cast(Object[])[ Device.getInstance().getBindAddress().getHostAddress() ]));
+      DiscoveryManager.instance().restartDiscoveryEngine();
+    }
+    return MultiCastUtils.findNicIP(Device.getInstance().getBindAddress());
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.discovery.Multicaster
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

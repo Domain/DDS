@@ -2,21 +2,27 @@ module org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
 
 public class SSDPMessageBuilderFactory
 {
   private static SSDPMessageBuilderFactory instance;
   private Map!(SSDPMessageType, SSDPRequestMessageBuilder) builders;
-
+  
+  public static enum SSDPMessageType
+  {
+    ALIVE,  BYEBYE,  SEARCH;
+    
+    private this() {}
+  }
+  
   private this()
   {
-    builders = new HashMap!(SSDPMessageType, SSDPRequestMessageBuilder)(3);
-    builders.put(SSDPMessageType.ALIVE, new DeviceAliveMessageBuilder());
-    builders.put(SSDPMessageType.BYEBYE, new DeviceUnavailableMessageBuilder());
-    builders.put(SSDPMessageType.SEARCH, new RendererSearchMessageBuilder());
+    this.builders = new HashMap(3);
+    this.builders.put(SSDPMessageType.ALIVE, new DeviceAliveMessageBuilder());
+    this.builders.put(SSDPMessageType.BYEBYE, new DeviceUnavailableMessageBuilder());
+    this.builders.put(SSDPMessageType.SEARCH, new RendererSearchMessageBuilder());
   }
-
+  
   public static SSDPMessageBuilderFactory getInstance()
   {
     if (instance is null) {
@@ -24,18 +30,15 @@ public class SSDPMessageBuilderFactory
     }
     return instance;
   }
-
-  public SSDPRequestMessageBuilder getBuilder(SSDPMessageType type) {
-    return cast(SSDPRequestMessageBuilder)builders.get(type);
-  }
-
-  public static enum SSDPMessageType
+  
+  public SSDPRequestMessageBuilder getBuilder(SSDPMessageType type)
   {
-    ALIVE, BYEBYE, SEARCH
+    return cast(SSDPRequestMessageBuilder)this.builders.get(type);
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

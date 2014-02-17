@@ -2,10 +2,13 @@ module org.serviio.upnp.service.contentdirectory.definition.ContainerVisibilityT
 
 public enum ContainerVisibilityType
 {
-  DISPLAYED, CONTENT_DISPLAYED, DISABLED
+  DISPLAYED,  CONTENT_DISPLAYED,  DISABLED;
+  
+  private this() {}
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.service.contentdirectory.definition.ContainerVisibilityType
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

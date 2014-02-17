@@ -1,51 +1,59 @@
 module org.serviio.restlet.AbstractRestfulException;
 
-import java.lang.RuntimeException;
-import java.lang.String;
 import java.util.List;
 
-public class AbstractRestfulException : RuntimeException
+public class AbstractRestfulException
+  : RuntimeException
 {
-    private static const long serialVersionUID = 7485159781915824536L;
-    private int errorCode;
-    private List!(String) parameters;
-
-    public this(int errorCode)
-    {
-        this.errorCode = errorCode;
-    }
-
-    public this(int errorCode, List!(String) parameters) {
-        this(errorCode);
-        this.parameters = parameters;
-    }
-
-    public this(String message, Throwable cause, int errorCode) {
-        super(message, cause);
-        this.errorCode = errorCode;
-    }
-
-    public this(String message, int errorCode)
-    {
-        super(message);
-        this.errorCode = errorCode;
-    }
-
-    public this(Throwable cause, int errorCode) {
-        super(cause);
-        this.errorCode = errorCode;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-    public List!(String) getParameters() {
-        return parameters;
-    }
+  private static final long serialVersionUID = 7485159781915824536L;
+  private int errorCode;
+  private List!(String) parameters;
+  
+  public this(int errorCode)
+  {
+    this(null, null, errorCode, null);
+  }
+  
+  public this(int errorCode, List!(String) parameters)
+  {
+    this(null, null, errorCode, parameters);
+  }
+  
+  public this(String message, Throwable cause, int errorCode, List!(String) parameters)
+  {
+    super(message, cause);
+    this.errorCode = errorCode;
+    this.parameters = parameters;
+  }
+  
+  public this(String message, Throwable cause, int errorCode)
+  {
+    this(message, cause, errorCode, null);
+  }
+  
+  public this(String message, int errorCode)
+  {
+    this(message, null, errorCode, null);
+  }
+  
+  public this(Throwable cause, int errorCode)
+  {
+    this(null, cause, errorCode, null);
+  }
+  
+  public int getErrorCode()
+  {
+    return this.errorCode;
+  }
+  
+  public List!(String) getParameters()
+  {
+    return this.parameters;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.restlet.AbstractRestfulException
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.restlet.AbstractRestfulException
+ * JD-Core Version:    0.7.0.1
+ */

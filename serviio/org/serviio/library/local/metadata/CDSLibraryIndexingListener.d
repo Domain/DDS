@@ -1,16 +1,19 @@
 module org.serviio.library.local.metadata.CDSLibraryIndexingListener;
 
 import org.serviio.library.metadata.AbstractCDSLibraryIndexingListener;
+import org.serviio.upnp.service.contentdirectory.ContentDirectory;
 
-public class CDSLibraryIndexingListener : AbstractCDSLibraryIndexingListener
+public class CDSLibraryIndexingListener
+  : AbstractCDSLibraryIndexingListener
 {
-    override protected void performCDSUpdate()
-    {
-        cds.incrementUpdateID();
-    }
+  protected void performCDSUpdate()
+  {
+    this.cds.incrementUpdateID();
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.local.metadata.CDSLibraryIndexingListener
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.local.metadata.CDSLibraryIndexingListener
+ * JD-Core Version:    0.7.0.1
+ */

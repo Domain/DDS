@@ -1,93 +1,95 @@
 module org.serviio.library.local.metadata.LocalItemMetadata;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import org.serviio.library.local.metadata.extractor.MetadataFile;
 import org.serviio.library.metadata.InvalidMetadataException;
 import org.serviio.library.metadata.ItemMetadata;
 import org.serviio.util.ObjectValidator;
-import org.serviio.library.local.metadata.ImageDescriptor;
 
-public abstract class LocalItemMetadata : ItemMetadata
+public abstract class LocalItemMetadata
+  : ItemMetadata
 {
-    protected long fileSize;
-    protected String filePath;
-    protected List!(MetadataFile) metadataFiles;
-    private ImageDescriptor coverImage;
-
-    public this()
-    {
-        metadataFiles = new ArrayList!(MetadataFile)();
+  protected long fileSize;
+  protected String filePath;
+  protected List!(MetadataFile) metadataFiles = new ArrayList();
+  private ImageDescriptor coverImage;
+  
+  public void merge(LocalItemMetadata additionalMetadata)
+  {
+    if (ObjectValidator.isEmpty(this.title)) {
+      setTitle(additionalMetadata.getTitle());
     }
-
-    public void merge(LocalItemMetadata additionalMetadata)
-    {
-        if (ObjectValidator.isEmpty(title)) {
-            setTitle(additionalMetadata.getTitle());
-        }
-        if (ObjectValidator.isEmpty(author)) {
-            setAuthor(additionalMetadata.getAuthor());
-        }
-        if (date is null) {
-            setDate(additionalMetadata.getDate());
-        }
-        if (fileSize == 0L) {
-            setFileSize(additionalMetadata.getFileSize());
-        }
-        if (ObjectValidator.isEmpty(filePath)) {
-            setFilePath(additionalMetadata.getFilePath());
-        }
-        if (ObjectValidator.isEmpty(description)) {
-            setDescription(additionalMetadata.getDescription());
-        }
-        if (coverImage is null) {
-            setCoverImage(additionalMetadata.getCoverImage());
-        }
-        metadataFiles.addAll(additionalMetadata.getMetadataFiles());
+    if (ObjectValidator.isEmpty(this.author)) {
+      setAuthor(additionalMetadata.getAuthor());
     }
-
-    override public void validateMetadata()
-    {
-        super.validateMetadata();
-        if (fileSize == 0L) {
-            throw new InvalidMetadataException("Filesize is zero.");
-        }
-        if (ObjectValidator.isEmpty(filePath))
-            throw new InvalidMetadataException("Filepath is empty.");
+    if (this.date is null) {
+      setDate(additionalMetadata.getDate());
     }
-
-    public long getFileSize()
-    {
-        return fileSize;
+    if (this.fileSize == 0L) {
+      setFileSize(additionalMetadata.getFileSize());
     }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
+    if (ObjectValidator.isEmpty(this.filePath)) {
+      setFilePath(additionalMetadata.getFilePath());
     }
-
-    public String getFilePath() {
-        return filePath;
+    if (ObjectValidator.isEmpty(this.description)) {
+      setDescription(additionalMetadata.getDescription());
     }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    if (this.coverImage is null) {
+      setCoverImage(additionalMetadata.getCoverImage());
     }
-
-    public List!(MetadataFile) getMetadataFiles() {
-        return metadataFiles;
+    this.metadataFiles.addAll(additionalMetadata.getMetadataFiles());
+  }
+  
+  public void validateMetadata()
+  {
+    super.validateMetadata();
+    if (this.fileSize == 0L) {
+      throw new InvalidMetadataException("Filesize is zero.");
     }
-
-    public ImageDescriptor getCoverImage() {
-        return coverImage;
+    if (ObjectValidator.isEmpty(this.filePath)) {
+      throw new InvalidMetadataException("Filepath is empty.");
     }
-
-    public void setCoverImage(ImageDescriptor coverImage) {
-        this.coverImage = coverImage;
-    }
+  }
+  
+  public long getFileSize()
+  {
+    return this.fileSize;
+  }
+  
+  public void setFileSize(long fileSize)
+  {
+    this.fileSize = fileSize;
+  }
+  
+  public String getFilePath()
+  {
+    return this.filePath;
+  }
+  
+  public void setFilePath(String filePath)
+  {
+    this.filePath = filePath;
+  }
+  
+  public List!(MetadataFile) getMetadataFiles()
+  {
+    return this.metadataFiles;
+  }
+  
+  public ImageDescriptor getCoverImage()
+  {
+    return this.coverImage;
+  }
+  
+  public void setCoverImage(ImageDescriptor coverImage)
+  {
+    this.coverImage = coverImage;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.local.metadata.LocalItemMetadata
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.local.metadata.LocalItemMetadata
+ * JD-Core Version:    0.7.0.1
+ */

@@ -2,49 +2,56 @@ module org.serviio.library.local.metadata.extractor.embedded.h264.AnnexBNALUnitR
 
 import java.io.IOException;
 import java.util.Arrays;
-import org.serviio.library.local.metadata.extractor.embedded.h264.NALUnitReader;
-import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
 
-public class AnnexBNALUnitReader : NALUnitReader
+public class AnnexBNALUnitReader
+  : NALUnitReader
 {
-    private /*final*/ BufferWrapper src;
-
-    public this(BufferWrapper src)
+  private final BufferWrapper src;
+  
+  public this(BufferWrapper src)
+  {
+    this.src = src;
+  }
+  
+  public BufferWrapper nextNALUnit()
+  {
+    if (this.src.remaining() < 5L) {
+      return null;
+    }
+    long start = -1L;
+    do
     {
-        this.src = src;
-    }
-
-    public BufferWrapper nextNALUnit() {
-        if (src.remaining() < 5L) {
-            return null;
+      byte[] marker = new byte[4];
+      if (this.src.remaining() >= 4L)
+      {
+        this.src.read(marker);
+        if (Arrays.equals(cast(byte[])[ 0, 0, 0, 1 ], marker))
+        {
+          if (start == -1L)
+          {
+            start = this.src.position();
+          }
+          else
+          {
+            this.src.position(this.src.position() - 4L);
+            return this.src.getSegment(start, this.src.position() - start);
+          }
         }
-
-        long start = -1L;
-        do {
-            byte[] marker = new byte[4];
-            if (src.remaining() >= 4L) {
-                src.read(marker);
-                if (Arrays.equals(cast(byte[])[ 0, 0, 0, 1 ], marker)) {
-                    if (start == -1L) {
-                        start = src.position();
-                    } else {
-                        src.position(src.position() - 4L);
-                        return src.getSegment(start, src.position() - start);
-                    }
-                }
-                else src.position(src.position() - 3L);
-            }
-            else
-            {
-                return src.getSegment(start, src.size() - start);
-            }
+        else {
+          this.src.position(this.src.position() - 3L);
         }
-        while (src.remaining() > 0L);
-        return src.getSegment(start, src.position());
-    }
+      }
+      else
+      {
+        return this.src.getSegment(start, this.src.size() - start);
+      }
+    } while (this.src.remaining() > 0L);
+    return this.src.getSegment(start, this.src.position());
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.h264.AnnexBNALUnitReader
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.h264.AnnexBNALUnitReader
+ * JD-Core Version:    0.7.0.1
+ */

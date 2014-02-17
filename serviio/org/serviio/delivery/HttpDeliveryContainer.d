@@ -1,7 +1,5 @@
 module org.serviio.delivery.HttpDeliveryContainer;
 
-import java.lang.String;
-import java.lang.Long;
 import java.io.InputStream;
 import java.util.Map;
 import org.apache.http.ProtocolVersion;
@@ -16,12 +14,12 @@ public class HttpDeliveryContainer
   private Long fileSize;
   private TransferMode transferMode;
   private bool transcoded;
-
+  
   public this(Map!(String, Object) responseHeaders)
   {
     this.responseHeaders = responseHeaders;
   }
-
+  
   public this(Map!(String, Object) responseHeaders, InputStream contentStream, bool partialContent, ProtocolVersion requestHttpVersion, TransferMode transferMode, bool transcoded, Long fileSize)
   {
     this.responseHeaders = responseHeaders;
@@ -32,37 +30,45 @@ public class HttpDeliveryContainer
     this.transcoded = transcoded;
     this.transferMode = transferMode;
   }
-
-  public Map!(String, Object) getResponseHeaders() {
-    return responseHeaders;
+  
+  public Map!(String, Object) getResponseHeaders()
+  {
+    return this.responseHeaders;
   }
-
-  public InputStream getContentStream() {
-    return contentStream;
+  
+  public InputStream getContentStream()
+  {
+    return this.contentStream;
   }
-
-  public bool isPartialContent() {
-    return partialContent;
+  
+  public bool isPartialContent()
+  {
+    return this.partialContent;
   }
-
-  public ProtocolVersion getRequestHttpVersion() {
-    return requestHttpVersion;
+  
+  public ProtocolVersion getRequestHttpVersion()
+  {
+    return this.requestHttpVersion;
   }
-
-  public Long getFileSize() {
-    return fileSize;
+  
+  public Long getFileSize()
+  {
+    return this.fileSize;
   }
-
-  public TransferMode getTransferMode() {
-    return transferMode;
+  
+  public TransferMode getTransferMode()
+  {
+    return this.transferMode;
   }
-
-  public bool isTranscoded() {
-    return transcoded;
+  
+  public bool isTranscoded()
+  {
+    return this.transcoded;
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.delivery.HttpDeliveryContainer
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

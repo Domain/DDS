@@ -2,8 +2,6 @@ module org.serviio.library.online.feed.PluginCompilerThread;
 
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyCodeSource;
-import java.lang.Thread;
-import java.lang.String;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -11,9 +9,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.serviio.ApplicationSettings;
-import org.serviio.library.entities.OnlineRepository;
+import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
 import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.library.online.FeedItemUrlExtractor;
 import org.serviio.library.online.OnlineLibraryManager;
@@ -23,134 +22,174 @@ import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PluginCompilerThread : Thread
+public class PluginCompilerThread
+  : Thread
 {
-    private static Logger log;
-    private static const int PLUGIN_COMPILER_CHECK_INTERVAL = 10;
-    private File pluginsFolder;
-    private Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) urlExtractorsp;
-    private Map!(File, Date) seenFilesCache;
-    private GroovyClassLoader gcl;
-    private bool workerRunning;
-    private bool isSleeping = false;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(PluginCompilerThread);
+  private static final int PLUGIN_COMPILER_CHECK_INTERVAL = 10;
+  private File pluginsFolder;
+  protected final Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) urlExtractors = new HashMap();
+  private Map!(File, Date) seenFilesCache = new HashMap();
+  private GroovyClassLoader gcl = new GroovyClassLoader();
+  private bool workerRunning;
+  private bool isSleeping = false;
+  private bool checkPeriodically = checkForPluginsPeriodically();
+  private final CountDownLatch pluginsCompiled;
+  
+  public this(CountDownLatch pluginsCompiled)
+  {
+    this.pluginsFolder = getPluginsDirectoryPath();
+    this.pluginsCompiled = pluginsCompiled;
+  }
+  
+  public void run()
+  {
+    if ((this.pluginsFolder !is null) && (this.pluginsFolder.isDirectory()))
     {
-        log = LoggerFactory.getLogger!(PluginCompilerThread)();
-    }
-
-    public this()
-    {
-        urlExtractors = new HashMap!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType)();
-        seenFilesCache = new HashMap!(File, Date)();
-        gcl = new GroovyClassLoader();
-        pluginsFolder = getPluginsDirectoryPath();
-    }
-
-    override public void run()
-    {
-        if ((pluginsFolder !is null) && (pluginsFolder.isDirectory())) {
-            log.info("Started looking for plugins");
-            workerRunning = true;
-            while (workerRunning) {
-                searchForPlugins();
-                try
-                {
-                    if (workerRunning) {
-                        isSleeping = true;
-                        Thread.sleep(PLUGIN_COMPILER_CHECK_INTERVAL*1000L);
-                        isSleeping = false;
-                    }
-                } catch (InterruptedException e) {
-                    isSleeping = false;
-                }
-            }
-            log.info("Finished looking for plugins");
+      log.info("Started looking for plugins");
+      this.workerRunning = true;
+      while (this.workerRunning)
+      {
+        searchForPlugins();
+        if (!this.checkPeriodically) {
+          this.workerRunning = false;
         }
-        else {
-            log.warn(String_format("Plugins folder '%s' does not exist. No plugins will be compiled.", cast(Object[])[ pluginsFolder ]));
+        try
+        {
+          if (this.workerRunning)
+          {
+            this.isSleeping = true;
+            Thread.sleep(10000L);
+            this.isSleeping = false;
+          }
         }
-    }
-
-    public void stopWorker() {
-        workerRunning = false;
-        if (isSleeping)
-            interrupt();
-    }
-
-    public bool isWorkerRunning()
-    {
-        return workerRunning;
-    }
-
-    private File getPluginsDirectoryPath()
-    {
-        String pluginFolderName = ApplicationSettings.getStringProperty("plugins_directory");
-        File pluginFolder = new File(System.getProperty("serviio.home"), pluginFolderName);
-        if (!ObjectValidator.isEmpty(System.getProperty("plugins.location"))) {
-            pluginFolder = new File(System.getProperty("plugins.location"), pluginFolderName);
+        catch (InterruptedException e)
+        {
+          this.isSleeping = false;
         }
-        log.info(String_format("Looking for plugins at %s", cast(Object[])[ pluginFolder.getPath() ]));
-        return pluginFolder;
+        this.pluginsCompiled.countDown();
+      }
+      log.info("Finished looking for plugins");
     }
-
-    private void searchForPlugins()
+    else
     {
-        File[] foundPlugins = pluginsFolder.listFiles(new class() FilenameFilter {
-            public bool accept(File dir, String name)
-            {
-                if (name.endsWith(".groovy")) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        foreach (File pluginFile ; foundPlugins)
-            if ((!seenFilesCache.containsKey(pluginFile)) || (FileUtils.getLastModifiedDate(pluginFile).after(cast(Date)seenFilesCache.get(pluginFile))))
-            {
-                compilePluginFile(pluginFile);
-            }
+      log.warn(String.format("Plugins folder '%s' does not exist. No plugins will be compiled.", cast(Object[])[ this.pluginsFolder ]));
     }
-
-    private void compilePluginFile(File pluginFile)
+  }
+  
+  public void stopWorker()
+  {
+    this.workerRunning = false;
+    if (this.isSleeping) {
+      interrupt();
+    }
+  }
+  
+  public bool isWorkerRunning()
+  {
+    return this.workerRunning;
+  }
+  
+  private bool checkForPluginsPeriodically()
+  {
+    if (ObjectValidator.isEmpty(System.getProperty("plugins.check"))) {
+      return true;
+    }
+    return Boolean.parseBoolean(System.getProperty("plugins.check"));
+  }
+  
+  private File getPluginsDirectoryPath()
+  {
+    String pluginFolderName = ApplicationSettings.getStringProperty("plugins_directory");
+    File pluginFolder = new File(System.getProperty("serviio.home"), pluginFolderName);
+    if (!ObjectValidator.isEmpty(System.getProperty("plugins.location"))) {
+      pluginFolder = new File(System.getProperty("plugins.location"), pluginFolderName);
+    }
+    log.info(String.format("Looking for plugins at %s", cast(Object[])[ pluginFolder.getPath() ]));
+    return pluginFolder;
+  }
+  
+  private void searchForPlugins()
+  {
+    File[] foundPlugins = this.pluginsFolder.listFiles(new class() FilenameFilter {
+      public bool accept(File dir, String name)
+      {
+        if (name.endsWith(".groovy")) {
+          return true;
+        }
+        return false;
+      }
+    });
+    foreach (File pluginFile ; foundPlugins) {
+      if ((!this.seenFilesCache.containsKey(pluginFile)) || (FileUtils.getLastModifiedDate(pluginFile).after(cast(Date)this.seenFilesCache.get(pluginFile)))) {
+        compilePluginFile(pluginFile);
+      }
+    }
+  }
+  
+  protected void compilePluginFile(File pluginFile)
+  {
+    try
     {
-        try {
-            log.debug_(String_format("Starting plugin %s compilation", cast(Object[])[ pluginFile.getName() ]));
-            Class!(Object) pluginClass = gcl.parseClass(new GroovyCodeSource(pluginFile), false);
-            if (AbstractUrlExtractor.class_.isAssignableFrom(pluginClass)) {
-                bool feedPlugin = true;
-                AbstractUrlExtractor pluginInstance = cast(AbstractUrlExtractor)pluginClass.newInstance();
-                if (FeedItemUrlExtractor.class_.isAssignableFrom(pluginClass)) {
-                    urlExtractors.put(pluginInstance, OnlineRepository.OnlineRepositoryType.FEED);
-                } else if (WebResourceUrlExtractor.class_.isAssignableFrom(pluginClass)) {
-                    urlExtractors.put(pluginInstance, OnlineRepository.OnlineRepositoryType.WEB_RESOURCE);
-                    feedPlugin = false;
-                } else {
-                    log.warn("Unsupported plugin class");
-                    return;
-                }
-                seenFilesCache.put(pluginFile, FileUtils.getLastModifiedDate(pluginFile));
-                OnlineLibraryManager.getInstance().removeFeedFromCache(pluginInstance);
-                log.info(String_format("Added %s plugin %s (%s), version: %d", cast(Object[])[ feedPlugin ? "Feed" : "Web Resouce", pluginInstance.getExtractorName(), pluginFile.getName(), Integer.valueOf(pluginInstance.getVersion()) ]));
-            } else {
-                log.warn(String_format("Groovy class %s (%s) doesn't extend %s, it will not be used", cast(Object[])[ pluginClass.getName(), pluginFile.getName(), FeedItemUrlExtractor.class_.getName() ]));
-            }
+      log.debug_(String.format("Starting plugin %s compilation", cast(Object[])[ pluginFile.getName() ]));
+      Class/*!(?)*/ pluginClass = this.gcl.parseClass(new GroovyCodeSource(pluginFile), false);
+      if (AbstractUrlExtractor.class_.isAssignableFrom(pluginClass))
+      {
+        bool feedPlugin = true;
+        AbstractUrlExtractor pluginInstance = cast(AbstractUrlExtractor)pluginClass.newInstance();
+        if (FeedItemUrlExtractor.class_.isAssignableFrom(pluginClass))
+        {
+          storePluginInCache(pluginInstance, OnlineRepository.OnlineRepositoryType.FEED);
         }
-        catch (CompilationFailedException e) {
-            log.warn(String_format("Plugin %s failed to compile: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
-        } catch (IOException e) {
-            log.warn(String_format("Plugin %s failed to load: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
-        } catch (Exception e) {
-            log.warn(String_format("Unexpected error during adding plugin %s: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]), e);
+        else if (WebResourceUrlExtractor.class_.isAssignableFrom(pluginClass))
+        {
+          storePluginInCache(pluginInstance, OnlineRepository.OnlineRepositoryType.WEB_RESOURCE);
+          feedPlugin = false;
         }
+        else
+        {
+          log.warn("Unsupported plugin class");
+          return;
+        }
+        this.seenFilesCache.put(pluginFile, FileUtils.getLastModifiedDate(pluginFile));
+        OnlineLibraryManager.getInstance().removeFeedFromCache(pluginInstance);
+        log.info(String.format("Added %s plugin %s (%s), version: %d", cast(Object[])[ feedPlugin ? "Feed" : "Web Resouce", pluginInstance.getExtractorName(), pluginFile.getName(), Integer.valueOf(pluginInstance.getVersion()) ]));
+      }
+      else
+      {
+        log.warn(String.format("Groovy class %s (%s) doesn't extend %s, it will not be used", cast(Object[])[ pluginClass.getName(), pluginFile.getName(), FeedItemUrlExtractor.class_.getName() ]));
+      }
     }
-
-    public Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) getUrlExtractors() {
-        return Collections.unmodifiableMap(urlExtractors);
+    catch (CompilationFailedException e)
+    {
+      log.warn(String.format("Plugin %s failed to compile: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
     }
+    catch (IOException e)
+    {
+      log.warn(String.format("Plugin %s failed to load: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]));
+    }
+    catch (Exception e)
+    {
+      log.warn(String.format("Unexpected error during adding plugin %s: %s", cast(Object[])[ pluginFile.getName(), e.getMessage() ]), e);
+    }
+  }
+  
+  private synchronized void storePluginInCache(AbstractUrlExtractor plugin, OnlineRepository.OnlineRepositoryType type)
+  {
+    if (this.urlExtractors.containsKey(plugin)) {
+      this.urlExtractors.remove(plugin);
+    }
+    this.urlExtractors.put(plugin, type);
+  }
+  
+  public Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) getUrlExtractors()
+  {
+    return Collections.unmodifiableMap(this.urlExtractors);
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.online.feed.PluginCompilerThread
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.online.feed.PluginCompilerThread
+ * JD-Core Version:    0.7.0.1
+ */

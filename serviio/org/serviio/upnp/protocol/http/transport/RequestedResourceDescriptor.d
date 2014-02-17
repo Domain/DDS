@@ -1,74 +1,78 @@
 module org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 
-import java.lang.Long;
-import java.lang.String;
-import java.lang.Integer;
 import java.util.regex.Pattern;
-import org.serviio.profile.DeliveryQuality;
-import org.serviio.upnp.service.contentdirectory.classes.Resource;
+import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
 import org.serviio.upnp.webserver.AbstractRequestHandler;
 import org.serviio.util.StringUtils;
 
 public class RequestedResourceDescriptor
 {
-    private static immutable Pattern URL_EXTENSION_REMOVAL_PATTERN;
-    private Long resourceId;
-    private Resource.ResourceType resourceType;
-    private String targetProfileName;
-    private Integer protocolInfoIndex;
-    private DeliveryQuality.QualityType quality;
-
-    static this()
+  private static final Pattern URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
+  private Long resourceId;
+  private Resource.ResourceType resourceType;
+  private String targetProfileName;
+  private Integer protocolInfoIndex;
+  private DeliveryQuality.QualityType quality;
+  private String path;
+  
+  public this(String requestUri)
+  {
+    try
     {
-        URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(?<=/[a-zA-Z]{0,25})\\.[a-zA-Z]+");
+      String[] requestFields = AbstractRequestHandler.getRequestPathFields(requestUri, "/resource", URL_EXTENSION_REMOVAL_PATTERN);
+      
+      this.path = requestUri.substring(requestUri.indexOf("/resource") + "/resource".length() + 1);
+      this.resourceId = new Long(requestFields[0]);
+      String resourceTypeParam = requestFields[1];
+      this.resourceType = Resource.ResourceType.valueOf(StringUtils.localeSafeToUppercase(resourceTypeParam));
+      if ((requestFields.length > 2) && (this.resourceType != Resource.ResourceType.SEGMENT))
+      {
+        String[] protocolFields = requestFields[2].split("\\-");
+        this.targetProfileName = protocolFields[0];
+        this.protocolInfoIndex = Integer.valueOf(Integer.parseInt(protocolFields[1].trim()));
+        this.quality = DeliveryQuality.QualityType.valueOf(requestFields[3]);
+      }
     }
-
-    public this(String requestUri)
+    catch (Exception e)
     {
-        try
-        {
-            String[] requestFields = AbstractRequestHandler.getRequestPathFields(requestUri, "/resource", URL_EXTENSION_REMOVAL_PATTERN);
-
-            resourceId = new Long(requestFields[0]);
-            String resourceTypeParam = requestFields[1];
-            targetProfileName = null;
-            resourceType = Resource.ResourceType.valueOf(StringUtils.localeSafeToUppercase(resourceTypeParam));
-            protocolInfoIndex = null;
-            if (requestFields.length > 2)
-            {
-                String[] protocolFields = requestFields[2].split("\\-");
-                targetProfileName = protocolFields[0];
-                protocolInfoIndex = Integer.valueOf(Integer.parseInt(protocolFields[1].trim()));
-                quality = DeliveryQuality.QualityType.valueOf(requestFields[3]);
-            }
-        } catch (Exception e) {
-            throw new InvalidResourceRequestException(String_format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
-        }
+      throw new InvalidResourceRequestException(String.format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
     }
-
-    public Long getResourceId()
-    {
-        return resourceId;
-    }
-
-    public Resource.ResourceType getResourceType() {
-        return resourceType;
-    }
-
-    public String getTargetProfileName() {
-        return targetProfileName;
-    }
-
-    public Integer getProtocolInfoIndex() {
-        return protocolInfoIndex;
-    }
-
-    public DeliveryQuality.QualityType getQuality() {
-        return quality;
-    }
+  }
+  
+  public Long getResourceId()
+  {
+    return this.resourceId;
+  }
+  
+  public Resource.ResourceType getResourceType()
+  {
+    return this.resourceType;
+  }
+  
+  public String getTargetProfileName()
+  {
+    return this.targetProfileName;
+  }
+  
+  public Integer getProtocolInfoIndex()
+  {
+    return this.protocolInfoIndex;
+  }
+  
+  public DeliveryQuality.QualityType getQuality()
+  {
+    return this.quality;
+  }
+  
+  public String getPath()
+  {
+    return this.path;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor
+ * JD-Core Version:    0.7.0.1
+ */

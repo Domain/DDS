@@ -1,64 +1,16 @@
 module org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 
-import java.lang.String;
-
-enum ObjectClassType : String
+public enum ObjectClassType
 {
-    CONTAINER = "object.container", 
-    AUDIO_ITEM = "object.item.audioItem", 
-    VIDEO_ITEM = "object.item.videoItem", 
-    IMAGE_ITEM = "object.item.imageItem", 
-    MOVIE = "object.item.videoItem.movie", 
-    MUSIC_TRACK = "object.item.audioItem.musicTrack", 
-    PHOTO = "object.item.imageItem.photo", 
-    PLAYLIST_ITEM = "object.container", 
-    PLAYLIST_CONTAINER = "object.container.playlistContainer", 
-    PERSON = "object.container.person", 
-    MUSIC_ARTIST = "object.container.person.musicArtist", 
-    GENRE = "object.container.genre", 
-    MUSIC_GENRE = "object.container.genre.musicGenre", 
-    ALBUM = "object.container.album", 
-    MUSIC_ALBUM = "object.container.album.musicAlbum", 
-    STORAGE_FOLDER = "object.container.storageFolder",
+  CONTAINER,  AUDIO_ITEM,  VIDEO_ITEM,  IMAGE_ITEM,  MOVIE,  MUSIC_TRACK,  PHOTO,  PLAYLIST_ITEM,  PLAYLIST_CONTAINER,  PERSON,  MUSIC_ARTIST,  GENRE,  MUSIC_GENRE,  ALBUM,  MUSIC_ALBUM,  STORAGE_FOLDER;
+  
+  private this() {}
+  
+  public abstract String getClassName();
 }
 
-public String getClassName(ObjectClassType objectClassType)
-{
-    return cast(String)objectClassType;
-}
 
-//public class ObjectClassType
-//{
-//    enum ObjectClassTypeEnum : String
-//    {
-//        CONTAINER = "object.container", 
-//        AUDIO_ITEM = "object.item.audioItem", 
-//        VIDEO_ITEM = "object.item.videoItem", 
-//        IMAGE_ITEM = "object.item.imageItem", 
-//        MOVIE = "object.item.videoItem.movie", 
-//        MUSIC_TRACK = "object.item.audioItem.musicTrack", 
-//        PHOTO = "object.item.imageItem.photo", 
-//        PLAYLIST_ITEM = "object.container", 
-//        PLAYLIST_CONTAINER = "object.container.playlistContainer", 
-//        PERSON = "object.container.person", 
-//        MUSIC_ARTIST = "object.container.person.musicArtist", 
-//        GENRE = "object.container.genre", 
-//        MUSIC_GENRE = "object.container.genre.musicGenre", 
-//        ALBUM = "object.container.album", 
-//        MUSIC_ALBUM = "object.container.album.musicAlbum", 
-//        STORAGE_FOLDER = "object.container.storageFolder",
-//    }
-//
-//    ObjectClassTypeEnum objectClassType;
-//    alias objectClassType this;
-//
-//  public String getClassName()
-//  {
-//      return cast(String)objectClassType;
-//  }
-//}
-
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.upnp.service.contentdirectory.classes.ObjectClassType
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

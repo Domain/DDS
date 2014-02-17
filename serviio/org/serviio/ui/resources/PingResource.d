@@ -5,11 +5,12 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface PingResource
 {
-    //@Get("xml|json")
-    public abstract ResultRepresentation ping();
+  @Get("xml|json")
+  public abstract ResultRepresentation ping();
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.PingResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

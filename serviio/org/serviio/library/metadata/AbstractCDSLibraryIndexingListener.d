@@ -1,111 +1,125 @@
 module org.serviio.library.metadata.AbstractCDSLibraryIndexingListener;
 
-import java.lang.String;
-import java.lang.Runnable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.serviio.upnp.Device;
 import org.serviio.upnp.service.contentdirectory.ContentDirectory;
 import org.serviio.util.ServiioThreadFactory;
 import org.serviio.util.ThreadUtils;
-import org.serviio.library.metadata.LibraryIndexingListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListener
+public abstract class AbstractCDSLibraryIndexingListener
+  : LibraryIndexingListener
 {
-    private static Logger log;
-    private static const int UPDATE_THREAD_INTERVAL_SECONDS = 5;
-    private int threadUpdateInterval;
-
-    protected ContentDirectory cds;
-
-    private AtomicBoolean libraryUpdated;
-    private String lastAddedFile;
-    private int numberOfAddedFiles = 0;
-
-    static this()
+  private static final Logger log = LoggerFactory.getLogger!(AbstractCDSLibraryIndexingListener);
+  private static final int UPDATE_THREAD_INTERVAL_SECONDS = 5;
+  private int threadUpdateInterval = 5;
+  protected ContentDirectory cds = cast(ContentDirectory)Device.getInstance().getServiceById("urn:upnp-org:serviceId:ContentDirectory");
+  private AtomicBoolean libraryUpdated = new AtomicBoolean(false);
+  private String lastAddedFile;
+  private int numberOfAddedFiles = 0;
+  private Map!(MediaFileType, String) fileTypeUpdateIds = new HashMap();
+  
+  public this()
+  {
+    ServiioThreadFactory.getInstance().newThread(new CDSNotifierThread(null), "CDS library notifier", true).start();
+    
+    storeNewUpdateId(MediaFileType.IMAGE);
+    storeNewUpdateId(MediaFileType.VIDEO);
+    storeNewUpdateId(MediaFileType.AUDIO);
+  }
+  
+  public this(int intervalSeconds)
+  {
+    this();
+    this.threadUpdateInterval = intervalSeconds;
+  }
+  
+  public void resetForAdding()
+  {
+    this.lastAddedFile = null;
+    this.numberOfAddedFiles = 0;
+  }
+  
+  public void itemAdded(MediaFileType fileType, String file)
+  {
+    this.lastAddedFile = file;
+    this.numberOfAddedFiles += 1;
+    storeNewUpdateId(fileType);
+    isLibraryUpdated().set(true);
+  }
+  
+  public void itemDeleted(MediaFileType fileType, String file)
+  {
+    storeNewUpdateId(fileType);
+    isLibraryUpdated().set(true);
+  }
+  
+  public void itemUpdated(MediaFileType fileType, String file)
+  {
+    storeNewUpdateId(fileType);
+    isLibraryUpdated().set(true);
+  }
+  
+  protected abstract void performCDSUpdate();
+  
+  protected void notifyCDS()
+  {
+    log.debug_("Library updated, notifying CDS");
+    performCDSUpdate();
+    isLibraryUpdated().set(false);
+  }
+  
+  public String getUpdateId(MediaFileType fileType)
+  {
+    return cast(String)this.fileTypeUpdateIds.get(fileType);
+  }
+  
+  public AtomicBoolean isLibraryUpdated()
+  {
+    return this.libraryUpdated;
+  }
+  
+  public String getLastAddedFile()
+  {
+    return this.lastAddedFile;
+  }
+  
+  public int getNumberOfAddedFiles()
+  {
+    return this.numberOfAddedFiles;
+  }
+  
+  private void storeNewUpdateId(MediaFileType fileType)
+  {
+    if (fileType !is null) {
+      this.fileTypeUpdateIds.put(fileType, UUID.randomUUID().toString());
+    }
+  }
+  
+  private class CDSNotifierThread
+    : Runnable
+  {
+    private this() {}
+    
+    public void run()
     {
-        log = LoggerFactory.getLogger!(AbstractCDSLibraryIndexingListener)();
-        libraryUpdated = new AtomicBoolean(false);
-    }
-
-    public this()
-    {
-        threadUpdateInterval = UPDATE_THREAD_INTERVAL_SECONDS;
-        cds = cast(ContentDirectory)Device.getInstance().getServiceById("urn:upnp-org:serviceId:ContentDirectory");
-        ServiioThreadFactory.getInstance().newThread(new CDSNotifierThread(), "CDS library notifier", true).start();
-    }
-
-    public this(int intervalSeconds) 
-    {
-        this();
-        threadUpdateInterval = intervalSeconds;
-    }
-
-    public void resetForAdding()
-    {
-        lastAddedFile = null;
-        numberOfAddedFiles = 0;
-    }
-
-    public void itemAdded(String file)
-    {
-        lastAddedFile = file;
-        numberOfAddedFiles += 1;
-        isLibraryUpdated().set(true);
-    }
-
-    public void itemDeleted(String file)
-    {
-        isLibraryUpdated().set(true);
-    }
-
-    public void itemUpdated(String file)
-    {
-        isLibraryUpdated().set(true);
-    }
-
-    protected abstract void performCDSUpdate();
-
-    protected void notifyCDS()
-    {
-        log.debug_("Library updated, notifying CDS");
-        performCDSUpdate();
-        isLibraryUpdated().set(false);
-    }
-
-    public AtomicBoolean isLibraryUpdated()
-    {
-        return libraryUpdated;
-    }
-
-    public String getLastAddedFile() {
-        return lastAddedFile;
-    }
-
-    public int getNumberOfAddedFiles() {
-        return numberOfAddedFiles;
-    }
-
-    private class CDSNotifierThread : Runnable
-    {
-        private this()
-        {
+      for (;;)
+      {
+        if (this.outer.isLibraryUpdated().get()) {
+          this.outer.notifyCDS();
         }
-
-        public void run()
-        {
-            while (true) {
-                if (isLibraryUpdated().get()) {
-                    notifyCDS();
-                }
-                ThreadUtils.currentThreadSleep(threadUpdateInterval * 1000);
-            }
-        }
+        ThreadUtils.currentThreadSleep(this.outer.threadUpdateInterval * 1000);
+      }
     }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.metadata.AbstractCDSLibraryIndexingListener
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.metadata.AbstractCDSLibraryIndexingListener
+ * JD-Core Version:    0.7.0.1
+ */

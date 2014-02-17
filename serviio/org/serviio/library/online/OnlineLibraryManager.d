@@ -1,7 +1,7 @@
 module org.serviio.library.online.OnlineLibraryManager;
 
-import java.lang.String;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Collections;
@@ -11,298 +11,357 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import org.serviio.config.Configuration;
 import org.serviio.library.AbstractLibraryManager;
 import org.serviio.library.entities.CoverImage;
 import org.serviio.library.entities.OnlineRepository;
+import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.local.service.CoverImageService;
-import org.serviio.library.metadata.InvalidMetadataException;
+import org.serviio.library.local.service.SearchService;
 import org.serviio.library.metadata.LibraryIndexingListener;
 import org.serviio.library.online.feed.FeedParser;
 import org.serviio.library.online.metadata.FeedUpdaterThread;
+import org.serviio.library.online.metadata.MissingPluginException;
 import org.serviio.library.online.metadata.OnlineCDSLibraryIndexingListener;
 import org.serviio.library.online.metadata.OnlineCachable;
 import org.serviio.library.online.metadata.OnlineContainerItem;
 import org.serviio.library.online.metadata.OnlineResourceContainer;
+import org.serviio.library.online.metadata.OnlineResourceParseException;
 import org.serviio.library.online.metadata.SingleURLItem;
 import org.serviio.library.online.metadata.TechnicalMetadata;
+import org.serviio.library.online.metadata.WebResourceFeed;
+import org.serviio.library.online.metadata.WebResourceFeedItem;
 import org.serviio.util.DateUtils;
 import org.serviio.util.HttpClient;
-import org.serviio.library.online.OnlineCacheDecorator;
-import org.serviio.library.online.SingleURLParser;
-import org.serviio.library.online.WebResourceParser;
-import org.serviio.library.online.AbstractUrlExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OnlineLibraryManager : AbstractLibraryManager
+public class OnlineLibraryManager
+  : AbstractLibraryManager
 {
-    private static Logger log;
-    private static OnlineLibraryManager instance;
-    private OnlineCacheDecorator!(OnlineCachable) onlineCache;
-    private OnlineCacheDecorator!(CoverImage) thumbnailCache;
-    private OnlineCacheDecorator!(TechnicalMetadata) technicalMetadataCache;
-    private FeedParser feedParser;
-    private SingleURLParser singleURLParser;
-    private WebResourceParser webResourceParser;
-    private FeedUpdaterThread feedUpdaterThread;
-    private LibraryIndexingListener cdsListener;
-    private Map!(String, Date) feedExpiryMonitor;
-
-    static this()
-    {
-        log = LoggerFactory.getLogger!(OnlineLibraryManager)();
+  private static final Logger log = LoggerFactory.getLogger!(OnlineLibraryManager);
+  private static OnlineLibraryManager instance;
+  private OnlineCacheDecorator!(OnlineCachable) onlineCache;
+  private OnlineCacheDecorator!(CoverImage) thumbnailCache;
+  private OnlineCacheDecorator!(TechnicalMetadata) technicalMetadataCache;
+  private FeedParser feedParser;
+  private SingleURLParser singleURLParser;
+  private WebResourceParser webResourceParser;
+  private FeedUpdaterThread feedUpdaterThread;
+  private LibraryIndexingListener cdsListener;
+  private Map!(String, Date) feedExpiryMonitor = Collections.synchronizedMap(new HashMap());
+  private final CountDownLatch pluginsCompiled = new CountDownLatch(1);
+  
+  public static OnlineLibraryManager getInstance()
+  {
+    if (instance is null) {
+      instance = new OnlineLibraryManager();
     }
-
-    public static OnlineLibraryManager getInstance()
+    return instance;
+  }
+  
+  private this()
+  {
+    this.onlineCache = new OnlineContentCacheDecorator("online_feeds");
+    this.thumbnailCache = new ThumbnailCacheDecorator("thumbnails");
+    this.technicalMetadataCache = new TechnicalMetadataCacheDecorator("online_technical_metadata");
+    this.feedParser = new FeedParser();
+    this.webResourceParser = new WebResourceParser();
+    this.singleURLParser = new SingleURLParser();
+    this.cdsListener = new OnlineCDSLibraryIndexingListener();
+  }
+  
+  public void startFeedUpdaterThread()
+  {
+    synchronized (this.cdsListener)
     {
-        if (instance is null) {
-            instance = new OnlineLibraryManager();
+      try
+      {
+        this.pluginsCompiled.await();
+      }
+      catch (InterruptedException e) {}
+      this.feedParser.startParsing();
+      this.webResourceParser.startParsing();
+      if ((this.feedUpdaterThread is null) || ((this.feedUpdaterThread !is null) && (!this.feedUpdaterThread.isWorkerRunning())))
+      {
+        this.feedUpdaterThread = new FeedUpdaterThread(this);
+        this.feedUpdaterThread.setName("FeedUpdaterThread");
+        this.feedUpdaterThread.setDaemon(true);
+        this.feedUpdaterThread.setPriority(1);
+        this.feedUpdaterThread.addListener(this.cdsListener);
+        this.feedUpdaterThread.start();
+      }
+    }
+  }
+  
+  public void startPluginCompilerThread()
+  {
+    AbstractOnlineItemParser.startPluginCompilerThread(this.pluginsCompiled);
+  }
+  
+  public void stopFeedUpdaterThread()
+  {
+    synchronized (this.cdsListener)
+    {
+      this.feedParser.stopParsing();
+      this.webResourceParser.stopParsing();
+      stopThread(this.feedUpdaterThread);
+      this.feedUpdaterThread = null;
+    }
+  }
+  
+  public void stopPluginCompilerThread()
+  {
+    AbstractOnlineItemParser.stopPluginCompilerThread();
+    
+    PluginExecutionProcessor.shutdown();
+  }
+  
+  public void invokeFeedUpdaterThread()
+  {
+    if (this.feedUpdaterThread !is null) {
+      this.feedUpdaterThread.invoke();
+    }
+  }
+  
+  public OnlineResourceContainer/*!(?, ?)*/ findResource(OnlineRepository onlineRepository, bool onlyCached)
+  {
+    try
+    {
+      URL resourceUrl = new URL(onlineRepository.getRepositoryUrl());
+      OnlineResourceContainer/*!(?, ?)*/ resource = null;
+      synchronized (this.onlineCache)
+      {
+        resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(resourceUrl.toString());
+      }
+      if ((!onlyCached) && (isResourceRefreshNeeded(resourceUrl, resource)))
+      {
+        log.debug_(String.format("Resource %s not in cache, cast(re)loading it", cast(Object[])[ resourceUrl.toString() ]));
+        if (onlineRepository.getRepoType() == OnlineRepository.OnlineRepositoryType.FEED) {
+          resource = this.feedParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
+        } else {
+          resource = this.webResourceParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
         }
-        return instance;
-    }
-
-    private this()
-    {
-        feedExpiryMonitor = Collections.synchronizedMap(new HashMap!(String, Date)());
-        onlineCache = new OnlineContentCacheDecorator("online_feeds");
-        thumbnailCache = new ThumbnailCacheDecorator("thumbnails");
-        technicalMetadataCache = new TechnicalMetadataCacheDecorator("online_technical_metadata");
-        feedParser = new FeedParser();
-        webResourceParser = new WebResourceParser();
-        singleURLParser = new SingleURLParser();
-        cdsListener = new OnlineCDSLibraryIndexingListener();
-    }
-
-    public void startFeedUpdaterThread()
-    {
-        synchronized (cdsListener) {
-            feedParser.startParsing();
-            webResourceParser.startParsing();
-            if ((feedUpdaterThread is null) || ((feedUpdaterThread !is null) && (!feedUpdaterThread.isWorkerRunning()))) {
-                feedUpdaterThread = new FeedUpdaterThread();
-                feedUpdaterThread.setName("FeedUpdaterThread");
-                feedUpdaterThread.setDaemon(true);
-                feedUpdaterThread.setPriority(1);
-                feedUpdaterThread.addListener(cdsListener);
-                feedUpdaterThread.start();
-            }
-        }
-    }
-
-    public void startPluginCompilerThread()
-    {
-        AbstractOnlineItemParser.startPluginCompilerThread();
-    }
-
-    public void stopFeedUpdaterThread()
-    {
-        synchronized (cdsListener) {
-            feedParser.stopParsing();
-            webResourceParser.stopParsing();
-            stopThread(feedUpdaterThread);
-            feedUpdaterThread = null;
-        }
-    }
-
-    public void stopPluginCompilerThread()
-    {
-        AbstractOnlineItemParser.stopPluginCompilerThread();
-
-        PluginExecutionProcessor.shutdown();
-    }
-
-    public void invokeFeedUpdaterThread()
-    {
-        if (feedUpdaterThread !is null)
-            feedUpdaterThread.invoke();
-    }
-
-    public OnlineResourceContainer!(Object, Object) findResource(OnlineRepository onlineRepository, bool onlyCached)
-    {
-        URL resourceUrl = new URL(onlineRepository.getRepositoryUrl());
-        OnlineResourceContainer!(Object, Object) resource = null;
-        synchronized (onlineCache) {
-            resource = cast(OnlineResourceContainer!(Object, Object))onlineCache.retrieve(resourceUrl.toString());
-        }
-
-        if ((!onlyCached) && ((resource is null) || (isResourceExpired(resourceUrl, resource))))
+        synchronized (this.onlineCache)
         {
-            log.debug_(String_format("Resource %s not in cache yet, loading it", cast(Object[])[ resourceUrl.toString() ]));
-            try {
-                if (onlineRepository.getRepoType() == OnlineRepository.OnlineRepositoryType.FEED)
-                    resource = feedParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
-                else {
-                    resource = webResourceParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
-                }
-                synchronized (onlineCache) {
-                    onlineCache.store(resourceUrl.toString(), resource);
-                }
-
-                storeResourceExpiryDate(resourceUrl, resource);
-            } catch (InvalidMetadataException e) {
-                throw new IOException(String_format("Cannot parse resource from %s. Message: %s", cast(Object[])[ resourceUrl.toString(), e.getMessage() ]));
-            }
+          this.onlineCache.store(resourceUrl.toString(), resource);
         }
-        return resource;
+        SearchService.makeOnlineUnsearchable(onlineRepository.getId());
+        
+        storeResourceExpiryDate(resourceUrl.toString(), resource);
+      }
+      return resource;
     }
-
-    public OnlineResourceContainer!(Object, Object) findResourceInCacheOrParse(OnlineRepository onlineRepository) {
-        return findResource(onlineRepository, false);
-    }
-
-    public SingleURLItem findSingleURLItemInCacheOrParse(OnlineRepository onlineRepository) {
-        SingleURLItem item = null;
-        if (onlineRepository !is null) {
-            synchronized (onlineCache) {
-                item = cast(SingleURLItem)onlineCache.retrieve(onlineRepository.getRepositoryUrl());
-            }
-            if (item is null) {
-                item = singleURLParser.parseItem(onlineRepository);
-                synchronized (onlineCache) {
-                    onlineCache.store(onlineRepository.getRepositoryUrl(), item);
-                }
-            }
-        }
-        return item;
-    }
-
-    public void removeOnlineContentFromCache(String resourceUrl)
+    catch (MalformedURLException e)
     {
-        synchronized (feedExpiryMonitor) {
-            onlineCache.evict(resourceUrl);
-            feedExpiryMonitor.remove(resourceUrl);
-        }
+      log.warn(String.format("Could not parse URL %s", cast(Object[])[ onlineRepository.getRepositoryUrl() ]), e);
     }
-
-    public void removeFeedFromCache(AbstractUrlExtractor plugin)
+    return null;
+  }
+  
+  public OnlineResourceContainer/*!(?, ?)*/ findResourceInCacheOrParse(OnlineRepository onlineRepository)
+  {
+    return findResource(onlineRepository, false);
+  }
+  
+  public SingleURLItem findSingleURLItemInCacheOrParse(OnlineRepository onlineRepository)
+  {
+    SingleURLItem item = null;
+    if (onlineRepository !is null)
     {
-        synchronized (feedExpiryMonitor) {
-            Set!(String) urls = new HashSet!(String)(feedExpiryMonitor.keySet());
-            foreach (String feedUrl ; urls) {
-                OnlineResourceContainer!(Object, Object) resource = cast(OnlineResourceContainer!(Object, Object))onlineCache.retrieve(feedUrl);
-                if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().equals(plugin))) {
-                    log.debug_(String_format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));
-                    removeOnlineContentFromCache(feedUrl);
-                }
-            }
-        }
-    }
-
-    public void storeTechnicalMetadata(String cacheKey, TechnicalMetadata md) {
-        synchronized (technicalMetadataCache) {
-            technicalMetadataCache.store(cacheKey, md);
-        }
-    }
-
-    public TechnicalMetadata findTechnicalMetadata(String cacheKey) {
-        synchronized (technicalMetadataCache) {
-            if (cacheKey !is null) {
-                return cast(TechnicalMetadata)technicalMetadataCache.retrieve(cacheKey);
-            }
-            return null;
-        }
-    }
-
-    public CoverImage findThumbnail(ImageDescriptor thumbnail) {
-        synchronized (thumbnailCache) {
-            if ((thumbnail !is null) && (thumbnail.getImageUrl() !is null)) {
-                CoverImage coverImage = cast(CoverImage)thumbnailCache.retrieve(thumbnail.getImageUrl().toString());
-                if (coverImage is null) {
-                    try
-                    {
-                        log.debug_(String_format("Thumbnail %s not in cache yet, loading it", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
-                        byte[] imageBytes = HttpClient.retrieveBinaryFileFromURL(thumbnail.getImageUrl().toString());
-                        ImageDescriptor clonedImage = new ImageDescriptor(imageBytes, null);
-                        coverImage = CoverImageService.prepareCoverImage(clonedImage, null);
-                        if (coverImage is null) {
-                            throw new CannotRetrieveThumbnailException(String_format("An error accured when resizing thumbnail %s", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
-                        }
-                        thumbnailCache.store(thumbnail.getImageUrl().toString(), coverImage);
-                    } catch (IOException e) {
-                        throw new CannotRetrieveThumbnailException(String_format("Failed to download thumbnail %s.", cast(Object[])[ thumbnail.getImageUrl().toString() ]), e);
-                    }
-                }
-                return coverImage;
-            }
-            return null;
-        }
-    }
-
-    private bool isResourceExpired(URL resourceUrl, OnlineResourceContainer!(Object, Object) resource)
-    {
-        synchronized (feedExpiryMonitor) {
-            Date expiryDate = cast(Date)feedExpiryMonitor.get(resourceUrl.toString());
-            if (expiryDate !is null) {
-                Date currentDate = new Date();
-                bool resourceExpired = currentDate.after(expiryDate);
-                if (!resourceExpired)
-                {
-                    Date itemExpiryDate = getEarliestItemExpiryDate(resource);
-
-                    if ((itemExpiryDate !is null) && (currentDate.after(DateUtils.minusMinutes(itemExpiryDate, 5)))) {
-                        resourceExpired = true;
-                    }
-                }
-                if (resourceExpired) {
-                    log.debug_(String_format("Online resource %s expired, will reload it", cast(Object[])[ resourceUrl.toString() ]));
-                }
-                return resourceExpired;
-            }
-            return true;
-        }
-    }
-
-    private Date getEarliestItemExpiryDate(OnlineResourceContainer!(Object, Object) resource)
-    {
-        Date earliestDate = null;
-        foreach (OnlineContainerItem!(Object) item ; resource.getItems())
+      synchronized (this.onlineCache)
+      {
+        item = cast(SingleURLItem)this.onlineCache.retrieve(onlineRepository.getRepositoryUrl());
+      }
+      if (item is null)
+      {
+        item = this.singleURLParser.parseItem(onlineRepository);
+        synchronized (this.onlineCache)
         {
+          this.onlineCache.store(onlineRepository.getRepositoryUrl(), item);
+        }
+      }
+    }
+    return item;
+  }
+  
+  public void removeOnlineContentFromCache(String resourceUrl, Long onlineRepositoryId, bool resetExpiryDate)
+  {
+    synchronized (this.feedExpiryMonitor)
+    {
+      this.onlineCache.evict(resourceUrl);
+      this.webResourceParser.cleanItemCache(resourceUrl);
+      if (resetExpiryDate) {
+        this.feedExpiryMonitor.remove(resourceUrl);
+      }
+      SearchService.makeOnlineUnsearchable(onlineRepositoryId);
+    }
+  }
+  
+  public void removeFeedFromCache(AbstractUrlExtractor plugin)
+  {
+    synchronized (this.feedExpiryMonitor)
+    {
+      Set!(String) urls = new HashSet(this.feedExpiryMonitor.keySet());
+      foreach (String feedUrl ; urls)
+      {
+        OnlineResourceContainer/*!(?, ?)*/ resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(feedUrl);
+        if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().equals(plugin)))
+        {
+          log.debug_(String.format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));
+          removeOnlineContentFromCache(feedUrl, resource.getOnlineRepositoryId(), true);
+        }
+      }
+    }
+  }
+  
+  public void storeTechnicalMetadata(String cacheKey, TechnicalMetadata md)
+  {
+    synchronized (this.technicalMetadataCache)
+    {
+      this.technicalMetadataCache.store(cacheKey, md);
+    }
+  }
+  
+  public TechnicalMetadata findTechnicalMetadata(String cacheKey)
+  {
+    synchronized (this.technicalMetadataCache)
+    {
+      if (cacheKey !is null) {
+        return cast(TechnicalMetadata)this.technicalMetadataCache.retrieve(cacheKey);
+      }
+      return null;
+    }
+  }
+  
+  public CoverImage findThumbnail(ImageDescriptor thumbnail, String userAgent)
+  {
+    synchronized (this.thumbnailCache)
+    {
+      if ((thumbnail !is null) && (thumbnail.getImageUrl() !is null))
+      {
+        CoverImage coverImage = cast(CoverImage)this.thumbnailCache.retrieve(thumbnail.getImageUrl().toString());
+        if (coverImage is null) {
+          try
+          {
+            log.debug_(String.format("Thumbnail '%s' not in cache yet, loading it", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
+            byte[] imageBytes = HttpClient.retrieveBinaryFileFromURL(thumbnail.getImageUrl().toString(), userAgent);
+            ImageDescriptor clonedImage = new ImageDescriptor(imageBytes, null);
+            coverImage = CoverImageService.prepareCoverImage(clonedImage, null);
+            if (coverImage is null) {
+              throw new CannotRetrieveThumbnailException(String.format("An error accured when resizing thumbnail %s", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
+            }
+            this.thumbnailCache.store(thumbnail.getImageUrl().toString(), coverImage);
+          }
+          catch (IOException e)
+          {
+            throw new CannotRetrieveThumbnailException(String.format("Failed to download thumbnail %s.", cast(Object[])[ thumbnail.getImageUrl().toString() ]), e);
+          }
+        }
+        return coverImage;
+      }
+      return null;
+    }
+  }
+  
+  public void storeExpiryDateForFailedResource(String feedUrl, Long onlineRepositoryId)
+  {
+    log.debug_(String.format("Resetting expiry date for feed %s", cast(Object[])[ feedUrl ]));
+    storeResourceExpiryDate(feedUrl, null);
+    log.debug_(String.format("Removing feed %s from online cache", cast(Object[])[ feedUrl ]));
+    removeOnlineContentFromCache(feedUrl, onlineRepositoryId, false);
+  }
+  
+  private bool isResourceRefreshNeeded(URL resourceUrl, OnlineResourceContainer/*!(?, ?)*/ resource)
+  {
+    synchronized (this.feedExpiryMonitor)
+    {
+      Date expiryDate = cast(Date)this.feedExpiryMonitor.get(resourceUrl.toString());
+      if (expiryDate !is null)
+      {
+        Date currentDate = new Date();
+        bool resourceExpired = currentDate.after(expiryDate);
+        if ((!resourceExpired) && (resource !is null)) {
+          foreach (OnlineContainerItem/*!(?)*/ item ; resource.getItems()) {
             if (item.getExpiresOn() !is null) {
-                earliestDate = earliestDate.after(item.getExpiresOn()) ? item.getExpiresOn() : earliestDate is null ? item.getExpiresOn() : earliestDate;
+              if (currentDate.after(DateUtils.minusMinutes(item.getExpiresOn(), 5)))
+              {
+                resourceExpired = true;
+                if (( cast(WebResourceFeed)resource !is null )) {
+                  this.webResourceParser.cleanItemCache(resourceUrl, cast(WebResourceFeedItem)item);
+                }
+              }
             }
+          }
         }
-        return earliestDate;
+        if (resourceExpired) {
+          log.debug_(String.format("Online resource %s expired, will reload it", cast(Object[])[ resourceUrl.toString() ]));
+        }
+        return resourceExpired;
+      }
+      return resource is null;
     }
-
-    public void expireAllFeeds()
+  }
+  
+  private Date getEarliestItemExpiryDate(OnlineResourceContainer/*!(?, ?)*/ resource)
+  {
+    Date earliestDate = null;
+    foreach (OnlineContainerItem/*!(?)*/ item ; resource.getItems()) {
+      if (item.getExpiresOn() !is null) {
+        earliestDate = earliestDate.after(item.getExpiresOn()) ? item.getExpiresOn() : earliestDate is null ? item.getExpiresOn() : earliestDate;
+      }
+    }
+    return earliestDate;
+  }
+  
+  public void expireAllFeeds()
+  {
+    synchronized (this.feedExpiryMonitor)
     {
-        synchronized (feedExpiryMonitor) {
-            foreach (String url ; feedExpiryMonitor.keySet())
-                feedExpiryMonitor.put(url, new Date());
-        }
+      foreach (String url ; this.feedExpiryMonitor.keySet()) {
+        this.feedExpiryMonitor.put(url, new Date());
+      }
     }
-
-    public void shutdownCaches()
+  }
+  
+  public void shutdownCaches()
+  {
+    this.technicalMetadataCache.shutdown();
+    this.thumbnailCache.shutdown();
+  }
+  
+  public void removePersistentCaches()
+  {
+    this.technicalMetadataCache.evictAll();
+  }
+  
+  private Date getUserDefinedExpiryDate()
+  {
+    Calendar cal = new GregorianCalendar();
+    cal.setTime(new Date());
+    cal.add(10, Configuration.getOnlineFeedExpiryInterval().intValue());
+    return cal.getTime();
+  }
+  
+  private void storeResourceExpiryDate(String feedUrl, OnlineResourceContainer/*!(?, ?)*/ resource)
+  {
+    synchronized (this.feedExpiryMonitor)
     {
-        technicalMetadataCache.shutdown();
-        thumbnailCache.shutdown();
+      Date newExpiryDate = getUserDefinedExpiryDate();
+      this.feedExpiryMonitor.put(feedUrl, newExpiryDate);
+      if (resource !is null)
+      {
+        Date itemExpiryDate = getEarliestItemExpiryDate(resource);
+        log.debug_(String.format("Resource %s will expire in the cache on %s", cast(Object[])[ feedUrl, (itemExpiryDate !is null) && (itemExpiryDate.before(newExpiryDate)) ? itemExpiryDate : newExpiryDate ]));
+      }
     }
-
-    public void removePersistentCaches() {
-        technicalMetadataCache.evictAll();
-    }
-
-    private Date getUserDefinedExpiryDate() {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(new Date());
-        cal.add(10, Configuration.getOnlineFeedExpiryInterval().intValue());
-        return cal.getTime();
-    }
-
-    private void storeResourceExpiryDate(URL feedUrl, OnlineResourceContainer!(Object, Object) resource) {
-        synchronized (feedExpiryMonitor) {
-            Date newExpiryDate = getUserDefinedExpiryDate();
-            feedExpiryMonitor.put(feedUrl.toString(), newExpiryDate);
-
-            Date itemExpiryDate = getEarliestItemExpiryDate(resource);
-            log.debug_(String_format("Resource %s will expire in the cache on %s", cast(Object[])[ feedUrl, (itemExpiryDate !is null) && (itemExpiryDate.before(newExpiryDate)) ? itemExpiryDate : newExpiryDate ]));
-        }
-    }
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.online.OnlineLibraryManager
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.online.OnlineLibraryManager
+ * JD-Core Version:    0.7.0.1
+ */

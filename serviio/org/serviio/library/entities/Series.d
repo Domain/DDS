@@ -1,38 +1,55 @@
 module org.serviio.library.entities.Series;
 
-import java.lang.String;
 import org.serviio.db.entities.PersistedEntity;
 
-public class Series : PersistedEntity
+public class Series
+  : PersistedEntity
+  , CoverImageEntity
 {
-    private String title;
-    private String sortTitle;
-
-    public this(String title, String sortTitle)
-    {
-        this.title = title;
-        this.sortTitle = sortTitle;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSortTitle() {
-        return sortTitle;
-    }
-
-    public void setSortTitle(String sortTitle) {
-        this.sortTitle = sortTitle;
-    }
+  private String title;
+  private String sortTitle;
+  private Long thumbnailId;
+  
+  public this(String title, String sortTitle, Long thumbnailId)
+  {
+    this.title = title;
+    this.sortTitle = sortTitle;
+    this.thumbnailId = thumbnailId;
+  }
+  
+  public String getTitle()
+  {
+    return this.title;
+  }
+  
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+  
+  public String getSortTitle()
+  {
+    return this.sortTitle;
+  }
+  
+  public void setSortTitle(String sortTitle)
+  {
+    this.sortTitle = sortTitle;
+  }
+  
+  public Long getThumbnailId()
+  {
+    return this.thumbnailId;
+  }
+  
+  public void setThumbnailId(Long thumbnailId)
+  {
+    this.thumbnailId = thumbnailId;
+  }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
-* Qualified Name:     org.serviio.library.entities.Series
-* JD-Core Version:    0.6.2
-*/
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
+ * Qualified Name:     org.serviio.library.entities.Series
+ * JD-Core Version:    0.7.0.1
+ */

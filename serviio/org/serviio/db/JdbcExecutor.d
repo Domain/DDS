@@ -1,6 +1,5 @@
 module org.serviio.db.JdbcExecutor;
 
-import java.lang.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,20 +9,24 @@ import org.serviio.util.JdbcUtils;
 
 public abstract class JdbcExecutor(T)
 {
-  private static immutable List!(String) lockErrorCodes = Arrays.asList(cast(String[])[ "40XL1", "40XL2", "40001" ]);
-
-  public void executeUpdate() {
+  private static final List!(String) lockErrorCodes = Arrays.asList(cast(String[])[ "40XL1", "40XL2", "40001" ]);
+  
+  public void executeUpdate()
+  {
     Connection con = null;
     PreparedStatement ps = null;
-    try {
+    try
+    {
       con = DatabaseManager.getConnection();
       ps = processStatement(con);
-    } catch (SQLException e) {
-      if (lockErrorCodes.contains(e.getSQLState()))
-      {
+    }
+    catch (SQLException e)
+    {
+      if (lockErrorCodes.contains(e.getSQLState())) {
         ps = processStatement(con);
+      } else {
+        throw e;
       }
-      else throw e; 
     }
     finally
     {
@@ -31,11 +34,12 @@ public abstract class JdbcExecutor(T)
       DatabaseManager.releaseConnection(con);
     }
   }
-
+  
   protected abstract PreparedStatement processStatement(Connection paramConnection);
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.db.JdbcExecutor
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

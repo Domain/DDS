@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.OnlinePluginsServerResource;
 
+import java.util.Set;
 import org.serviio.library.online.AbstractOnlineItemParser;
 import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.restlet.AbstractServerResource;
@@ -7,7 +8,8 @@ import org.serviio.ui.representation.OnlinePlugin;
 import org.serviio.ui.representation.OnlinePluginsRepresentation;
 import org.serviio.ui.resources.OnlinePluginsResource;
 
-public class OnlinePluginsServerResource : AbstractServerResource
+public class OnlinePluginsServerResource
+  : AbstractServerResource
   , OnlinePluginsResource
 {
   public OnlinePluginsRepresentation load()
@@ -20,7 +22,8 @@ public class OnlinePluginsServerResource : AbstractServerResource
   }
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.server.OnlinePluginsServerResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

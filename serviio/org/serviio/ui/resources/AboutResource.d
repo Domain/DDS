@@ -1,10 +1,9 @@
 module org.serviio.ui.resources.AboutResource;
 
-public abstract interface AboutResource
-{
-}
+public abstract interface AboutResource {}
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.AboutResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */

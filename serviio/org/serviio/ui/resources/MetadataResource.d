@@ -7,14 +7,15 @@ import org.serviio.ui.representation.MetadataRepresentation;
 
 public abstract interface MetadataResource
 {
-    //@Get("xml|json")
-    public abstract MetadataRepresentation load();
-
-    //@Put("xml|json")
-    public abstract ResultRepresentation save(MetadataRepresentation paramMetadataRepresentation);
+  @Get("xml|json")
+  public abstract MetadataRepresentation load();
+  
+  @Put("xml|json")
+  public abstract ResultRepresentation save(MetadataRepresentation paramMetadataRepresentation);
 }
 
-/* Location:           D:\Program Files\Serviio\lib\serviio.jar
+
+/* Location:           C:\Users\Main\Downloads\serviio.jar
  * Qualified Name:     org.serviio.ui.resources.MetadataResource
- * JD-Core Version:    0.6.2
+ * JD-Core Version:    0.7.0.1
  */
