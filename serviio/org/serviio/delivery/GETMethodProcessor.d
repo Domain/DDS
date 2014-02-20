@@ -36,7 +36,7 @@ public class GETMethodProcessor
         DeliveryContainer deliveryContainer = resourceRetrievalStrategy.retrieveResource(resourceInfo.getResourceId(), selectedVersion, quality, path, null, null, client, markAsRead);
 
         TranscodingJobListener jobListener = deliveryContainer.getTranscodingJobListener();
-        if ((jobListener is_ null) || (jobListener.getFilesizeMap().size() == 0))
+        if ((jobListener is null) || (jobListener.getFilesizeMap().size() == 0))
         {
             this.log.debug_("Unsupported time range request because current filesize is_ not available, sending back 406");
             throw new HttpResponseCodeException(406);
@@ -64,11 +64,11 @@ public class GETMethodProcessor
     private bool markAsReadRequired(RangeHeaders rangeHeaders)
     {
         bool offsetRequested = false;
-        if (rangeHeaders !is_ null)
+        if (rangeHeaders !is null)
         {
             Long start = rangeHeaders.hasHeaders(RangeHeaders.RangeUnit.BYTES) ? rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.BYTES) : null;
-            start = (start is_ null) && (rangeHeaders.hasHeaders(RangeHeaders.RangeUnit.SECONDS)) ? rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.SECONDS) : null;
-            offsetRequested = (start !is_ null) && (!start.equals(new Long(0L)));
+            start = (start is null) && (rangeHeaders.hasHeaders(RangeHeaders.RangeUnit.SECONDS)) ? rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.SECONDS) : null;
+            offsetRequested = (start !is null) && (!start.equals(new Long(0L)));
         }
         if (!offsetRequested) {
             return true;
@@ -80,7 +80,7 @@ public class GETMethodProcessor
     {
         DeliveryContainer deliveryContainer = resourceRetrievalStrategy.retrieveResource(resourceInfo.getResourceId(), selectedVersion, quality, path, timeOffsetInSeconds, requestedDurationInSeconds, client, markAsRead);
         Long deliveredSize = deliveryContainer.getResourceInfo().getFileSize();
-        Long realStreamSize = Long.valueOf((!partialContent) && (deliveredSize !is_ null) ? deliveredSize.longValue() : streamSize);
+        Long realStreamSize = Long.valueOf((!partialContent) && (deliveredSize !is null) ? deliveredSize.longValue() : streamSize);
         return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, skipBytes, realStreamSize.longValue(), partialContent, deliverStream, requestHttpVersion);
     }
 
