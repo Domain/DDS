@@ -327,7 +327,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         {
             Integer itemBitrate = mediaItem.getBitrate() !is null ? mediaItem.getBitrate() : null;
             Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-            builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", new Object[] { audioBitrate ]) });
+            builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", audioBitrate) ]);
         }
         if (tDef.getTargetContainer() == AudioContainer.MP3) {
             builder.outFileOptions(cast(String[])[ "-id3v2_version", "3" ]);
@@ -392,10 +392,10 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     private static void mapStreams(Video mediaItem, FFmpegCLBuilder builder)
     {
         if (mediaItem.getVideoStreamIndex() !is null) {
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", new Object[] { mediaItem.getVideoStreamIndex() ]) });
+            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", mediaItem.getVideoStreamIndex()) ]);
         }
         if ((mediaItem.getAudioCodec() !is null) && (mediaItem.getAudioStreamIndex() !is null)) {
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", new Object[] { mediaItem.getAudioStreamIndex() ]) });
+            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", mediaItem.getAudioStreamIndex()) ]);
         }
     }
 
@@ -556,12 +556,12 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     protected static String encodeFilePathForFilter(HardSubs hardSubs, bool windows)
     {
-        String template = windows ? "\"%s\"" : "'%s'";
+        String tplt = windows ? "\"%s\"" : "'%s'";
         String fileName = hardSubs.getSubtitlesFile();
         for (Map.Entry!(String, String) encodingRule : windows ? windowsStringEncoding.entrySet() : stringEncoding.entrySet()) {
             fileName = fileName.replaceAll(cast(String)encodingRule.getKey(), cast(String)encodingRule.getValue());
         }
-        return String.format(template, cast(Object[])[ fileName ]);
+        return String.format(tplt, cast(Object[])[ fileName ]);
     }
 
     private static void addAudioParameters(Video mediaItem, VideoTranscodingDefinition tDef, FFmpegCLBuilder builder)
