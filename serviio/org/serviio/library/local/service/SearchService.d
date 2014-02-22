@@ -20,67 +20,67 @@ import org.serviio.util.Tupple;
 
 public class SearchService
 {
-  public static void makeVideoSearchable(Long mediaItemId, VideoMetadata metadata, Video video, Repository repository, Series series, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
-  {
-    makeSearchable(SearchMetadataFactory.videoMetadata(mediaItemId, metadata, video, repository, series, folderHierarchy), false);
-  }
-  
-  public static void makeVideoUnsearchable(Long mediaItemId, Video video)
-  {
-    makeUnsearchable(SearchMetadataFactory.videoIndexIds(mediaItemId, video));
-  }
-  
-  public static void makeAudioSearchable(Long mediaItemId, AudioMetadata metadata, MusicTrack song, Repository repository, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
-  {
-    makeSearchable(SearchMetadataFactory.audioMetadata(mediaItemId, metadata, song, repository, folderHierarchy), false);
-  }
-  
-  public static void makeAudioUnsearchable(Long mediaItemId, MusicTrack song)
-  {
-    makeUnsearchable(SearchMetadataFactory.audioIndexIds(mediaItemId, song));
-  }
-  
-  public static void makeImageSearchable(Long mediaItemId, Image image, Repository repository, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
-  {
-    makeSearchable(SearchMetadataFactory.imageMetadata(mediaItemId, image, repository, folderHierarchy), false);
-  }
-  
-  public static void makeImageUnsearchable(Long mediaItemId, Image image)
-  {
-    makeUnsearchable(SearchMetadataFactory.imageIndexIds(mediaItemId, image));
-  }
-  
-  public static void makeOnlineSearchable(OnlineItem item, OnlineResourceContainer/*!(? : OnlineContainerItem!(?)*/, ?) container, OnlineRepository repo)
-  {
-    makeSearchable(SearchMetadataFactory.onlineMetadata(item, container, repo), true);
-  }
-  
-  public static void makeOnlineUnsearchable(Long onlineRepositoryId)
-  {
-    SearchManager.getInstance().onlineIndexer().metadataRemoved("onlineRepoId", onlineRepositoryId.toString());
-  }
-  
-  private static void makeSearchable(List!(SearchMetadata) smd, bool online)
-  {
-    foreach (SearchMetadata md ; smd) {
-      if (!online) {
-        SearchManager.getInstance().localIndexer().metadataAdded(md);
-      } else {
-        SearchManager.getInstance().onlineIndexer().metadataAdded(md);
-      }
+    public static void makeVideoSearchable(Long mediaItemId, VideoMetadata metadata, Video video, Repository repository, Series series, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
+    {
+        makeSearchable(SearchMetadataFactory.videoMetadata(mediaItemId, metadata, video, repository, series, folderHierarchy), false);
     }
-  }
-  
-  private static void makeUnsearchable(List!(Tupple!(SearchIndexer.SearchCategory, Long)) idsToRemove)
-  {
-    for (Tupple!(SearchIndexer.SearchCategory, Long) pair : idsToRemove) {
-      SearchManager.getInstance().localIndexer().metadataRemoved(cast(SearchIndexer.SearchCategory)pair.getValueA(), cast(Long)pair.getValueB());
+
+    public static void makeVideoUnsearchable(Long mediaItemId, Video video)
+    {
+        makeUnsearchable(SearchMetadataFactory.videoIndexIds(mediaItemId, video));
     }
-  }
+
+    public static void makeAudioSearchable(Long mediaItemId, AudioMetadata metadata, MusicTrack song, Repository repository, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
+    {
+        makeSearchable(SearchMetadataFactory.audioMetadata(mediaItemId, metadata, song, repository, folderHierarchy), false);
+    }
+
+    public static void makeAudioUnsearchable(Long mediaItemId, MusicTrack song)
+    {
+        makeUnsearchable(SearchMetadataFactory.audioIndexIds(mediaItemId, song));
+    }
+
+    public static void makeImageSearchable(Long mediaItemId, Image image, Repository repository, Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy)
+    {
+        makeSearchable(SearchMetadataFactory.imageMetadata(mediaItemId, image, repository, folderHierarchy), false);
+    }
+
+    public static void makeImageUnsearchable(Long mediaItemId, Image image)
+    {
+        makeUnsearchable(SearchMetadataFactory.imageIndexIds(mediaItemId, image));
+    }
+
+    public static void makeOnlineSearchable(OnlineItem item, OnlineResourceContainer/*!(? : OnlineContainerItem!(?), ?)*/ container, OnlineRepository repo)
+    {
+        makeSearchable(SearchMetadataFactory.onlineMetadata(item, container, repo), true);
+    }
+
+    public static void makeOnlineUnsearchable(Long onlineRepositoryId)
+    {
+        SearchManager.getInstance().onlineIndexer().metadataRemoved("onlineRepoId", onlineRepositoryId.toString());
+    }
+
+    private static void makeSearchable(List!(SearchMetadata) smd, bool online)
+    {
+        foreach (SearchMetadata md ; smd) {
+            if (!online) {
+                SearchManager.getInstance().localIndexer().metadataAdded(md);
+            } else {
+                SearchManager.getInstance().onlineIndexer().metadataAdded(md);
+            }
+        }
+    }
+
+    private static void makeUnsearchable(List!(Tupple!(SearchIndexer.SearchCategory, Long)) idsToRemove)
+    {
+        for (Tupple!(SearchIndexer.SearchCategory, Long) pair : idsToRemove) {
+            SearchManager.getInstance().localIndexer().metadataRemoved(cast(SearchIndexer.SearchCategory)pair.getValueA(), cast(Long)pair.getValueB());
+        }
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.service.SearchService
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.service.SearchService
+* JD-Core Version:    0.7.0.1
+*/

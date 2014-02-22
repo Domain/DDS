@@ -3,164 +3,164 @@ module org.serviio.library.local.metadata.extractor.embedded.h264.CAVLCReader;
 import java.io.IOException;
 
 public class CAVLCReader
-  : BitstreamReader
+: BitstreamReader
 {
-  public this(BufferWrapper is)
-  {
-    super(is);
-  }
-  
-  public long readNBit(int n, String message)
-  {
-    long val = readNBit(n);
-    
-    trace(message, String.valueOf(val));
-    
-    return val;
-  }
-  
-  private int readUE()
-  {
-    int cnt = 0;
-    while (read1Bit() == 0) {
-      cnt++;
-    }
-    int res = 0;
-    if (cnt > 0)
+    public this(BufferWrapper ins)
     {
-      long val = readNBit(cnt);
-      
-      res = (int)((1 << cnt) - 1 + val);
+        super(ins);
     }
-    return res;
-  }
-  
-  public int readUE(String message)
-  {
-    int res = readUE();
-    
-    trace(message, String.valueOf(res));
-    
-    return res;
-  }
-  
-  public int readSE(String message)
-  {
-    int val = readUE();
-    
-    int sign = ((val & 0x1) << 1) - 1;
-    val = ((val >> 1) + (val & 0x1)) * sign;
-    
-    trace(message, String.valueOf(val));
-    
-    return val;
-  }
-  
-  public bool readBool(String message)
-  {
-    bool res = read1Bit() != 0;
-    
-    trace(message, res ? "1" : "0");
-    
-    return res;
-  }
-  
-  public int readU(int i, String string)
-  {
-    return cast(int)readNBit(i, string);
-  }
-  
-  public byte[] read(int payloadSize)
-  {
-    byte[] result = new byte[payloadSize];
-    for (int i = 0; i < payloadSize; i++) {
-      result[i] = (cast(byte)readByte());
-    }
-    return result;
-  }
-  
-  public bool readAE()
-  {
-    throw new UnsupportedOperationException("Stan");
-  }
-  
-  public int readTE(int max)
-  {
-    if (max > 1) {
-      return readUE();
-    }
-    return (read1Bit() ^ 0xFFFFFFFF) & 0x1;
-  }
-  
-  public int readAEI()
-  {
-    throw new UnsupportedOperationException("Stan");
-  }
-  
-  public int readME(String string)
-  {
-    return readUE(string);
-  }
-  
-  public Object readCE(BTree bt, String message)
-  {
-    for (;;)
+
+    public long readNBit(int n, String message)
     {
-      int bit = read1Bit();
-      bt = bt.down(bit);
-      if (bt is null) {
-        throw new RuntimeException("Illegal code");
-      }
-      Object i = bt.getValue();
-      if (i !is null)
-      {
-        trace(message, i.toString());
-        return i;
-      }
+        long val = readNBit(n);
+
+        trace(message, String.valueOf(val));
+
+        return val;
     }
-  }
-  
-  public int readZeroBitCount(String message)
-  {
-    int count = 0;
-    while (read1Bit() == 0) {
-      count++;
+
+    private int readUE()
+    {
+        int cnt = 0;
+        while (read1Bit() == 0) {
+            cnt++;
+        }
+        int res = 0;
+        if (cnt > 0)
+        {
+            long val = readNBit(cnt);
+
+            res = cast(int)((1 << cnt) - 1 + val);
+        }
+        return res;
     }
-    trace(message, String.valueOf(count));
-    
-    return count;
-  }
-  
-  public void readTrailingBits()
-  {
-    read1Bit();
-    readRemainingByte();
-  }
-  
-  private void trace(String message, String val)
-  {
-    StringBuilder traceBuilder = new StringBuilder();
-    
-    String pos = String.valueOf(bitsRead - this.debugBits.length());
-    int spaces = 8 - pos.length();
-    
-    traceBuilder.append("@" + pos);
-    for (int i = 0; i < spaces; i++) {
-      traceBuilder.append(' ');
+
+    public int readUE(String message)
+    {
+        int res = readUE();
+
+        trace(message, String.valueOf(res));
+
+        return res;
     }
-    traceBuilder.append(message);
-    spaces = 100 - traceBuilder.length() - this.debugBits.length();
-    for (int i = 0; i < spaces; i++) {
-      traceBuilder.append(' ');
+
+    public int readSE(String message)
+    {
+        int val = readUE();
+
+        int sign = ((val & 0x1) << 1) - 1;
+        val = ((val >> 1) + (val & 0x1)) * sign;
+
+        trace(message, String.valueOf(val));
+
+        return val;
     }
-    traceBuilder.append(this.debugBits);
-    traceBuilder.append(" (" + val + ")");
-    this.debugBits.clear();
-  }
+
+    public bool readBool(String message)
+    {
+        bool res = read1Bit() != 0;
+
+        trace(message, res ? "1" : "0");
+
+        return res;
+    }
+
+    public int readU(int i, String string)
+    {
+        return cast(int)readNBit(i, string);
+    }
+
+    public byte[] read(int payloadSize)
+    {
+        byte[] result = new byte[payloadSize];
+        for (int i = 0; i < payloadSize; i++) {
+            result[i] = (cast(byte)readByte());
+        }
+        return result;
+    }
+
+    public bool readAE()
+    {
+        throw new UnsupportedOperationException("Stan");
+    }
+
+    public int readTE(int max)
+    {
+        if (max > 1) {
+            return readUE();
+        }
+        return (read1Bit() ^ 0xFFFFFFFF) & 0x1;
+    }
+
+    public int readAEI()
+    {
+        throw new UnsupportedOperationException("Stan");
+    }
+
+    public int readME(String string)
+    {
+        return readUE(string);
+    }
+
+    public Object readCE(BTree bt, String message)
+    {
+        for (;;)
+        {
+            int bit = read1Bit();
+            bt = bt.down(bit);
+            if (bt is null) {
+                throw new RuntimeException("Illegal code");
+            }
+            Object i = bt.getValue();
+            if (i !is null)
+            {
+                trace(message, i.toString());
+                return i;
+            }
+        }
+    }
+
+    public int readZeroBitCount(String message)
+    {
+        int count = 0;
+        while (read1Bit() == 0) {
+            count++;
+        }
+        trace(message, String.valueOf(count));
+
+        return count;
+    }
+
+    public void readTrailingBits()
+    {
+        read1Bit();
+        readRemainingByte();
+    }
+
+    private void trace(String message, String val)
+    {
+        StringBuilder traceBuilder = new StringBuilder();
+
+        String pos = String.valueOf(bitsRead - this.debugBits.length());
+        int spaces = 8 - pos.length();
+
+        traceBuilder.append("@" + pos);
+        for (int i = 0; i < spaces; i++) {
+            traceBuilder.append(' ');
+        }
+        traceBuilder.append(message);
+        spaces = 100 - traceBuilder.length() - this.debugBits.length();
+        for (int i = 0; i < spaces; i++) {
+            traceBuilder.append(' ');
+        }
+        traceBuilder.append(this.debugBits);
+        traceBuilder.append(" (" + val + ")");
+        this.debugBits.clear();
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.h264.CAVLCReader
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.h264.CAVLCReader
+* JD-Core Version:    0.7.0.1
+*/

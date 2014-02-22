@@ -558,7 +558,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         String tplt = windows ? "\"%s\"" : "'%s'";
         String fileName = hardSubs.getSubtitlesFile();
-        for (Map.Entry!(String, String) encodingRule : windows ? windowsStringEncoding.entrySet() : stringEncoding.entrySet()) {
+        foreach (Map.Entry!(String, String) encodingRule ; windows ? windowsStringEncoding.entrySet() : stringEncoding.entrySet()) {
             fileName = fileName.replaceAll(cast(String)encodingRule.getKey(), cast(String)encodingRule.getValue());
         }
         return String.format(tplt, cast(Object[])[ fileName ]);
@@ -586,7 +586,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
             {
                 Integer itemBitrate = mediaItem.getAudioBitrate() !is null ? mediaItem.getAudioBitrate() : null;
                 Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-                builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", new Object[] { audioBitrate ]) });
+                builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", audioBitrate) ]);
             }
             Integer frequency = getAudioFrequency(tDef, mediaItem);
             if (frequency !is null) {
@@ -820,9 +820,9 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         Matcher m = p.matcher(ffmpegOutput);
         if (m.find())
         {
-            String version = m.group(1);
-            version = version.replaceAll(" ", "");
-            return "Lavf" + version;
+            String ver = m.group(1);
+            ver = ver.replaceAll(" ", "");
+            return "Lavf" + ver;
         }
         log.warn("Could not work output FFmpeg default User-Agent");
         return null;
