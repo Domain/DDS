@@ -73,7 +73,7 @@ public class SearchService
 
     private static void makeUnsearchable(List!(Tupple!(SearchIndexer.SearchCategory, Long)) idsToRemove)
     {
-        for (Tupple!(SearchIndexer.SearchCategory, Long) pair : idsToRemove) {
+        foreach (Tupple!(SearchIndexer.SearchCategory, Long) pair ; idsToRemove) {
             SearchManager.getInstance().localIndexer().metadataRemoved(cast(SearchIndexer.SearchCategory)pair.getValueA(), cast(Long)pair.getValueB());
         }
     }
