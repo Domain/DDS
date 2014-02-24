@@ -29,122 +29,122 @@ import org.slf4j.LoggerFactory;
 
 public class Searcher
 {
-  private static final Logger log = LoggerFactory.getLogger!(Searcher);
-  private static Map!(MediaFileType, List!(SearchIndexer.SearchCategory)) categoryMapping = new HashMap();
-  private MultiReader ireader;
-  private DirectoryReader[] subReaders;
-  
-  static this()
-  {
-    categoryMapping.put(MediaFileType.VIDEO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.MOVIES, SearchIndexer.SearchCategory.SERIES, SearchIndexer.SearchCategory.EPISODES, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
-    categoryMapping.put(MediaFileType.IMAGE, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
-    categoryMapping.put(MediaFileType.AUDIO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.ALBUM_ARTISTS, SearchIndexer.SearchCategory.ALBUMS, SearchIndexer.SearchCategory.MUSIC_TRACKS, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
-  }
-  
-  public this(SearchIndexer... indexers)
-  {
-    this.subReaders = new DirectoryReader[indexers.length];
-    for (int i = 0; i < indexers.length; i++)
+    private static final Logger log = LoggerFactory.getLogger!(Searcher);
+    private static Map!(MediaFileType, List!(SearchIndexer.SearchCategory)) categoryMapping = new HashMap();
+    private MultiReader ireader;
+    private DirectoryReader[] subReaders;
+
+    static this()
     {
-      IndexWriter writer = indexers[i].getWriter();
-      this.subReaders[i] = DirectoryReader.open(writer, true);
+        categoryMapping.put(MediaFileType.VIDEO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.MOVIES, SearchIndexer.SearchCategory.SERIES, SearchIndexer.SearchCategory.EPISODES, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
+        categoryMapping.put(MediaFileType.IMAGE, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
+        categoryMapping.put(MediaFileType.AUDIO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.ALBUM_ARTISTS, SearchIndexer.SearchCategory.ALBUMS, SearchIndexer.SearchCategory.MUSIC_TRACKS, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
     }
-    this.ireader = new MultiReader(this.subReaders, true);
-  }
-  
-  public List!(SearchResultsHolder) search(String term, MediaFileType fileType, int offset, int count)
-  {
-    log.debug_(String.format("Performing search for term '%s'", cast(Object[])[ term ]));
-    openReader();
-    IndexSearcher isearcher = new IndexSearcher(this.ireader);
-    List!(SearchResultsHolder) results = new ArrayList();
-    for (SearchIndexer.SearchCategory category : cast(List)categoryMapping.get(fileType)) {
-      results.add(runSearchForCategory(isearcher, category, fileType, term, offset, count));
-    }
-    return results;
-  }
-  
-  public void close()
-  {
-    try
+
+    public this(SearchIndexer[] indexers...)
     {
-      this.ireader.close();
+        this.subReaders = new DirectoryReader[indexers.length];
+        for (int i = 0; i < indexers.length; i++)
+        {
+            IndexWriter writer = indexers[i].getWriter();
+            this.subReaders[i] = DirectoryReader.open(writer, true);
+        }
+        this.ireader = new MultiReader(this.subReaders, true);
     }
-    catch (IOException e)
+
+    public List!(SearchResultsHolder) search(String term, MediaFileType fileType, int offset, int count)
     {
-      log.warn("Failed to close index reader", e);
+        log.debug_(String.format("Performing search for term '%s'", cast(Object[])[ term ]));
+        openReader();
+        IndexSearcher isearcher = new IndexSearcher(this.ireader);
+        List!(SearchResultsHolder) results = new ArrayList();
+        foreach (SearchIndexer.SearchCategory category ; cast(List)categoryMapping.get(fileType)) {
+            results.add(runSearchForCategory(isearcher, category, fileType, term, offset, count));
+        }
+        return results;
     }
-  }
-  
-  private SearchResultsHolder runSearchForCategory(IndexSearcher isearcher, SearchIndexer.SearchCategory category, MediaFileType fileType, String term, int offset, int count)
-  {
-    BooleanQuery termQuery = new BooleanQuery();
-    
-    List!(String) termParts = tokenizeQuery(term);
-    foreach (String termPart ; termParts) {
-      termQuery.add(new WildcardQuery(new Term("value", termPart.trim() + "*")), BooleanClause.Occur.MUST);
-    }
-    BooleanQuery query = new BooleanQuery();
-    query.add(new TermQuery(new Term("fileType", fileType.toString())), BooleanClause.Occur.MUST);
-    query.add(new WildcardQuery(new Term("category", category.toString())), BooleanClause.Occur.MUST);
-    query.add(termQuery, BooleanClause.Occur.MUST);
-    
-    TopDocs result = isearcher.search(query, count + offset);
-    List!(SearchResult) foundItems = new ArrayList();
-    List!(ScoreDoc) hits = CollectionUtils.getSubList(Arrays.asList(result.scoreDocs), offset, count);
-    foreach (ScoreDoc doc ; hits) {
-      foundItems.add(SearchResult.fromDoc(isearcher.doc(doc.doc)));
-    }
-    SearchResultsHolder holder = new SearchResultsHolder();
-    holder.setTotalMatched(result.totalHits);
-    holder.setCategory(category);
-    holder.setItems(foundItems);
-    return holder;
-  }
-  
-  private void openReader()
-  {
-    bool changed = false;
-    for (int i = 0; i < this.subReaders.length; i++)
+
+    public void close()
     {
-      DirectoryReader originalReader = this.subReaders[i];
-      DirectoryReader updatedIndexReader = DirectoryReader.openIfChanged(originalReader);
-      if (updatedIndexReader !is null)
-      {
-        changed = true;
-        this.subReaders[i] = updatedIndexReader;
-      }
+        try
+        {
+            this.ireader.close();
+        }
+        catch (IOException e)
+        {
+            log.warn("Failed to close index reader", e);
+        }
     }
-    if (changed) {
-      this.ireader = new MultiReader(this.subReaders);
-    }
-  }
-  
-  private List!(String) tokenizeQuery(String term)
-  {
-    List!(String) query = new ArrayList();
-    Analyzer analyzer = new ServiioSearchAnalyzer(Version.LUCENE_44);
-    TokenStream tokenStream = analyzer.tokenStream("value", new StringReader(term));
-    CharTermAttribute termAtt = cast(CharTermAttribute)tokenStream.addAttribute(CharTermAttribute.class_);
-    try
+
+    private SearchResultsHolder runSearchForCategory(IndexSearcher isearcher, SearchIndexer.SearchCategory category, MediaFileType fileType, String term, int offset, int count)
     {
-      tokenStream.reset();
-      while (tokenStream.incrementToken()) {
-        query.add(termAtt.toString());
-      }
-      tokenStream.end();
+        BooleanQuery termQuery = new BooleanQuery();
+
+        List!(String) termParts = tokenizeQuery(term);
+        foreach (String termPart ; termParts) {
+            termQuery.add(new WildcardQuery(new Term("value", termPart.trim() + "*")), BooleanClause.Occur.MUST);
+        }
+        BooleanQuery query = new BooleanQuery();
+        query.add(new TermQuery(new Term("fileType", fileType.toString())), BooleanClause.Occur.MUST);
+        query.add(new WildcardQuery(new Term("category", category.toString())), BooleanClause.Occur.MUST);
+        query.add(termQuery, BooleanClause.Occur.MUST);
+
+        TopDocs result = isearcher.search(query, count + offset);
+        List!(SearchResult) foundItems = new ArrayList();
+        List!(ScoreDoc) hits = CollectionUtils.getSubList(Arrays.asList(result.scoreDocs), offset, count);
+        foreach (ScoreDoc doc ; hits) {
+            foundItems.add(SearchResult.fromDoc(isearcher.doc(doc.doc)));
+        }
+        SearchResultsHolder holder = new SearchResultsHolder();
+        holder.setTotalMatched(result.totalHits);
+        holder.setCategory(category);
+        holder.setItems(foundItems);
+        return holder;
     }
-    finally
+
+    private void openReader()
     {
-      tokenStream.close();
-      analyzer.close();
+        bool changed = false;
+        for (int i = 0; i < this.subReaders.length; i++)
+        {
+            DirectoryReader originalReader = this.subReaders[i];
+            DirectoryReader updatedIndexReader = DirectoryReader.openIfChanged(originalReader);
+            if (updatedIndexReader !is null)
+            {
+                changed = true;
+                this.subReaders[i] = updatedIndexReader;
+            }
+        }
+        if (changed) {
+            this.ireader = new MultiReader(this.subReaders);
+        }
     }
-    return query;
-  }
+
+    private List!(String) tokenizeQuery(String term)
+    {
+        List!(String) query = new ArrayList();
+        Analyzer analyzer = new ServiioSearchAnalyzer(Version.LUCENE_44);
+        TokenStream tokenStream = analyzer.tokenStream("value", new StringReader(term));
+        CharTermAttribute termAtt = cast(CharTermAttribute)tokenStream.addAttribute(CharTermAttribute.class_);
+        try
+        {
+            tokenStream.reset();
+            while (tokenStream.incrementToken()) {
+                query.add(termAtt.toString());
+            }
+            tokenStream.end();
+        }
+        finally
+        {
+            tokenStream.close();
+            analyzer.close();
+        }
+        return query;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.search.Searcher
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.search.Searcher
+* JD-Core Version:    0.7.0.1
+*/

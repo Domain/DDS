@@ -40,86 +40,85 @@ import org.serviio.upnp.service.contentdirectory.rest.representation.OnlineIdent
 import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultsRepresentation;
 
-public class ServiioXstreamRepresentation(T)
-  : XstreamRepresentation!(T)
+public class ServiioXstreamRepresentation(T) : XstreamRepresentation!(T)
 {
-  public this(T object)
-  {
-    super(object);
-  }
-  
-  public this(MediaType mediaType, T object)
-  {
-    super(mediaType, object);
-  }
-  
-  public this(Representation representation)
-  {
-    super(representation);
-  }
-  
-  public MediaType getMediaType()
-  {
-    return MediaType.APPLICATION_XML;
-  }
-  
-  protected XStream createXstream(MediaType arg0)
-  {
-    XStream xs = super.createXstream(arg0);
-    xs.alias("serviceStatus", ServiceStatusRepresentation.class_);
-    xs.alias("action", ActionRepresentation.class_);
-    xs.alias("application", ApplicationRepresentation.class_);
-    xs.alias("license", LicenseRepresentation.class_);
-    xs.alias("libraryStatus", LibraryStatusRepresentation.class_);
-    xs.alias("metadata", MetadataRepresentation.class_);
-    xs.alias("refdata", ReferenceDataRepresentation.class_);
-    xs.alias("repository", RepositoryRepresentation.class_);
-    xs.alias("result", ResultRepresentation.class_);
-    xs.alias("status", StatusRepresentation.class_);
-    xs.alias("delivery", DeliveryRepresentation.class_);
-    xs.alias("transcoding", TranscodingRepresentation.class_);
-    xs.alias("subtitles", SubtitlesRepresentation.class_);
-    xs.alias("renderer", RendererRepresentation.class_);
-    xs.alias("presentation", PresentationRepresentation.class_);
-    xs.alias("consoleSettings", ConsoleSettingsRepresentation.class_);
-    xs.alias("remoteAccess", RemoteAccessRepresentation.class_);
-    xs.alias("plugins", OnlinePluginsRepresentation.class_);
-    xs.alias("onlineRepositoriesBackup", OnlineRepositoriesBackupRepresentation.class_);
-    
-    xs.alias("item", DataValue.class_);
-    xs.alias("sharedFolder", SharedFolder.class_);
-    xs.alias("fileType", MediaFileType.class_);
-    xs.alias("browsingCategory", BrowsingCategory.class_);
-    xs.alias("onlineRepository", OnlineRepository.class_);
-    xs.alias("onlinePlugin", OnlinePlugin.class_);
-    xs.alias("backupItem", OnlineRepositoryBackup.class_);
-    
-    xs.alias("contentDirectory", BrowseContentDirectoryRepresentation.class_);
-    xs.alias("searchResults", SearchResultsRepresentation.class_);
-    xs.alias("category", CategorySearchResultsRepresentation.class_);
-    xs.alias("object", DirectoryObjectRepresentation.class_);
-    xs.alias("object", SearchResultRepresentation.class_);
-    xs.alias("contentUrl", ContentURLRepresentation.class_);
-    xs.alias("identifier", OnlineIdentifierRepresentation.class_);
-    
+    public this(T object)
+    {
+        super(object);
+    }
 
-    ClassAliasingMapper mapper = new ClassAliasingMapper(xs.getMapper());
-    mapper.addClassAlias("id", Long.class_);
-    xs.registerLocalConverter(SharedFolder.class_, "accessGroupIds", new CollectionConverter(mapper));
-    xs.registerLocalConverter(OnlineRepository.class_, "accessGroupIds", new CollectionConverter(mapper));
-    xs.registerLocalConverter(OnlineRepositoryBackup.class_, "accessGroupIds", new CollectionConverter(mapper));
-    
-    return xs;
-  }
-  
-  public CharacterSet getCharacterSet()
-  {
-    return CharacterSet.UTF_8;
-  }
+    public this(MediaType mediaType, T object)
+    {
+        super(mediaType, object);
+    }
+
+    public this(Representation representation)
+    {
+        super(representation);
+    }
+
+    public MediaType getMediaType()
+    {
+        return MediaType.APPLICATION_XML;
+    }
+
+    protected XStream createXstream(MediaType arg0)
+    {
+        XStream xs = super.createXstream(arg0);
+        xs.alias_("serviceStatus", ServiceStatusRepresentation.class_);
+        xs.alias_("action", ActionRepresentation.class_);
+        xs.alias_("application", ApplicationRepresentation.class_);
+        xs.alias_("license", LicenseRepresentation.class_);
+        xs.alias_("libraryStatus", LibraryStatusRepresentation.class_);
+        xs.alias_("metadata", MetadataRepresentation.class_);
+        xs.alias_("refdata", ReferenceDataRepresentation.class_);
+        xs.alias_("repository", RepositoryRepresentation.class_);
+        xs.alias_("result", ResultRepresentation.class_);
+        xs.alias_("status", StatusRepresentation.class_);
+        xs.alias_("delivery", DeliveryRepresentation.class_);
+        xs.alias_("transcoding", TranscodingRepresentation.class_);
+        xs.alias_("subtitles", SubtitlesRepresentation.class_);
+        xs.alias_("renderer", RendererRepresentation.class_);
+        xs.alias_("presentation", PresentationRepresentation.class_);
+        xs.alias_("consoleSettings", ConsoleSettingsRepresentation.class_);
+        xs.alias_("remoteAccess", RemoteAccessRepresentation.class_);
+        xs.alias_("plugins", OnlinePluginsRepresentation.class_);
+        xs.alias_("onlineRepositoriesBackup", OnlineRepositoriesBackupRepresentation.class_);
+
+        xs.alias_("item", DataValue.class_);
+        xs.alias_("sharedFolder", SharedFolder.class_);
+        xs.alias_("fileType", MediaFileType.class_);
+        xs.alias_("browsingCategory", BrowsingCategory.class_);
+        xs.alias_("onlineRepository", OnlineRepository.class_);
+        xs.alias_("onlinePlugin", OnlinePlugin.class_);
+        xs.alias_("backupItem", OnlineRepositoryBackup.class_);
+
+        xs.alias_("contentDirectory", BrowseContentDirectoryRepresentation.class_);
+        xs.alias_("searchResults", SearchResultsRepresentation.class_);
+        xs.alias_("category", CategorySearchResultsRepresentation.class_);
+        xs.alias_("object", DirectoryObjectRepresentation.class_);
+        xs.alias_("object", SearchResultRepresentation.class_);
+        xs.alias_("contentUrl", ContentURLRepresentation.class_);
+        xs.alias_("identifier", OnlineIdentifierRepresentation.class_);
+
+
+        ClassAliasingMapper mapper = new ClassAliasingMapper(xs.getMapper());
+        mapper.addClassAlias("id", Long.class_);
+        xs.registerLocalConverter(SharedFolder.class_, "accessGroupIds", new CollectionConverter(mapper));
+        xs.registerLocalConverter(OnlineRepository.class_, "accessGroupIds", new CollectionConverter(mapper));
+        xs.registerLocalConverter(OnlineRepositoryBackup.class_, "accessGroupIds", new CollectionConverter(mapper));
+
+        return xs;
+    }
+
+    public CharacterSet getCharacterSet()
+    {
+        return CharacterSet.UTF_8;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.restlet.ServiioXstreamRepresentation
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.restlet.ServiioXstreamRepresentation
+* JD-Core Version:    0.7.0.1
+*/

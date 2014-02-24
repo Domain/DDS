@@ -12,54 +12,54 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistParser
 {
-  private static final Logger log = LoggerFactory.getLogger!(PlaylistParser);
-  private static final int ONLINE_MAX_BYTES_TO_READ = 102400;
-  private static PlaylistParser instance;
-  
-  public static PlaylistParser getInstance()
-  {
-    if (instance is null) {
-      instance = new PlaylistParser();
-    }
-    return instance;
-  }
-  
-  public ParsedPlaylist parse(String playlistLocation)
-  {
-    log.debug_(String.format("Parsing playlist '%s'", cast(Object[])[ playlistLocation ]));
-    byte[] playlistBytes = getPlaylistBytes(playlistLocation);
-    PlaylistParserStrategy strategy = PlaylistStrategyFactory.getStrategy(playlistBytes, playlistLocation);
-    if (strategy !is null)
+    private static final Logger log = LoggerFactory.getLogger!(PlaylistParser);
+    private static immutable int ONLINE_MAX_BYTES_TO_READ = 102400;
+    private static PlaylistParser instance;
+
+    public static PlaylistParser getInstance()
     {
-      log.debug_(String.format("Found a suitable playlist parser strategy: %s", cast(Object[])[ strategy.getClass().getSimpleName() ]));
-      return strategy.parsePlaylist(playlistBytes, playlistLocation);
+        if (instance is null) {
+            instance = new PlaylistParser();
+        }
+        return instance;
     }
-    log.warn(String.format("Could not find a suitable playlist parser for file '%s', it is either not supported or the file is corrupted.", cast(Object[])[ playlistLocation ]));
-    
-    return null;
-  }
-  
-  private byte[] getPlaylistBytes(String playlistLocation)
-  {
-    InputStream is = null;
-    int maxLengthToRead = 2147483647;
-    if (HttpUtils.isHttpUrl(playlistLocation))
+
+    public ParsedPlaylist parse(String playlistLocation)
     {
-      log.debug_("Reading playlist from URL");
-      is = HttpClient.getStreamFromURL(playlistLocation);
-      maxLengthToRead = 102400;
+        log.debug_(String.format("Parsing playlist '%s'", cast(Object[])[ playlistLocation ]));
+        byte[] playlistBytes = getPlaylistBytes(playlistLocation);
+        PlaylistParserStrategy strategy = PlaylistStrategyFactory.getStrategy(playlistBytes, playlistLocation);
+        if (strategy !is null)
+        {
+            log.debug_(String.format("Found a suitable playlist parser strategy: %s", cast(Object[])[ strategy.getClass().getSimpleName() ]));
+            return strategy.parsePlaylist(playlistBytes, playlistLocation);
+        }
+        log.warn(String.format("Could not find a suitable playlist parser for file '%s', it is either not supported or the file is corrupted.", cast(Object[])[ playlistLocation ]));
+
+        return null;
     }
-    else
+
+    private byte[] getPlaylistBytes(String playlistLocation)
     {
-      log.debug_("Reading playlist from a local file");
-      is = new FileInputStream(playlistLocation);
+        InputStream ins = null;
+        int maxLengthToRead = 2147483647;
+        if (HttpUtils.isHttpUrl(playlistLocation))
+        {
+            log.debug_("Reading playlist from URL");
+            ins = HttpClient.getStreamFromURL(playlistLocation);
+            maxLengthToRead = 102400;
+        }
+        else
+        {
+            log.debug_("Reading playlist from a local file");
+            ins = new FileInputStream(playlistLocation);
+        }
+        return FileUtils.readFileBytes(ins, maxLengthToRead);
     }
-    return FileUtils.readFileBytes(is, maxLengthToRead);
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.playlist.PlaylistParser
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.playlist.PlaylistParser
+* JD-Core Version:    0.7.0.1
+*/

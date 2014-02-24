@@ -16,81 +16,81 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServiioStatusService
-  : StatusService
+: StatusService
 {
-  private static final Logger log = LoggerFactory.getLogger!(ServiioStatusService);
-  
-  public Representation getRepresentation(Status status, Request request, Response response)
-  {
-    if (status.getThrowable() !is null)
+    private static final Logger log = LoggerFactory.getLogger!(ServiioStatusService);
+
+    public Representation getRepresentation(Status status, Request request, Response response)
     {
-      log.warn(String.format("%s occured. Returning error code %s to the REST layer. Message: %s", cast(Object[])[ status.getThrowable().getClass().getSimpleName(), Integer.valueOf(status.getCode()), status.getThrowable().getMessage() ]));
-      
-      log.debug_("Detailed exception: ", status.getThrowable());
+        if (status.getThrowable() !is null)
+        {
+            log.warn(String.format("%s occured. Returning error code %s to the REST layer. Message: %s", cast(Object[])[ status.getThrowable().getClass().getSimpleName(), Integer.valueOf(status.getCode()), status.getThrowable().getMessage() ]));
+
+            log.debug_("Detailed exception: ", status.getThrowable());
+        }
+        else
+        {
+            log.warn(String.format("Returning error code to the REST layer: %s", cast(Object[])[ status.toString() ]));
+        }
+        response.setStatus(status);
+        if ((status.getThrowable() !is null) && (( cast(AbstractRestfulException)status.getThrowable() !is null )))
+        {
+            int errorCode = (cast(AbstractRestfulException)status.getThrowable()).getErrorCode();
+            List!(String) parameters = (cast(AbstractRestfulException)status.getThrowable()).getParameters();
+            ResultRepresentation r = responseError(Integer.valueOf(errorCode), parameters);
+            return buildResultRepresentation(request, r);
+        }
+        ResultRepresentation r = responseError(null, null);
+        return buildResultRepresentation(request, r);
     }
-    else
+
+    public Status getStatus(Throwable throwable, Request request, Response response)
     {
-      log.warn(String.format("Returning error code to the REST layer: %s", cast(Object[])[ status.toString() ]));
+        if (( cast(ResourceException)throwable !is null ))
+        {
+            ResourceException re = cast(ResourceException)throwable;
+            return re.getStatus();
+        }
+        if (( cast(ValidationException)throwable !is null )) {
+            return new Status(Status.CLIENT_ERROR_BAD_REQUEST, throwable);
+        }
+        if (( cast(HttpCodeException)throwable !is null )) {
+            return new Status((cast(HttpCodeException)throwable).getHttpCode(), throwable);
+        }
+        if (( cast(AuthenticationException)throwable !is null )) {
+            return new Status(Status.CLIENT_ERROR_UNAUTHORIZED, throwable);
+        }
+        if (( cast(FileNotFoundException)throwable !is null )) {
+            return new Status(Status.CLIENT_ERROR_NOT_FOUND, throwable);
+        }
+        if (( cast(ServerUnavailableException)throwable !is null )) {
+            return new Status(Status.SERVER_ERROR_SERVICE_UNAVAILABLE, throwable);
+        }
+        return new Status(Status.SERVER_ERROR_INTERNAL, throwable);
     }
-    response.setStatus(status);
-    if ((status.getThrowable() !is null) && (( cast(AbstractRestfulException)status.getThrowable() !is null )))
+
+    private ResultRepresentation responseError(Integer errorCode, List!(String) parameters)
     {
-      int errorCode = (cast(AbstractRestfulException)status.getThrowable()).getErrorCode();
-      List!(String) parameters = (cast(AbstractRestfulException)status.getThrowable()).getParameters();
-      ResultRepresentation r = responseError(Integer.valueOf(errorCode), parameters);
-      return buildResultRepresentation(request, r);
+        return new ResultRepresentation(errorCode, parameters);
     }
-    ResultRepresentation r = responseError(null, null);
-    return buildResultRepresentation(request, r);
-  }
-  
-  public Status getStatus(Throwable throwable, Request request, Response response)
-  {
-    if (( cast(ResourceException)throwable !is null ))
+
+    private Representation buildResultRepresentation(Request request, ResultRepresentation r)
     {
-      ResourceException re = cast(ResourceException)throwable;
-      return re.getStatus();
+        MediaType mt = null;
+
+        List!(Preference!(MediaType)) acceptedMediaTypes = request.getClientInfo().getAcceptedMediaTypes();
+        if ((acceptedMediaTypes !is null) && (acceptedMediaTypes.size() > 0)) {
+            mt = cast(MediaType)(cast(Preference)acceptedMediaTypes.get(0)).getMetadata();
+        }
+        if ((mt !is null) && (mt.getName().startsWith(MediaType.APPLICATION_JSON.getName()))) {
+            return new GsonRepresentation(r);
+        }
+        return new ServiioXstreamRepresentation(mt, r);
     }
-    if (( cast(ValidationException)throwable !is null )) {
-      return new Status(Status.CLIENT_ERROR_BAD_REQUEST, throwable);
-    }
-    if (( cast(HttpCodeException)throwable !is null )) {
-      return new Status((cast(HttpCodeException)throwable).getHttpCode(), throwable);
-    }
-    if (( cast(AuthenticationException)throwable !is null )) {
-      return new Status(Status.CLIENT_ERROR_UNAUTHORIZED, throwable);
-    }
-    if (( cast(FileNotFoundException)throwable !is null )) {
-      return new Status(Status.CLIENT_ERROR_NOT_FOUND, throwable);
-    }
-    if (( cast(ServerUnavailableException)throwable !is null )) {
-      return new Status(Status.SERVER_ERROR_SERVICE_UNAVAILABLE, throwable);
-    }
-    return new Status(Status.SERVER_ERROR_INTERNAL, throwable);
-  }
-  
-  private ResultRepresentation responseError(Integer errorCode, List!(String) parameters)
-  {
-    return new ResultRepresentation(errorCode, parameters);
-  }
-  
-  private Representation buildResultRepresentation(Request request, ResultRepresentation r)
-  {
-    MediaType mt = null;
-    
-    List!(Preference!(MediaType)) acceptedMediaTypes = request.getClientInfo().getAcceptedMediaTypes();
-    if ((acceptedMediaTypes !is null) && (acceptedMediaTypes.size() > 0)) {
-      mt = (MediaType)(cast(Preference)acceptedMediaTypes.get(0)).getMetadata();
-    }
-    if ((mt !is null) && (mt.getName().startsWith(MediaType.APPLICATION_JSON.getName()))) {
-      return new GsonRepresentation(r);
-    }
-    return new ServiioXstreamRepresentation(mt, r);
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.restlet.ServiioStatusService
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.restlet.ServiioStatusService
+* JD-Core Version:    0.7.0.1
+*/

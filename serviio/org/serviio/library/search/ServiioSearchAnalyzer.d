@@ -55,7 +55,7 @@ public class ServiioSearchAnalyzer
     tok = new LowerCaseFilter(this.matchVersion, tok);
     tok = new StopFilter(this.matchVersion, tok, this.stopwords);
     tok = new ASCIIFoldingFilter(tok);
-    new Analyzer.TokenStreamComponents(src, tok)
+    new class(src, tok) Analyzer.TokenStreamComponents
     {
       protected void setReader(Reader reader)
       {
