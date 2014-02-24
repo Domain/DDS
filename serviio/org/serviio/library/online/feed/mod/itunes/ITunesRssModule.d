@@ -1,6 +1,6 @@
-module org.serviio.library.online.feed.module.itunes.ITunesRssModule;
+module org.serviio.library.online.feed.mod.itunes.ITunesRssModule;
 
-import com.sun.syndication.feed.module.Module;
+import com.sun.syndication.feed.mod.Module;
 import java.util.Date;
 import java.util.List;
 

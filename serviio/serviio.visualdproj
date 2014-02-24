@@ -557,13 +557,13 @@
      </Folder>
      <Folder name="online">
       <Folder name="feed">
-       <Folder name="module">
+       <Folder name="mod">
         <Folder name="itunes">
-         <File path="org\serviio\library\online\feed\module\itunes\Image.d" />
-         <File path="org\serviio\library\online\feed\module\itunes\ITunesRssModule.d" />
-         <File path="org\serviio\library\online\feed\module\itunes\ITunesRssModuleImpl.d" />
-         <File path="org\serviio\library\online\feed\module\itunes\ITunesRssModuleParser.d" />
-         <File path="org\serviio\library\online\feed\module\itunes\package.d" />
+         <File path="org\serviio\library\online\feed\mod\itunes\Image.d" />
+         <File path="org\serviio\library\online\feed\mod\itunes\ITunesRssModule.d" />
+         <File path="org\serviio\library\online\feed\mod\itunes\ITunesRssModuleImpl.d" />
+         <File path="org\serviio\library\online\feed\mod\itunes\ITunesRssModuleParser.d" />
+         <File path="org\serviio\library\online\feed\mod\itunes\package.d" />
         </Folder>
        </Folder>
        <File path="org\serviio\library\online\feed\BasicFeedEntryParser.d" />

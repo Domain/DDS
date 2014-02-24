@@ -1,4 +1,4 @@
-module org.serviio.library.online.feed.module.itunes.Image;
+module org.serviio.library.online.feed.mod.itunes.Image;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
