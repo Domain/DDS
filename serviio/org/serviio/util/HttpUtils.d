@@ -81,8 +81,8 @@ public class HttpUtils
     StringBuffer sb = new StringBuffer();
     sb.append("[");
     List!(String) headersList = new ArrayList();
-    for (Map.Entry!(String, String) header : headers.entrySet()) {
-      headersList.add(cast(String)header.getKey() + ": " + (String)header.getValue());
+    foreach (Map.Entry!(String, String) header ; headers.entrySet()) {
+      headersList.add(cast(String)header.getKey() + ": " + cast(String)header.getValue());
     }
     sb.append(CollectionUtils.listToCSV(headersList, ",", false));
     sb.append("]");

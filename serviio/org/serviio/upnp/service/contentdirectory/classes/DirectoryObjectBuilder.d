@@ -8,281 +8,281 @@ import org.serviio.upnp.service.contentdirectory.definition.Definition;
 
 public class DirectoryObjectBuilder
 {
-  public static DirectoryObject createInstance(ObjectClassType type, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    if (type == ObjectClassType.CONTAINER)
+    public static DirectoryObject createInstance(ObjectClassType type, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      Container container = new Container(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupContainer(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        if (type == ObjectClassType.CONTAINER)
+        {
+            Container container = new Container(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupContainer(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.AUDIO_ITEM)
+        {
+            AudioItem item = new AudioItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupAudioItem(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.MUSIC_TRACK)
+        {
+            MusicTrack item = new MusicTrack(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupMusicTrack(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.GENRE)
+        {
+            Genre container = new Genre(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupGenre(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.MUSIC_GENRE)
+        {
+            MusicGenre container = new MusicGenre(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupGenre(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.PERSON)
+        {
+            Person container = new Person(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupPerson(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.MUSIC_ARTIST)
+        {
+            MusicArtist container = new MusicArtist(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupMusicArtist(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.IMAGE_ITEM)
+        {
+            ImageItem item = new ImageItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupImageItem(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.PHOTO)
+        {
+            Photo item = new Photo(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupPhoto(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.VIDEO_ITEM)
+        {
+            VideoItem item = new VideoItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupVideoItem(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.MOVIE)
+        {
+            Movie item = new Movie(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupMovie(item, values, resources, entityId);
+            return item;
+        }
+        if (type == ObjectClassType.STORAGE_FOLDER)
+        {
+            StorageFolder container = new StorageFolder(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupStorageFolder(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.MUSIC_ALBUM)
+        {
+            MusicAlbum container = new MusicAlbum(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupMusicAlbum(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        if (type == ObjectClassType.PLAYLIST_CONTAINER)
+        {
+            PlaylistContainer container = new PlaylistContainer(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
+            setupPlaylistContainer(container, values, resources, entityId, disablePresentationSettings);
+            return container;
+        }
+        return null;
     }
-    if (type == ObjectClassType.AUDIO_ITEM)
+
+    private static void setupObject(DirectoryObject object, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      AudioItem item = new AudioItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupAudioItem(item, values, resources, entityId);
-      return item;
+        org.serviio.library.entities.Person creator = cast(org.serviio.library.entities.Person)values.get(ClassProperties.CREATOR);
+        if (creator !is null) {
+            object.setCreator(creator.getName());
+        }
+        object.setParentID(cast(String)values.get(ClassProperties.PARENT_ID));
+        if (resources !is null) {
+            object.setResources(resources);
+        }
+        object.setEntityId(entityId);
+        object.setIcon(cast(Resource)values.get(ClassProperties.ICON));
+        object.setAlbumArtURIResource(cast(Resource)values.get(ClassProperties.ALBUM_ART_URI));
     }
-    if (type == ObjectClassType.MUSIC_TRACK)
+
+    private static void setupContainer(Container container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      MusicTrack item = new MusicTrack(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupMusicTrack(item, values, resources, entityId);
-      return item;
+        setupObject(container, values, resources, entityId);
+        container.setChildCount(cast(Integer)values.get(ClassProperties.CHILD_COUNT));
+        container.setSearchable((cast(Boolean)values.get(ClassProperties.SEARCHABLE)).boolValue());
+
+        String mediaClass = getMediaClass(container, disablePresentationSettings);
+        container.setMediaClass(mediaClass);
     }
-    if (type == ObjectClassType.GENRE)
+
+    private static void setupItem(Item item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      Genre container = new Genre(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupGenre(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupObject(item, values, resources, entityId);
+        item.setRefID(cast(String)values.get(ClassProperties.REF_ID));
+        item.setDcmInfo(cast(String)values.get(ClassProperties.DCM_INFO));
     }
-    if (type == ObjectClassType.MUSIC_GENRE)
+
+    private static void setupAudioItem(AudioItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      MusicGenre container = new MusicGenre(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupGenre(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupItem(item, values, resources, entityId);
+        item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
+        org.serviio.library.entities.Genre genre = cast(org.serviio.library.entities.Genre)values.get(ClassProperties.GENRE);
+        if (genre !is null) {
+            item.setGenre(genre.getName());
+        }
+        item.setLanguage(cast(String)values.get(ClassProperties.LANGUAGE));
+        item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
+        item.setPublisher(cast(String)values.get(ClassProperties.PUBLISHER));
+        item.setRights(cast(String)values.get(ClassProperties.RIGHTS));
+        item.setLive(cast(Boolean)values.get(ClassProperties.LIVE));
     }
-    if (type == ObjectClassType.PERSON)
+
+    private static void setupMusicTrack(MusicTrack item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      Person container = new Person(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupPerson(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupAudioItem(item, values, resources, entityId);
+        org.serviio.library.entities.MusicAlbum album = cast(org.serviio.library.entities.MusicAlbum)values.get(ClassProperties.ALBUM);
+        if (album !is null) {
+            item.setAlbum(album.getTitle());
+        }
+        org.serviio.library.entities.Person artist = cast(org.serviio.library.entities.Person)values.get(ClassProperties.ARTIST);
+        if (artist !is null) {
+            item.setArtist(cast(String[])[ artist.getName() ]);
+        }
+        item.setDate(cast(String)values.get(ClassProperties.DATE));
+        item.setOriginalTrackNumber(cast(Integer)values.get(ClassProperties.ORIGINAL_TRACK_NUMBER));
     }
-    if (type == ObjectClassType.MUSIC_ARTIST)
+
+    private static void setupGenre(Genre item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      MusicArtist container = new MusicArtist(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupMusicArtist(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupContainer(item, values, resources, entityId, disablePresentationSettings);
     }
-    if (type == ObjectClassType.IMAGE_ITEM)
+
+    private static void setupPerson(Person item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      ImageItem item = new ImageItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupImageItem(item, values, resources, entityId);
-      return item;
+        setupContainer(item, values, resources, entityId, disablePresentationSettings);
     }
-    if (type == ObjectClassType.PHOTO)
+
+    private static void setupMusicArtist(MusicArtist item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      Photo item = new Photo(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupPhoto(item, values, resources, entityId);
-      return item;
+        setupPerson(item, values, resources, entityId, disablePresentationSettings);
     }
-    if (type == ObjectClassType.VIDEO_ITEM)
+
+    private static void setupImageItem(ImageItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      VideoItem item = new VideoItem(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupVideoItem(item, values, resources, entityId);
-      return item;
+        setupItem(item, values, resources, entityId);
+        item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
+        item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
+        item.setRights(cast(String)values.get(ClassProperties.RIGHTS));
+        item.setPublisher(cast(String[])values.get(ClassProperties.PUBLISHER));
+        item.setDate(cast(String)values.get(ClassProperties.DATE));
     }
-    if (type == ObjectClassType.MOVIE)
+
+    private static void setupPhoto(Photo item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      Movie item = new Movie(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupMovie(item, values, resources, entityId);
-      return item;
+        setupImageItem(item, values, resources, entityId);
+        item.setAlbum(cast(String)values.get(ClassProperties.ALBUM));
     }
-    if (type == ObjectClassType.STORAGE_FOLDER)
+
+    private static void setupVideoItem(VideoItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      StorageFolder container = new StorageFolder(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupStorageFolder(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupItem(item, values, resources, entityId);
+        org.serviio.library.entities.Genre genre = cast(org.serviio.library.entities.Genre)values.get(ClassProperties.GENRE);
+        if (genre !is null) {
+            item.setGenre(genre.getName());
+        }
+        item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
+        item.setDate(cast(String)values.get(ClassProperties.DATE));
+        item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
+        item.setRating((cast(MPAARating)values.get(ClassProperties.RATING)).toString());
+        item.setLanguage(cast(String)values.get(ClassProperties.LANGUAGE));
+        item.setSubtitlesUrlResource(cast(Resource)values.get(ClassProperties.SUBTITLES_URL));
+        item.setPublishers(getPersonsNames(cast(List)values.get(ClassProperties.PUBLISHER)));
+        item.setActors(getPersonsNames(cast(List)values.get(ClassProperties.ACTOR)));
+        item.setDirectors(getPersonsNames(cast(List)values.get(ClassProperties.DIRECTOR)));
+        item.setProducers(getPersonsNames(cast(List)values.get(ClassProperties.PRODUCER)));
+        item.setLive(cast(Boolean)values.get(ClassProperties.LIVE));
+        item.setContentType(cast(ContentType)values.get(ClassProperties.CONTENT_TYPE));
+        item.setOnlineIdentifiers(cast(Map)values.get(ClassProperties.ONLINE_DB_IDENTIFIERS));
     }
-    if (type == ObjectClassType.MUSIC_ALBUM)
+
+    private static void setupMovie(Movie item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
     {
-      MusicAlbum container = new MusicAlbum(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupMusicAlbum(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupVideoItem(item, values, resources, entityId);
     }
-    if (type == ObjectClassType.PLAYLIST_CONTAINER)
+
+    private static void setupStorageFolder(StorageFolder container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      PlaylistContainer container = new PlaylistContainer(cast(String)values.get(ClassProperties.ID), cast(String)values.get(ClassProperties.TITLE));
-      setupPlaylistContainer(container, values, resources, entityId, disablePresentationSettings);
-      return container;
+        setupContainer(container, values, resources, entityId, disablePresentationSettings);
     }
-    return null;
-  }
-  
-  private static void setupObject(DirectoryObject object, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    org.serviio.library.entities.Person creator = (org.serviio.library.entities.Person)values.get(ClassProperties.CREATOR);
-    if (creator !is null) {
-      object.setCreator(creator.getName());
-    }
-    object.setParentID(cast(String)values.get(ClassProperties.PARENT_ID));
-    if (resources !is null) {
-      object.setResources(resources);
-    }
-    object.setEntityId(entityId);
-    object.setIcon(cast(Resource)values.get(ClassProperties.ICON));
-    object.setAlbumArtURIResource(cast(Resource)values.get(ClassProperties.ALBUM_ART_URI));
-  }
-  
-  private static void setupContainer(Container container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupObject(container, values, resources, entityId);
-    container.setChildCount(cast(Integer)values.get(ClassProperties.CHILD_COUNT));
-    container.setSearchable((cast(Boolean)values.get(ClassProperties.SEARCHABLE)).boolValue());
-    
-    String mediaClass = getMediaClass(container, disablePresentationSettings);
-    container.setMediaClass(mediaClass);
-  }
-  
-  private static void setupItem(Item item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupObject(item, values, resources, entityId);
-    item.setRefID(cast(String)values.get(ClassProperties.REF_ID));
-    item.setDcmInfo(cast(String)values.get(ClassProperties.DCM_INFO));
-  }
-  
-  private static void setupAudioItem(AudioItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupItem(item, values, resources, entityId);
-    item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
-    org.serviio.library.entities.Genre genre = (org.serviio.library.entities.Genre)values.get(ClassProperties.GENRE);
-    if (genre !is null) {
-      item.setGenre(genre.getName());
-    }
-    item.setLanguage(cast(String)values.get(ClassProperties.LANGUAGE));
-    item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
-    item.setPublisher(cast(String)values.get(ClassProperties.PUBLISHER));
-    item.setRights(cast(String)values.get(ClassProperties.RIGHTS));
-    item.setLive(cast(Boolean)values.get(ClassProperties.LIVE));
-  }
-  
-  private static void setupMusicTrack(MusicTrack item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupAudioItem(item, values, resources, entityId);
-    org.serviio.library.entities.MusicAlbum album = (org.serviio.library.entities.MusicAlbum)values.get(ClassProperties.ALBUM);
-    if (album !is null) {
-      item.setAlbum(album.getTitle());
-    }
-    org.serviio.library.entities.Person artist = (org.serviio.library.entities.Person)values.get(ClassProperties.ARTIST);
-    if (artist !is null) {
-      item.setArtist(cast(String[])[ artist.getName() ]);
-    }
-    item.setDate(cast(String)values.get(ClassProperties.DATE));
-    item.setOriginalTrackNumber(cast(Integer)values.get(ClassProperties.ORIGINAL_TRACK_NUMBER));
-  }
-  
-  private static void setupGenre(Genre item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupContainer(item, values, resources, entityId, disablePresentationSettings);
-  }
-  
-  private static void setupPerson(Person item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupContainer(item, values, resources, entityId, disablePresentationSettings);
-  }
-  
-  private static void setupMusicArtist(MusicArtist item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupPerson(item, values, resources, entityId, disablePresentationSettings);
-  }
-  
-  private static void setupImageItem(ImageItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupItem(item, values, resources, entityId);
-    item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
-    item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
-    item.setRights(cast(String)values.get(ClassProperties.RIGHTS));
-    item.setPublisher(cast(String[])values.get(ClassProperties.PUBLISHER));
-    item.setDate(cast(String)values.get(ClassProperties.DATE));
-  }
-  
-  private static void setupPhoto(Photo item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupImageItem(item, values, resources, entityId);
-    item.setAlbum(cast(String)values.get(ClassProperties.ALBUM));
-  }
-  
-  private static void setupVideoItem(VideoItem item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupItem(item, values, resources, entityId);
-    org.serviio.library.entities.Genre genre = (org.serviio.library.entities.Genre)values.get(ClassProperties.GENRE);
-    if (genre !is null) {
-      item.setGenre(genre.getName());
-    }
-    item.setDescription(cast(String)values.get(ClassProperties.DESCRIPTION));
-    item.setDate(cast(String)values.get(ClassProperties.DATE));
-    item.setLongDescription(cast(String)values.get(ClassProperties.LONG_DESCRIPTION));
-    item.setRating((cast(MPAARating)values.get(ClassProperties.RATING)).toString());
-    item.setLanguage(cast(String)values.get(ClassProperties.LANGUAGE));
-    item.setSubtitlesUrlResource(cast(Resource)values.get(ClassProperties.SUBTITLES_URL));
-    item.setPublishers(getPersonsNames(cast(List)values.get(ClassProperties.PUBLISHER)));
-    item.setActors(getPersonsNames(cast(List)values.get(ClassProperties.ACTOR)));
-    item.setDirectors(getPersonsNames(cast(List)values.get(ClassProperties.DIRECTOR)));
-    item.setProducers(getPersonsNames(cast(List)values.get(ClassProperties.PRODUCER)));
-    item.setLive(cast(Boolean)values.get(ClassProperties.LIVE));
-    item.setContentType(cast(ContentType)values.get(ClassProperties.CONTENT_TYPE));
-    item.setOnlineIdentifiers(cast(Map)values.get(ClassProperties.ONLINE_DB_IDENTIFIERS));
-  }
-  
-  private static void setupMovie(Movie item, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId)
-  {
-    setupVideoItem(item, values, resources, entityId);
-  }
-  
-  private static void setupStorageFolder(StorageFolder container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupContainer(container, values, resources, entityId, disablePresentationSettings);
-  }
-  
-  private static void setupMusicAlbum(MusicAlbum container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupContainer(container, values, resources, entityId, disablePresentationSettings);
-    container.setArtist(cast(String)values.get(ClassProperties.ARTIST));
-  }
-  
-  private static void setupPlaylistContainer(PlaylistContainer container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
-  {
-    setupContainer(container, values, resources, entityId, disablePresentationSettings);
-  }
-  
-  private static String[] getPersonsNames(List!(org.serviio.library.entities.Person) persons)
-  {
-    if ((persons !is null) && (persons.size() > 0))
+
+    private static void setupMusicAlbum(MusicAlbum container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      String[] names = new String[persons.size()];
-      for (int i = 0; i < persons.size(); i++)
-      {
-        org.serviio.library.entities.Person person = (org.serviio.library.entities.Person)persons.get(i);
-        names[i] = person.getName();
-      }
-      return names;
+        setupContainer(container, values, resources, entityId, disablePresentationSettings);
+        container.setArtist(cast(String)values.get(ClassProperties.ARTIST));
     }
-    return null;
-  }
-  
-  private static String getMediaClass(Container container, bool disablePresentationSettings)
-  {
-    String mediaClass = getContainerMediaClass(container.getId());
-    if (mediaClass is null)
+
+    private static void setupPlaylistContainer(PlaylistContainer container, Map!(ClassProperties, Object) values, List!(Resource) resources, Long entityId, bool disablePresentationSettings)
     {
-      String parentId = container.getId();
-      while ((mediaClass is null) && (!parentId.equals("-1")))
-      {
-        parentId = Definition.instance().getParentNodeId(parentId, disablePresentationSettings);
-        mediaClass = getContainerMediaClass(parentId);
-      }
+        setupContainer(container, values, resources, entityId, disablePresentationSettings);
     }
-    return mediaClass;
-  }
-  
-  private static String getContainerMediaClass(String containerId)
-  {
-    if ((containerId.equals("-1")) || (containerId.equals("0"))) {
-      return null;
+
+    private static String[] getPersonsNames(List!(org.serviio.library.entities.Person) persons)
+    {
+        if ((persons !is null) && (persons.size() > 0))
+        {
+            String[] names = new String[persons.size()];
+            for (int i = 0; i < persons.size(); i++)
+            {
+                org.serviio.library.entities.Person person = cast(org.serviio.library.entities.Person)persons.get(i);
+                names[i] = person.getName();
+            }
+            return names;
+        }
+        return null;
     }
-    if (containerId.equals("A")) {
-      return "M";
+
+    private static String getMediaClass(Container container, bool disablePresentationSettings)
+    {
+        String mediaClass = getContainerMediaClass(container.getId());
+        if (mediaClass is null)
+        {
+            String parentId = container.getId();
+            while ((mediaClass is null) && (!parentId.equals("-1")))
+            {
+                parentId = Definition.instance().getParentNodeId(parentId, disablePresentationSettings);
+                mediaClass = getContainerMediaClass(parentId);
+            }
+        }
+        return mediaClass;
     }
-    if (containerId.equals("I")) {
-      return "P";
+
+    private static String getContainerMediaClass(String containerId)
+    {
+        if ((containerId.equals("-1")) || (containerId.equals("0"))) {
+            return null;
+        }
+        if (containerId.equals("A")) {
+            return "M";
+        }
+        if (containerId.equals("I")) {
+            return "P";
+        }
+        if (containerId.equals("V")) {
+            return "V";
+        }
+        return null;
     }
-    if (containerId.equals("V")) {
-      return "V";
-    }
-    return null;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.classes.DirectoryObjectBuilder
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.classes.DirectoryObjectBuilder
+* JD-Core Version:    0.7.0.1
+*/

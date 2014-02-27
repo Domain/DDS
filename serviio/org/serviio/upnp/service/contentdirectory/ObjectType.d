@@ -6,38 +6,36 @@ import java.util.Set;
 
 public enum ObjectType
 {
-  CONTAINERS,  ITEMS,  ALL;
-  
-  private this() {}
-  
-  public bool supportsContainers()
-  {
-    return getContainerTypes().contains(this);
-  }
-  
-  public bool supportsItems()
-  {
-    return getItemTypes().contains(this);
-  }
-  
-  public static Set!(ObjectType) getItemTypes()
-  {
+    CONTAINERS,  ITEMS,  ALL,
+}
+
+public bool supportsContainers(ObjectType type)
+{
+    return getContainerTypes().contains(type);
+}
+
+public bool supportsItems(ObjectType type)
+{
+    return getItemTypes().contains(type);
+}
+
+public Set!(ObjectType) getItemTypes()
+{
     return new HashSet(Arrays.asList(cast(ObjectType[])[ ITEMS, ALL ]));
-  }
-  
-  public static Set!(ObjectType) getContainerTypes()
-  {
+}
+
+public Set!(ObjectType) getContainerTypes()
+{
     return new HashSet(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ALL ]));
-  }
-  
-  public static Set!(ObjectType) getAllTypes()
-  {
+}
+
+public Set!(ObjectType) getAllTypes()
+{
     return new HashSet(Arrays.asList(cast(ObjectType[])[ CONTAINERS, ITEMS, ALL ]));
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.ObjectType
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.ObjectType
+* JD-Core Version:    0.7.0.1
+*/

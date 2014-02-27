@@ -19,72 +19,71 @@ import org.serviio.upnp.protocol.TemplateApplicator;
 import org.serviio.util.HttpUtils;
 import org.slf4j.Logger;
 
-public class DeviceDescriptionRequestHandler
-  : AbstractDescriptionRequestHandler
+public class DeviceDescriptionRequestHandler : AbstractDescriptionRequestHandler
 {
-  protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
-  {
-    String[] requestFields = getRequestPathFields(getRequestUri(request), "/deviceDescription", null);
-    if (requestFields.length > 1)
+    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
-      response.setStatusCode(404);
-      return;
-    }
-    String deviceId = requestFields[0];
-    InetAddress clientIPAddress = getCallerIPAddress(context);
-    
-    this.log.debug_(String.format("DeviceDescription request received for device %s from %s (headers = %s)", cast(Object[])[ deviceId, clientIPAddress.getHostAddress(), HttpUtils.headersToString(request.getAllHeaders()) ]));
-    if (!clientIPAddress.isLoopbackAddress()) {
-      RendererManager.getInstance().rendererAvailable(request.getAllHeaders(), clientIPAddress.getHostAddress());
-    }
-    Device device = Device.getInstance();
-    if ((deviceId !is null) && (deviceId.equals(device.getUuid())))
-    {
-      Profile profile = ProfileManager.getProfile(clientIPAddress);
-      
-      prepareSuccessfulHttpResponse(request, response);
-      
+        String[] requestFields = getRequestPathFields(getRequestUri(request), "/deviceDescription", null);
+        if (requestFields.length > 1)
+        {
+            response.setStatusCode(404);
+            return;
+        }
+        String deviceId = requestFields[0];
+        InetAddress clientIPAddress = getCallerIPAddress(context);
 
-      Map!(String, Object) dataModel = new HashMap();
-      dataModel.put("device", device);
-      dataModel.put("deviceDescription", profile.getDeviceDescription());
-      dataModel.put("services", device.getServices());
-      dataModel.put("smallPngURL", resolveIconURL("smallPNG"));
-      dataModel.put("largePngURL", resolveIconURL("largePNG"));
-      dataModel.put("smallJpgURL", resolveIconURL("smallJPG"));
-      dataModel.put("largeJpgURL", resolveIconURL("largeJPG"));
-      
-      String message = TemplateApplicator.applyTemplate("org/serviio/upnp/protocol/templates/deviceDescription.ftl", dataModel);
-      
-      StringEntity body = new StringEntity(message, "UTF-8");
-      body.setContentType("text/xml");
-      
-      response.setEntity(body);
-      this.log.debug_(String.format("Sending DeviceDescription XML back using profile '%s'", cast(Object[])[ profile ]));
+        this.log.debug_(String.format("DeviceDescription request received for device %s from %s (headers = %s)", cast(Object[])[ deviceId, clientIPAddress.getHostAddress(), HttpUtils.headersToString(request.getAllHeaders()) ]));
+        if (!clientIPAddress.isLoopbackAddress()) {
+            RendererManager.getInstance().rendererAvailable(request.getAllHeaders(), clientIPAddress.getHostAddress());
+        }
+        Device device = Device.getInstance();
+        if ((deviceId !is null) && (deviceId.equals(device.getUuid())))
+        {
+            Profile profile = ProfileManager.getProfile(clientIPAddress);
+
+            prepareSuccessfulHttpResponse(request, response);
+
+
+            Map!(String, Object) dataModel = new HashMap();
+            dataModel.put("device", device);
+            dataModel.put("deviceDescription", profile.getDeviceDescription());
+            dataModel.put("services", device.getServices());
+            dataModel.put("smallPngURL", resolveIconURL("smallPNG"));
+            dataModel.put("largePngURL", resolveIconURL("largePNG"));
+            dataModel.put("smallJpgURL", resolveIconURL("smallJPG"));
+            dataModel.put("largeJpgURL", resolveIconURL("largeJPG"));
+
+            String message = TemplateApplicator.applyTemplate("org/serviio/upnp/protocol/templates/deviceDescription.ftl", dataModel);
+
+            StringEntity content = new StringEntity(message, "UTF-8");
+            content.setContentType("text/xml");
+
+            response.setEntity(content);
+            this.log.debug_(String.format("Sending DeviceDescription XML back using profile '%s'", cast(Object[])[ profile ]));
+        }
+        else
+        {
+            response.setStatusCode(404);
+            this.log.debug_(String.format("Device with id %s doesn't exist, sending back 404 error", cast(Object[])[ deviceId ]));
+        }
     }
-    else
+
+    protected String resolveIconURL(String iconName)
     {
-      response.setStatusCode(404);
-      this.log.debug_(String.format("Device with id %s doesn't exist, sending back 404 error", cast(Object[])[ deviceId ]));
+        try
+        {
+            return new URL("http", Device.getInstance().getBindAddress().getHostAddress(), WebServer.WEBSERVER_PORT.intValue(), "/icon/" + iconName).getPath();
+        }
+        catch (MalformedURLException e)
+        {
+            this.log.warn("Cannot resolve Device UPnP icon URL address.");
+        }
+        return null;
     }
-  }
-  
-  protected String resolveIconURL(String iconName)
-  {
-    try
-    {
-      return new URL("http", Device.getInstance().getBindAddress().getHostAddress(), WebServer.WEBSERVER_PORT.intValue(), "/icon/" + iconName).getPath();
-    }
-    catch (MalformedURLException e)
-    {
-      this.log.warn("Cannot resolve Device UPnP icon URL address.");
-    }
-    return null;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.webserver.DeviceDescriptionRequestHandler
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.webserver.DeviceDescriptionRequestHandler
+* JD-Core Version:    0.7.0.1
+*/

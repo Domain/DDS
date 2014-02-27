@@ -187,7 +187,7 @@ public class GenericDLNAMessageBuilder
           Document document = getDocument(parentNode);
           if (value.getClass().isArray())
           {
-            for (Object arrayItem : cast(Object[])value)
+            foreach (Object arrayItem ; cast(Object[])value)
             {
               Node node = document.createElement(propertyXMLName);
               node.setTextContent(castObjectValue(arrayItem));

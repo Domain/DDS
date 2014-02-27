@@ -230,17 +230,8 @@
      <File path="org\serviio\db\package.d" />
     </Folder>
     <Folder name="delivery">
-     <Folder name="RangeHeaders">
-      <File path="org\serviio\delivery\RangeHeaders\package.d" />
-      <File path="org\serviio\delivery\RangeHeaders\RangeDefinition.d" />
-      <File path="org\serviio\delivery\RangeHeaders\RangeUnit.d" />
-     </Folder>
      <Folder name="resource">
       <Folder name="transcode">
-       <Folder name="TranscodingJobListener">
-        <File path="org\serviio\delivery\resource\transcode\TranscodingJobListener\package.d" />
-        <File path="org\serviio\delivery\resource\transcode\TranscodingJobListener\ProgressData.d" />
-       </Folder>
        <File path="org\serviio\delivery\resource\transcode\AbstractTranscodingDefinition.d" />
        <File path="org\serviio\delivery\resource\transcode\AbstractTranscodingDeliveryEngine.d" />
        <File path="org\serviio\delivery\resource\transcode\AbstractTranscodingDeliveryStrategy.d" />
@@ -274,10 +265,6 @@
       <File path="org\serviio\delivery\resource\ImageDeliveryEngine.d" />
       <File path="org\serviio\delivery\resource\package.d" />
       <File path="org\serviio\delivery\resource\VideoDeliveryEngine.d" />
-     </Folder>
-     <Folder name="ResourceDeliveryProcessor">
-      <File path="org\serviio\delivery\ResourceDeliveryProcessor\HttpMethod.d" />
-      <File path="org\serviio\delivery\ResourceDeliveryProcessor\package.d" />
      </Folder>
      <Folder name="subtitles">
       <File path="org\serviio\delivery\subtitles\EmbeddedSubtitlesReader.d" />
@@ -411,14 +398,6 @@
       <File path="org\serviio\library\dao\VideoDAOImpl.d" />
      </Folder>
      <Folder name="entities">
-      <Folder name="OnlineRepository">
-       <File path="org\serviio\library\entities\OnlineRepository\OnlineRepositoryType.d" />
-       <File path="org\serviio\library\entities\OnlineRepository\package.d" />
-      </Folder>
-      <Folder name="Person">
-       <File path="org\serviio\library\entities\Person\package.d" />
-       <File path="org\serviio\library\entities\Person\RoleType.d" />
-      </Folder>
       <File path="org\serviio\library\entities\AccessGroup.d" />
       <File path="org\serviio\library\entities\CoverImage.d" />
       <File path="org\serviio\library\entities\CoverImageEntity.d" />
@@ -635,10 +614,6 @@
       <File path="org\serviio\library\playlist\WplParserStrategy.d" />
      </Folder>
      <Folder name="search">
-      <Folder name="SearchIndexer">
-       <File path="org\serviio\library\search\SearchIndexer\package.d" />
-       <File path="org\serviio\library\search\SearchIndexer\SearchCategory.d" />
-      </Folder>
       <File path="org\serviio\library\search\AbstractOnlineRecursiveSearchMetadata.d" />
       <File path="org\serviio\library\search\AbstractRecursiveSearchMetadata.d" />
       <File path="org\serviio\library\search\AbstractSearchMetadata.d" />
@@ -673,11 +648,6 @@
      <File path="org\serviio\library\package.d" />
     </Folder>
     <Folder name="licensing">
-     <Folder name="LicensingManager">
-      <File path="org\serviio\licensing\LicensingManager\package.d" />
-      <File path="org\serviio\licensing\LicensingManager\ServiioEdition.d" />
-      <File path="org\serviio\licensing\LicensingManager\ServiioLicenseType.d" />
-     </Folder>
      <File path="org\serviio\licensing\BundledLicenseProvider.d" />
      <File path="org\serviio\licensing\CustomerLicenseProvider.d" />
      <File path="org\serviio\licensing\InvalidLicenseException.d" />
@@ -690,10 +660,6 @@
      <File path="org\serviio\licensing\VersionValidatorPlugin.d" />
     </Folder>
     <Folder name="profile">
-     <Folder name="DeliveryQuality">
-      <File path="org\serviio\profile\DeliveryQuality\package.d" />
-      <File path="org\serviio\profile\DeliveryQuality\QualityType.d" />
-     </Folder>
      <File path="org\serviio\profile\DeliveryQuality.d" />
      <File path="org\serviio\profile\DetectionDefinition.d" />
      <File path="org\serviio\profile\H264LevelCheckType.d" />
@@ -742,10 +708,6 @@
     </Folder>
     <Folder name="ui">
      <Folder name="representation">
-      <Folder name="RendererRepresentation">
-       <File path="org\serviio\ui\representation\RendererRepresentation\package.d" />
-       <File path="org\serviio\ui\representation\RendererRepresentation\RendererStatus.d" />
-      </Folder>
       <File path="org\serviio\ui\representation\ActionRepresentation.d" />
       <File path="org\serviio\ui\representation\ApplicationRepresentation.d" />
       <File path="org\serviio\ui\representation\BrowsingCategory.d" />
@@ -890,10 +852,6 @@
        <File path="org\serviio\upnp\protocol\soap\SOAPParameters.d" />
       </Folder>
       <Folder name="ssdp">
-       <Folder name="SSDPMessageBuilderFactory">
-        <File path="org\serviio\upnp\protocol\ssdp\SSDPMessageBuilderFactory\package.d" />
-        <File path="org\serviio\upnp\protocol\ssdp\SSDPMessageBuilderFactory\SSDPMessageType.d" />
-       </Folder>
        <File path="org\serviio\upnp\protocol\ssdp\DeviceAliveMessageBuilder.d" />
        <File path="org\serviio\upnp\protocol\ssdp\DeviceUnavailableMessageBuilder.d" />
        <File path="org\serviio\upnp\protocol\ssdp\InsufficientInformationException.d" />
@@ -924,10 +882,6 @@
       </Folder>
       <Folder name="contentdirectory">
        <Folder name="classes">
-        <Folder name="Resource">
-         <File path="org\serviio\upnp\service\contentdirectory\classes\Resource\package.d" />
-         <File path="org\serviio\upnp\service\contentdirectory\classes\Resource\ResourceType.d" />
-        </Folder>
         <File path="org\serviio\upnp\service\contentdirectory\classes\Album.d" />
         <File path="org\serviio\upnp\service\contentdirectory\classes\AudioItem.d" />
         <File path="org\serviio\upnp\service\contentdirectory\classes\ClassProperties.d" />
@@ -1137,10 +1091,6 @@
          <File path="org\serviio\upnp\service\contentdirectory\rest\access\WebGateway.d" />
         </Folder>
         <Folder name="representation">
-         <Folder name="AbstractCDSObjectRepresentation">
-          <File path="org\serviio\upnp\service\contentdirectory\rest\representation\AbstractCDSObjectRepresentation\DirectoryObjectType.d" />
-          <File path="org\serviio\upnp\service\contentdirectory\rest\representation\AbstractCDSObjectRepresentation\package.d" />
-         </Folder>
          <File path="org\serviio\upnp\service\contentdirectory\rest\representation\AbstractCDSObjectRepresentation.d" />
          <File path="org\serviio\upnp\service\contentdirectory\rest\representation\BrowseContentDirectoryRepresentation.d" />
          <File path="org\serviio\upnp\service\contentdirectory\rest\representation\CategorySearchResultsRepresentation.d" />

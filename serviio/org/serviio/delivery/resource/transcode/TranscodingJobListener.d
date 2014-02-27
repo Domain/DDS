@@ -16,234 +16,233 @@ import org.serviio.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TranscodingJobListener
-  : ProcessListener
+public class TranscodingJobListener : ProcessListener
 {
-  private static final Logger log = LoggerFactory.getLogger!(TranscodingJobListener);
-  private String transcodingIdentifier;
-  private File transcodedFile;
-  private PipedInputStream transcodedStream;
-  private bool isSegmentedOutput;
-  
-  public this(String transcodingIdentifier, bool isSegmentedOutput)
-  {
-    this.transcodingIdentifier = transcodingIdentifier;
-    this.isSegmentedOutput = isSegmentedOutput;
-  }
-  
-  private Set!(TranscodeInputStream) processingStreams = new HashSet();
-  private bool started = false;
-  private bool successful = true;
-  private TreeMap!(Double, ProgressData) timeFilesizeMap = new TreeMap();
-  private /*volatile*/ bool shuttingDown = false;
-  
-  public void processEnded(bool success)
-  {
-    log.debug_(String.format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
-    foreach (TranscodeInputStream stream ; this.processingStreams) {
-      stream.setTranscodeFinished(true);
-    }
-    this.finished = true;
-    this.successful = success;
-  }
-  
-  public void outputUpdated(String updatedLine)
-  {
-    if (!this.started)
-    {
-      if (updatedLine.startsWith("Press [q] to stop")) {
-        this.started = true;
-      }
-    }
-    else
-    {
-      int sizePos = updatedLine.indexOf("size=");
-      if (sizePos > -1)
-      {
-        String sizeStr = updatedLine.substring(sizePos + 5);
-        int timePos = sizeStr.indexOf("time=");
-        int bitratePos = sizeStr.indexOf(" bitrate=");
-        if ((timePos > -1) && (bitratePos > -1))
-        {
-          String size = sizeStr.substring(0, timePos - 3).trim();
-          String time = sizeStr.substring(timePos + 5, bitratePos);
-          try
-          {
-            Double txTime = DateUtils.timeToSecondsPrecise(time);
-            
+    private static final Logger log = LoggerFactory.getLogger!(TranscodingJobListener);
+    private String transcodingIdentifier;
+    private File transcodedFile;
+    private PipedInputStream transcodedStream;
+    private bool isSegmentedOutput;
 
-            String bitrateStr = sizeStr.substring(bitratePos + 9);
-            int unitPos = bitrateStr.indexOf("kbits/s");
-            if (unitPos > -1)
-            {
-              String bitrate = bitrateStr.substring(0, unitPos);
-              synchronized (this.timeFilesizeMap)
-              {
-                this.timeFilesizeMap.put(txTime, new ProgressData(Long.valueOf(Long.parseLong(size)), Float.valueOf(Float.parseFloat(bitrate))));
-              }
-            }
-          }
-          catch (NumberFormatException e)
-          {
-            log.debug_(String.format("Error updating FFmpeg output for line '%s': %s", cast(Object[])[ updatedLine, e.getMessage() ]));
-          }
-        }
-      }
-    }
-  }
-  
-  public void closeStream(Client client)
-  {
-    Iterator!(TranscodeInputStream) i = this.processingStreams.iterator();
-    while (i.hasNext())
+    public this(String transcodingIdentifier, bool isSegmentedOutput)
     {
-      TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
-      if (tis.getClient().equals(client))
-      {
-        try
+        this.transcodingIdentifier = transcodingIdentifier;
+        this.isSegmentedOutput = isSegmentedOutput;
+    }
+
+    private Set!(TranscodeInputStream) processingStreams = new HashSet();
+    private bool started = false;
+    private bool successful = true;
+    private TreeMap!(Double, ProgressData) timeFilesizeMap = new TreeMap();
+    private /*volatile*/ bool shuttingDown = false;
+
+    public void processEnded(bool success)
+    {
+        log.debug_(String.format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
+        foreach (TranscodeInputStream stream ; this.processingStreams) {
+            stream.setTranscodeFinished(true);
+        }
+        this.finished = true;
+        this.successful = success;
+    }
+
+    public void outputUpdated(String updatedLine)
+    {
+        if (!this.started)
         {
-          tis.close();
+            if (updatedLine.startsWith("Press [q] to stop")) {
+                this.started = true;
+            }
         }
-        catch (IOException e) {}
-        i.remove();
-      }
+        else
+        {
+            int sizePos = updatedLine.indexOf("size=");
+            if (sizePos > -1)
+            {
+                String sizeStr = updatedLine.substring(sizePos + 5);
+                int timePos = sizeStr.indexOf("time=");
+                int bitratePos = sizeStr.indexOf(" bitrate=");
+                if ((timePos > -1) && (bitratePos > -1))
+                {
+                    String size = sizeStr.substring(0, timePos - 3).trim();
+                    String time = sizeStr.substring(timePos + 5, bitratePos);
+                    try
+                    {
+                        Double txTime = DateUtils.timeToSecondsPrecise(time);
+
+
+                        String bitrateStr = sizeStr.substring(bitratePos + 9);
+                        int unitPos = bitrateStr.indexOf("kbits/s");
+                        if (unitPos > -1)
+                        {
+                            String bitrate = bitrateStr.substring(0, unitPos);
+                            synchronized (this.timeFilesizeMap)
+                            {
+                                this.timeFilesizeMap.put(txTime, new ProgressData(Long.valueOf(Long.parseLong(size)), Float.valueOf(Float.parseFloat(bitrate))));
+                            }
+                        }
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        log.debug_(String.format("Error updating FFmpeg output for line '%s': %s", cast(Object[])[ updatedLine, e.getMessage() ]));
+                    }
+                }
+            }
+        }
     }
-  }
-  
-  public synchronized void releaseResources()
-  {
-    if (!this.shuttingDown)
+
+    public void closeStream(Client client)
     {
-      this.shuttingDown = true;
-      closeFFmpegConsumer();
-      
-      getExecutor().stopProcess(true);
-      
-      closeAllStreams();
-      if (getTranscodedFile() !is null)
-      {
-        File fileToDelete = this.isSegmentedOutput ? getTranscodedFile().getParentFile() : getTranscodedFile();
-        bool deleted = FileUtils.deleteFileOrFolder(fileToDelete);
-        log.debug_(String.format("Deleted temp file '%s': %s", cast(Object[])[ fileToDelete, Boolean.valueOf(deleted) ]));
-      }
+        Iterator!(TranscodeInputStream) i = this.processingStreams.iterator();
+        while (i.hasNext())
+        {
+            TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
+            if (tis.getClient().equals(client))
+            {
+                try
+                {
+                    tis.close();
+                }
+                catch (IOException e) {}
+                i.remove();
+            }
+        }
     }
-  }
-  
-  public String getTranscodingIdentifier()
-  {
-    return this.transcodingIdentifier;
-  }
-  
-  public void addStream(TranscodeInputStream stream)
-  {
-    this.processingStreams.add(stream);
-  }
-  
-  public bool isSuccessful()
-  {
-    return this.successful;
-  }
-  
-  public TreeMap!(Double, ProgressData) getFilesizeMap()
-  {
-    return new TreeMap(this.timeFilesizeMap);
-  }
-  
-  public File getTranscodedFile()
-  {
-    return this.transcodedFile;
-  }
-  
-  public PipedInputStream getTranscodedStream()
-  {
-    return this.transcodedStream;
-  }
-  
-  public void setTranscodedStream(PipedInputStream transcodedStream)
-  {
-    this.transcodedStream = transcodedStream;
-  }
-  
-  public void setTranscodedFile(File transcodedFile)
-  {
-    this.transcodedFile = transcodedFile;
-  }
-  
-  private void closeAllStreams()
-  {
-    Iterator!(TranscodeInputStream) i = this.processingStreams.iterator();
-    while (i.hasNext())
+
+    public synchronized void releaseResources()
     {
-      TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
-      FileUtils.closeQuietly(cast(InputStream)tis);
-      i.remove();
+        if (!this.shuttingDown)
+        {
+            this.shuttingDown = true;
+            closeFFmpegConsumer();
+
+            getExecutor().stopProcess(true);
+
+            closeAllStreams();
+            if (getTranscodedFile() !is null)
+            {
+                File fileToDelete = this.isSegmentedOutput ? getTranscodedFile().getParentFile() : getTranscodedFile();
+                bool deleted = FileUtils.deleteFileOrFolder(fileToDelete);
+                log.debug_(String.format("Deleted temp file '%s': %s", cast(Object[])[ fileToDelete, Boolean.valueOf(deleted) ]));
+            }
+        }
     }
-  }
-  
-  private void closeFFmpegConsumer()
-  {
-    if (this.transcodedStream !is null) {
-      FileUtils.closeQuietly(this.transcodedStream);
-    }
-  }
-  
-  public override hash_t toHash()
-  {
-    int prime = 31;
-    int result = 1;
-    result = 31 * result + (this.transcodingIdentifier is null ? 0 : this.transcodingIdentifier.hashCode());
-    return result;
-  }
-  
-  public override equals_t opEquals(Object obj)
-  {
-    if (this == obj) {
-      return true;
-    }
-    if (obj is null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    TranscodingJobListener other = cast(TranscodingJobListener)obj;
-    if (this.transcodingIdentifier is null)
+
+    public String getTranscodingIdentifier()
     {
-      if (other.transcodingIdentifier !is null) {
-        return false;
-      }
+        return this.transcodingIdentifier;
     }
-    else if (!this.transcodingIdentifier.equals(other.transcodingIdentifier)) {
-      return false;
-    }
-    return true;
-  }
-  
-  public static class ProgressData
-  {
-    private Long fileSize;
-    private Float bitrate;
-    
-    public this(Long fileSize, Float bitrate)
+
+    public void addStream(TranscodeInputStream stream)
     {
-      this.fileSize = fileSize;
-      this.bitrate = bitrate;
+        this.processingStreams.add(stream);
     }
-    
-    public Long getFileSize()
+
+    public bool isSuccessful()
     {
-      return this.fileSize;
+        return this.successful;
     }
-    
-    public Float getBitrate()
+
+    public TreeMap!(Double, ProgressData) getFilesizeMap()
     {
-      return this.bitrate;
+        return new TreeMap(this.timeFilesizeMap);
     }
-  }
+
+    public File getTranscodedFile()
+    {
+        return this.transcodedFile;
+    }
+
+    public PipedInputStream getTranscodedStream()
+    {
+        return this.transcodedStream;
+    }
+
+    public void setTranscodedStream(PipedInputStream transcodedStream)
+    {
+        this.transcodedStream = transcodedStream;
+    }
+
+    public void setTranscodedFile(File transcodedFile)
+    {
+        this.transcodedFile = transcodedFile;
+    }
+
+    private void closeAllStreams()
+    {
+        Iterator!(TranscodeInputStream) i = this.processingStreams.iterator();
+        while (i.hasNext())
+        {
+            TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
+            FileUtils.closeQuietly(cast(InputStream)tis);
+            i.remove();
+        }
+    }
+
+    private void closeFFmpegConsumer()
+    {
+        if (this.transcodedStream !is null) {
+            FileUtils.closeQuietly(this.transcodedStream);
+        }
+    }
+
+    public override hash_t toHash()
+    {
+        int prime = 31;
+        int result = 1;
+        result = 31 * result + (this.transcodingIdentifier is null ? 0 : this.transcodingIdentifier.hashCode());
+        return result;
+    }
+
+    public override equals_t opEquals(Object obj)
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj is null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        TranscodingJobListener other = cast(TranscodingJobListener)obj;
+        if (this.transcodingIdentifier is null)
+        {
+            if (other.transcodingIdentifier !is null) {
+                return false;
+            }
+        }
+        else if (!this.transcodingIdentifier.equals(other.transcodingIdentifier)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static class ProgressData
+    {
+        private Long fileSize;
+        private Float bitrate;
+
+        public this(Long fileSize, Float bitrate)
+        {
+            this.fileSize = fileSize;
+            this.bitrate = bitrate;
+        }
+
+        public Long getFileSize()
+        {
+            return this.fileSize;
+        }
+
+        public Float getBitrate()
+        {
+            return this.bitrate;
+        }
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.delivery.resource.transcode.TranscodingJobListener
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.delivery.resource.transcode.TranscodingJobListener
+* JD-Core Version:    0.7.0.1
+*/

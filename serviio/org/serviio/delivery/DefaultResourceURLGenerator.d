@@ -3,13 +3,14 @@ module org.serviio.delivery.DefaultResourceURLGenerator;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.serviio.dlna.MediaFormatProfile;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;
-import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource;
+import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.util.ObjectValidator;
 
-public class DefaultResourceURLGenerator
-: ResourceURLGenerator
+public class DefaultResourceURLGenerator : ResourceURLGenerator
 {
     public static immutable String RESOURCE_SEPARATOR = "-";
 

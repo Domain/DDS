@@ -65,7 +65,7 @@ public class ListEpisodesForSeriesSeasonCommand
   {
     Map!(Long, Integer) lastViewed = VideoService.getLastViewedEpisode(seriesId);
     if (lastViewed !is null) {
-      return (Long)(cast(Map.Entry)lastViewed.entrySet().iterator().next()).getKey();
+      return cast(Long)(cast(Map.Entry)lastViewed.entrySet().iterator().next()).getKey();
     }
     return null;
   }

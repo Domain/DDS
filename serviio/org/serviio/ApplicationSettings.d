@@ -1,42 +1,35 @@
+/*
+* Decompiled with CFR 0_66.
+*/
+module org.serviio.ApplicationSettings;
 
+import java.io.InputStream;
+import java.util.Properties;
 
-java.util.Properties
+public class ApplicationSettings {
+    private static Properties properties = new Properties();
 
-ApplicationSettings
+    public static Properties getProperties() {
+        return ApplicationSettings.properties;
+    }
 
-  properties = ()
-  
-  static
-  
-    
-    
-      propertiesloadgetResourceAsStream"/serviio.properties"
-    
-     ( {}
-  
-  
-  getProperties
-  
-    properties
-  
-  
-  getStringProperty
-  
-    getProperties()get
-  
-  
-  getIntegerProperty
-  
-     = getStringProperty
-     (!= {
-      valueOf
-    
-    
-  
+    public static String getStringProperty(String name) {
+        return cast(String)ApplicationSettings.getProperties().get(cast(Object)name);
+    }
 
+    public static Integer getIntegerProperty(String name) {
+        String strValue = ApplicationSettings.getStringProperty(name);
+        if (strValue is null) return null;
+        return Integer.valueOf(strValue);
+    }
 
+    static this() {
+        try {
+            ApplicationSettings.properties.load(ApplicationSettings.class_.getResourceAsStream("/serviio.properties"));
+        }
+        catch (Exception e) {
+            // empty catch block
+        }
+    }
+}
 
-/* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.ApplicationSettings
- * JD-Core Version:    0.7.0.1
- */

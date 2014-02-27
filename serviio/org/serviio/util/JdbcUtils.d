@@ -208,11 +208,11 @@ public class JdbcUtils
     }
     try
     {
-      InputStream in = blob.getBinaryStream();
+      InputStream input = blob.getBinaryStream();
       int len = cast(int)blob.length();
       long pos = 1L;
       byte[] bytes = blob.getBytes(pos, len);
-      in.close();
+      input.close();
       return bytes;
     }
     catch (Exception e)
