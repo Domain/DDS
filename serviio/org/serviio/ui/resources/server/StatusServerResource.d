@@ -20,7 +20,7 @@ import org.serviio.restlet.AbstractServerResource;
 import org.serviio.restlet.ResultRepresentation;
 import org.serviio.restlet.ValidationException;
 import org.serviio.ui.representation.RendererRepresentation;
-import org.serviio.ui.representation.RendererRepresentation.RendererStatus;
+import org.serviio.ui.representation.RendererRepresentation:RendererStatus;
 import org.serviio.ui.representation.StatusRepresentation;
 import org.serviio.ui.resources.StatusResource;
 import org.serviio.upnp.service.contentdirectory.ContentDirectory;
@@ -28,197 +28,195 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.util.ThreadUtils;
 import org.slf4j.Logger;
 
-public class StatusServerResource
-  : AbstractServerResource
-  , StatusResource
+public class StatusServerResource : AbstractServerResource, StatusResource
 {
-  static final Pattern ipAddressPattern = Pattern.compile("\\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
-  
-  public StatusRepresentation load()
-  {
-    StatusRepresentation rep = new StatusRepresentation();
-    rep.setBoundNICName(Configuration.getBoundNICName());
-    rep.setServerStatus(MediaServer.getStatus());
-    rep.setRendererEnabledByDefault(Configuration.isRendererEnabledByDefault());
-    rep.setDefaultAccessGroupId(Configuration.getRendererDefaultAccessGroupId());
-    initRenderers(rep);
-    return rep;
-  }
-  
-  public ResultRepresentation save(StatusRepresentation rep)
-  {
-    bool restartRequired = false;
-    bool cacheCleanupRequired = false;
-    if (updateRenderers(rep))
+    static final Pattern ipAddressPattern = Pattern.compile("\\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b");
+
+    public StatusRepresentation load()
     {
-      restartRequired = true;
-      cacheCleanupRequired = true;
+        StatusRepresentation rep = new StatusRepresentation();
+        rep.setBoundNICName(Configuration.getBoundNICName());
+        rep.setServerStatus(MediaServer.getStatus());
+        rep.setRendererEnabledByDefault(Configuration.isRendererEnabledByDefault());
+        rep.setDefaultAccessGroupId(Configuration.getRendererDefaultAccessGroupId());
+        initRenderers(rep);
+        return rep;
     }
-    if (updateBoundIPAddress(rep)) {
-      restartRequired = true;
-    }
-    Configuration.setRendererEnabledByDefault(rep.isRendererEnabledByDefault());
-    if (rep.getDefaultAccessGroupId() !is null) {
-      Configuration.setRendererDefaultAccessGroupId(getAccessGroupId(rep.getDefaultAccessGroupId()));
-    }
-    if (restartRequired) {
-      if (MediaServer.getStatus() != UPnPServerStatus.STOPPED) {
-        ThreadUtils.runAsynchronously(new class() Runnable {
-          public void run()
-          {
-            MediaServer.stopServer();
-            MediaServer.startServer();
-          }
-        });
-      }
-    }
-    if (cacheCleanupRequired) {
-      getCDS().incrementUpdateID();
-    }
-    return responseOk();
-  }
-  
-  private bool updateBoundIPAddress(StatusRepresentation rep)
-  {
-    bool addressUpdated = false;
-    String originalNICName = Configuration.getBoundNICName();
-    String newNICName = rep.getBoundNICName();
-    if (((originalNICName is null) && (newNICName !is null)) || ((originalNICName !is null) && (!originalNICName.equals(newNICName)))) {
-      addressUpdated = true;
-    }
-    this.log.debug_("Storing bound NIC: " + newNICName);
-    Configuration.setBoundNICName(newNICName);
-    return addressUpdated;
-  }
-  
-  private bool validateIPAddress(String ipAddress)
-  {
-    if (ObjectValidator.isNotEmpty(ipAddress))
+
+    public ResultRepresentation save(StatusRepresentation rep)
     {
-      Matcher m = ipAddressPattern.matcher(ipAddress);
-      return m.matches();
+        bool restartRequired = false;
+        bool cacheCleanupRequired = false;
+        if (updateRenderers(rep))
+        {
+            restartRequired = true;
+            cacheCleanupRequired = true;
+        }
+        if (updateBoundIPAddress(rep)) {
+            restartRequired = true;
+        }
+        Configuration.setRendererEnabledByDefault(rep.isRendererEnabledByDefault());
+        if (rep.getDefaultAccessGroupId() !is null) {
+            Configuration.setRendererDefaultAccessGroupId(getAccessGroupId(rep.getDefaultAccessGroupId()));
+        }
+        if (restartRequired) {
+            if (MediaServer.getStatus() != UPnPServerStatus.STOPPED) {
+                ThreadUtils.runAsynchronously(new class() Runnable {
+                    public void run()
+                    {
+                        MediaServer.stopServer();
+                        MediaServer.startServer();
+                    }
+                });
+            }
+        }
+        if (cacheCleanupRequired) {
+            getCDS().incrementUpdateID();
+        }
+        return responseOk();
     }
-    return false;
-  }
-  
-  private void initRenderers(StatusRepresentation rep)
-  {
-    List!(RendererRepresentation) renderers = new ArrayList();
-    
-    List!(Renderer) storedRenderers = RendererManager.getInstance().getStoredRenderers();
-    Map!(String, ActiveRenderer) activeRenderers = RendererManager.getInstance().getActiveRenderers();
-    
-    Set!(Renderer) mergedRenderers = new HashSet();
-    mergedRenderers.addAll(storedRenderers);
-    foreach (ActiveRenderer ar ; activeRenderers.values()) {
-      mergedRenderers.add(ar.getRenderer());
-    }
-    foreach (Renderer renderer ; mergedRenderers)
+
+    private bool updateBoundIPAddress(StatusRepresentation rep)
     {
-      RendererRepresentation rr = new RendererRepresentation();
-      rr.setUuid(renderer.getUuid());
-      rr.setIpAddress(renderer.getIpAddress());
-      rr.setName(renderer.getName());
-      rr.setProfileId(renderer.getProfileId());
-      rr.setEnabled(renderer.isEnabled());
-      rr.setAccessGroupId(getAccessGroupId(renderer.getAccessGroupId()));
-      if (activeRenderers.containsKey(renderer.getUuid())) {
-        rr.setStatus(RendererRepresentation.RendererStatus.ACTIVE);
-      } else if (renderer.isManuallyAdded()) {
-        rr.setStatus(RendererRepresentation.RendererStatus.UNKNOWN);
-      } else {
-        rr.setStatus(RendererRepresentation.RendererStatus.INACTIVE);
-      }
-      renderers.add(rr);
+        bool addressUpdated = false;
+        String originalNICName = Configuration.getBoundNICName();
+        String newNICName = rep.getBoundNICName();
+        if (((originalNICName is null) && (newNICName !is null)) || ((originalNICName !is null) && (!originalNICName.equals(newNICName)))) {
+            addressUpdated = true;
+        }
+        this.log.debug_("Storing bound NIC: " + newNICName);
+        Configuration.setBoundNICName(newNICName);
+        return addressUpdated;
     }
-    Collections.sort(renderers);
-    rep.setRenderers(renderers);
-  }
-  
-  private Long getAccessGroupId(Long providedAccessGroupId)
-  {
-    return LicensingManager.getInstance().isProVersion() ? providedAccessGroupId : AccessGroup.NO_LIMIT_ACCESS_GROUP_ID;
-  }
-  
-  private bool updateRenderers(StatusRepresentation rep)
-  {
-    bool restartRequired = false;
-    
-    validateRenderers(rep);
-    List!(Renderer) storedRenderers = RendererManager.getInstance().getStoredRenderers();
-    foreach (Renderer existingRenderer ; storedRenderers) {
-      if (findRendererRepresentationByUuid(rep.getRenderers(), existingRenderer.getUuid()) is null) {
-        RendererManager.getInstance().removeRenderer(existingRenderer.getUuid());
-      }
-    }
-    foreach (RendererRepresentation rr ; rep.getRenderers())
+
+    private bool validateIPAddress(String ipAddress)
     {
-      Renderer storedRenderer = RendererManager.getInstance().getStoredRendererByUuid(rr.getUuid());
-      if (storedRenderer !is null)
-      {
-        bool profileUpdated = false;
-        if (!storedRenderer.getProfileId().equalsIgnoreCase(rr.getProfileId()))
+        if (ObjectValidator.isNotEmpty(ipAddress))
         {
-          storedRenderer.setProfileId(rr.getProfileId());
-          storedRenderer.setForcedProfile(true);
-          profileUpdated = true;
+            Matcher m = ipAddressPattern.matcher(ipAddress);
+            return m.matches();
         }
-        if (storedRenderer.isEnabled() != rr.isEnabled())
-        {
-          storedRenderer.setEnabled(rr.isEnabled());
-          profileUpdated = true;
-        }
-        if ((ObjectValidator.isNotEmpty(rr.getName())) && (!storedRenderer.getName().equalsIgnoreCase(rr.getName())))
-        {
-          storedRenderer.setName(rr.getName());
-          profileUpdated = true;
-        }
-        if (storedRenderer.getAccessGroupId() != getAccessGroupId(rr.getAccessGroupId()))
-        {
-          storedRenderer.setAccessGroupId(fixAccessGroupId(rr.getAccessGroupId()));
-          profileUpdated = true;
-        }
-        if (profileUpdated)
-        {
-          restartRequired = true;
-          RendererManager.getInstance().updateRenderer(storedRenderer);
-        }
-      }
-      else
-      {
-        this.log.warn("Adding new renderers is not supported. Ignoring the data.");
-      }
+        return false;
     }
-    return restartRequired;
-  }
-  
-  private Long fixAccessGroupId(Long accessGroupId)
-  {
-    return accessGroupId is null ? Configuration.getRendererDefaultAccessGroupId() : getAccessGroupId(accessGroupId);
-  }
-  
-  private void validateRenderers(StatusRepresentation rep)
-  {
-    foreach (RendererRepresentation rr ; rep.getRenderers()) {
-      if (!validateIPAddress(rr.getIpAddress())) {
-        throw new ValidationException(500);
-      }
+
+    private void initRenderers(StatusRepresentation rep)
+    {
+        List!(RendererRepresentation) renderers = new ArrayList();
+
+        List!(Renderer) storedRenderers = RendererManager.getInstance().getStoredRenderers();
+        Map!(String, ActiveRenderer) activeRenderers = RendererManager.getInstance().getActiveRenderers();
+
+        Set!(Renderer) mergedRenderers = new HashSet();
+        mergedRenderers.addAll(storedRenderers);
+        foreach (ActiveRenderer ar ; activeRenderers.values()) {
+            mergedRenderers.add(ar.getRenderer());
+        }
+        foreach (Renderer renderer ; mergedRenderers)
+        {
+            RendererRepresentation rr = new RendererRepresentation();
+            rr.setUuid(renderer.getUuid());
+            rr.setIpAddress(renderer.getIpAddress());
+            rr.setName(renderer.getName());
+            rr.setProfileId(renderer.getProfileId());
+            rr.setEnabled(renderer.isEnabled());
+            rr.setAccessGroupId(getAccessGroupId(renderer.getAccessGroupId()));
+            if (activeRenderers.containsKey(renderer.getUuid())) {
+                rr.setStatus(RendererRepresentation.RendererStatus.ACTIVE);
+            } else if (renderer.isManuallyAdded()) {
+                rr.setStatus(RendererRepresentation.RendererStatus.UNKNOWN);
+            } else {
+                rr.setStatus(RendererRepresentation.RendererStatus.INACTIVE);
+            }
+            renderers.add(rr);
+        }
+        Collections.sort(renderers);
+        rep.setRenderers(renderers);
     }
-  }
-  
-  public RendererRepresentation findRendererRepresentationByUuid(List!(RendererRepresentation) reps, String uuid)
-  {
-    foreach (RendererRepresentation rr ; reps) {
-      if (rr.getUuid().equalsIgnoreCase(uuid)) {
-        return rr;
-      }
+
+    private Long getAccessGroupId(Long providedAccessGroupId)
+    {
+        return LicensingManager.getInstance().isProVersion() ? providedAccessGroupId : AccessGroup.NO_LIMIT_ACCESS_GROUP_ID;
     }
-    return null;
-  }
+
+    private bool updateRenderers(StatusRepresentation rep)
+    {
+        bool restartRequired = false;
+
+        validateRenderers(rep);
+        List!(Renderer) storedRenderers = RendererManager.getInstance().getStoredRenderers();
+        foreach (Renderer existingRenderer ; storedRenderers) {
+            if (findRendererRepresentationByUuid(rep.getRenderers(), existingRenderer.getUuid()) is null) {
+                RendererManager.getInstance().removeRenderer(existingRenderer.getUuid());
+            }
+        }
+        foreach (RendererRepresentation rr ; rep.getRenderers())
+        {
+            Renderer storedRenderer = RendererManager.getInstance().getStoredRendererByUuid(rr.getUuid());
+            if (storedRenderer !is null)
+            {
+                bool profileUpdated = false;
+                if (!storedRenderer.getProfileId().equalsIgnoreCase(rr.getProfileId()))
+                {
+                    storedRenderer.setProfileId(rr.getProfileId());
+                    storedRenderer.setForcedProfile(true);
+                    profileUpdated = true;
+                }
+                if (storedRenderer.isEnabled() != rr.isEnabled())
+                {
+                    storedRenderer.setEnabled(rr.isEnabled());
+                    profileUpdated = true;
+                }
+                if ((ObjectValidator.isNotEmpty(rr.getName())) && (!storedRenderer.getName().equalsIgnoreCase(rr.getName())))
+                {
+                    storedRenderer.setName(rr.getName());
+                    profileUpdated = true;
+                }
+                if (storedRenderer.getAccessGroupId() != getAccessGroupId(rr.getAccessGroupId()))
+                {
+                    storedRenderer.setAccessGroupId(fixAccessGroupId(rr.getAccessGroupId()));
+                    profileUpdated = true;
+                }
+                if (profileUpdated)
+                {
+                    restartRequired = true;
+                    RendererManager.getInstance().updateRenderer(storedRenderer);
+                }
+            }
+            else
+            {
+                this.log.warn("Adding new renderers is not supported. Ignoring the data.");
+            }
+        }
+        return restartRequired;
+    }
+
+    private Long fixAccessGroupId(Long accessGroupId)
+    {
+        return accessGroupId is null ? Configuration.getRendererDefaultAccessGroupId() : getAccessGroupId(accessGroupId);
+    }
+
+    private void validateRenderers(StatusRepresentation rep)
+    {
+        foreach (RendererRepresentation rr ; rep.getRenderers()) {
+            if (!validateIPAddress(rr.getIpAddress())) {
+                throw new ValidationException(500);
+            }
+        }
+    }
+
+    public RendererRepresentation findRendererRepresentationByUuid(List!(RendererRepresentation) reps, String uuid)
+    {
+        foreach (RendererRepresentation rr ; reps) {
+            if (rr.getUuid().equalsIgnoreCase(uuid)) {
+                return rr;
+            }
+        }
+        return null;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.ui.resources.server.StatusServerResource
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.ui.resources.server.StatusServerResource
+* JD-Core Version:    0.7.0.1
+*/

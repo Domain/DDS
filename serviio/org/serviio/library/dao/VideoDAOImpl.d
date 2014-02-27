@@ -19,7 +19,7 @@ import org.serviio.dlna.SourceAspectRatio;
 import org.serviio.dlna.VideoCodec;
 import org.serviio.dlna.VideoContainer;
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.entities.Video;
 import org.serviio.library.local.ContentType;
 import org.serviio.library.local.EmbeddedSubtitles;

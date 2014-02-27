@@ -10,7 +10,7 @@ import org.serviio.delivery.subtitles.SubtitlesService;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.SubtitleCodec;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

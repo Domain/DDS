@@ -20,27 +20,25 @@ import org.serviio.delivery.Client;
 import org.serviio.delivery.HttpDeliveryContainer;
 import org.serviio.delivery.HttpResponseCodeException;
 import org.serviio.delivery.RangeHeaders;
-import org.serviio.delivery.RangeHeaders.RangeDefinition;
-import org.serviio.delivery.RangeHeaders.RangeUnit;
+import org.serviio.delivery.RangeHeaders:RangeDefinition;
+import org.serviio.delivery.RangeHeaders:RangeUnit;
 import org.serviio.delivery.ResourceDeliveryProcessor;
-import org.serviio.delivery.ResourceDeliveryProcessor.HttpMethod;
+import org.serviio.delivery.ResourceDeliveryProcessor:HttpMethod;
 import org.serviio.delivery.ResourceRetrievalStrategyFactory;
 import org.serviio.profile.Profile;
 import org.serviio.profile.ProfileManager;
 import org.serviio.restlet.HttpCodeException;
 import org.serviio.upnp.protocol.http.transport.CDSProtocolHandler;
-import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.rest.representation.ClosingInputRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.CDSRetrieveMediaResource;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 
-public class CDSRetrieveMediaServerResource
-: AbstractRestrictedCDSServerResource
-, CDSRetrieveMediaResource
+public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResource, CDSRetrieveMediaResource
 {
-    private static final int CACHE_SECONDS = 36000;
+    private static immutable int CACHE_SECONDS = 36000;
     public static immutable String RESOURCE_CONTEXT = "/resource";
     private static immutable String PARAM_CLIENT_ID = "clientId";
     private static final ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();

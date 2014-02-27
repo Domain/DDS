@@ -3,8 +3,7 @@ module org.serviio.delivery.MediaFormatProfileResource;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
 
-public abstract class MediaFormatProfileResource
-: ResourceInfo
+public abstract class MediaFormatProfileResource : ResourceInfo
 {
     private MediaFormatProfile formatProfile;
     private DeliveryQuality.QualityType quality;

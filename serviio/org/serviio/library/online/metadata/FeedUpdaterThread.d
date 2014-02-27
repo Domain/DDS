@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.AudioMetadata;
 import org.serviio.library.local.metadata.ImageMetadata;
 import org.serviio.library.local.metadata.VideoMetadata;

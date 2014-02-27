@@ -15,7 +15,7 @@ import org.serviio.library.local.LibraryManager;
 import org.serviio.library.online.OnlineLibraryManager;
 import org.serviio.library.search.SearchManager;
 import org.serviio.licensing.LicensingManager;
-import org.serviio.licensing.LicensingManager.ServiioEdition;
+import org.serviio.licensing.LicensingManager:ServiioEdition;
 import org.serviio.licensing.ServiioLicense;
 import org.serviio.profile.ProfileManager;
 import org.serviio.renderer.RendererManager;

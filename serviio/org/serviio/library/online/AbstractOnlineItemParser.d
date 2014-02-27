@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.online.feed.PluginCompilerThread;
 import org.serviio.library.online.metadata.OnlineItem;

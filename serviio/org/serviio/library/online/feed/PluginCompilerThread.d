@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.serviio.ApplicationSettings;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.library.online.FeedItemUrlExtractor;
 import org.serviio.library.online.OnlineLibraryManager;

@@ -10,7 +10,7 @@ import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener.ProgressData;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.protocol.http.transport.TransferMode;
 import org.slf4j.Logger;
 

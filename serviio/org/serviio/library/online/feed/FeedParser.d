@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import org.serviio.config.Configuration;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.metadata.InvalidMetadataException;
 import org.serviio.library.metadata.MediaFileType;

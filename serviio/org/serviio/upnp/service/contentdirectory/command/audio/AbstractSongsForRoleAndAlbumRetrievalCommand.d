@@ -3,7 +3,7 @@ module org.serviio.upnp.service.contentdirectory.command.audio.AbstractSongsForR
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicTrack;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.local.service.AudioService;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;

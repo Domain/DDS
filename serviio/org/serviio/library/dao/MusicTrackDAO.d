@@ -4,7 +4,7 @@ import java.util.List;
 import org.serviio.db.dao.GenericDAO;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicTrack;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 
 public abstract interface MusicTrackDAO
   : GenericDAO!(MusicTrack)

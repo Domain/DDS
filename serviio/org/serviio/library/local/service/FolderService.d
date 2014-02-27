@@ -9,7 +9,7 @@ import org.serviio.library.entities.Folder;
 import org.serviio.library.entities.Repository;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.library.search.SearchIndexer;
-import org.serviio.library.search.SearchIndexer.SearchCategory;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.library.service.Service;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.util.FileUtils;

@@ -3,7 +3,7 @@ module org.serviio.util.ServiioUri;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 
 public class ServiioUri

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.serviio.config.Configuration;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.metadata.InvalidMetadataException;
 import org.serviio.library.metadata.MediaFileType;

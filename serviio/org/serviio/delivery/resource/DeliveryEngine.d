@@ -8,7 +8,7 @@ import org.serviio.delivery.MediaFormatProfileResource;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.library.entities.MediaItem;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 
 public abstract interface DeliveryEngine(e, MI : MediaItem)

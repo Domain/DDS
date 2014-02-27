@@ -5,7 +5,7 @@ import org.serviio.db.dao.GenericDAO;
 import org.serviio.db.dao.InvalidArgumentException;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicAlbum;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 
 public abstract interface MusicAlbumDAO
   : GenericDAO!(MusicAlbum)

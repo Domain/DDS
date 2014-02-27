@@ -4,7 +4,7 @@ import java.util.List;
 import org.serviio.db.dao.GenericDAO;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 
 public abstract interface OnlineRepositoryDAO

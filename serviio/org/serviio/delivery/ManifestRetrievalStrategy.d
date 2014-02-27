@@ -9,7 +9,7 @@ import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.library.entities.MediaItem;
 import org.serviio.library.entities.Video;
 import org.serviio.library.metadata.MediaFileType;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;

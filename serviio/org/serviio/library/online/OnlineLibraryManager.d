@@ -16,7 +16,7 @@ import org.serviio.config.Configuration;
 import org.serviio.library.AbstractLibraryManager;
 import org.serviio.library.entities.CoverImage;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.local.service.CoverImageService;
 import org.serviio.library.local.service.SearchService;

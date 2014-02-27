@@ -9,7 +9,7 @@ import java.io.InputStream;
 import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
 import org.serviio.util.FileUtils;
 import org.slf4j.Logger;

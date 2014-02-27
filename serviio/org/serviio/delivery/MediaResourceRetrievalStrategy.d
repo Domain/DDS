@@ -19,7 +19,7 @@ import org.serviio.library.local.service.VideoService;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.library.online.OnlineItemService;
 import org.serviio.library.online.metadata.OnlineItem;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ContentDirectoryEngine;
 import org.slf4j.Logger;

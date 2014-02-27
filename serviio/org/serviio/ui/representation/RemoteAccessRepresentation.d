@@ -1,6 +1,6 @@
 module org.serviio.ui.representation.RemoteAccessRepresentation;
 
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 
 public class RemoteAccessRepresentation
 {

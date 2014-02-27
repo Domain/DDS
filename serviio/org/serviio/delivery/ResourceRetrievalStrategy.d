@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 
 public abstract interface ResourceRetrievalStrategy
 {

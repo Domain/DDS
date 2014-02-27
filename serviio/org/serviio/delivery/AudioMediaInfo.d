@@ -1,7 +1,7 @@
 module org.serviio.delivery.AudioMediaInfo;
 
 import org.serviio.dlna.MediaFormatProfile;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 
 public class AudioMediaInfo
   : MediaFormatProfileResource

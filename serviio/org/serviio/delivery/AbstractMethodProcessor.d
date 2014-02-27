@@ -10,7 +10,7 @@ import org.serviio.delivery.resource.transcode.TranscodingJobListener.ProgressDa
 import org.serviio.delivery.subtitles.SubtitlesInfo;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler;
 import org.serviio.upnp.protocol.http.transport.TransferMode;
 import org.serviio.util.ObjectValidator;

@@ -1,7 +1,7 @@
 module org.serviio.ui.representation.OnlineRepository;
 
 import java.util.LinkedHashSet;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.CollectionUtils;
 

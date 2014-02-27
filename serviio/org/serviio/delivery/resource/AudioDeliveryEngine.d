@@ -18,7 +18,7 @@ import org.serviio.dlna.MediaFormatProfileResolver;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.external.FFMPEGWrapper;
 import org.serviio.library.entities.MusicTrack;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,7 +2,7 @@ module org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.search.SearchIndexer.SearchCategory;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.BrowseItemsHolder;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
@@ -15,8 +15,7 @@ import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ActionNode
-: ContainerNode
+public class ActionNode : ContainerNode
 {
     private static final Logger log = LoggerFactory.getLogger!(ActionNode);
     private String commandClass;

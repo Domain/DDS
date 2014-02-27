@@ -10,7 +10,7 @@ import org.serviio.library.entities.CoverImage;
 import org.serviio.library.entities.MediaItem;
 import org.serviio.library.local.service.MediaService;
 import org.serviio.library.online.OnlineItemService;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -8,7 +8,7 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 import org.serviio.upnp.Device;
 import org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory;
-import org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory.SSDPMessageType;
+import org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory:SSDPMessageType;
 import org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
 import org.serviio.util.DateUtils;
 import org.serviio.util.MultiCastUtils;

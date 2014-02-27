@@ -28,7 +28,7 @@ import org.serviio.external.DCRawWrapper;
 import org.serviio.library.entities.Image;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.local.service.MediaService;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.ImageResolutions;
 import org.serviio.profile.Profile;
 import org.serviio.util.FileUtils;

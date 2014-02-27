@@ -13,7 +13,7 @@ import org.serviio.library.online.metadata.OnlineContainerItem;
 import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.library.online.metadata.OnlineResourceContainer;
 import org.serviio.library.search.SearchIndexer;
-import org.serviio.library.search.SearchIndexer.SearchCategory;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.library.search.SearchManager;
 import org.serviio.library.search.SearchMetadata;
 import org.serviio.util.Tupple;

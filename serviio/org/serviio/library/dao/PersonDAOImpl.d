@@ -10,7 +10,7 @@ import org.serviio.db.DatabaseManager;
 import org.serviio.db.dao.InvalidArgumentException;
 import org.serviio.db.dao.PersistenceException;
 import org.serviio.library.entities.Person;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.util.JdbcUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;

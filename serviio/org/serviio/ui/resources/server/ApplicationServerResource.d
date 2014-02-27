@@ -3,7 +3,7 @@ module org.serviio.ui.resources.server.ApplicationServerResource;
 import org.serviio.MediaServer;
 import org.serviio.config.Configuration;
 import org.serviio.licensing.LicensingManager;
-import org.serviio.licensing.LicensingManager.ServiioEdition;
+import org.serviio.licensing.LicensingManager:ServiioEdition;
 import org.serviio.licensing.ServiioLicense;
 import org.serviio.restlet.AbstractServerResource;
 import org.serviio.ui.representation.ApplicationRepresentation;

@@ -1,7 +1,7 @@
 module org.serviio.library.online.SingleURLParser;
 
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.metadata.InvalidMetadataException;
 import org.serviio.library.online.metadata.SingleURLItem;

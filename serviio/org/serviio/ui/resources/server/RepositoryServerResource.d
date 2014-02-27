@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import org.serviio.config.Configuration;
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.entities.Repository;
 import org.serviio.library.local.LibraryManager;
 import org.serviio.library.local.service.RepositoryService;

@@ -22,7 +22,7 @@ import org.serviio.external.FFMPEGWrapper;
 import org.serviio.external.ResizeDefinition;
 import org.serviio.library.entities.Video;
 import org.serviio.library.local.metadata.TransportStreamTimestamp;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

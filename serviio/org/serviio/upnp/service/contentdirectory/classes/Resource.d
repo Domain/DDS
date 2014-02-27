@@ -4,7 +4,7 @@ import org.serviio.delivery.DefaultResourceURLGenerator;
 import org.serviio.delivery.HostInfo;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.dlna.MediaFormatProfile;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 
 public class Resource
 {

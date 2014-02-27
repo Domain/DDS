@@ -37,13 +37,12 @@ import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.library.online.ContentURLContainer;
 import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.profile.DeliveryQuality;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractDeliveryEngine(e, MI : MediaItem)
-: DeliveryEngine!(RI, MI)
+public abstract class AbstractDeliveryEngine(e, MI : MediaItem) : DeliveryEngine!(RI, MI)
 {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

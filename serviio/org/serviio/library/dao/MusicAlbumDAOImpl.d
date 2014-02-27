@@ -13,7 +13,7 @@ import org.serviio.db.dao.InvalidArgumentException;
 import org.serviio.db.dao.PersistenceException;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicAlbum;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.util.JdbcUtils;
 import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;

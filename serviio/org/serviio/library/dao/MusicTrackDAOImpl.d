@@ -13,7 +13,7 @@ import org.serviio.db.dao.PersistenceException;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicTrack;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.JdbcUtils;
 import org.serviio.util.ObjectValidator;

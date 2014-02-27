@@ -2,7 +2,7 @@ module org.serviio.library.online.metadata.WebResourceFeed;
 
 import java.io.Serializable;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.online.WebResourceUrlExtractor;
 

@@ -6,7 +6,7 @@ import org.serviio.db.dao.DAOFactory;
 import org.serviio.library.dao.OnlineRepositoryDAO;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.library.online.OnlineItemService;
 import org.serviio.library.service.Service;

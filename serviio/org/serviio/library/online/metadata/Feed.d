@@ -2,7 +2,7 @@ module org.serviio.library.online.metadata.Feed;
 
 import java.io.Serializable;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.online.FeedItemUrlExtractor;
 
 public class Feed

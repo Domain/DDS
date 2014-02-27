@@ -4,7 +4,7 @@ import java.util.List;
 import org.serviio.db.dao.DAOFactory;
 import org.serviio.library.dao.PersonDAO;
 import org.serviio.library.entities.Person;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.service.Service;
 
 public class PersonService

@@ -13,7 +13,7 @@ import org.serviio.db.dao.InvalidArgumentException;
 import org.serviio.db.dao.PersistenceException;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.JdbcUtils;
 import org.slf4j.Logger;

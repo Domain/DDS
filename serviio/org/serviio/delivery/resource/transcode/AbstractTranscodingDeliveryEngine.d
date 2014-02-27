@@ -24,7 +24,7 @@ import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.SubtitleCodec;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.library.entities.MediaItem;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.OnlineContentType;
 import org.serviio.profile.Profile;
 import org.serviio.util.FileUtils;

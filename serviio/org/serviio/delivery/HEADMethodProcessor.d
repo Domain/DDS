@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.http.ProtocolVersion;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
-import org.serviio.profile.DeliveryQuality.QualityType;
+import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class HEADMethodProcessor

@@ -8,7 +8,7 @@ import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.CoverImage;
 import org.serviio.library.entities.OnlineRepository;
-import org.serviio.library.entities.OnlineRepository.OnlineRepositoryType;
+import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.library.online.metadata.MissingPluginException;
 import org.serviio.library.online.metadata.NamedOnlineResource;
