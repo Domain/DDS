@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import org.serviio.delivery.HostInfo;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;
-import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 
 public class ManifestTranscodeInputStreamModifier
 {

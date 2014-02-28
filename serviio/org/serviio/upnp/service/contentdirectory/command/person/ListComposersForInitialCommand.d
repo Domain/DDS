@@ -1,7 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.command.person.ListComposersForInitialCommand;
 
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;

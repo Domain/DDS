@@ -20,9 +20,9 @@ import org.serviio.delivery.HostInfo;
 import org.serviio.delivery.HttpDeliveryContainer;
 import org.serviio.delivery.HttpResponseCodeException;
 import org.serviio.delivery.RangeHeaders;
-import org.serviio.delivery.RangeHeaders.RangeDefinition;
+import org.serviio.delivery.RangeHeaders:RangeDefinition;
 import org.serviio.delivery.ResourceDeliveryProcessor;
-import org.serviio.delivery.ResourceDeliveryProcessor.HttpMethod;
+import org.serviio.delivery.ResourceDeliveryProcessor:HttpMethod;
 import org.serviio.delivery.ResourceRetrievalStrategyFactory;
 import org.serviio.profile.Profile;
 import org.serviio.profile.ProfileManager;
@@ -33,8 +33,7 @@ import org.serviio.util.HttpUtils;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 
-public class ResourceTransportRequestHandler
-: AbstractRequestHandler
+public class ResourceTransportRequestHandler : AbstractRequestHandler
 {
     private static final ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
     private ResourceTransportProtocolHandler dlnaProtocolHandler = new DLNAProtocolHandler();

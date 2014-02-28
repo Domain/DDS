@@ -2,7 +2,7 @@ module org.serviio.upnp.service.contentdirectory.command.video.ListVideosForProd
 
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
-import org.serviio.library.entities.Person.RoleType;
+import org.serviio.library.entities.Person:RoleType;
 import org.serviio.library.entities.Video;
 import org.serviio.library.local.service.VideoService;
 import org.serviio.profile.Profile;

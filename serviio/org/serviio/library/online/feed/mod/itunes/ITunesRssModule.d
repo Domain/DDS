@@ -1,11 +1,11 @@
 module org.serviio.library.online.feed.mod.itunes.ITunesRssModule;
 
-import com.sun.syndication.feed.mod.Module;
+//import com.sun.syndication.feed.mod.Module;
 import java.util.Date;
 import java.util.List;
 
 public abstract interface ITunesRssModule
-  : Module
+  //: Module
 {
   public static immutable String URI = "http://itunes.apple.com/rss";
   

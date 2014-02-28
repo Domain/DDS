@@ -1,11 +1,11 @@
 module org.serviio.library.online.feed.mod.itunes.ITunesRssModuleImpl;
 
-import com.sun.syndication.feed.mod.ModuleImpl;
+//import com.sun.syndication.feed.mod.ModuleImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ITunesRssModuleImpl : ModuleImpl, ITunesRssModule
+public class ITunesRssModuleImpl : /*ModuleImpl, */ITunesRssModule
 {
     private static immutable long serialVersionUID = 2678421912344703004L;
     private Date releaseDate;

@@ -9,7 +9,7 @@ import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.upnp.protocol.http.transport.InvalidResourceRequestException;
 import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 import org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler;
-import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

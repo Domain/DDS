@@ -4,7 +4,7 @@ import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.upnp.service.contentdirectory.classes.ClassProperties;
 import org.serviio.upnp.service.contentdirectory.classes.DirectoryObject;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
-import org.serviio.upnp.service.contentdirectory.classes.Resource.ResourceType;
+import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

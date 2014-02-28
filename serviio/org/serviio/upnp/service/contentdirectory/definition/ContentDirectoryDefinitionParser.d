@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
-import org.serviio.library.search.SearchIndexer.SearchCategory;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.XPathUtil;
