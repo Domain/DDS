@@ -3,13 +3,13 @@ module java.text.Normalizer;
 
 import java.lang.exceptions;
 
+public enum Form
+{
+    NFD
+}
+
 public class Normalizer
 {
-	enum Form
-	{
-		NFD
-	}
-
     public this()
     {
         implMissing();

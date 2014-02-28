@@ -122,7 +122,7 @@ public class CollectionUtils
         return result;
     }
 
-    public static Object getFirstItem(Collection/*!(?)*/ collection)
+    public static Object getFirstItem(T)(Collection!T collection)
     {
         if ((collection !is null) && (!collection.isEmpty())) {
             return collection.iterator().next();
@@ -168,7 +168,7 @@ public class CollectionUtils
         array = setToArray(set, elementClass);
     }
 
-    public static int[] enumSetToOrdinalArray(Set/*!(?)*/ enums)
+    public static int[] enumSetToOrdinalArray(T)(Set!T enums)
     {
         int[] result = new int[enums.size()];
         int i = 0;
@@ -258,7 +258,7 @@ public class CollectionUtils
         return result;
     }
 
-    public static List!(Long) extractEntityIDs(List/*!(? : PersistedEntity)*/ entities)
+    public static List!(Long) extractEntityIDs(T : PersistedEntity)(List!(T) entities)
     {
         List!(Long) ids = new ArrayList();
         foreach (PersistedEntity entity ; entities) {
@@ -267,7 +267,7 @@ public class CollectionUtils
         return ids;
     }
 
-    public static void removeNulls(Collection/*!(?)*/ col)
+    public static void removeNulls(T)(Collection!T col)
     {
         col.remove(null);
     }

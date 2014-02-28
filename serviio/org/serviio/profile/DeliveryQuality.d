@@ -2,17 +2,17 @@ module org.serviio.profile.DeliveryQuality;
 
 import org.serviio.delivery.resource.transcode.TranscodingConfiguration;
 
+public enum QualityType
+{
+    ORIGINAL,  MEDIUM,  LOW
+}
+
 public class DeliveryQuality
 {
     private QualityType type;
     private TranscodingConfiguration transcodingConfiguration;
     private TranscodingConfiguration onlineTranscodingConfiguration;
     private TranscodingConfiguration hardSubsTranscodingConfiguration;
-
-    public static enum QualityType
-    {
-        ORIGINAL,  MEDIUM,  LOW
-    }
 
     public this(QualityType type, TranscodingConfiguration transcodingConfiguration, TranscodingConfiguration onlineTranscodingConfiguration, TranscodingConfiguration hardSubsTranscodingConfiguration)
     {

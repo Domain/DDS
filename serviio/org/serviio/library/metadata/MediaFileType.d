@@ -2,6 +2,7 @@ module org.serviio.library.metadata.MediaFileType;
 
 import std.traits;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

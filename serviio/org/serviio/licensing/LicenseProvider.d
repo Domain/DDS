@@ -1,8 +1,10 @@
 module org.serviio.licensing.LicenseProvider;
 
+import java.lang.String;
+
 public abstract interface LicenseProvider
 {
-  public abstract String readLicense();
+    public abstract String readLicense();
 }
 
 

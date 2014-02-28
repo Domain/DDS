@@ -1,5 +1,6 @@
 module org.serviio.config.Configuration;
 
+import java.lang;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +16,13 @@ import org.serviio.util.CollectionUtils;
 import org.serviio.util.FileUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
+import org.serviio.config.ConfigStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Configuration
 {
-    private static final Logger log = LoggerFactory.getLogger!(Configuration);
+    private static Logger log = LoggerFactory.getLogger!(Configuration);
     private static immutable String DATABASE_UPDATE_ID = "db_update_id";
     private static immutable String SEARCH_HIDDEN_FILES = "search_hidden_files";
     private static immutable String SEARCH_FOR_UPDATED_FILES = "search_updated_files";
@@ -481,7 +483,7 @@ public class Configuration
         }
     }
 
-    public static DeliveryQuality.QualityType getRemotePreferredDeliveryQuality()
+    public static QualityType getRemotePreferredDeliveryQuality()
     {
         String value = cast(String)cache.get("remote_preferred_quality");
         if (ObjectValidator.isNotEmpty(value)) {
@@ -504,7 +506,7 @@ public class Configuration
         storeConfigValue("enable_port_forwarding", Boolean.toString(enable));
     }
 
-    public static void setRemotePreferredDeliveryQuality(DeliveryQuality.QualityType quality)
+    public static void setRemotePreferredDeliveryQuality(QualityType quality)
     {
         storeConfigValue("remote_preferred_quality", quality.toString());
     }

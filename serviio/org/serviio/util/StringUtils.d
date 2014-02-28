@@ -1,5 +1,6 @@
 module org.serviio.util.StringUtils;
 
+import java.lang.String;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

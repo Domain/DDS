@@ -1,5 +1,7 @@
 module org.serviio.util.FileUtils;
 
+import java.lang.String;
+import java.lang.Class;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
