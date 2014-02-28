@@ -1,6 +1,6 @@
 module java.lang.ThreadGroup;
 
-import java.lang.all;
+import java.lang;
 
 public class ThreadGroup
 {

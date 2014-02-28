@@ -1,6 +1,6 @@
 module java.util.StringTokenizer;
 
-import java.lang.all;
+import java.lang;
 
 class StringTokenizer {
 

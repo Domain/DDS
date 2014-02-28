@@ -1,6 +1,6 @@
 module java.io.InputStreamReader;
 
-import java.lang.all;
+import java.lang;
 
 public class InputStreamReader
 {

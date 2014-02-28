@@ -1,6 +1,6 @@
 module java.util.HashSet;
 
-import java.lang.all;
+import java.lang;
 import java.util.Set;
 import java.util.Collection;
 import java.util.Iterator;

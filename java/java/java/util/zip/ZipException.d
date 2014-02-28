@@ -1,6 +1,6 @@
 module java.util.zip.ZipException;
 
-import java.lang.all;
+import java.lang;
 
 public class ZipException
 {

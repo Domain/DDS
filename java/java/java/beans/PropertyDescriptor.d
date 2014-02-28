@@ -2,7 +2,7 @@ module java.beans.PropertyDescriptor;
 
 import java.beans.FeatureDescriptor;
 
-import java.lang.all;
+import java.lang;
 import java.lang.reflect.Method;
 
 class PropertyDescriptor : FeatureDescriptor {

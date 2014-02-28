@@ -1,5 +1,8 @@
 module org.serviio.licensing.ServiioLicense;
 
+import java.lang;
+import org.serviio.licensing.LicensingManager;
+
 public class ServiioLicense
 {
     private LicensingManager.ServiioEdition edition;

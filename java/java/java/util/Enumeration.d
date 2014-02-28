@@ -1,6 +1,6 @@
 module java.util.Enumeration;
 
-import java.lang.all;
+import java.lang;
 
 interface Enumeration(T) {
     public bool hasMoreElements();

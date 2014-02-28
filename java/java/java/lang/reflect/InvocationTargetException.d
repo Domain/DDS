@@ -1,6 +1,6 @@
 module java.lang.reflect.InvocationTargetException;
 
-import java.lang.all;
+import java.lang;
 
 class InvocationTargetException : Exception {
     Exception cause;

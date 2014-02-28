@@ -1,6 +1,6 @@
 module java.util.Random;
 
-import java.lang.all;
+import java.lang;
 version(Tango){
     static import tango.math.random.Kiss;
 } else { // Phobos

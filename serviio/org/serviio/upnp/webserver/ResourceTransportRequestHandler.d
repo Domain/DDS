@@ -3,7 +3,7 @@ module org.serviio.upnp.webserver.ResourceTransportRequestHandler;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;

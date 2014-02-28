@@ -1,5 +1,5 @@
 module java.beans.IntrospectionException;
-import java.lang.all;
+import java.lang;
 
 class IntrospectionException : Exception {
     this(String mess){

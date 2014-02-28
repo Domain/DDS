@@ -1,6 +1,6 @@
 module java.util.TimerTask;
 
-import java.lang.all;
+import java.lang;
 import java.util.Timer;
 
 class TimerTask : Runnable {

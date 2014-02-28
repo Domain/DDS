@@ -1,6 +1,6 @@
 module java.util.Date;
 
-import java.lang.all;
+import java.lang;
 
 class Date {
     public this(){

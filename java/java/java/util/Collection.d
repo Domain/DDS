@@ -1,6 +1,6 @@
 module java.util.Collection;
 
-import java.lang.all;
+import java.lang;
 import java.util.Iterator;
 
 interface Collection(T) {

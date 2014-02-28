@@ -1,6 +1,6 @@
 module java.util.LinkedHashMap;
 
-import java.lang.all;
+import java.lang;
 import java.util.HashMap;
 
 class LinkedHashMap(K, V) : HashMap!(K, V) {

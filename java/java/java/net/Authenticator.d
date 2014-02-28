@@ -1,6 +1,6 @@
 module java.net.Authenticator;
 
-import java.lang.all;
+import java.lang;
 
 public class Authenticator
 {

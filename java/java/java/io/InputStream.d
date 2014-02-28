@@ -4,7 +4,7 @@
 
 module java.io.InputStream;
 
-import java.lang.all;
+import java.lang;
 
 public abstract class InputStream {
 

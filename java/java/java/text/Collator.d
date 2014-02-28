@@ -1,6 +1,6 @@
 module java.text.Collator;
 
-import java.lang.all;
+import java.lang;
 import java.util.Comparator;
 
 class Collator : Comparator!Object {

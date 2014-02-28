@@ -23,6 +23,7 @@
   <isSolaris>0</isSolaris>
   <scheduler>0</scheduler>
   <useDeprecated>0</useDeprecated>
+  <errDeprecated>0</errDeprecated>
   <useAssert>0</useAssert>
   <useInvariants>0</useInvariants>
   <useIn>0</useIn>
@@ -116,6 +117,7 @@
   <isSolaris>0</isSolaris>
   <scheduler>0</scheduler>
   <useDeprecated>0</useDeprecated>
+  <errDeprecated>0</errDeprecated>
   <useAssert>0</useAssert>
   <useInvariants>0</useInvariants>
   <useIn>0</useIn>
@@ -190,14 +192,67 @@
   <Folder name="org">
    <Folder name="apache">
     <Folder name="commons">
+     <Folder name="codec">
+      <Folder name="binary">
+       <File path="org\apache\commons\codec\binary\Base64.d" />
+       <File path="org\apache\commons\codec\binary\package.d" />
+      </Folder>
+      <Folder name="digest">
+       <File path="org\apache\commons\codec\digest\DigestUtils.d" />
+       <File path="org\apache\commons\codec\digest\package.d" />
+      </Folder>
+     </Folder>
      <Folder name="configuration">
       <File path="org\apache\commons\configuration\Configuration.d" />
      </Folder>
+     <Folder name="imaging">
+      <Folder name="common">
+       <Folder name="bytesource">
+        <File path="org\apache\commons\imaging\common\bytesource\ByteSource.d" />
+        <File path="org\apache\commons\imaging\common\bytesource\ByteSourceArray.d" />
+        <File path="org\apache\commons\imaging\common\bytesource\ByteSourceFile.d" />
+        <File path="org\apache\commons\imaging\common\bytesource\ByteSourceInputStream.d" />
+        <File path="org\apache\commons\imaging\common\bytesource\package.d" />
+       </Folder>
+       <File path="org\apache\commons\imaging\common\IImageMetadata.d" />
+       <File path="org\apache\commons\imaging\common\package.d" />
+      </Folder>
+      <Folder name="formats">
+       <Folder name="jpeg">
+        <File path="org\apache\commons\imaging\formats\jpeg\JpegImageMetadata.d" />
+        <File path="org\apache\commons\imaging\formats\jpeg\JpegUtils.d" />
+        <File path="org\apache\commons\imaging\formats\jpeg\package.d" />
+       </Folder>
+       <Folder name="tiff">
+        <Folder name="constants">
+         <File path="org\apache\commons\imaging\formats\tiff\constants\package.d" />
+         <File path="org\apache\commons\imaging\formats\tiff\constants\TiffConstants.d" />
+        </Folder>
+        <File path="org\apache\commons\imaging\formats\tiff\package.d" />
+        <File path="org\apache\commons\imaging\formats\tiff\TiffField.d" />
+       </Folder>
+      </Folder>
+      <File path="org\apache\commons\imaging\ImageFormat.d" />
+      <File path="org\apache\commons\imaging\ImageInfo.d" />
+      <File path="org\apache\commons\imaging\ImageReadException.d" />
+      <File path="org\apache\commons\imaging\Imaging.d" />
+      <File path="org\apache\commons\imaging\package.d" />
+     </Folder>
      <Folder name="io">
+      <Folder name="filefilter">
+       <File path="org\apache\commons\io\filefilter\package.d" />
+       <File path="org\apache\commons\io\filefilter\RegexFileFilter.d" />
+      </Folder>
+      <Folder name="input">
+       <File path="org\apache\commons\io\input\package.d" />
+       <File path="org\apache\commons\io\input\ReaderInputStream.d" />
+      </Folder>
       <File path="org\apache\commons\io\FilenameUtils.d" />
       <File path="org\apache\commons\io\FileUtils.d" />
+      <File path="org\apache\commons\io\IOCase.d" />
       <File path="org\apache\commons\io\IOUtils.d" />
       <File path="org\apache\commons\io\LineIterator.d" />
+      <File path="org\apache\commons\io\package.d" />
      </Folder>
      <Folder name="lang">
       <File path="org\apache\commons\lang\BooleanUtils.d" />
@@ -210,6 +265,7 @@
       <File path="org\apache\http\entity\AbstractHttpEntity.d" />
       <File path="org\apache\http\entity\ByteArrayEntity.d" />
       <File path="org\apache\http\entity\InputStreamEntity.d" />
+      <File path="org\apache\http\entity\package.d" />
       <File path="org\apache\http\entity\StringEntity.d" />
      </Folder>
      <Folder name="impl">
@@ -220,15 +276,18 @@
        <File path="org\apache\http\impl\io\HttpRequestWriter.d" />
        <File path="org\apache\http\impl\io\HttpResponseParser.d" />
        <File path="org\apache\http\impl\io\HttpResponseWriter.d" />
+       <File path="org\apache\http\impl\io\package.d" />
       </Folder>
       <File path="org\apache\http\impl\DefaultConnectionReuseStrategy.d" />
       <File path="org\apache\http\impl\DefaultHttpClientConnection.d" />
       <File path="org\apache\http\impl\DefaultHttpRequestFactory.d" />
       <File path="org\apache\http\impl\DefaultHttpResponseFactory.d" />
       <File path="org\apache\http\impl\DefaultHttpServerConnection.d" />
+      <File path="org\apache\http\impl\package.d" />
      </Folder>
      <Folder name="io">
       <File path="org\apache\http\io\HttpMessageWriter.d" />
+      <File path="org\apache\http\io\package.d" />
       <File path="org\apache\http\io\SessionInputBuffer.d" />
       <File path="org\apache\http\io\SessionOutputBuffer.d" />
      </Folder>
@@ -238,10 +297,12 @@
       <File path="org\apache\http\message\BasicHttpResponse.d" />
       <File path="org\apache\http\message\BasicLineFormatter.d" />
       <File path="org\apache\http\message\BasicLineParser.d" />
+      <File path="org\apache\http\message\package.d" />
      </Folder>
      <Folder name="params">
       <File path="org\apache\http\params\BasicHttpParams.d" />
       <File path="org\apache\http\params\HttpParams.d" />
+      <File path="org\apache\http\params\package.d" />
      </Folder>
      <Folder name="protocol">
       <File path="org\apache\http\protocol\BasicHttpContext.d" />
@@ -252,6 +313,7 @@
       <File path="org\apache\http\protocol\HttpRequestHandler.d" />
       <File path="org\apache\http\protocol\HttpRequestHandlerResolver.d" />
       <File path="org\apache\http\protocol\HttpService.d" />
+      <File path="org\apache\http\protocol\package.d" />
       <File path="org\apache\http\protocol\RequestContent.d" />
       <File path="org\apache\http\protocol\RequestTargetHost.d" />
       <File path="org\apache\http\protocol\ResponseConnControl.d" />
@@ -261,6 +323,7 @@
      </Folder>
      <Folder name="util">
       <File path="org\apache\http\util\EntityUtils.d" />
+      <File path="org\apache\http\util\package.d" />
      </Folder>
      <File path="org\apache\http\ConnectionClosedException.d" />
      <File path="org\apache\http\ConnectionReuseStrategy.d" />
@@ -275,16 +338,89 @@
      <File path="org\apache\http\HttpResponseFactory.d" />
      <File path="org\apache\http\HttpVersion.d" />
      <File path="org\apache\http\MethodNotSupportedException.d" />
+     <File path="org\apache\http\package.d" />
      <File path="org\apache\http\ProtocolVersion.d" />
      <File path="org\apache\http\RequestLine.d" />
+     <File path="org\apache\http\StatusLine.d" />
     </Folder>
     <Folder name="jcs">
      <Folder name="access">
       <Folder name="exception">
        <File path="org\apache\jcs\access\exception\CacheException.d" />
+       <File path="org\apache\jcs\access\exception\package.d" />
       </Folder>
      </Folder>
      <File path="org\apache\jcs\JCS.d" />
+     <File path="org\apache\jcs\package.d" />
+    </Folder>
+    <Folder name="lucene">
+     <Folder name="analysis">
+      <Folder name="core">
+       <File path="org\apache\lucene\analysis\core\LowerCaseFilter.d" />
+       <File path="org\apache\lucene\analysis\core\package.d" />
+       <File path="org\apache\lucene\analysis\core\StopAnalyzer.d" />
+       <File path="org\apache\lucene\analysis\core\StopFilter.d" />
+      </Folder>
+      <Folder name="miscellaneous">
+       <File path="org\apache\lucene\analysis\miscellaneous\ASCIIFoldingFilter.d" />
+       <File path="org\apache\lucene\analysis\miscellaneous\package.d" />
+      </Folder>
+      <Folder name="standard">
+       <File path="org\apache\lucene\analysis\standard\package.d" />
+       <File path="org\apache\lucene\analysis\standard\StandardFilter.d" />
+       <File path="org\apache\lucene\analysis\standard\StandardTokenizer.d" />
+      </Folder>
+      <Folder name="tokenattributes">
+       <File path="org\apache\lucene\analysis\tokenattributes\CharTermAttribute.d" />
+       <File path="org\apache\lucene\analysis\tokenattributes\package.d" />
+      </Folder>
+      <Folder name="util">
+       <File path="org\apache\lucene\analysis\util\CharArraySet.d" />
+       <File path="org\apache\lucene\analysis\util\package.d" />
+       <File path="org\apache\lucene\analysis\util\StopwordAnalyzerBase.d" />
+      </Folder>
+      <File path="org\apache\lucene\analysis\Analyzer.d" />
+      <File path="org\apache\lucene\analysis\package.d" />
+      <File path="org\apache\lucene\analysis\Tokenizer.d" />
+      <File path="org\apache\lucene\analysis\TokenStream.d" />
+     </Folder>
+     <Folder name="document">
+      <File path="org\apache\lucene\document\Document.d" />
+      <File path="org\apache\lucene\document\Field.d" />
+      <File path="org\apache\lucene\document\FieldType.d" />
+      <File path="org\apache\lucene\document\package.d" />
+      <File path="org\apache\lucene\document\StringField.d" />
+      <File path="org\apache\lucene\document\TextField.d" />
+     </Folder>
+     <Folder name="index">
+      <File path="org\apache\lucene\index\DirectoryReader.d" />
+      <File path="org\apache\lucene\index\IndexWriter.d" />
+      <File path="org\apache\lucene\index\IndexWriterConfig.d" />
+      <File path="org\apache\lucene\index\LiveIndexWriterConfig.d" />
+      <File path="org\apache\lucene\index\MultiReader.d" />
+      <File path="org\apache\lucene\index\package.d" />
+      <File path="org\apache\lucene\index\Term.d" />
+     </Folder>
+     <Folder name="search">
+      <File path="org\apache\lucene\search\BooleanClause.d" />
+      <File path="org\apache\lucene\search\BooleanQuery.d" />
+      <File path="org\apache\lucene\search\IndexSearcher.d" />
+      <File path="org\apache\lucene\search\package.d" />
+      <File path="org\apache\lucene\search\ScoreDoc.d" />
+      <File path="org\apache\lucene\search\TermQuery.d" />
+      <File path="org\apache\lucene\search\TopDocs.d" />
+      <File path="org\apache\lucene\search\WildcardQuery.d" />
+     </Folder>
+     <Folder name="store">
+      <File path="org\apache\lucene\store\Directory.d" />
+      <File path="org\apache\lucene\store\FSDirectory.d" />
+      <File path="org\apache\lucene\store\package.d" />
+      <File path="org\apache\lucene\store\RAMDirectory.d" />
+     </Folder>
+     <Folder name="util">
+      <File path="org\apache\lucene\util\package.d" />
+      <File path="org\apache\lucene\util\Version.d" />
+     </Folder>
     </Folder>
     <Folder name="sanselan">
      <Folder name="common">

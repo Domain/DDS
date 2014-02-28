@@ -1,6 +1,6 @@
 module java.util.Hashtable;
 
-import java.lang.all;
+import java.lang;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.Map : Entry;

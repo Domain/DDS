@@ -1,6 +1,6 @@
 module java.io.StringReader;
 
-import java.lang.all;
+import java.lang;
 import java.io.Reader;
 
 class StringReader : Reader {

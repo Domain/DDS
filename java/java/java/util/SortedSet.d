@@ -1,6 +1,6 @@
 module java.util.SortedSet;
 
-import java.lang.all;
+import java.lang;
 import java.util.Set;
 import java.util.Comparator;
 

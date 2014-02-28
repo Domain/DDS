@@ -1,6 +1,6 @@
 module java.beans.FeatureDescriptor;
 
-import java.lang.all;
+import java.lang;
 import java.util.Enumeration;
 
 class FeatureDescriptor {

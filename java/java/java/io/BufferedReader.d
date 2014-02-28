@@ -1,6 +1,6 @@
 module java.io.BufferedReader;
 
-import java.lang.all;
+import java.lang;
 import java.io.Reader;
 
 class BufferedReader : Reader {

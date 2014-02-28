@@ -1,6 +1,6 @@
 module java.text.Format;
 
-import java.lang.all;
+import java.lang;
 import java.text.FieldPosition;
 import java.text.AttributedCharacterIterator;
 import java.text.ParsePosition;

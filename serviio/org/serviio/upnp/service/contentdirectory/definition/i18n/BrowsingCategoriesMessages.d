@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.ResourceBundle.Control;
+import java.util.ResourceBundle:Control;
 import org.serviio.config.Configuration;
 import org.serviio.i18n.GetLocalizationMessageBundleControl;
 import org.serviio.i18n.Language;

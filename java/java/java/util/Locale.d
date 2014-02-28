@@ -1,6 +1,6 @@
 module java.util.Locale;
 
-import java.lang.all;
+import java.lang;
 
 class Locale : Cloneable {
     static Locale CANADA;

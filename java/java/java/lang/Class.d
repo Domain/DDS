@@ -4,7 +4,7 @@ import java.lang.util;
 import java.lang.String;
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
-import java.lang.reflect.Package;
+//import java.lang.reflect.Package;
 import java.lang.reflect.Constructor;
 
 class Class {
@@ -107,10 +107,10 @@ class Class {
         implMissing(__FILE__, __LINE__ );
         return null;
     }
-    Package getPackage(){
-        implMissing(__FILE__, __LINE__ );
-        return null;
-    }
+    //Package getPackage(){
+    //    implMissing(__FILE__, __LINE__ );
+    //    return null;
+    //}
     //ProtectionDomain getProtectionDomain(){
     //    implMissing(__FILE__, __LINE__ );
     //    return null;

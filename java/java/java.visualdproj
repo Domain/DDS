@@ -193,17 +193,19 @@
    <Folder name="awt">
     <Folder name="geom">
      <File path="java\awt\geom\AffineTransform.d" />
+     <File path="java\awt\geom\package.d" />
     </Folder>
     <Folder name="image">
      <File path="java\awt\image\BufferedImage.d" />
+     <File path="java\awt\image\package.d" />
     </Folder>
     <File path="java\awt\Dimension.d" />
     <File path="java\awt\Graphics2D.d" />
     <File path="java\awt\GraphicsEnvironment.d" />
+    <File path="java\awt\package.d" />
     <File path="java\awt\RenderingHints.d" />
    </Folder>
    <Folder name="beans">
-    <File path="java\beans\all.d" />
     <File path="java\beans\BeanDescriptor.d" />
     <File path="java\beans\BeanInfo.d" />
     <File path="java\beans\FeatureDescriptor.d" />
@@ -215,23 +217,27 @@
     <File path="java\beans\PropertyDescriptor.d" />
    </Folder>
    <Folder name="io">
-    <File path="java\io\all.d" />
     <File path="java\io\BufferedInputStream.d" />
     <File path="java\io\BufferedReader.d" />
+    <File path="java\io\BufferedWriter.d" />
     <File path="java\io\ByteArrayInputStream.d" />
     <File path="java\io\ByteArrayOutputStream.d" />
+    <File path="java\io\Closeable.d" />
     <File path="java\io\File.d" />
     <File path="java\io\FileFilter.d" />
     <File path="java\io\FileInputStream.d" />
     <File path="java\io\FilenameFilter.d" />
     <File path="java\io\FileNotFoundException.d" />
     <File path="java\io\FileOutputStream.d" />
+    <File path="java\io\FileReader.d" />
     <File path="java\io\FilterInputStream.d" />
     <File path="java\io\InputStream.d" />
     <File path="java\io\InputStreamReader.d" />
     <File path="java\io\InterruptedIOException.d" />
     <File path="java\io\IOException.d" />
     <File path="java\io\OutputStream.d" />
+    <File path="java\io\OutputStreamWriter.d" />
+    <File path="java\io\package.d" />
     <File path="java\io\PipedInputStream.d" />
     <File path="java\io\PipedOutputStream.d" />
     <File path="java\io\PrintStream.d" />
@@ -249,21 +255,20 @@
    <Folder name="lang">
     <Folder name="annotation">
      <File path="java\lang\annotation\Annotation.d" />
+     <File path="java\lang\annotation\package.d" />
      <File path="java\lang\annotation\Retention.d" />
      <File path="java\lang\annotation\RetentionPolicy.d" />
      <File path="java\lang\annotation\Target.d" />
     </Folder>
     <Folder name="reflect">
      <File path="java\lang\reflect\AccessibleObject.d" />
-     <File path="java\lang\reflect\all.d" />
      <File path="java\lang\reflect\Array.d" />
      <File path="java\lang\reflect\Constructor.d" />
      <File path="java\lang\reflect\Field.d" />
      <File path="java\lang\reflect\InvocationTargetException.d" />
      <File path="java\lang\reflect\Method.d" />
-     <File path="java\lang\reflect\Package.d" />
+     <File path="java\lang\reflect\Type.d" />
     </Folder>
-    <File path="java\lang\all.d" />
     <File path="java\lang\Boolean.d" />
     <File path="java\lang\Byte.d" />
     <File path="java\lang\Character.d" />
@@ -283,6 +288,7 @@
     <File path="java\lang\Math.d" />
     <File path="java\lang\Number.d" />
     <File path="java\lang\NumberFormatException.d" />
+    <File path="java\lang\package.d" />
     <File path="java\lang\Process.d" />
     <File path="java\lang\ProcessBuilder.d" />
     <File path="java\lang\Runnable.d" />
@@ -300,21 +306,22 @@
     <File path="java\lang\wrappers.d" />
    </Folder>
    <Folder name="math">
-    <File path="java\math\all.d" />
     <File path="java\math\BigDecimal.d" />
     <File path="java\math\BigInteger.d" />
+    <File path="java\math\package.d" />
    </Folder>
    <Folder name="net">
-    <File path="java\net\all.d" />
     <File path="java\net\Authenticator.d" />
     <File path="java\net\DatagramPacket.d" />
     <File path="java\net\DatagramSocket.d" />
+    <File path="java\net\HttpURLConnection.d" />
     <File path="java\net\Inet4Address.d" />
     <File path="java\net\InetAddress.d" />
     <File path="java\net\InetSocketAddress.d" />
     <File path="java\net\MalformedURLException.d" />
     <File path="java\net\MulticastSocket.d" />
     <File path="java\net\NetworkInterface.d" />
+    <File path="java\net\package.d" />
     <File path="java\net\PasswordAuthentication.d" />
     <File path="java\net\ServerSocket.d" />
     <File path="java\net\Socket.d" />
@@ -332,18 +339,19 @@
    </Folder>
    <Folder name="nio">
     <Folder name="channels">
-     <Folder name="FileChannel">
-      <File path="java\nio\channels\FileChannel\MapMode.d" />
-     </Folder>
+     <File path="java\nio\channels\FileChannel.d" />
+     <File path="java\nio\channels\package.d" />
     </Folder>
     <Folder name="charset">
      <File path="java\nio\charset\Charset.d" />
+     <File path="java\nio\charset\package.d" />
     </Folder>
     <File path="java\nio\ByteBuffer.d" />
     <File path="java\nio\CharBuffer.d" />
+    <File path="java\nio\MappedByteBuffer.d" />
+    <File path="java\nio\package.d" />
    </Folder>
    <Folder name="nonstandard">
-    <File path="java\nonstandard\all.d" />
     <File path="java\nonstandard\Locale.d" />
     <File path="java\nonstandard\RuntimeTraits.d" />
     <File path="java\nonstandard\SafeUtf.d" />
@@ -356,11 +364,13 @@
    <Folder name="security">
     <File path="java\security\Key.d" />
     <File path="java\security\MessageDigest.d" />
+    <File path="java\security\package.d" />
    </Folder>
    <Folder name="sql">
     <File path="java\sql\Blob.d" />
     <File path="java\sql\Connection.d" />
     <File path="java\sql\DriverManager.d" />
+    <File path="java\sql\package.d" />
     <File path="java\sql\PreparedStatement.d" />
     <File path="java\sql\ResultSet.d" />
     <File path="java\sql\SQLDataException.d" />
@@ -369,10 +379,6 @@
     <File path="java\sql\Timestamp.d" />
    </Folder>
    <Folder name="text">
-    <Folder name="Normalizer">
-     <File path="java\text\Normalizer\Form.d" />
-    </Folder>
-    <File path="java\text\all.d" />
     <File path="java\text\AttributedCharacterIterator.d" />
     <File path="java\text\CharacterIterator.d" />
     <File path="java\text\Collator.d" />
@@ -383,6 +389,7 @@
     <File path="java\text\MessageFormat.d" />
     <File path="java\text\Normalizer.d" />
     <File path="java\text\NumberFormat.d" />
+    <File path="java\text\package.d" />
     <File path="java\text\ParseException.d" />
     <File path="java\text\ParsePosition.d" />
     <File path="java\text\SimpleDateFormat.d" />
@@ -393,17 +400,21 @@
       <File path="java\util\concurrent\atomic\AtomicBoolean.d" />
       <File path="java\util\concurrent\atomic\AtomicInteger.d" />
       <File path="java\util\concurrent\atomic\AtomicReference.d" />
+      <File path="java\util\concurrent\atomic\package.d" />
      </Folder>
      <File path="java\util\concurrent\Callable.d" />
      <File path="java\util\concurrent\CancellationException.d" />
      <File path="java\util\concurrent\ConcurrentLinkedQueue.d" />
      <File path="java\util\concurrent\ConcurrentSkipListSet.d" />
+     <File path="java\util\concurrent\CountDownLatch.d" />
      <File path="java\util\concurrent\ExecutionException.d" />
      <File path="java\util\concurrent\Executors.d" />
      <File path="java\util\concurrent\ExecutorService.d" />
      <File path="java\util\concurrent\Future.d" />
+     <File path="java\util\concurrent\package.d" />
      <File path="java\util\concurrent\ScheduledExecutorService.d" />
      <File path="java\util\concurrent\ScheduledFuture.d" />
+     <File path="java\util\concurrent\ScheduledThreadPoolExecutor.d" />
      <File path="java\util\concurrent\ThreadFactory.d" />
      <File path="java\util\concurrent\TimeoutException.d" />
      <File path="java\util\concurrent\TimeUnit.d" />
@@ -411,28 +422,24 @@
     <Folder name="logging">
      <File path="java\util\logging\Handler.d" />
      <File path="java\util\logging\Level.d" />
+     <File path="java\util\logging\Logger.d" />
      <File path="java\util\logging\LogManager.d" />
-    </Folder>
-    <Folder name="Map">
-     <File path="java\util\Map\Entry.d" />
+     <File path="java\util\logging\package.d" />
     </Folder>
     <Folder name="prefs">
      <File path="java\util\prefs\Preferences.d" />
     </Folder>
     <Folder name="regex">
-     <File path="java\util\regex\all.d" />
      <File path="java\util\regex\Matcher.d" />
+     <File path="java\util\regex\package.d" />
      <File path="java\util\regex\Pattern.d" />
      <File path="java\util\regex\PatternSyntaxException.d" />
     </Folder>
-    <Folder name="ResourceBundle">
-     <File path="java\util\ResourceBundle\Control.d" />
-    </Folder>
     <Folder name="zip">
-     <File path="java\util\zip\all.d" />
      <File path="java\util\zip\DeflaterOutputStream.d" />
      <File path="java\util\zip\GZIPInputStream.d" />
      <File path="java\util\zip\InflaterInputStream.d" />
+     <File path="java\util\zip\package.d" />
      <File path="java\util\zip\ZipEntry.d" />
      <File path="java\util\zip\ZipException.d" />
      <File path="java\util\zip\ZipFile.d" />
@@ -442,7 +449,6 @@
     <File path="java\util\AbstractList.d" />
     <File path="java\util\AbstractMap.d" />
     <File path="java\util\AbstractSet.d" />
-    <File path="java\util\all.d" />
     <File path="java\util\ArrayList.d" />
     <File path="java\util\Arrays.d" />
     <File path="java\util\Calendar.d" />
@@ -471,6 +477,7 @@
     <File path="java\util\MissingResourceException.d" />
     <File path="java\util\Observable.d" />
     <File path="java\util\Observer.d" />
+    <File path="java\util\package.d" />
     <File path="java\util\Properties.d" />
     <File path="java\util\Queue.d" />
     <File path="java\util\Random.d" />
@@ -493,22 +500,27 @@
   <Folder name="javax">
    <Folder name="crypto">
     <Folder name="spec">
+     <File path="javax\crypto\spec\package.d" />
      <File path="javax\crypto\spec\SecretKeySpec.d" />
     </Folder>
     <File path="javax\crypto\Cipher.d" />
     <File path="javax\crypto\Mac.d" />
+    <File path="javax\crypto\package.d" />
    </Folder>
    <Folder name="imageio">
     <File path="javax\imageio\ImageIO.d" />
+    <File path="javax\imageio\package.d" />
    </Folder>
    <Folder name="xml">
     <Folder name="namespace">
      <File path="javax\xml\namespace\NamespaceContext.d" />
+     <File path="javax\xml\namespace\package.d" />
      <File path="javax\xml\namespace\QName.d" />
     </Folder>
     <Folder name="parsers">
      <File path="javax\xml\parsers\DocumentBuilder.d" />
      <File path="javax\xml\parsers\DocumentBuilderFactory.d" />
+     <File path="javax\xml\parsers\package.d" />
      <File path="javax\xml\parsers\ParserConfigurationException.d" />
     </Folder>
     <Folder name="soap">
@@ -516,33 +528,41 @@
      <File path="javax\xml\soap\DetailEntry.d" />
      <File path="javax\xml\soap\MessageFactory.d" />
      <File path="javax\xml\soap\MimeHeaders.d" />
+     <File path="javax\xml\soap\package.d" />
      <File path="javax\xml\soap\SOAPBody.d" />
      <File path="javax\xml\soap\SOAPBodyElement.d" />
      <File path="javax\xml\soap\SOAPElement.d" />
      <File path="javax\xml\soap\SOAPEnvelope.d" />
      <File path="javax\xml\soap\SOAPException.d" />
      <File path="javax\xml\soap\SOAPFault.d" />
+     <File path="javax\xml\soap\SOAPHeader.d" />
      <File path="javax\xml\soap\SOAPMessage.d" />
+     <File path="javax\xml\soap\SOAPPart.d" />
     </Folder>
     <Folder name="transform">
      <Folder name="dom">
       <File path="javax\xml\transform\dom\DOMSource.d" />
+      <File path="javax\xml\transform\dom\package.d" />
      </Folder>
      <Folder name="stream">
+      <File path="javax\xml\transform\stream\package.d" />
       <File path="javax\xml\transform\stream\StreamResult.d" />
       <File path="javax\xml\transform\stream\StreamSource.d" />
      </Folder>
+     <File path="javax\xml\transform\package.d" />
      <File path="javax\xml\transform\Source.d" />
      <File path="javax\xml\transform\Transformer.d" />
      <File path="javax\xml\transform\TransformerException.d" />
      <File path="javax\xml\transform\TransformerFactory.d" />
     </Folder>
     <Folder name="validation">
+     <File path="javax\xml\validation\package.d" />
      <File path="javax\xml\validation\Schema.d" />
      <File path="javax\xml\validation\SchemaFactory.d" />
      <File path="javax\xml\validation\Validator.d" />
     </Folder>
     <Folder name="xpath">
+     <File path="javax\xml\xpath\package.d" />
      <File path="javax\xml\xpath\XPath.d" />
      <File path="javax\xml\xpath\XPathConstants.d" />
      <File path="javax\xml\xpath\XPathExpressionException.d" />

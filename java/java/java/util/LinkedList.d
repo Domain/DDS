@@ -1,6 +1,6 @@
 module java.util.LinkedList;
 
-import java.lang.all;
+import java.lang;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ListIterator;

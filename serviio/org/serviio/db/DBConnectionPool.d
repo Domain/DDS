@@ -1,5 +1,6 @@
 module org.serviio.db.DBConnectionPool;
 
+import java.lang;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,130 +12,130 @@ import org.slf4j.LoggerFactory;
 
 class DBConnectionPool
 {
-  private static final Logger log = LoggerFactory.getLogger!(DBConnectionPool);
-  private int checkedOut;
-  private Vector!(Connection) freeConnections = new Vector();
-  private int maxConn;
-  private String name;
-  private String URL;
-  
-  public this(String name, String URL, int maxConn)
-  {
-    this.name = name;
-    this.URL = URL;
-    this.maxConn = maxConn;
-  }
-  
-  public synchronized void freeConnection(Connection con)
-  {
-    if (con !is null) {
-      this.freeConnections.addElement(con);
-    }
-    this.checkedOut -= 1;
-    notifyAll();
-    if (log.isTraceEnabled()) {
-      log.trace(String.format("Releasing connection from pool %s", cast(Object[])[ this.name ]));
-    }
-  }
-  
-  public synchronized Connection getConnection(bool autoCommit)
-  {
-    Connection con = null;
-    if (this.freeConnections.size() > 0)
+    private static Logger log = LoggerFactory.getLogger!(DBConnectionPool);
+    private int checkedOut;
+    private Vector!(Connection) freeConnections = new Vector();
+    private int maxConn;
+    private String name;
+    private String URL;
+
+    public this(String name, String URL, int maxConn)
     {
-      con = cast(Connection)this.freeConnections.firstElement();
-      this.freeConnections.removeElementAt(0);
-      if (log.isTraceEnabled()) {
-        log.trace(String.format("Getting pooled connection from pool %s", cast(Object[])[ this.name ]));
-      }
-      try
-      {
-        if (con.isClosed())
-        {
-          if (log.isTraceEnabled()) {
-            log.trace("Removed bad connection from " + this.name);
-          }
-          con = getConnection(autoCommit);
+        this.name = name;
+        this.URL = URL;
+        this.maxConn = maxConn;
+    }
+
+    public synchronized void freeConnection(Connection con)
+    {
+        if (con !is null) {
+            this.freeConnections.addElement(con);
         }
-      }
-      catch (SQLException e)
-      {
+        this.checkedOut -= 1;
+        notifyAll();
         if (log.isTraceEnabled()) {
-          log.trace("Removed bad connection from " + this.name);
+            log.trace(String.format("Releasing connection from pool %s", cast(Object[])[ this.name ]));
         }
-        con = getConnection(autoCommit);
-      }
     }
-    else if ((this.maxConn == 0) || (this.checkedOut < this.maxConn))
+
+    public synchronized Connection getConnection(bool autoCommit)
     {
-      con = newConnection();
+        Connection con = null;
+        if (this.freeConnections.size() > 0)
+        {
+            con = cast(Connection)this.freeConnections.firstElement();
+            this.freeConnections.removeElementAt(0);
+            if (log.isTraceEnabled()) {
+                log.trace(String.format("Getting pooled connection from pool %s", cast(Object[])[ this.name ]));
+            }
+            try
+            {
+                if (con.isClosed())
+                {
+                    if (log.isTraceEnabled()) {
+                        log.trace("Removed bad connection from " + this.name);
+                    }
+                    con = getConnection(autoCommit);
+                }
+            }
+            catch (SQLException e)
+            {
+                if (log.isTraceEnabled()) {
+                    log.trace("Removed bad connection from " + this.name);
+                }
+                con = getConnection(autoCommit);
+            }
+        }
+        else if ((this.maxConn == 0) || (this.checkedOut < this.maxConn))
+        {
+            con = newConnection();
+        }
+        if (con !is null)
+        {
+            this.checkedOut += 1;
+            con.setAutoCommit(autoCommit);
+        }
+        return con;
     }
-    if (con !is null)
+
+    public synchronized Connection getConnection(long timeout, bool autoCommit)
     {
-      this.checkedOut += 1;
-      con.setAutoCommit(autoCommit);
+        long startTime = new Date().getTime();
+        Connection con;
+        while ((con = getConnection(autoCommit)) is null)
+        {
+            try
+            {
+                wait(timeout);
+            }
+            catch (InterruptedException e) {}
+            if (new Date().getTime() - startTime >= timeout) {
+                return null;
+            }
+        }
+        return con;
     }
-    return con;
-  }
-  
-  public synchronized Connection getConnection(long timeout, bool autoCommit)
-  {
-    long startTime = new Date().getTime();
-    Connection con;
-    while ((con = getConnection(autoCommit)) is null)
+
+    public synchronized void release()
     {
-      try
-      {
-        wait(timeout);
-      }
-      catch (InterruptedException e) {}
-      if (new Date().getTime() - startTime >= timeout) {
-        return null;
-      }
+        Enumeration!(Connection) allConnections = this.freeConnections.elements();
+        while (allConnections.hasMoreElements())
+        {
+            Connection con = cast(Connection)allConnections.nextElement();
+            try
+            {
+                con.close();
+                log.debug_("Closed connection for pool " + this.name);
+            }
+            catch (SQLException e)
+            {
+                log.debug_("Can't close connection for pool " + this.name, e);
+            }
+        }
+        this.freeConnections.removeAllElements();
     }
-    return con;
-  }
-  
-  public synchronized void release()
-  {
-    Enumeration!(Connection) allConnections = this.freeConnections.elements();
-    while (allConnections.hasMoreElements())
+
+    private Connection newConnection()
     {
-      Connection con = cast(Connection)allConnections.nextElement();
-      try
-      {
-        con.close();
-        log.debug_("Closed connection for pool " + this.name);
-      }
-      catch (SQLException e)
-      {
-        log.debug_("Can't close connection for pool " + this.name, e);
-      }
+        Connection con = null;
+        try
+        {
+            con = DriverManager.getConnection(this.URL);
+            if (log.isTraceEnabled()) {
+                log.trace("Created a new connection in pool " + this.name);
+            }
+        }
+        catch (SQLException e)
+        {
+            log.warn("Can't create a new connection for " + this.URL, e);
+            return null;
+        }
+        return con;
     }
-    this.freeConnections.removeAllElements();
-  }
-  
-  private Connection newConnection()
-  {
-    Connection con = null;
-    try
-    {
-      con = DriverManager.getConnection(this.URL);
-      if (log.isTraceEnabled()) {
-        log.trace("Created a new connection in pool " + this.name);
-      }
-    }
-    catch (SQLException e)
-    {
-      log.warn("Can't create a new connection for " + this.URL, e);
-      return null;
-    }
-    return con;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.db.DBConnectionPool
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.db.DBConnectionPool
+* JD-Core Version:    0.7.0.1
+*/

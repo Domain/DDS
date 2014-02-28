@@ -1,7 +1,7 @@
 module java.beans.BeanDescriptor;
 import java.beans.FeatureDescriptor;
 
-import java.lang.all;
+import java.lang;
 
 class BeanDescriptor : FeatureDescriptor {
     this(Class beanClass){

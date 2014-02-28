@@ -4,19 +4,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import org.restlet.Client;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.data.ClientInfo;
-import org.restlet.data.Cookie;
-import org.restlet.data.Encoding;
-import org.restlet.data.Method;
-import org.restlet.data.Protocol;
-import org.restlet.data.Reference;
-import org.restlet.data.Status;
-import org.restlet.representation.Representation;
-import org.restlet.util.Series;
+import java.util.Map:Entry;
+//import org.restlet.Client;
+//import org.restlet.Request;
+//import org.restlet.Response;
+//import org.restlet.data.ClientInfo;
+//import org.restlet.data.Cookie;
+//import org.restlet.data.Encoding;
+//import org.restlet.data.Method;
+//import org.restlet.data.Protocol;
+//import org.restlet.data.Reference;
+//import org.restlet.data.Status;
+//import org.restlet.representation.Representation;
+//import org.restlet.util.Series;
 import org.serviio.config.Configuration;
 import org.serviio.external.FFMPEGWrapper;
 import org.serviio.library.online.metadata.FeedItem;
@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractUrlExtractor
 {
-    protected static final int ITEM_LIST_TIMEOUT_SEC = 30;
-    protected static final int URL_EXTRACTION_TIMEOUT_MS = 30000;
+    protected static immutable int ITEM_LIST_TIMEOUT_SEC = 30;
+    protected static immutable int URL_EXTRACTION_TIMEOUT_MS = 30000;
     protected static final Logger log = LoggerFactory.getLogger!(FeedItemUrlExtractor);
     private Client restletClient = new Client(Protocol.HTTP);
 
@@ -80,7 +80,7 @@ public abstract class AbstractUrlExtractor
         return Configuration.getOnlineFeedExpiryInterval();
     }
 
-    protected immutable String generateMAC(String text, String salt, String algorithm)
+    protected final String generateMAC(String text, String salt, String algorithm)
     {
         try
         {
@@ -92,7 +92,7 @@ public abstract class AbstractUrlExtractor
         }
     }
 
-    protected immutable String decryptAES(String hexText, String key, String iv)
+    protected final String decryptAES(String hexText, String key, String iv)
     {
         return SecurityUtils.decryptAES(key, iv, hexText);
     }
@@ -109,7 +109,7 @@ public abstract class AbstractUrlExtractor
         }
     }
 
-    protected immutable String decryptAsHex(String text, String key, String algorithm)
+    protected final String decryptAsHex(String text, String key, String algorithm)
     {
         try
         {
@@ -121,12 +121,12 @@ public abstract class AbstractUrlExtractor
         }
     }
 
-    protected immutable String openURL(URL url, String userAgent)
+    protected final String openURL(URL url, String userAgent)
     {
         return openURL(url, userAgent, null);
     }
 
-    protected immutable String openURL(URL url, String userAgent, Map!(String, String) cookies)
+    protected final String openURL(URL url, String userAgent, Map!(String, String) cookies)
     {
         Request request = new Request(Method.GET, url.toString());
         if (cookies !is null) {
@@ -162,7 +162,7 @@ public abstract class AbstractUrlExtractor
         return StringUtils.readStreamAsString(response.getEntity().getStream(), "UTF-8");
     }
 
-    protected immutable String getFFmpegUserAgent()
+    protected final String getFFmpegUserAgent()
     {
         return FFMPEGWrapper.getFFmpegUserAgent();
     }

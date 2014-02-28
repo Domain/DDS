@@ -1,6 +1,6 @@
 module java.text.SimpleDateFormat;
 
-import java.lang.all;
+import java.lang;
 
 public class SimpleDateFormat
 {

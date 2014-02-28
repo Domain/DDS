@@ -1,6 +1,6 @@
 module java.util.List;
 
-import java.lang.all;
+import java.lang;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;

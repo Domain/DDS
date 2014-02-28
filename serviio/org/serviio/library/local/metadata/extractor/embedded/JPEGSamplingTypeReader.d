@@ -8,7 +8,7 @@ import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
-import org.apache.commons.imaging.formats.jpeg.JpegUtils.Visitor;
+import org.apache.commons.imaging.formats.jpeg.JpegUtils:Visitor;
 import org.serviio.dlna.SamplingMode;
 
 public class JPEGSamplingTypeReader

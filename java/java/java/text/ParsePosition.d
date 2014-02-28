@@ -1,6 +1,6 @@
 module java.text.ParsePosition;
 
-import java.lang.all;
+import java.lang;
 import java.util.Date;
 
 class ParsePosition{

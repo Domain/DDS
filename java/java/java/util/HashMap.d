@@ -1,6 +1,6 @@
 module java.util.HashMap;
 
-import java.lang.all;
+import java.lang;
 import java.util.Map;
 import java.util.Collection;
 import java.util.Set;

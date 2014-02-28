@@ -1,6 +1,6 @@
 module java.text.NumberFormat;
 
-import java.lang.all;
+import java.lang;
 import java.text.Format;
 import java.text.FieldPosition;
 import java.text.ParsePosition;

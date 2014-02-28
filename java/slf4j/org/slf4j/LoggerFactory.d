@@ -16,7 +16,8 @@ public final class LoggerFactory {
     public static Logger getLogger(alias Class)() {
         if (_instance is null)
             _instance = new LoggerFactory();
-        auto name = Class.stringof;//fullyQualifiedName!Class;
+        auto name = fullyQualifiedName!Class;
+        //auto name = Class.stringof;
         if (name !in _instance.loggers)
             _instance.loggers[name] = new Logger(name);
         return _instance.loggers[name];

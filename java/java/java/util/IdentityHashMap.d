@@ -1,6 +1,6 @@
 module java.util.IdentityHashMap;
 
-import java.lang.all;
+import java.lang;
 import java.util.Map;
 import java.util.HashSet;
 import java.util.HashMap;

@@ -3,7 +3,7 @@ module org.serviio.upnp.service.contentdirectory.ContentDirectoryEngine;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.classes.DirectoryObject;

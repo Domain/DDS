@@ -1,6 +1,6 @@
 module java.beans.PropertyChangeEvent;
 
-import java.lang.all;
+import java.lang;
 import java.util.EventObject;
 
 class PropertyChangeEvent : EventObject {

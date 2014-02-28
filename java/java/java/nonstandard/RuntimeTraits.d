@@ -8,7 +8,7 @@
  * Copyright (c) 2009, CHRISTOPHER WRIGHT
  */
 module java.nonstandard.RuntimeTraits;
-import java.lang.all;
+import java.lang;
 
 version(Tango){
     private const String CONST_CLASS_INFO = "new ClassInfo()";

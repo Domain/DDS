@@ -1,6 +1,6 @@
 module java.util.regex.Pattern;
 
-import java.lang.all;
+import java.lang;
 import java.util.regex.Matcher;
 
 class Pattern {

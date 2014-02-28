@@ -1,6 +1,6 @@
 module java.nonstandard.SharedLib;
 
-import java.lang.all;
+import java.lang;
 version(Tango){
     static import tango.sys.SharedLib;
     static import tango.stdc.stringz;

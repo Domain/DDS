@@ -1,6 +1,6 @@
 module java.net.InetAddress;
 
-import java.lang.all;
+import java.lang;
 
 public class InetAddress
 {

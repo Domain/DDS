@@ -1,6 +1,6 @@
 module java.util.Stack;
 
-import java.lang.all;
+import java.lang;
 import java.util.Vector;
 import java.util.Iterator;
 import java.util.ListIterator;

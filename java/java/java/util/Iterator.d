@@ -1,6 +1,6 @@
 module java.util.Iterator;
 
-import java.lang.all;
+import java.lang;
 
 interface Iterator(T) {
     public bool hasNext();

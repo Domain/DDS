@@ -1,6 +1,6 @@
 module java.text.FieldPosition;
 
-import java.lang.all;
+import java.lang;
 // FIXME see dmd bug 2878
 //import java.text.Format;
 

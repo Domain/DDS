@@ -1,6 +1,6 @@
 module java.text.MessageFormat;
 
-import java.lang.all;
+import java.lang;
 import java.text.Format;
 
 class MessageFormat : java.text.Format.Format {

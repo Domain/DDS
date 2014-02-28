@@ -1,6 +1,6 @@
 module java.util.TreeSet;
 
-import java.lang.all;
+import java.lang;
 import java.util.SortedSet;
 import java.util.AbstractSet;
 import java.util.Collection;

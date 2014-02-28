@@ -61,7 +61,7 @@ version (Tango) {
     import std.zlib;
 }
 
-import java.lang.all;
+import java.lang;
 
 class DeflaterOutputStream : java.io.OutputStream.OutputStream {
 

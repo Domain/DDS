@@ -1,6 +1,6 @@
 module java.util.prefs.Preferences;
 
-import java.lang.all;
+import java.lang;
 
 public class Preferences
 {

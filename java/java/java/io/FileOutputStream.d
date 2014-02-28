@@ -6,7 +6,7 @@ module java.io.FileOutputStream;
 public import java.io.File;
 public import java.io.OutputStream;
 
-import java.lang.all;
+import java.lang;
 
 version(Tango){
     import TangoFile = tango.io.device.File;

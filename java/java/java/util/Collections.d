@@ -1,6 +1,6 @@
 module java.util.Collections;
 
-import java.lang.all;
+import java.lang;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;

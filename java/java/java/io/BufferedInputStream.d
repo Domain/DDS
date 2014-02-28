@@ -4,7 +4,7 @@
 module java.io.BufferedInputStream;
 
 import java.io.InputStream;
-import java.lang.all;
+import java.lang;
 
 public class BufferedInputStream : java.io.InputStream.InputStream {
 

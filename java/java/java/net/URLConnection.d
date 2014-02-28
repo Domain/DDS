@@ -1,6 +1,6 @@
 module java.net.URLConnection;
 
-import java.lang.all;
+import java.lang;
 
 public class URLConnection
 {

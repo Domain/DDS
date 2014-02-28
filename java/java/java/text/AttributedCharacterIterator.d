@@ -3,7 +3,7 @@ module java.text.AttributedCharacterIterator;
 import java.text.CharacterIterator;
 import java.util.Set;
 import java.util.Map;
-import java.lang.all;
+import java.lang;
 
 interface AttributedCharacterIterator : CharacterIterator {
     static class Attribute {

@@ -1,6 +1,6 @@
 module java.lang.StringBuilder;
 
-import java.lang.all;
+import java.lang;
 
 public class StringBuilder
 {

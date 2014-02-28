@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import org.serviio.ApplicationSettings;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.online.PreferredQuality;

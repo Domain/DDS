@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import org.serviio.delivery.VideoMediaInfo;
 import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;

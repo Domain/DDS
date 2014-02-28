@@ -1,6 +1,6 @@
 module java.lang.reflect.Field;
 
-import java.lang.all;
+import java.lang;
 import java.lang.Class;
 import java.lang.String;
 

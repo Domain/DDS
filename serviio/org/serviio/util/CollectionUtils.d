@@ -1,5 +1,6 @@
 module org.serviio.util.CollectionUtils;
 
+import java.lang;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import java.util.Set;
 import org.serviio.db.entities.PersistedEntity;
 
@@ -67,12 +68,12 @@ public class CollectionUtils
         return sb.toString();
     }
 
-    public static String listToCSV(Collection/*!(?)*/ list, String separator, bool trim)
+    public static String listToCSV(T)(Collection!T list, String separator, bool trim)
     {
         StringBuffer sb = new StringBuffer();
         if ((list !is null) && (list.size() > 0))
         {
-            Iterator/*!(?)*/ i = list.iterator();
+            Iterator!T i = list.iterator();
             while (i.hasNext())
             {
                 String value = i.next().toString();
@@ -85,14 +86,14 @@ public class CollectionUtils
         return sb.toString();
     }
 
-    public static String mapToCSV(Map/*!(?, ?)*/ map, String separator, bool trim)
+    public static String mapToCSV(K, V)(Map!(K, V) map, String separator, bool trim)
     {
         StringBuffer sb = new StringBuffer();
         bool first;
         if ((map !is null) && (map.size() > 0))
         {
             first = true;
-            foreach (Map.Entry/*!(?, ?)*/ entry ; map.entrySet())
+            foreach (Map.Entry!(K, V) entry ; map.entrySet())
             {
                 if (!first) {
                     sb.append(separator);

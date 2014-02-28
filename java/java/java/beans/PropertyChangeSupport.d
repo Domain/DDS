@@ -1,6 +1,6 @@
 module java.beans.PropertyChangeSupport;
 
-import java.lang.all;
+import java.lang;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 

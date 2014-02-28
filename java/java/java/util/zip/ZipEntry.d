@@ -1,6 +1,6 @@
 module java.util.zip.ZipEntry;
 
-import java.lang.all;
+import java.lang;
 
 public class ZipEntry
 {

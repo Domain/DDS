@@ -3,7 +3,7 @@
  */
 module java.io.FileInputStream;
 
-import java.lang.all;
+import java.lang;
 import java.io.File;
 import java.io.InputStream;
 

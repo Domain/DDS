@@ -1,6 +1,6 @@
 module java.beans.Introspector;
 import java.beans.BeanInfo;
-import java.lang.all;
+import java.lang;
 class Introspector {
 
     static const int IGNORE_ALL_BEANINFO = 0;

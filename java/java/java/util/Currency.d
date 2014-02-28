@@ -1,6 +1,6 @@
 module java.util.Currency;
 
-import java.lang.all;
+import java.lang;
 import java.util.Locale;
 
 class Currency{

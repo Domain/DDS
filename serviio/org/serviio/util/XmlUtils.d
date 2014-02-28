@@ -21,77 +21,77 @@ import org.xml.sax.SAXException;
 
 public class XmlUtils
 {
-  private static final Logger log = LoggerFactory.getLogger(XmlUtils.class_.getName());
-  
-  public static String objectToXMLType(Object object)
-  {
-    if (object !is null)
+    private static final Logger log = LoggerFactory.getLogger(XmlUtils.class_.getName());
+
+    public static String objectToXMLType(Object object)
     {
-      if (( cast(String)object !is null )) {
-        return cast(String)object;
-      }
-      if (( cast(Integer)object !is null )) {
-        return (cast(Integer)object).toString();
-      }
-      return object.toString();
+        if (object !is null)
+        {
+            if (( cast(String)object !is null )) {
+                return cast(String)object;
+            }
+            if (( cast(Integer)object !is null )) {
+                return (cast(Integer)object).toString();
+            }
+            return object.toString();
+        }
+        return null;
     }
-    return null;
-  }
-  
-  public static String getStringFromDocument(Document doc, bool omitXmlDeclaration)
-  {
-    DOMSource domSource = new DOMSource(doc);
-    StringWriter writer = new StringWriter();
-    StreamResult result = new StreamResult(writer);
-    TransformerFactory tf = TransformerFactory.newInstance();
-    try
+
+    public static String getStringFromDocument(Document doc, bool omitXmlDeclaration)
     {
-      Transformer transformer = tf.newTransformer();
-      if (omitXmlDeclaration) {
-        transformer.setOutputProperty("omit-xml-declaration", "yes");
-      }
-      transformer.transform(domSource, result);
+        DOMSource domSource = new DOMSource(doc);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        try
+        {
+            Transformer transformer = tf.newTransformer();
+            if (omitXmlDeclaration) {
+                transformer.setOutputProperty("omit-xml-declaration", "yes");
+            }
+            transformer.transform(domSource, result);
+        }
+        catch (TransformerException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return writer.toString();
     }
-    catch (TransformerException e)
+
+    public static bool validateXML(String xmlId, URL schemaURL, String xml)
     {
-      throw new RuntimeException(e);
+        Source xmlFile = new StreamSource(new StringReader(xml));
+        SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+        try
+        {
+            Schema schema = schemaFactory.newSchema(schemaURL);
+            Validator validator = schema.newValidator();
+            validator.validate(xmlFile);
+            return true;
+        }
+        catch (SAXException e)
+        {
+            log.error(String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
+            return false;
+        }
+        catch (IOException e)
+        {
+            log.error(String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
+        }
+        return false;
     }
-    return writer.toString();
-  }
-  
-  public static bool validateXML(String xmlId, URL schemaURL, String xml)
-  {
-    Source xmlFile = new StreamSource(new StringReader(xml));
-    SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-    try
+
+    public static String decodeXml(String decodedXml)
     {
-      Schema schema = schemaFactory.newSchema(schemaURL);
-      Validator validator = schema.newValidator();
-      validator.validate(xmlFile);
-      return true;
+        String result = decodedXml.replaceAll("&lt;", "<");
+        result = result.replaceAll("&gt;", ">");
+        return result;
     }
-    catch (SAXException e)
-    {
-      log.error(String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
-      return false;
-    }
-    catch (IOException e)
-    {
-      log.error(String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
-    }
-    return false;
-  }
-  
-  public static String decodeXml(String decodedXml)
-  {
-    String result = decodedXml.replaceAll("&lt;", "<");
-    result = result.replaceAll("&gt;", ">");
-    return result;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.util.XmlUtils
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.util.XmlUtils
+* JD-Core Version:    0.7.0.1
+*/

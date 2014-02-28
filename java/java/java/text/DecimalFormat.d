@@ -1,6 +1,6 @@
 module java.text.DecimalFormat;
 
-import java.lang.all;
+import java.lang;
 
 class DecimalFormat {
     this(){

@@ -1,6 +1,6 @@
 module java.math.BigDecimal;
 
-import java.lang.all;
+import java.lang;
 import java.math.BigInteger;
 
 class BigDecimal : Number {

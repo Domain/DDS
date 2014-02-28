@@ -1,6 +1,6 @@
 module java.util.EventObject;
 
-import java.lang.all;
+import java.lang;
 
 class EventObject {
     protected Object source;

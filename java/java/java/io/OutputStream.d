@@ -3,7 +3,7 @@
  */
 module java.io.OutputStream;
 
-import java.lang.all;
+import java.lang;
 
 public abstract class OutputStream {
 

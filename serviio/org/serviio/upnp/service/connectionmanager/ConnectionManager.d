@@ -2,7 +2,7 @@ module org.serviio.upnp.service.connectionmanager.ConnectionManager;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import java.util.Set;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.Profile;

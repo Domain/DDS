@@ -1,6 +1,6 @@
 module java.util.Timer;
 
-import java.lang.all;
+import java.lang;
 import java.util.TimerTask;
 import java.lang.Thread;
 

@@ -3,7 +3,7 @@
  */
 module java.util.zip.InflaterInputStream;
 
-import java.lang.all;
+import java.lang;
 import java.io.InputStream;
 version(Tango){
     import tango.io.stream.Zlib;

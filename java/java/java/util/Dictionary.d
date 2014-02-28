@@ -1,6 +1,6 @@
 module java.util.Dictionary;
 
-import java.lang.all;
+import java.lang;
 import java.util.Enumeration;
 
 class Dictionary(K, V) {

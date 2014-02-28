@@ -1,6 +1,6 @@
 module java.util.ListIterator;
 
-import java.lang.all;
+import java.lang;
 import java.util.Iterator;
 
 interface ListIterator(T) : Iterator!T {

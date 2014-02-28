@@ -1,6 +1,6 @@
 module java.math.BigInteger;
 
-import java.lang.all;
+import java.lang;
 import java.util.Random;
 version(Tango){
     import tango.math.BigInt;

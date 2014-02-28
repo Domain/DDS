@@ -2,7 +2,7 @@ module java.beans.BeanInfo;
 
 import java.beans.BeanDescriptor;
 import java.beans.PropertyDescriptor;
-import java.lang.all;
+import java.lang;
 
 interface BeanInfo {
     static const int ICON_COLOR_16x16 = 0;

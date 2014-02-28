@@ -1,6 +1,6 @@
 module java.net.URLEncoder;
 
-import java.lang.all;
+import java.lang;
 
 public class URLEncoder
 {

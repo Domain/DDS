@@ -1,6 +1,6 @@
 module java.util.zip.ZipFile;
 
-import java.lang.all;
+import java.lang;
 
 public class ZipFile
 {

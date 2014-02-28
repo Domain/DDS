@@ -1,12 +1,15 @@
 module org.serviio.licensing.LicensingManager;
 
+import java.lang.String;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.serviio.licensing.ServiioLicense;
+import org.serviio.licensing.LicenseValidator;
 
 public class LicensingManager
 {
-    private static final int LICENSE_UPDATER_INTERVAL_SEC = 3600;
+    private static immutable int LICENSE_UPDATER_INTERVAL_SEC = 3600;
     private static LicensingManager instance;
     private ServiioLicense license;
 
@@ -21,7 +24,7 @@ public class LicensingManager
     }
 
     private LicenseValidator validator = new LicenseValidator();
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private this()
     {

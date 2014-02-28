@@ -1,6 +1,6 @@
 module java.io.PipedInputStream;
 
-import java.lang.all;
+import java.lang;
 import java.io.InputStream;
 import java.io.PipedOutputStream;
 

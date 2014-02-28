@@ -1,6 +1,6 @@
 module java.util.AbstractList;
 
-import java.lang.all;
+import java.lang;
 import java.util.Collection;
 import java.util.AbstractCollection;
 import java.util.List;

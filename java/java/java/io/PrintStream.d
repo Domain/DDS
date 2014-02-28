@@ -1,6 +1,6 @@
 module java.io.PrintStream;
 
-import java.lang.all;
+import java.lang;
 import java.lang.String;
 import java.io.OutputStream;
 

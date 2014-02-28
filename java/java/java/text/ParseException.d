@@ -1,6 +1,6 @@
 module java.text.ParseException;
 
-import java.lang.all;
+import java.lang;
 
 class ParseException : Exception {
     this( String e = null ){

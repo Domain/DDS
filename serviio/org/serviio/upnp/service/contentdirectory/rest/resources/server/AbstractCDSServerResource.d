@@ -2,7 +2,7 @@ module org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractC
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.CacheDirective;

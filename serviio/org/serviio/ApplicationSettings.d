@@ -3,6 +3,7 @@
 */
 module org.serviio.ApplicationSettings;
 
+import java.lang;
 import java.io.InputStream;
 import java.util.Properties;
 

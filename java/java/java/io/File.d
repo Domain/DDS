@@ -3,7 +3,7 @@
  */
 module java.io.File;
 
-import java.lang.all;
+import java.lang;
 import java.io.FilenameFilter;
 import java.io.FileFilter;
 

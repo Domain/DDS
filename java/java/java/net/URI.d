@@ -1,6 +1,6 @@
 module java.net.URI;
 
-import java.lang.all;
+import java.lang;
 
 class URI {
     this(String){

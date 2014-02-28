@@ -1,6 +1,6 @@
 module java.lang.reflect.AccessibleObject;
 
-import java.lang.all;
+import java.lang;
 
 class AccessibleObject {
     protected this(){

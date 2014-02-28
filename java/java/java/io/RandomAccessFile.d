@@ -1,6 +1,6 @@
 module java.io.RandomAccessFile;
 
-import java.lang.all;
+import java.lang;
 
 public class RandomAccessFile
 {

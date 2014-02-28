@@ -1,6 +1,6 @@
 module java.util.zip.ZipInputStream;
 
-import java.lang.all;
+import java.lang;
 
 public class ZipInputStream
 {

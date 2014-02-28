@@ -1,6 +1,6 @@
 module java.util.MissingResourceException;
 
-import java.lang.all;
+import java.lang;
 
 class MissingResourceException : Exception {
     String classname;

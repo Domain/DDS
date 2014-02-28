@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import org.serviio.library.entities.OnlineRepository:OnlineRepositoryType;

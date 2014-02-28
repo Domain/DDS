@@ -1,6 +1,6 @@
 module java.text.CharacterIterator;
 
-import java.lang.all;
+import java.lang;
 
 interface CharacterIterator {
     static const wchar DONE = '\u00FF';

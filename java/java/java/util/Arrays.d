@@ -1,6 +1,6 @@
 module java.util.Arrays;
 
-import java.lang.all;
+import java.lang;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;

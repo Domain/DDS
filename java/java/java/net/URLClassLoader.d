@@ -1,6 +1,6 @@
 module java.net.URLClassLoader;
 
-import java.lang.all;
+import java.lang;
 
 public class URLClassLoader
 {

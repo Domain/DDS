@@ -1,6 +1,6 @@
 module java.util.regex.PatternSyntaxException;
 
-import java.lang.all;
+import java.lang;
 
 
 class PatternSyntaxException : IllegalArgumentException {

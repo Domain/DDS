@@ -1,6 +1,6 @@
 module java.io.PushbackReader;
 
-import java.lang.all;
+import java.lang;
 import java.io.Reader;
 
 class PushbackReader : Reader {

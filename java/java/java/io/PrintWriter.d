@@ -1,6 +1,6 @@
 module java.io.PrintWriter;
 
-import java.lang.all;
+import java.lang;
 import java.io.OutputStream;
 import java.io.Writer;
 

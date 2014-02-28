@@ -2,7 +2,7 @@ module java.lang.reflect.Method;
 
 import java.lang.reflect.AccessibleObject;
 
-import java.lang.all;
+import java.lang;
 import java.lang.Class;
 import java.lang.String;
 

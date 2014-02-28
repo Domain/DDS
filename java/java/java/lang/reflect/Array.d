@@ -1,6 +1,6 @@
 module java.lang.reflect.Array;
 
-import java.lang.all;
+import java.lang;
 
 class Array {
     static Object get(Object array, int index){

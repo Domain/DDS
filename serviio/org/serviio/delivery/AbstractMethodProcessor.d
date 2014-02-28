@@ -3,7 +3,7 @@ module org.serviio.delivery.AbstractMethodProcessor;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map:Entry;
 import java.util.TreeMap;
 import org.apache.http.ProtocolVersion;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener:ProgressData;

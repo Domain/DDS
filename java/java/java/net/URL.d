@@ -1,6 +1,6 @@
 module java.net.URL;
 
-import java.lang.all;
+import java.lang;
 
 class URL {
     this(String){

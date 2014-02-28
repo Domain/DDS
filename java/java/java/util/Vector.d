@@ -1,6 +1,6 @@
 module java.util.Vector;
 
-import java.lang.all;
+import java.lang;
 import java.util.AbstractList;
 import java.util.List;
 import java.util.Collection;
