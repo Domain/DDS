@@ -12,7 +12,7 @@ import org.serviio.util.Tupple;
 public abstract class AbstractRecursiveSearchMetadata
   : AbstractSearchMetadata
 {
-  public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchIndexer.SearchCategory category, String searchableValue, Long thumbnailId)
+  public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchCategory category, String searchableValue, Long thumbnailId)
   {
     super(mediaItemId, fileType, objectType, category, searchableValue, thumbnailId);
   }

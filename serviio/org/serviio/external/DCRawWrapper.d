@@ -1,11 +1,16 @@
 module org.serviio.external.DCRawWrapper;
 
+import java.lang.Boolean;
+import java.lang.String;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.serviio.external.AbstractExecutableWrapper;
+import org.serviio.external.ProcessExecutor;
+import org.serviio.external.DCRawCLBuilder;
 
 public class DCRawWrapper : AbstractExecutableWrapper
 {

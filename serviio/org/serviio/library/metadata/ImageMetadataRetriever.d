@@ -1,5 +1,6 @@
 module org.serviio.library.metadata.ImageMetadataRetriever;
 
+import java.lang.String;
 import java.io.IOException;
 import org.serviio.external.DCRawWrapper;
 import org.serviio.library.local.metadata.ImageMetadata;

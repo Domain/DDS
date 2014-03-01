@@ -22,7 +22,7 @@ public class OnlineItemSearchMetadata
   
   private this(Long repositoryId, Long itemId, String title, String repositoryName, MediaFileType fileType, Long thumbnailId, bool isContainerItem)
   {
-    super(itemId, fileType, ObjectType.ITEMS, SearchIndexer.SearchCategory.ONLINE_ITEMS, title, thumbnailId, repositoryId);
+    super(itemId, fileType, ObjectType.ITEMS, SearchCategory.ONLINE_ITEMS, title, thumbnailId, repositoryId);
     
     String recursiveId = buildIdForTheHierarchy(repositoryId, itemId, isContainerItem);
     if (fileType == MediaFileType.AUDIO) {

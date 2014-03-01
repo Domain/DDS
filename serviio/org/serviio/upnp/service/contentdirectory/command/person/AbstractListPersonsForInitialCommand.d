@@ -13,9 +13,9 @@ import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 
 public abstract class AbstractListPersonsForInitialCommand : AbstractPersonsRetrievalCommand
 {
-    private Person.RoleType roleType;
+    private RoleType roleType;
 
-    public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, MediaFileType fileType, String idPrefix, int startIndex, int count, Person.RoleType roleType, bool disablePresentationSettings)
+    public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, MediaFileType fileType, String idPrefix, int startIndex, int count, RoleType roleType, bool disablePresentationSettings)
     {
         super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, fileType, idPrefix, startIndex, count, disablePresentationSettings);
         this.roleType = roleType;

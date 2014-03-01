@@ -1,6 +1,7 @@
 module org.serviio.upnp.service.contentdirectory.classes.ClassProperties;
 
 import std.traits;
+import java.lang.String;
 
 public enum ClassProperties
 {

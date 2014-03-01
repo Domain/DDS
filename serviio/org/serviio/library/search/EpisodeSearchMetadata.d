@@ -12,7 +12,7 @@ public class EpisodeSearchMetadata
 {
   public this(Long mediaItemId, Integer season, Long seriesId, String episodeTitle, Long thumbnailId, String seriesName)
   {
-    super(mediaItemId, MediaFileType.VIDEO, ObjectType.ITEMS, SearchIndexer.SearchCategory.EPISODES, episodeTitle, thumbnailId);
+    super(mediaItemId, MediaFileType.VIDEO, ObjectType.ITEMS, SearchCategory.EPISODES, episodeTitle, thumbnailId);
     addCommandMapping(ListSeriesByNameCommand.class_, seriesId);
     addCommandMapping(ListSeasonsForSeriesCommand.class_, season);
     addCommandMapping(ListEpisodesForSeriesSeasonCommand.class_, mediaItemId);

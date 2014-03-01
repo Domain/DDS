@@ -198,7 +198,7 @@ public class MusicTrackDAOImpl
 
       ps.setString(1, MediaFileType.AUDIO.toString());
       ps.setLong(2, artistId.longValue());
-      ps.setString(3, Person.RoleType.ARTIST.toString());
+      ps.setString(3, RoleType.ARTIST.toString());
       ResultSet rs = ps.executeQuery();
       return mapResultSet(rs);
     }
@@ -226,7 +226,7 @@ public class MusicTrackDAOImpl
 
       ps.setString(1, MediaFileType.AUDIO.toString());
       ps.setLong(2, artistId.longValue());
-      ps.setString(3, Person.RoleType.ARTIST.toString());
+      ps.setString(3, RoleType.ARTIST.toString());
       ResultSet rs = ps.executeQuery();
       Integer count;
       if (rs.next())
@@ -686,7 +686,7 @@ public class MusicTrackDAOImpl
     }
   }
   
-  public List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
+  public List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of music tracks for person %s with role %s on album %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId, role, albumId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
     
@@ -721,7 +721,7 @@ public class MusicTrackDAOImpl
     }
   }
   
-  public int retrieveMusicTracksForTrackRoleAndAlbumCount(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup)
+  public int retrieveMusicTracksForTrackRoleAndAlbumCount(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup)
   {
     log.debug_(String.format("Retrieving number of music tracks for person %s with role %s on album %s [%s]", cast(Object[])[ artistId, role, albumId, accessGroup ]));
     Connection con = null;

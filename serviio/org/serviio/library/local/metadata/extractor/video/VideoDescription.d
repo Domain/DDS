@@ -1,5 +1,6 @@
 module org.serviio.library.local.metadata.extractor.video.VideoDescription;
 
+import java.lang;
 import java.util.Arrays;
 
 public class VideoDescription
@@ -70,11 +71,10 @@ public class VideoDescription
         return this.year;
     }
 
-    public String toString()
+    override public String toString()
     {
         StringBuilder builder = new StringBuilder();
         builder.append("VideoDescription [type=").append(this.type).append(", names=").append(Arrays.toString(this.names)).append(", year=").append(this.year).append(", season=").append(this.season).append(", episode=").append(this.episode).append("]");
-
 
         return builder.toString();
     }

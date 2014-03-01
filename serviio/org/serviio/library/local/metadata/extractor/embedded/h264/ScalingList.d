@@ -1,6 +1,8 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.ScalingList;
 
+import java.lang.String;
 import java.io.IOException;
+import org.serviio.library.local.metadata.extractor.embedded.h264.CAVLCReader;
 
 public class ScalingList
 {
@@ -27,9 +29,9 @@ public class ScalingList
         return sl;
     }
 
-    public String toString()
+    override public String toString()
     {
-        return "ScalingList{scalingList=" + this.scalingList + ", useDefaultScalingMatrixFlag=" + this.useDefaultScalingMatrixFlag + '}';
+        return "ScalingList{scalingList=" ~ this.scalingList ~ ", useDefaultScalingMatrixFlag=" ~ this.useDefaultScalingMatrixFlag ~ '}';
     }
 }
 

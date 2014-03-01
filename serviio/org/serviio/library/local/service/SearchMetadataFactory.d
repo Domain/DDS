@@ -53,16 +53,16 @@ public class SearchMetadataFactory
         return allMetadata;
     }
 
-    public static List!(Tupple!(SearchIndexer.SearchCategory, Long)) videoIndexIds(Long mediaItemId, Video video)
+    public static List!(Tupple!(SearchCategory, Long)) videoIndexIds(Long mediaItemId, Video video)
     {
-        List!(Tupple!(SearchIndexer.SearchCategory, Long)) allPairs = new ArrayList();
+        List!(Tupple!(SearchCategory, Long)) allPairs = new ArrayList();
         if (video.getContentType() == ContentType.MOVIE) {
-            allPairs.add(new Tupple(SearchIndexer.SearchCategory.MOVIES, mediaItemId));
+            allPairs.add(new Tupple(SearchCategory.MOVIES, mediaItemId));
         }
         if (video.getContentType() == ContentType.EPISODE) {
-            allPairs.add(new Tupple(SearchIndexer.SearchCategory.EPISODES, mediaItemId));
+            allPairs.add(new Tupple(SearchCategory.EPISODES, mediaItemId));
         }
-        allPairs.add(new Tupple(SearchIndexer.SearchCategory.FILES, mediaItemId));
+        allPairs.add(new Tupple(SearchCategory.FILES, mediaItemId));
 
 
         return allPairs;
@@ -96,11 +96,11 @@ public class SearchMetadataFactory
         return allMetadata;
     }
 
-    public static List!(Tupple!(SearchIndexer.SearchCategory, Long)) imageIndexIds(Long mediaItemId, Image image)
+    public static List!(Tupple!(SearchCategory, Long)) imageIndexIds(Long mediaItemId, Image image)
     {
-        List!(Tupple!(SearchIndexer.SearchCategory, Long)) allPairs = new ArrayList();
+        List!(Tupple!(SearchCategory, Long)) allPairs = new ArrayList();
 
-        allPairs.add(new Tupple(SearchIndexer.SearchCategory.FILES, mediaItemId));
+        allPairs.add(new Tupple(SearchCategory.FILES, mediaItemId));
 
 
         return allPairs;
@@ -110,7 +110,7 @@ public class SearchMetadataFactory
     {
         List!(SearchMetadata) allMetadata = new ArrayList();
 
-        Person albumArtist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMusicAlbum(song.getAlbumId(), Person.RoleType.ALBUM_ARTIST));
+        Person albumArtist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMusicAlbum(song.getAlbumId(), RoleType.ALBUM_ARTIST));
         if (albumArtist !is null) {
             allMetadata.add(new AlbumArtistSearchMetadata(albumArtist.getId(), albumArtist.getName(), albumArtist.getInitial(), CoverImageService.getPersonCoverArt(albumArtist.getId())));
         }
@@ -122,12 +122,12 @@ public class SearchMetadataFactory
         return allMetadata;
     }
 
-    public static List!(Tupple!(SearchIndexer.SearchCategory, Long)) audioIndexIds(Long mediaItemId, MusicTrack song)
+    public static List!(Tupple!(SearchCategory, Long)) audioIndexIds(Long mediaItemId, MusicTrack song)
     {
-        List!(Tupple!(SearchIndexer.SearchCategory, Long)) allPairs = new ArrayList();
+        List!(Tupple!(SearchCategory, Long)) allPairs = new ArrayList();
 
-        allPairs.add(new Tupple(SearchIndexer.SearchCategory.MUSIC_TRACKS, mediaItemId));
-        allPairs.add(new Tupple(SearchIndexer.SearchCategory.FILES, mediaItemId));
+        allPairs.add(new Tupple(SearchCategory.MUSIC_TRACKS, mediaItemId));
+        allPairs.add(new Tupple(SearchCategory.FILES, mediaItemId));
 
 
         return allPairs;

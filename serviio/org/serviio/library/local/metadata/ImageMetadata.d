@@ -1,6 +1,6 @@
 module org.serviio.library.local.metadata.ImageMetadata;
 
-import java.lang.Integer;
+import java.lang;
 import org.serviio.dlna.ImageContainer;
 import org.serviio.dlna.SamplingMode;
 import org.serviio.library.metadata.InvalidMetadataException;
@@ -15,7 +15,7 @@ public class ImageMetadata : LocalItemMetadata
     private Integer exifRotation;
     private SamplingMode chromaSubsampling;
 
-    public void merge(LocalItemMetadata additionalMetadata)
+    override public void merge(LocalItemMetadata additionalMetadata)
     {
         if (( cast(ImageMetadata)additionalMetadata !is null ))
         {
@@ -43,12 +43,12 @@ public class ImageMetadata : LocalItemMetadata
         }
     }
 
-    public void fillInUnknownEntries()
+    override public void fillInUnknownEntries()
     {
         super.fillInUnknownEntries();
     }
 
-    public void validateMetadata()
+    override public void validateMetadata()
     {
         super.validateMetadata();
         if (this.container is null) {
@@ -122,7 +122,7 @@ public class ImageMetadata : LocalItemMetadata
         this.chromaSubsampling = chromaSubsampling;
     }
 
-    public String toString()
+    override public String toString()
     {
         return String.format("ImageMetadata [title=%s, date=%s, filePath=%s, fileSize=%s, container=%s, width=%s, height=%s, colorDepth=%s, sampling=%s]", cast(Object[])[ this.title, this.date, this.filePath, Long.valueOf(this.fileSize), this.container, this.width, this.height, this.colorDepth, this.chromaSubsampling ]);
     }

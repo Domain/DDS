@@ -14,13 +14,13 @@ public abstract interface MusicAlbumDAO
   
   public abstract int getNumberOfTracks(Long paramLong);
   
-  public abstract List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(Long paramLong, Person.RoleType paramRoleType, int paramInt1, int paramInt2);
+  public abstract List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(Long paramLong, RoleType paramRoleType, int paramInt1, int paramInt2);
   
-  public abstract int retrieveMusicAlbumsForTrackRoleCount(Long paramLong, Person.RoleType paramRoleType);
+  public abstract int retrieveMusicAlbumsForTrackRoleCount(Long paramLong, RoleType paramRoleType);
   
-  public abstract List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String paramString, Person.RoleType paramRoleType, int paramInt1, int paramInt2);
+  public abstract List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String paramString, RoleType paramRoleType, int paramInt1, int paramInt2);
   
-  public abstract int retrieveMusicAlbumsForTrackRoleCount(String paramString, Person.RoleType paramRoleType);
+  public abstract int retrieveMusicAlbumsForTrackRoleCount(String paramString, RoleType paramRoleType);
   
   public abstract List!(MusicAlbum) retrieveMusicAlbumsForAlbumArtist(Long paramLong, int paramInt1, int paramInt2);
   

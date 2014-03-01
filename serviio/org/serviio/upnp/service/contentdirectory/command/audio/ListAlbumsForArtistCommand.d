@@ -20,13 +20,13 @@ public class ListAlbumsForArtistCommand
   
   protected List!(MusicAlbum) retrieveEntityList()
   {
-    List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(new Long(getInternalObjectId()), Person.RoleType.ARTIST, this.startIndex, this.count);
+    List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(new Long(getInternalObjectId()), RoleType.ARTIST, this.startIndex, this.count);
     return albums;
   }
   
   public int retrieveItemCount()
   {
-    return AudioService.getNumberOfAlbumsForTrackRole(new Long(getInternalObjectId()), Person.RoleType.ARTIST);
+    return AudioService.getNumberOfAlbumsForTrackRole(new Long(getInternalObjectId()), RoleType.ARTIST);
   }
 }
 

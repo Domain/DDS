@@ -1,5 +1,6 @@
 module org.serviio.library.metadata.FFmpegMetadataRetriever;
 
+import java.lang;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,13 +29,14 @@ import org.serviio.util.MediaUtils;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.serviio.util.Tupple;
+import org.serviio.library.metadata.ItemMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FFmpegMetadataRetriever
 {
-    private static final Logger log = LoggerFactory.getLogger!(FFmpegMetadataRetriever);
-    private static final Pattern streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})(\\((\\w+)\\))?");
+    private static Logger log = LoggerFactory.getLogger!(FFmpegMetadataRetriever);
+    private static immutable Pattern streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})(\\((\\w+)\\))?");
     private static immutable String CONTAINER = "container";
     private static immutable String DURATION = "duration";
     private static immutable String BITRATE = "bitrate";
@@ -54,7 +56,7 @@ public class FFmpegMetadataRetriever
     private static immutable String SAR = "sar";
     private static immutable String EMBEDDED_SUBTITLES = "embedded_subtitles";
     private static immutable String TOKEN_STREAM = "Stream";
-    private static final Map!(String, Integer) maxDpbMbs = new LinkedHashMap();
+    private static Map!(String, Integer) maxDpbMbs = new LinkedHashMap();
 
     static this()
     {
@@ -65,11 +67,7 @@ public class FFmpegMetadataRetriever
     {
         List!(String) mediaDescription = FFMPEGWrapper.readMediaFileInformation(filePath, context);
         updateMetadata(metadata, mediaDescription, filePath);
-
-
         validateMandatoryMetadata(metadata);
-
-
         getProfileForH264(metadata, filePath, context);
     }
 
@@ -77,8 +75,6 @@ public class FFmpegMetadataRetriever
     {
         List!(String) mediaDescription = FFMPEGWrapper.readMediaFileInformation(filePath, context);
         updateMetadata(metadata, mediaDescription);
-
-
         validateCodecsFound(metadata);
     }
 

@@ -15,42 +15,42 @@ public class PersonService
     return DAOFactory.getPersonDAO().findPersonById(personId);
   }
   
-  public static List!(Person) getListOfPersons(Person.RoleType role, int startingIndex, int requestedCount)
+  public static List!(Person) getListOfPersons(RoleType role, int startingIndex, int requestedCount)
   {
     return DAOFactory.getPersonDAO().retrievePersonsWithRole(role, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfPersons(Person.RoleType role)
+  public static int getNumberOfPersons(RoleType role)
   {
     return DAOFactory.getPersonDAO().getPersonsWithRoleCount(role);
   }
   
-  public static List!(Person) getListOfPersonsForMediaItem(Long mediaItemId, Person.RoleType roleType)
+  public static List!(Person) getListOfPersonsForMediaItem(Long mediaItemId, RoleType roleType)
   {
     return DAOFactory.getPersonDAO().retrievePersonsWithRoleForMediaItem(roleType, mediaItemId);
   }
   
-  public static List!(Person) getListOfPersonsForMusicAlbum(Long albumId, Person.RoleType roleType)
+  public static List!(Person) getListOfPersonsForMusicAlbum(Long albumId, RoleType roleType)
   {
     return DAOFactory.getPersonDAO().retrievePersonsWithRoleForMusicAlbum(roleType, albumId);
   }
   
-  public static List!(String) getListOfPersonInitials(Person.RoleType role, int startingIndex, int requestedCount)
+  public static List!(String) getListOfPersonInitials(RoleType role, int startingIndex, int requestedCount)
   {
     return DAOFactory.getPersonDAO().retrievePersonInitials(role, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfPersonInitials(Person.RoleType role)
+  public static int getNumberOfPersonInitials(RoleType role)
   {
     return DAOFactory.getPersonDAO().retrievePersonInitialsCount(role);
   }
   
-  public static List!(Person) getListOfPersonsForInitial(String initial, Person.RoleType role, int startingIndex, int requestedCount)
+  public static List!(Person) getListOfPersonsForInitial(String initial, RoleType role, int startingIndex, int requestedCount)
   {
     return DAOFactory.getPersonDAO().retrievePersonsForInitial(initial, role, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfPersonsForInitial(String initial, Person.RoleType role)
+  public static int getNumberOfPersonsForInitial(String initial, RoleType role)
   {
     return DAOFactory.getPersonDAO().retrievePersonsForInitialCount(initial, role);
   }

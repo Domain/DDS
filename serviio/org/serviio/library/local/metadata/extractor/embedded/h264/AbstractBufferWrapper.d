@@ -1,11 +1,12 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.AbstractBufferWrapper;
 
+import java.lang.String;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
 
-public abstract class AbstractBufferWrapper
-: BufferWrapper
+public abstract class AbstractBufferWrapper : BufferWrapper
 {
     public int readBitsRemaining;
     private byte readBitsBuffer;
@@ -13,7 +14,6 @@ public abstract class AbstractBufferWrapper
     public long readUInt64()
     {
         long result = 0L;
-
 
         result += (readUInt32() << 32);
         if (result < 0L) {

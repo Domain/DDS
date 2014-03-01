@@ -10,7 +10,7 @@ public abstract class AbstractOnlineRecursiveSearchMetadata
 {
   private Long onlineRepositoryId;
   
-  public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchIndexer.SearchCategory category, String searchableValue, Long thumbnailId, Long onlineRepositoryId)
+  public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchCategory category, String searchableValue, Long thumbnailId, Long onlineRepositoryId)
   {
     super(mediaItemId, fileType, objectType, category, searchableValue, thumbnailId);
     this.onlineRepositoryId = onlineRepositoryId;

@@ -71,10 +71,10 @@ public class SearchService
         }
     }
 
-    private static void makeUnsearchable(List!(Tupple!(SearchIndexer.SearchCategory, Long)) idsToRemove)
+    private static void makeUnsearchable(List!(Tupple!(SearchCategory, Long)) idsToRemove)
     {
-        foreach (Tupple!(SearchIndexer.SearchCategory, Long) pair ; idsToRemove) {
-            SearchManager.getInstance().localIndexer().metadataRemoved(cast(SearchIndexer.SearchCategory)pair.getValueA(), cast(Long)pair.getValueB());
+        foreach (Tupple!(SearchCategory, Long) pair ; idsToRemove) {
+            SearchManager.getInstance().localIndexer().metadataRemoved(cast(SearchCategory)pair.getValueA(), cast(Long)pair.getValueB());
         }
     }
 }

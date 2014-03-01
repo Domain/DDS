@@ -91,17 +91,17 @@ public class VideoService
       Long mediaItemId = Long.valueOf(DAOFactory.getVideoDAO().create(video));
       if (metadata.getDirectors() !is null) {
         foreach (String director ; metadata.getDirectors()) {
-          DAOFactory.getPersonDAO().addPersonToMedia(director, Person.RoleType.DIRECTOR, mediaItemId);
+          DAOFactory.getPersonDAO().addPersonToMedia(director, RoleType.DIRECTOR, mediaItemId);
         }
       }
       if (metadata.getProducers() !is null) {
         foreach (String producer ; metadata.getProducers()) {
-          DAOFactory.getPersonDAO().addPersonToMedia(producer, Person.RoleType.PRODUCER, mediaItemId);
+          DAOFactory.getPersonDAO().addPersonToMedia(producer, RoleType.PRODUCER, mediaItemId);
         }
       }
       if (metadata.getActors() !is null) {
         foreach (String actor ; metadata.getActors()) {
-          DAOFactory.getPersonDAO().addPersonToMedia(actor, Person.RoleType.ACTOR, mediaItemId);
+          DAOFactory.getPersonDAO().addPersonToMedia(actor, RoleType.ACTOR, mediaItemId);
         }
       }
       foreach (MetadataFile metadataFile ; metadata.getMetadataFiles())
@@ -214,9 +214,9 @@ public class VideoService
       
 
 
-      List!(Long) originalDirectorRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(Person.RoleType.DIRECTOR, mediaItemId);
-      List!(Long) originalProducerRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(Person.RoleType.PRODUCER, mediaItemId);
-      List!(Long) originalActorRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(Person.RoleType.ACTOR, mediaItemId);
+      List!(Long) originalDirectorRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(RoleType.DIRECTOR, mediaItemId);
+      List!(Long) originalProducerRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(RoleType.PRODUCER, mediaItemId);
+      List!(Long) originalActorRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(RoleType.ACTOR, mediaItemId);
       
       List!(Long) newDirectorRoles = new ArrayList();
       List!(Long) newProducerRoles = new ArrayList();
@@ -224,21 +224,21 @@ public class VideoService
       if (metadata.getDirectors() !is null) {
         foreach (String director ; metadata.getDirectors())
         {
-          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(director, Person.RoleType.DIRECTOR, mediaItemId);
+          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(director, RoleType.DIRECTOR, mediaItemId);
           newDirectorRoles.add(newRole);
         }
       }
       if (metadata.getProducers() !is null) {
         foreach (String producer ; metadata.getProducers())
         {
-          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(producer, Person.RoleType.PRODUCER, mediaItemId);
+          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(producer, RoleType.PRODUCER, mediaItemId);
           newProducerRoles.add(newRole);
         }
       }
       if (metadata.getActors() !is null) {
         foreach (String actor ; metadata.getActors())
         {
-          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(actor, Person.RoleType.ACTOR, mediaItemId);
+          Long newRole = DAOFactory.getPersonDAO().addPersonToMedia(actor, RoleType.ACTOR, mediaItemId);
           newActorRoles.add(newRole);
         }
       }
@@ -315,12 +315,12 @@ public class VideoService
     return DAOFactory.getVideoDAO().retrieveVideosForGenreCount(genreId, accessGroup, Configuration.isBrowseFilterOutSeries());
   }
   
-  public static List!(Video) getListOfVideosForPerson(Long personId, Person.RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
+  public static List!(Video) getListOfVideosForPerson(Long personId, RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
   {
     return DAOFactory.getVideoDAO().retrieveVideosForPerson(personId, role, accessGroup, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfVideosForPerson(Long personId, Person.RoleType role, AccessGroup accessGroup)
+  public static int getNumberOfVideosForPerson(Long personId, RoleType role, AccessGroup accessGroup)
   {
     return DAOFactory.getVideoDAO().retrieveVideosForPersonCount(personId, role, accessGroup);
   }
@@ -503,7 +503,7 @@ public class VideoService
         if ((series !is null) && (series.getThumbnailId() !is null)) {
           DAOFactory.getCoverImageDAO().delete_(series.getThumbnailId());
         }
-        SearchManager.getInstance().localIndexer().metadataRemoved(SearchIndexer.SearchCategory.SERIES, seriesId);
+        SearchManager.getInstance().localIndexer().metadataRemoved(SearchCategory.SERIES, seriesId);
       }
     }
   }

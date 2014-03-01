@@ -11,7 +11,7 @@ public class AlbumArtistSearchMetadata
 {
   public this(Long personId, String artistName, String nameInitial, Long thumbnailId)
   {
-    super(personId, MediaFileType.AUDIO, ObjectType.CONTAINERS, SearchIndexer.SearchCategory.ALBUM_ARTISTS, artistName, thumbnailId);
+    super(personId, MediaFileType.AUDIO, ObjectType.CONTAINERS, SearchCategory.ALBUM_ARTISTS, artistName, thumbnailId);
     addCommandMapping(ListAlbumArtistInitialsCommand.class_, AbstractListInitialsCommand.getInitialId(nameInitial));
     addCommandMapping(ListAlbumArtistsForInitialCommand.class_, personId);
   }

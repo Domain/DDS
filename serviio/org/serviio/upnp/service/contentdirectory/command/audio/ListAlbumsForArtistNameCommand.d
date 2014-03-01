@@ -27,7 +27,7 @@ public class ListAlbumsForArtistNameCommand
     String artistName = getArtistName();
     if (ObjectValidator.isNotEmpty(artistName))
     {
-      List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(artistName, Person.RoleType.ARTIST, this.startIndex, this.count);
+      List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(artistName, RoleType.ARTIST, this.startIndex, this.count);
       return albums;
     }
     return Collections.emptyList();
@@ -37,7 +37,7 @@ public class ListAlbumsForArtistNameCommand
   {
     String artistName = getArtistName();
     if (ObjectValidator.isNotEmpty(artistName)) {
-      return AudioService.getNumberOfAlbumsForTrackRole(artistName, Person.RoleType.ARTIST);
+      return AudioService.getNumberOfAlbumsForTrackRole(artistName, RoleType.ARTIST);
     }
     return 0;
   }

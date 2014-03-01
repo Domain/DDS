@@ -11,7 +11,7 @@ public class OnlineContainerSearchMetadata
 {
   public this(Long containerId, String title, MediaFileType fileType, Long thumbnailId, Long onlineRepositoryId)
   {
-    super(containerId, fileType, ObjectType.CONTAINERS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS, title, thumbnailId, onlineRepositoryId);
+    super(containerId, fileType, ObjectType.CONTAINERS, SearchCategory.ONLINE_CONTAINERS, title, thumbnailId, onlineRepositoryId);
     
     String recursiveId = buildIdForTheHierarchy(containerId, null, true);
     if (fileType == MediaFileType.AUDIO) {

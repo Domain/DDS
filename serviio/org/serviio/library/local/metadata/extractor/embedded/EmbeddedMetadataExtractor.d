@@ -1,5 +1,6 @@
 module org.serviio.library.local.metadata.extractor.embedded.EmbeddedMetadataExtractor;
 
+import java.lang.Integer;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -40,132 +41,131 @@ import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EmbeddedMetadataExtractor
-  : MetadataExtractor
+public class EmbeddedMetadataExtractor : MetadataExtractor
 {
-  private static final Logger log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
-  private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-  
-  public ExtractorType getExtractorType()
-  {
-    return ExtractorType.EMBEDDED;
-  }
-  
-  public bool isMetadataUpdated(File mediaFile, MediaItem mediaItem, MetadataDescriptor metadataDescriptor)
-  {
-    if ((mediaFile !is null) && (mediaFile.exists()) && (metadataDescriptor !is null))
+    private static Logger log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    override public ExtractorType getExtractorType()
     {
-      Date mediaFileDate = FileUtils.getLastModifiedDate(mediaFile);
-      if ((metadataDescriptor.getDateUpdated() is null) || (mediaFileDate.after(metadataDescriptor.getDateUpdated()))) {
-        return true;
-      }
-      return false;
+        return ExtractorType.EMBEDDED;
     }
-    return false;
-  }
-  
-  protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
-  {
-    if ((mediaFile.exists()) && (mediaFile.canRead())) {
-      return new MetadataFile(getExtractorType(), FileUtils.getLastModifiedDate(mediaFile), null, mediaFile);
-    }
-    throw new IOException(String.format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
-  }
-  
-  protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
-  {
-    File mediaFile = cast(File)metadataDescriptor.getExtractable();
-    if (( cast(AudioMetadata)metadata !is null )) {
-      retrieveAudioMetadata(mediaFile, metadata);
-    } else if (( cast(ImageMetadata)metadata !is null )) {
-      retrieveImageMetadata(mediaFile, metadata);
-    } else {
-      retrieveVideoMetadata(mediaFile, metadata);
-    }
-    if (ObjectValidator.isEmpty(metadata.getTitle())) {
-      metadata.setTitle(FileUtils.getFileNameWithoutExtension(mediaFile));
-    }
-    if (metadata.getDate() is null) {
-      metadata.setDate(FileUtils.getLastModifiedDate(mediaFile));
-    }
-    metadata.setFileSize(mediaFile.length());
-    metadata.setFilePath(FileUtils.getProperFilePath(mediaFile));
-  }
-  
-  protected void retrieveAudioMetadata(File mediaFile, LocalItemMetadata metadata)
-  {
-    AudioMetadata aMetadata = cast(AudioMetadata)metadata;
-    try
+
+    override public bool isMetadataUpdated(File mediaFile, MediaItem mediaItem, MetadataDescriptor metadataDescriptor)
     {
-      AudioFile audioFile = AudioFileIO.read(mediaFile);
-      Tag tag = audioFile.getTag();
-      AudioHeader header = audioFile.getAudioHeader();
-      
-      AudioExtractionStrategy strategy = null;
-      if (( cast(MP3File)audioFile !is null )) {
-        strategy = new MP3ExtractionStrategy();
-      } else if (header.getFormat().startsWith("ASF")) {
-        strategy = new WMAExtractionStrategy();
-      } else if (( cast(Mp4AudioHeader)header !is null )) {
-        strategy = new MP4ExtractionStrategy();
-      } else if (( cast(FlacTag)tag !is null )) {
-        strategy = new FLACExtractionStrategy();
-      } else if (( cast(VorbisCommentTag)tag !is null )) {
-        strategy = new OGGExtractionStrategy();
-      } else {
-        throw new InvalidMediaFormatException(String.format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
-      }
-      strategy.extractMetadata(aMetadata, audioFile, header, tag);
+        if ((mediaFile !is null) && (mediaFile.exists()) && (metadataDescriptor !is null))
+        {
+            Date mediaFileDate = FileUtils.getLastModifiedDate(mediaFile);
+            if ((metadataDescriptor.getDateUpdated() is null) || (mediaFileDate.after(metadataDescriptor.getDateUpdated()))) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
-    catch (CannotReadException e)
+
+    override protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
     {
-      FFmpegMetadataRetriever.retrieveAudioMetadata(aMetadata, FileUtils.getProperFilePath(mediaFile), DeliveryContext.local());
+        if ((mediaFile.exists()) && (mediaFile.canRead())) {
+            return new MetadataFile(getExtractorType(), FileUtils.getLastModifiedDate(mediaFile), null, mediaFile);
+        }
+        throw new IOException(String.format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
     }
-    catch (InvalidAudioFrameException e)
+
+    override protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
     {
-      throw new InvalidMediaFormatException(e);
+        File mediaFile = cast(File)metadataDescriptor.getExtractable();
+        if (( cast(AudioMetadata)metadata !is null )) {
+            retrieveAudioMetadata(mediaFile, metadata);
+        } else if (( cast(ImageMetadata)metadata !is null )) {
+            retrieveImageMetadata(mediaFile, metadata);
+        } else {
+            retrieveVideoMetadata(mediaFile, metadata);
+        }
+        if (ObjectValidator.isEmpty(metadata.getTitle())) {
+            metadata.setTitle(FileUtils.getFileNameWithoutExtension(mediaFile));
+        }
+        if (metadata.getDate() is null) {
+            metadata.setDate(FileUtils.getLastModifiedDate(mediaFile));
+        }
+        metadata.setFileSize(mediaFile.length());
+        metadata.setFilePath(FileUtils.getProperFilePath(mediaFile));
     }
-    catch (TagException e)
+
+    protected void retrieveAudioMetadata(File mediaFile, LocalItemMetadata metadata)
     {
-      throw new InvalidMediaFormatException(e);
+        AudioMetadata aMetadata = cast(AudioMetadata)metadata;
+        try
+        {
+            AudioFile audioFile = AudioFileIO.read(mediaFile);
+            Tag tag = audioFile.getTag();
+            AudioHeader header = audioFile.getAudioHeader();
+
+            AudioExtractionStrategy strategy = null;
+            if (( cast(MP3File)audioFile !is null )) {
+                strategy = new MP3ExtractionStrategy();
+            } else if (header.getFormat().startsWith("ASF")) {
+                strategy = new WMAExtractionStrategy();
+            } else if (( cast(Mp4AudioHeader)header !is null )) {
+                strategy = new MP4ExtractionStrategy();
+            } else if (( cast(FlacTag)tag !is null )) {
+                strategy = new FLACExtractionStrategy();
+            } else if (( cast(VorbisCommentTag)tag !is null )) {
+                strategy = new OGGExtractionStrategy();
+            } else {
+                throw new InvalidMediaFormatException(String.format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
+            }
+            strategy.extractMetadata(aMetadata, audioFile, header, tag);
+        }
+        catch (CannotReadException e)
+        {
+            FFmpegMetadataRetriever.retrieveAudioMetadata(aMetadata, FileUtils.getProperFilePath(mediaFile), DeliveryContext.local());
+        }
+        catch (InvalidAudioFrameException e)
+        {
+            throw new InvalidMediaFormatException(e);
+        }
+        catch (TagException e)
+        {
+            throw new InvalidMediaFormatException(e);
+        }
+        catch (ReadOnlyFileException e) {}
+        if (aMetadata.getReleaseYear() !is null) {
+            metadata.setDate(yearToDate(aMetadata.getReleaseYear()));
+        }
     }
-    catch (ReadOnlyFileException e) {}
-    if (aMetadata.getReleaseYear() !is null) {
-      metadata.setDate(yearToDate(aMetadata.getReleaseYear()));
-    }
-  }
-  
-  protected void retrieveImageMetadata(File mediaFile, LocalItemMetadata metadata)
-  {
-    ImageMetadataRetriever.retrieveImageMetadata(cast(ImageMetadata)metadata, FileUtils.getProperFilePath(mediaFile), true);
-  }
-  
-  protected void retrieveVideoMetadata(File mediaFile, LocalItemMetadata metadata)
-  {
-    VideoExtractionStrategy strategy = new VideoExtractionStrategy();
-    
-    strategy.extractMetadata(cast(VideoMetadata)metadata, mediaFile);
-    
-    (cast(VideoMetadata)metadata).setContentType(ContentType.UNKNOWN);
-  }
-  
-  private Date yearToDate(Integer year)
-  {
-    String dateStr = "01/01/" + year.toString();
-    try
+
+    protected void retrieveImageMetadata(File mediaFile, LocalItemMetadata metadata)
     {
-      return DATE_FORMAT.parse(dateStr);
+        ImageMetadataRetriever.retrieveImageMetadata(cast(ImageMetadata)metadata, FileUtils.getProperFilePath(mediaFile), true);
     }
-    catch (ParseException e)
+
+    protected void retrieveVideoMetadata(File mediaFile, LocalItemMetadata metadata)
     {
-      log.debug_(String.format("Could not parse year %s to date", cast(Object[])[ year ]));
+        VideoExtractionStrategy strategy = new VideoExtractionStrategy();
+
+        strategy.extractMetadata(cast(VideoMetadata)metadata, mediaFile);
+
+        (cast(VideoMetadata)metadata).setContentType(ContentType.UNKNOWN);
     }
-    return null;
-  }
+
+    private Date yearToDate(Integer year)
+    {
+        String dateStr = "01/01/" ~ year.toString();
+        try
+        {
+            return DATE_FORMAT.parse(dateStr);
+        }
+        catch (ParseException e)
+        {
+            log.debug_(String.format("Could not parse year %s to date", cast(Object[])[ year ]));
+        }
+        return null;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.EmbeddedMetadataExtractor
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.EmbeddedMetadataExtractor
+* JD-Core Version:    0.7.0.1
+*/

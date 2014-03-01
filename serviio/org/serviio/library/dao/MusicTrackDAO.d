@@ -41,9 +41,9 @@ public abstract interface MusicTrackDAO
   
   public abstract int retrieveRandomMusicTracksCount(int paramInt, AccessGroup paramAccessGroup);
   
-  public abstract List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long paramLong1, Person.RoleType paramRoleType, Long paramLong2, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
+  public abstract List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long paramLong1, RoleType paramRoleType, Long paramLong2, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
   
-  public abstract int retrieveMusicTracksForTrackRoleAndAlbumCount(Long paramLong1, Person.RoleType paramRoleType, Long paramLong2, AccessGroup paramAccessGroup);
+  public abstract int retrieveMusicTracksForTrackRoleAndAlbumCount(Long paramLong1, RoleType paramRoleType, Long paramLong2, AccessGroup paramAccessGroup);
   
   public abstract List!(MusicTrack) retrieveMusicTracksForPlaylist(Long paramLong, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
   

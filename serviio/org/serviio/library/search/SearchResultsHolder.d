@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SearchResultsHolder
 {
-  private SearchIndexer.SearchCategory category;
+  private SearchCategory category;
   private List!(SearchResult) items = new ArrayList();
   private int totalMatched = 0;
   
@@ -34,12 +34,12 @@ public class SearchResultsHolder
     return this.items.size();
   }
   
-  public SearchIndexer.SearchCategory getCategory()
+  public SearchCategory getCategory()
   {
     return this.category;
   }
   
-  public void setCategory(SearchIndexer.SearchCategory category)
+  public void setCategory(SearchCategory category)
   {
     this.category = category;
   }

@@ -1,6 +1,12 @@
 module org.serviio.library.entities.Person;
 
+import java.lang.String;
 import org.serviio.db.entities.PersistedEntity;
+
+public enum RoleType
+{
+    ARTIST,  ACTOR,  DIRECTOR,  WRITER,  PRODUCER,  ALBUM_ARTIST,  COMPOSER
+}
 
 public class Person : PersistedEntity
 {
@@ -8,11 +14,6 @@ public class Person : PersistedEntity
     private String name;
     private String sortName;
     private String initial;
-
-    public static enum RoleType
-    {
-        ARTIST,  ACTOR,  DIRECTOR,  WRITER,  PRODUCER,  ALBUM_ARTIST,  COMPOSER
-    }
 
     public this(String name, String sortName, String initial)
     {
@@ -51,7 +52,7 @@ public class Person : PersistedEntity
         this.initial = initial;
     }
 
-    public String toString()
+    override public String toString()
     {
         return String.format("Person [name=%s, sortName=%s]", cast(Object[])[ this.name, this.sortName ]);
     }

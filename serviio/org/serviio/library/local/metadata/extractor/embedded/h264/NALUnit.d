@@ -1,7 +1,10 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.NALUnit;
 
+import java.lang.String;
 import java.io.IOException;
 import java.io.OutputStream;
+import org.serviio.library.local.metadata.extractor.embedded.h264.NALUnitType;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
 
 public class NALUnit
 {
@@ -30,7 +33,7 @@ public class NALUnit
         os.write(nalu);
     }
 
-    public String toString()
+    override public String toString()
     {
         return "NALUnit{type=" + this.type + ", nal_ref_idc=" + this.nal_ref_idc + '}';
     }

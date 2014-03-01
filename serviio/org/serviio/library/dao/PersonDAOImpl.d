@@ -71,7 +71,7 @@ public class PersonDAOImpl
     }
   }
   
-  public Long addPersonToMedia(String personName, Person.RoleType role, Long mediaItemId)
+  public Long addPersonToMedia(String personName, RoleType role, Long mediaItemId)
   {
     if ((ObjectValidator.isEmpty(personName)) || (mediaItemId is null))
     {
@@ -117,7 +117,7 @@ public class PersonDAOImpl
     }
   }
   
-  public Long addPersonToMusicAlbum(String personName, Person.RoleType role, Long albumId)
+  public Long addPersonToMusicAlbum(String personName, RoleType role, Long albumId)
   {
     if ((ObjectValidator.isEmpty(personName)) || (albumId is null))
     {
@@ -283,7 +283,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(Person) retrievePersonsWithRole(Person.RoleType roleType, int startingIndex, int requestedCount)
+  public List!(Person) retrievePersonsWithRole(RoleType roleType, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of persons with role %s (from=%s, count=%s)", cast(Object[])[ roleType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
     Connection con = null;
@@ -309,7 +309,7 @@ public class PersonDAOImpl
     }
   }
   
-  public int getPersonsWithRoleCount(Person.RoleType roleType)
+  public int getPersonsWithRoleCount(RoleType roleType)
   {
     log.debug_(String.format("Retrieving number of persons with role %s", cast(Object[])[ roleType ]));
     Connection con = null;
@@ -369,7 +369,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(Person) retrievePersonsWithRoleForMediaItem(Person.RoleType roleType, Long mediaItemId)
+  public List!(Person) retrievePersonsWithRoleForMediaItem(RoleType roleType, Long mediaItemId)
   {
     log.debug_(String.format("Retrieving list of persons with role %s for MediaItem %s", cast(Object[])[ roleType, mediaItemId ]));
     Connection con = null;
@@ -395,7 +395,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(Person) retrievePersonsWithRoleForMusicAlbum(Person.RoleType roleType, Long albumId)
+  public List!(Person) retrievePersonsWithRoleForMusicAlbum(RoleType roleType, Long albumId)
   {
     log.debug_(String.format("Retrieving list of persons with role %s for MusicAlbum %s", cast(Object[])[ roleType, albumId ]));
     Connection con = null;
@@ -471,7 +471,7 @@ public class PersonDAOImpl
     }
   }
   
-  public Long getPersonRoleForMediaItem(Person.RoleType role, Long personId, Long mediaItemId)
+  public Long getPersonRoleForMediaItem(RoleType role, Long personId, Long mediaItemId)
   {
     if ((personId is null) || (mediaItemId is null) || (role is null)) {
       throw new InvalidArgumentException("Cannot check for person role. Required data is missing.");
@@ -506,7 +506,7 @@ public class PersonDAOImpl
     }
   }
   
-  public Long getPersonRoleForMusicAlbum(Person.RoleType role, Long personId, Long albumId)
+  public Long getPersonRoleForMusicAlbum(RoleType role, Long personId, Long albumId)
   {
     if ((personId is null) || (albumId is null) || (role is null)) {
       throw new InvalidArgumentException("Cannot check for person role. Required data is missing.");
@@ -541,7 +541,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(Long) getRoleIDsForMediaItem(Person.RoleType role, Long mediaItemId)
+  public List!(Long) getRoleIDsForMediaItem(RoleType role, Long mediaItemId)
   {
     if ((mediaItemId is null) || (role is null)) {
       throw new InvalidArgumentException("Cannot get list of roles. Required data is missing.");
@@ -574,7 +574,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(String) retrievePersonInitials(Person.RoleType role, int startingIndex, int requestedCount)
+  public List!(String) retrievePersonInitials(RoleType role, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of person initials (role = %s, from=%s, count=%s)", cast(Object[])[ role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
     Connection con = null;
@@ -604,7 +604,7 @@ public class PersonDAOImpl
     }
   }
   
-  public int retrievePersonInitialsCount(Person.RoleType role)
+  public int retrievePersonInitialsCount(RoleType role)
   {
     log.debug_(String.format("Retrieving number of person initials for role %s", cast(Object[])[ role ]));
     Connection con = null;
@@ -635,7 +635,7 @@ public class PersonDAOImpl
     }
   }
   
-  public List!(Person) retrievePersonsForInitial(String initial, Person.RoleType role, int startingIndex, int requestedCount)
+  public List!(Person) retrievePersonsForInitial(String initial, RoleType role, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of persons with initial %s and role %s (from=%s, count=%s)", cast(Object[])[ initial, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
     Connection con = null;
@@ -662,7 +662,7 @@ public class PersonDAOImpl
     }
   }
   
-  public int retrievePersonsForInitialCount(String initial, Person.RoleType role)
+  public int retrievePersonsForInitialCount(String initial, RoleType role)
   {
     log.debug_(String.format("Retrieving number of persons with initial %s and role %s", cast(Object[])[ initial, role ]));
     Connection con = null;

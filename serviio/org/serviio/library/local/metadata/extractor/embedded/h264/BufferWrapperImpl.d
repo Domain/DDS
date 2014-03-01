@@ -9,6 +9,8 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel:MapMode;
 import java.util.ArrayList;
 import java.util.List;
+import org.serviio.library.local.metadata.extractor.embedded.h264.AbstractBufferWrapper;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
 
 public class BufferWrapperImpl : AbstractBufferWrapper
 {

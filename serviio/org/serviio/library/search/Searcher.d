@@ -30,15 +30,15 @@ import org.slf4j.LoggerFactory;
 public class Searcher
 {
     private static final Logger log = LoggerFactory.getLogger!(Searcher);
-    private static Map!(MediaFileType, List!(SearchIndexer.SearchCategory)) categoryMapping = new HashMap();
+    private static Map!(MediaFileType, List!(SearchCategory)) categoryMapping = new HashMap();
     private MultiReader ireader;
     private DirectoryReader[] subReaders;
 
     static this()
     {
-        categoryMapping.put(MediaFileType.VIDEO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.MOVIES, SearchIndexer.SearchCategory.SERIES, SearchIndexer.SearchCategory.EPISODES, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
-        categoryMapping.put(MediaFileType.IMAGE, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
-        categoryMapping.put(MediaFileType.AUDIO, Arrays.asList(cast(SearchIndexer.SearchCategory[])[ SearchIndexer.SearchCategory.ALBUM_ARTISTS, SearchIndexer.SearchCategory.ALBUMS, SearchIndexer.SearchCategory.MUSIC_TRACKS, SearchIndexer.SearchCategory.FILES, SearchIndexer.SearchCategory.FOLDERS, SearchIndexer.SearchCategory.ONLINE_ITEMS, SearchIndexer.SearchCategory.ONLINE_CONTAINERS ]));
+        categoryMapping.put(MediaFileType.VIDEO, Arrays.asList(cast(SearchCategory[])[ SearchCategory.MOVIES, SearchCategory.SERIES, SearchCategory.EPISODES, SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));
+        categoryMapping.put(MediaFileType.IMAGE, Arrays.asList(cast(SearchCategory[])[ SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));
+        categoryMapping.put(MediaFileType.AUDIO, Arrays.asList(cast(SearchCategory[])[ SearchCategory.ALBUM_ARTISTS, SearchCategory.ALBUMS, SearchCategory.MUSIC_TRACKS, SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));
     }
 
     public this(SearchIndexer[] indexers...)
@@ -58,7 +58,7 @@ public class Searcher
         openReader();
         IndexSearcher isearcher = new IndexSearcher(this.ireader);
         List!(SearchResultsHolder) results = new ArrayList();
-        foreach (SearchIndexer.SearchCategory category ; cast(List)categoryMapping.get(fileType)) {
+        foreach (SearchCategory category ; cast(List)categoryMapping.get(fileType)) {
             results.add(runSearchForCategory(isearcher, category, fileType, term, offset, count));
         }
         return results;
@@ -76,7 +76,7 @@ public class Searcher
         }
     }
 
-    private SearchResultsHolder runSearchForCategory(IndexSearcher isearcher, SearchIndexer.SearchCategory category, MediaFileType fileType, String term, int offset, int count)
+    private SearchResultsHolder runSearchForCategory(IndexSearcher isearcher, SearchCategory category, MediaFileType fileType, String term, int offset, int count)
     {
         BooleanQuery termQuery = new BooleanQuery();
 

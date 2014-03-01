@@ -17,7 +17,7 @@ public abstract interface SearchMetadata
   
   public abstract MediaFileType getFileType();
   
-  public abstract SearchIndexer.SearchCategory getCategory();
+  public abstract SearchCategory getCategory();
   
   public abstract String getSearchableValue();
   

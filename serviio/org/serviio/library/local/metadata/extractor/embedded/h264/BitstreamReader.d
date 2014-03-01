@@ -1,6 +1,8 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.BitstreamReader;
 
 import java.io.IOException;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
+import org.serviio.library.local.metadata.extractor.embedded.h264.CharCache;
 
 public class BitstreamReader
 {

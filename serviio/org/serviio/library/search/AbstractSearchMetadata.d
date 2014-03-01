@@ -18,13 +18,13 @@ public abstract class AbstractSearchMetadata : SearchMetadata
     private final Long entityId;
     private final MediaFileType fileType;
     private final ObjectType objectType;
-    private final SearchIndexer.SearchCategory category;
+    private final SearchCategory category;
     private immutable String searchableValue;
     private final Long thumbnailId;
     private final List!(String) context = new ArrayList();
     private final Map/*!(Class!(?), Object)*/ commands = new HashMap();
 
-    public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchIndexer.SearchCategory category, String searchableValue, Long thumbnailId)
+    public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchCategory category, String searchableValue, Long thumbnailId)
     {
         this.entityId = mediaItemId;
         this.fileType = fileType;
@@ -34,7 +34,7 @@ public abstract class AbstractSearchMetadata : SearchMetadata
         this.thumbnailId = thumbnailId;
     }
 
-    public static String generateIndexId(SearchIndexer.SearchCategory category, Long entityId)
+    public static String generateIndexId(SearchCategory category, Long entityId)
     {
         return String.format("%s-%s", cast(Object[])[ entityId, category ]);
     }
@@ -66,7 +66,7 @@ public abstract class AbstractSearchMetadata : SearchMetadata
         return this.fileType;
     }
 
-    public SearchIndexer.SearchCategory getCategory()
+    public SearchCategory getCategory()
     {
         return this.category;
     }

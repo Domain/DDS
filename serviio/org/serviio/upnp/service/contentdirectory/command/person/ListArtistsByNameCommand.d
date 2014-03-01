@@ -20,13 +20,13 @@ public class ListArtistsByNameCommand : AbstractPersonsRetrievalCommand
 
     protected List!(Person) retrieveEntityList()
     {
-        List!(Person) artists = PersonService.getListOfPersons(Person.RoleType.ARTIST, this.startIndex, this.count);
+        List!(Person) artists = PersonService.getListOfPersons(RoleType.ARTIST, this.startIndex, this.count);
         return artists;
     }
 
     public int retrieveItemCount()
     {
-        return PersonService.getNumberOfPersons(Person.RoleType.ARTIST);
+        return PersonService.getNumberOfPersons(RoleType.ARTIST);
     }
 }
 

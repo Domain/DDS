@@ -12,7 +12,7 @@ public class ListSongsForComposerAndAlbumCommand
 {
   public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
   {
-    super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, Person.RoleType.COMPOSER, disablePresentationSettings);
+    super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, RoleType.COMPOSER, disablePresentationSettings);
   }
 }
 

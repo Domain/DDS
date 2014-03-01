@@ -2,11 +2,13 @@ module org.serviio.library.local.metadata.extractor.ExtractorType;
 
 import org.serviio.library.local.metadata.extractor.embedded.EmbeddedMetadataExtractor;
 import org.serviio.library.local.metadata.extractor.video.OnlineVideoSourcesMetadataExtractor;
+import org.serviio.library.local.metadata.extractor.MetadataExtractor;
 
 public enum ExtractorType
 {
     EMBEDDED,  COVER_IMAGE_IN_FOLDER,  ONLINE_VIDEO_SOURCES,  SWISSCENTER,  XBMC,  MYMOVIES
 }
+
 public MetadataExtractor getExtractorInstance(ExtractorType type)
 {
     final switch (type)

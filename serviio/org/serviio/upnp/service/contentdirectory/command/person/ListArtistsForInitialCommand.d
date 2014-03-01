@@ -12,7 +12,7 @@ public class ListArtistsForInitialCommand : AbstractListPersonsForInitialCommand
 {
     public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
     {
-        super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.AUDIO, idPrefix, startIndex, count, Person.RoleType.ARTIST, disablePresentationSettings);
+        super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.AUDIO, idPrefix, startIndex, count, RoleType.ARTIST, disablePresentationSettings);
     }
 }
 

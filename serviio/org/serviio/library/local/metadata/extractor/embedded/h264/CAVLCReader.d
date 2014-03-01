@@ -1,9 +1,12 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.CAVLCReader;
 
+import java.lang.String;
 import java.io.IOException;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BitstreamReader;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
+import org.serviio.library.local.metadata.extractor.embedded.h264.BTree;
 
-public class CAVLCReader
-: BitstreamReader
+public class CAVLCReader : BitstreamReader
 {
     public this(BufferWrapper ins)
     {

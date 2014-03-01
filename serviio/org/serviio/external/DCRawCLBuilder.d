@@ -1,16 +1,19 @@
 module org.serviio.external.DCRawCLBuilder;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.serviio.external.AbstractCLBuilder;
+import org.serviio.external.ProcessExecutorParameter;
 
 public class DCRawCLBuilder : AbstractCLBuilder
 {
-    private ProcessExecutorParameter inFile;
-    private List!(ProcessExecutorParameter) inFileOptions = new ArrayList();
+    private ProcessExecutorParameter file;
+    private List!(ProcessExecutorParameter) fileOptions = new ArrayList();
     static String executablePath = setupExecutablePath("dcraw.location", "dcraw_executable");
 
-    public ProcessExecutorParameter[] build()
+    override public ProcessExecutorParameter[] build()
     {
         List!(ProcessExecutorParameter) args = new ArrayList();
         args.add(new ProcessExecutorParameter(executablePath));
@@ -25,13 +28,13 @@ public class DCRawCLBuilder : AbstractCLBuilder
 
     public DCRawCLBuilder inFileOptions(String[] options...)
     {
-        Collections.addAll(this.inFileOptions, ProcessExecutorParameter.parameters(options));
+        Collections.addAll(this.fileOptions, ProcessExecutorParameter.parameters(options));
         return this;
     }
 
     public DCRawCLBuilder inFile(String inFile)
     {
-        this.inFile = new ProcessExecutorParameter(inFile);
+        this.file = new ProcessExecutorParameter(inFile);
         return this;
     }
 }

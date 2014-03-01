@@ -10,7 +10,7 @@ public class MusicTrackSearchMetadata
 {
   public this(Long mediaItemId, Long albumId, String songTitle, String albumName, String albumArtist, Long thumbnailId)
   {
-    super(mediaItemId, MediaFileType.AUDIO, ObjectType.ITEMS, SearchIndexer.SearchCategory.MUSIC_TRACKS, songTitle, thumbnailId);
+    super(mediaItemId, MediaFileType.AUDIO, ObjectType.ITEMS, SearchCategory.MUSIC_TRACKS, songTitle, thumbnailId);
     addCommandMapping(ListAllAlbumsCommand.class_, albumId);
     addCommandMapping(ListSongsForAlbumCommand.class_, mediaItemId);
     addToContext(albumArtist);

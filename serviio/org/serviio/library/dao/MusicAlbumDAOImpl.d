@@ -69,7 +69,7 @@ public class MusicAlbumDAOImpl
       con = DatabaseManager.getConnection();
       ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, person p WHERE pr.music_album_id = a.id AND p.id = pr.person_id AND pr.role_type = ? AND LCASE(p.name) = LCASE(?) AND LCASE(a.title) = LCASE(?)");
       
-      ps.setString(1, Person.RoleType.ALBUM_ARTIST.toString());
+      ps.setString(1, RoleType.ALBUM_ARTIST.toString());
       ps.setString(2, artist);
       ps.setString(3, title);
       
@@ -169,7 +169,7 @@ public class MusicAlbumDAOImpl
     }
   }
   
-  public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(Long personId, Person.RoleType personRole, int startingIndex, int requestedCount)
+  public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(Long personId, RoleType personRole, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of music albums for person %s and role %s (from=%s, count=%s)", cast(Object[])[ personId, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
     Connection con = null;
@@ -197,7 +197,7 @@ public class MusicAlbumDAOImpl
     }
   }
   
-  public int retrieveMusicAlbumsForTrackRoleCount(Long artistId, Person.RoleType personRole)
+  public int retrieveMusicAlbumsForTrackRoleCount(Long artistId, RoleType personRole)
   {
     log.debug_(String.format("Getting number of albums for person %s and role %s", cast(Object[])[ artistId, personRole ]));
     Connection con = null;
@@ -230,7 +230,7 @@ public class MusicAlbumDAOImpl
     }
   }
   
-  public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String personName, Person.RoleType personRole, int startingIndex, int requestedCount)
+  public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String personName, RoleType personRole, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of music albums for person '%s' and role %s (from=%s, count=%s)", cast(Object[])[ personName, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
     Connection con = null;
@@ -258,7 +258,7 @@ public class MusicAlbumDAOImpl
     }
   }
   
-  public int retrieveMusicAlbumsForTrackRoleCount(String personName, Person.RoleType personRole)
+  public int retrieveMusicAlbumsForTrackRoleCount(String personName, RoleType personRole)
   {
     log.debug_(String.format("Getting number of albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]));
     Connection con = null;
@@ -304,7 +304,7 @@ public class MusicAlbumDAOImpl
 
 
       ps.setLong(1, artistId.longValue());
-      ps.setString(2, Person.RoleType.ALBUM_ARTIST.toString());
+      ps.setString(2, RoleType.ALBUM_ARTIST.toString());
       ResultSet rs = ps.executeQuery();
       return mapResultSet(rs);
     }
@@ -330,7 +330,7 @@ public class MusicAlbumDAOImpl
       ps = con.prepareStatement("SELECT count(distinct(a.id)) as c from music_album a, person_role pr WHERE pr.music_album_id = a.id AND pr.person_id = ? AND pr.role_type = ?");
       
       ps.setLong(1, artistId.longValue());
-      ps.setString(2, Person.RoleType.ALBUM_ARTIST.toString());
+      ps.setString(2, RoleType.ALBUM_ARTIST.toString());
       
       ResultSet rs = ps.executeQuery();
       Integer count;

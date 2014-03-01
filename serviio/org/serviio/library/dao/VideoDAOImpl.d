@@ -518,7 +518,7 @@ public class VideoDAOImpl
     }
   }
   
-  public List!(Video) retrieveVideosForPerson(Long personId, Person.RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
+  public List!(Video) retrieveVideosForPerson(Long personId, RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
   {
     log.debug_(String.format("Retrieving list of videos for person %s with role %s (from=%s, count=%s) [%s]", cast(Object[])[ personId, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
     Connection con = null;
@@ -555,7 +555,7 @@ public class VideoDAOImpl
     }
   }
   
-  public int retrieveVideosForPersonCount(Long personId, Person.RoleType role, AccessGroup accessGroup)
+  public int retrieveVideosForPersonCount(Long personId, RoleType role, AccessGroup accessGroup)
   {
     log.debug_(String.format("Retrieving number of videos for person %s with role %s [%s]", cast(Object[])[ personId, role, accessGroup ]));
     Connection con = null;

@@ -71,7 +71,7 @@ public class ObjectValuesBuilder
             MusicAlbum album = cast(MusicAlbum)entity;
             Long albumArtId = CoverImageService.getMusicAlbumCoverArt(album.getId());
             values = instantiateValuesForContainer(title, objectId, parentId, objectType, searchCriteria, accessGroup, albumArtId, disablePresentationSettings);
-            Person albumArtist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMusicAlbum(album.getId(), Person.RoleType.ALBUM_ARTIST));
+            Person albumArtist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMusicAlbum(album.getId(), RoleType.ALBUM_ARTIST));
             if (albumArtist !is null) {
                 values.put(ClassProperties.ARTIST, albumArtist.getName());
             }
@@ -94,7 +94,7 @@ public class ObjectValuesBuilder
             values.put(ClassProperties.GENRE, GenreService.getGenre(track.getGenreId()));
             if (track.isLocalMedia())
             {
-                Person artist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMediaItem(track.getId(), Person.RoleType.ARTIST));
+                Person artist = cast(Person)CollectionUtils.getFirstItem(PersonService.getListOfPersonsForMediaItem(track.getId(), RoleType.ARTIST));
                 values.put(ClassProperties.CREATOR, artist);
                 values.put(ClassProperties.ARTIST, artist);
             }

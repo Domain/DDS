@@ -9,7 +9,7 @@ public class MovieSearchMetadata
 {
   public this(Long mediaItemId, String movieTitle, Long thumbnailId)
   {
-    super(mediaItemId, MediaFileType.VIDEO, ObjectType.ITEMS, SearchIndexer.SearchCategory.MOVIES, movieTitle, thumbnailId);
+    super(mediaItemId, MediaFileType.VIDEO, ObjectType.ITEMS, SearchCategory.MOVIES, movieTitle, thumbnailId);
     addCommandMapping(ListMovieVideosByNameCommand.class_, mediaItemId);
   }
 }

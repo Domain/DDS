@@ -115,10 +115,10 @@ public class ContentDirectoryDefinitionParser
         try
         {
             ObjectClassType containerClassType = ObjectValidator.isNotEmpty(nodeContainerClass) ? ObjectClassType.valueOf(nodeContainerClass) : null;
-            List!(SearchIndexer.SearchCategory) searchCategories = new ArrayList();
+            List!(SearchCategory) searchCategories = new ArrayList();
             if (ObjectValidator.isNotEmpty(nodeSearchCategories)) {
                 foreach (String searchCategory ; nodeSearchCategories.split("\\s")) {
-                    searchCategories.add(SearchIndexer.SearchCategory.valueOf(searchCategory));
+                    searchCategories.add(SearchCategory.valueOf(searchCategory));
                 }
             }
             ObjectClassType itemClassType = ObjectValidator.isNotEmpty(nodeItemClass) ? ObjectClassType.valueOf(nodeItemClass) : null;

@@ -26,20 +26,29 @@ import org.serviio.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+public enum SearchCategory
+{
+    MOVIES,  
+    EPISODES,  
+    SERIES,  
+    ALBUMS,  
+    MUSIC_TRACKS,  
+    ALBUM_ARTISTS,  
+    FOLDERS,  
+    FILES,  
+    ONLINE_CONTAINERS,  
+    ONLINE_ITEMS
+}
+
 public class SearchIndexer
 {
-    public static enum SearchCategory
-    {
-        MOVIES,  EPISODES,  SERIES,  ALBUMS,  MUSIC_TRACKS,  ALBUM_ARTISTS,  FOLDERS,  FILES,  ONLINE_CONTAINERS,  ONLINE_ITEMS
-    }
-
-    private static final Logger log = LoggerFactory.getLogger!(SearchIndexer);
+    private static Logger log = LoggerFactory.getLogger!(SearchIndexer);
     private bool inMemory;
-    private final FieldType indexedTokenizedStored;
-    private final FieldType storedNotIndexed;
-    private final FieldType storedIndexed;
-    private final IndexWriter writer;
-    private final Directory directory;
+    private immutable FieldType indexedTokenizedStored;
+    private immutable FieldType storedNotIndexed;
+    private immutable FieldType storedIndexed;
+    private immutable IndexWriter writer;
+    private immutable Directory directory;
 
     public this(bool inMemory)
     {

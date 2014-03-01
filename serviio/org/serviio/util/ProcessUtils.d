@@ -1,5 +1,6 @@
 module org.serviio.util.ProcessUtils;
 
+import java.lang;
 import java.lang.reflect.Field;
 import org.jvnet.winp.WinProcess;
 import org.serviio.external.ProcessExecutor;
@@ -10,87 +11,86 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessUtils
 {
-  private static final Logger log = LoggerFactory.getLogger!(ProcessUtils);
-  
-  public static void destroy(Process p)
-  {
-    if (Platform.isWindows())
+    private static Logger log = LoggerFactory.getLogger!(ProcessUtils);
+
+    public static void destroy(Process p)
     {
-      WinProcess wp = new WinProcess(p);
-      log.debug_("Killing the Windows process: " + wp.getPid());
-      wp.killRecursively();
+        if (Platform.isWindows())
+        {
+            WinProcess wp = new WinProcess(p);
+            log.debug_("Killing the Windows process: " ~ wp.getPid());
+            wp.killRecursively();
+        }
+        else
+        {
+            destroyUnixProcess(p);
+        }
     }
-    else
+
+    private static Integer getProcessID(Process p)
     {
-      destroyUnixProcess(p);
+        Integer pid = null;
+        if ((p !is null) && (p.getClass().getName().equals("java.lang.UNIXProcess"))) {
+            try
+            {
+                Field f = p.getClass().getDeclaredField("pid");
+                f.setAccessible(true);
+                pid = Integer.valueOf(f.getInt(p));
+            }
+            catch (Throwable e)
+            {
+                log.debug_("Can't determine the Unix process ID: " ~ e.getMessage());
+            }
+        }
+        return pid;
     }
-  }
-  
-  private static Integer getProcessID(Process p)
-  {
-    Integer pid = null;
-    if ((p !is null) && (p.getClass().getName().equals("java.lang.UNIXProcess"))) {
-      try
-      {
-        Field f = p.getClass().getDeclaredField("pid");
-        f.setAccessible(true);
-        pid = Integer.valueOf(f.getInt(p));
-      }
-      catch (Throwable e)
-      {
-        log.debug_("Can't determine the Unix process ID: " + e.getMessage());
-      }
-    }
-    return pid;
-  }
-  
-  private static void destroyUnixProcess(Process p)
-  {
-    if (p !is null)
+
+    private static void destroyUnixProcess(Process p)
     {
-      Integer pid = getProcessID(p);
-      if (pid !is null) {
-        kill(p, pid, 9);
-      } else {
-        p.destroy();
-      }
+        if (p !is null)
+        {
+            Integer pid = getProcessID(p);
+            if (pid !is null) {
+                kill(p, pid, 9);
+            } else {
+                p.destroy();
+            }
+        }
     }
-  }
-  
-  private static void kill(Process p, Integer pid, int signal)
-  {
-    log.debug_("Sending kill -" + signal + " to the Unix process: " + pid);
-    ProcessExecutor pw = new ProcessExecutor(cast(ProcessExecutorParameter[])[ new ProcessExecutorParameter("kill"), new ProcessExecutorParameter("-" + signal), new ProcessExecutorParameter(pid.toString()) ]);
-    
-    pw.addListener(new TaskKillProcessListener(p));
-    pw.run();
-  }
-  
-  private static class TaskKillProcessListener
-    : ProcessListener
-  {
-    private Process p;
-    
-    public this(Process p)
+
+    private static void kill(Process p, Integer pid, int signal)
     {
-      this.p = p;
+        log.debug_("Sending kill -" ~ signal ~ " to the Unix process: " ~ pid);
+        ProcessExecutor pw = new ProcessExecutor(cast(ProcessExecutorParameter[])[ new ProcessExecutorParameter("kill"), new ProcessExecutorParameter("-" + signal), new ProcessExecutorParameter(pid.toString()) ]);
+
+        pw.addListener(new TaskKillProcessListener(p));
+        pw.run();
     }
-    
-    public void processEnded(bool success)
+
+    private static class TaskKillProcessListener : ProcessListener
     {
-      if (!success) {
-        this.p.destroy();
-      }
+        private Process p;
+
+        public this(Process p)
+        {
+            this.p = p;
+        }
+
+        override public void processEnded(bool success)
+        {
+            if (!success) {
+                this.p.destroy();
+            }
+        }
+
+        override public void outputUpdated(String updatedLine) {}
+
+        override public void releaseResources() {}
     }
-    
-    public void outputUpdated(String updatedLine) {}
-    
-    public void releaseResources() {}
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.util.ProcessUtils
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.util.ProcessUtils
+* JD-Core Version:    0.7.0.1
+*/

@@ -20,13 +20,13 @@ public class ListVideosForActorCommand
   
   protected List!(Video) retrieveEntityList()
   {
-    List!(Video) videos = VideoService.getListOfVideosForPerson(new Long(getInternalObjectId()), Person.RoleType.ACTOR, this.accessGroup, this.startIndex, this.count);
+    List!(Video) videos = VideoService.getListOfVideosForPerson(new Long(getInternalObjectId()), RoleType.ACTOR, this.accessGroup, this.startIndex, this.count);
     return videos;
   }
   
   public int retrieveItemCount()
   {
-    return VideoService.getNumberOfVideosForPerson(new Long(getInternalObjectId()), Person.RoleType.ACTOR, this.accessGroup);
+    return VideoService.getNumberOfVideosForPerson(new Long(getInternalObjectId()), RoleType.ACTOR, this.accessGroup);
   }
 }
 

@@ -12,7 +12,7 @@ public class FolderSearchMetadata : AbstractRecursiveSearchMetadata
 {
     public this(Tupple!(Long, String) root, List!(Tupple!(Long, String)) hierarchy, MediaFileType fileType, Long thumbnailId)
     {
-        super(getEntityId(hierarchy), fileType, ObjectType.CONTAINERS, SearchIndexer.SearchCategory.FOLDERS, getSearchableValue(hierarchy), thumbnailId);
+        super(getEntityId(hierarchy), fileType, ObjectType.CONTAINERS, SearchCategory.FOLDERS, getSearchableValue(hierarchy), thumbnailId);
 
         String recursiveId = buildIdForTheHierarchy(root, hierarchy, null);
         if (fileType == MediaFileType.AUDIO) {

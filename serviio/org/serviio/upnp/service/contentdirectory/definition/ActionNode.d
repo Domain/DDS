@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 
+import java.lang.String;
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.search.SearchIndexer:SearchCategory;
@@ -12,6 +13,8 @@ import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.upnp.service.contentdirectory.command.Command;
 import org.serviio.upnp.service.contentdirectory.command.CommandExecutionException;
 import org.serviio.util.ObjectValidator;
+import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
+import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +24,9 @@ public class ActionNode : ContainerNode
     private String commandClass;
     private String idPrefix;
     private bool recursive;
-    private List!(SearchIndexer.SearchCategory) searchCategories;
+    private List!(SearchCategory) searchCategories;
 
-    public this(String commandClassName, String idPrefix, ObjectClassType containerClass, ObjectClassType itemClass, DefinitionNode parent, String cacheRegion, bool recursive, List!(SearchIndexer.SearchCategory) searchCategories)
+    public this(String commandClassName, String idPrefix, ObjectClassType containerClass, ObjectClassType itemClass, DefinitionNode parent, String cacheRegion, bool recursive, List!(SearchCategory) searchCategories)
     {
         super(containerClass, parent, cacheRegion);
         this.itemClass = itemClass;
@@ -33,12 +36,12 @@ public class ActionNode : ContainerNode
         this.searchCategories = searchCategories;
     }
 
-    public DirectoryObject retrieveDirectoryObject(String objectId, ObjectType objectType, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
+    override public DirectoryObject retrieveDirectoryObject(String objectId, ObjectType objectType, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
     {
         return executeRetrieveItemAction(objectId, objectType, rendererProfile, userProfile, disablePresentationSettings);
     }
 
-    public void validate()
+    override public void validate()
     {
         if ((this.containerClass is null) && (this.itemClass is null)) {
             throw new ContentDirectoryDefinitionException("Container class or Item class must be provided in definition.");
@@ -54,7 +57,7 @@ public class ActionNode : ContainerNode
         }
     }
 
-    public BrowseItemsHolder!(DirectoryObject) retrieveContainerItems(String containerId, ObjectType objectType, SearchCriteria searchCriteria, int startIndex, int count, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
+    override public BrowseItemsHolder!(DirectoryObject) retrieveContainerItems(String containerId, ObjectType objectType, SearchCriteria searchCriteria, int startIndex, int count, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
     {
         if (count == 0) {
             count = 2147483647;
@@ -68,7 +71,7 @@ public class ActionNode : ContainerNode
         return super.retrieveContainerItems(containerId, objectType, searchCriteria, startIndex, count, rendererProfile, userProfile, disablePresentationSettings);
     }
 
-    public int retrieveContainerItemsCount(String containerId, ObjectType objectType, SearchCriteria searchCriteria, AccessGroup userProfile, bool disablePresentationSettings)
+    override public int retrieveContainerItemsCount(String containerId, ObjectType objectType, SearchCriteria searchCriteria, AccessGroup userProfile, bool disablePresentationSettings)
     {
         if (this.recursive)
         {
@@ -111,7 +114,7 @@ public class ActionNode : ContainerNode
         return this.recursive;
     }
 
-    public List!(SearchIndexer.SearchCategory) getSearchCategories()
+    public List!(SearchCategory) getSearchCategories()
     {
         return this.searchCategories;
     }

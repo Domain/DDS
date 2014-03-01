@@ -1,5 +1,6 @@
 module org.serviio.library.dao.VideoDAO;
 
+import java.lang;
 import java.util.List;
 import java.util.Map;
 import org.serviio.db.dao.GenericDAO;
@@ -30,9 +31,9 @@ public abstract interface VideoDAO : GenericDAO!(Video)
 
     public abstract int retrieveVideosForGenreCount(Long paramLong, AccessGroup paramAccessGroup, bool paramBoolean);
 
-    public abstract List!(Video) retrieveVideosForPerson(Long paramLong, Person.RoleType paramRoleType, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
+    public abstract List!(Video) retrieveVideosForPerson(Long paramLong, RoleType paramRoleType, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
 
-    public abstract int retrieveVideosForPersonCount(Long paramLong, Person.RoleType paramRoleType, AccessGroup paramAccessGroup);
+    public abstract int retrieveVideosForPersonCount(Long paramLong, RoleType paramRoleType, AccessGroup paramAccessGroup);
 
     public abstract List!(Video) retrieveVideosForSeriesSeason(Long paramLong, Integer paramInteger, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
 

@@ -9,35 +9,37 @@ import org.serviio.library.entities.Repository;
 import org.serviio.library.local.metadata.LocalItemMetadata;
 import org.serviio.library.local.metadata.MetadataFactory;
 import org.serviio.library.metadata.MediaFileType;
+import org.serviio.library.local.metadata.extractor.ExtractorType;
+import org.serviio.library.local.metadata.extractor.MetadataFile;
 
 public abstract class MetadataExtractor
 {
-  public LocalItemMetadata extract(File mediaFile, MediaFileType fileType, Repository repository)
-  {
-    LocalItemMetadata metadata = MetadataFactory.getMetadataInstance(fileType);
-    MetadataFile metadataFile = getMetadataFile(mediaFile, fileType, repository);
-    if (metadataFile !is null)
+    public LocalItemMetadata extract(File mediaFile, MediaFileType fileType, Repository repository)
     {
-      metadata.getMetadataFiles().add(metadataFile);
-      retrieveMetadata(metadataFile, metadata);
-      
-      metadataFile = null;
-      return metadata;
+        LocalItemMetadata metadata = MetadataFactory.getMetadataInstance(fileType);
+        MetadataFile metadataFile = getMetadataFile(mediaFile, fileType, repository);
+        if (metadataFile !is null)
+        {
+            metadata.getMetadataFiles().add(metadataFile);
+            retrieveMetadata(metadataFile, metadata);
+
+            metadataFile = null;
+            return metadata;
+        }
+        return null;
     }
-    return null;
-  }
-  
-  public abstract ExtractorType getExtractorType();
-  
-  public abstract bool isMetadataUpdated(File paramFile, MediaItem paramMediaItem, MetadataDescriptor paramMetadataDescriptor);
-  
-  protected abstract MetadataFile getMetadataFile(File paramFile, MediaFileType paramMediaFileType, Repository paramRepository);
-  
-  protected abstract void retrieveMetadata(MetadataFile paramMetadataFile, LocalItemMetadata paramLocalItemMetadata);
+
+    public abstract ExtractorType getExtractorType();
+
+    public abstract bool isMetadataUpdated(File paramFile, MediaItem paramMediaItem, MetadataDescriptor paramMetadataDescriptor);
+
+    protected abstract MetadataFile getMetadataFile(File paramFile, MediaFileType paramMediaFileType, Repository paramRepository);
+
+    protected abstract void retrieveMetadata(MetadataFile paramMetadataFile, LocalItemMetadata paramLocalItemMetadata);
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.MetadataExtractor
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.MetadataExtractor
+* JD-Core Version:    0.7.0.1
+*/

@@ -9,7 +9,7 @@ public class AlbumSearchMetadata
 {
   public this(Long albumId, String albumName, String albumArtist, Long albumArtId)
   {
-    super(albumId, MediaFileType.AUDIO, ObjectType.CONTAINERS, SearchIndexer.SearchCategory.ALBUMS, albumName, albumArtId);
+    super(albumId, MediaFileType.AUDIO, ObjectType.CONTAINERS, SearchCategory.ALBUMS, albumName, albumArtId);
     addCommandMapping(ListAllAlbumsCommand.class_, albumId);
     addToContext(albumArtist);
   }

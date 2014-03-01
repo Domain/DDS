@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.definition.Definition;
 
+import java.lang.String;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +19,7 @@ public class Definition
     public static immutable String NODE_ID_AUDIO = "A";
     public static immutable String SEGMENT_SEPARATOR = "^";
     private static immutable String SEGMENT_SEPARATOR_REGEX = "\\^";
-    private static Definition instance;
+    private static Definition _instance;
     private ContainerNode rootNode;
 
     public this(ContainerNode rootNode)
@@ -28,19 +29,19 @@ public class Definition
 
     public static Definition instance()
     {
-        if (instance is null)
+        if (_instance is null)
         {
             InputStream definitionStream = Definition.class_.getResourceAsStream("contentDirectoryDef.xml");
             try
             {
-                instance = ContentDirectoryDefinitionParser.parseDefinition(definitionStream);
+                _instance = ContentDirectoryDefinitionParser.parseDefinition(definitionStream);
             }
             catch (ContentDirectoryDefinitionException e)
             {
                 throw new RuntimeException(String.format("Cannot initialize ContentDirectory service: %s", cast(Object[])[ e.getMessage() ]), e);
             }
         }
-        return instance;
+        return _instance;
     }
 
     public static void setInstance(Definition instance)
@@ -157,7 +158,7 @@ public class Definition
         return null;
     }
 
-    public List!(ActionNode) findNodesForSearchCategory(SearchIndexer.SearchCategory category)
+    public List!(ActionNode) findNodesForSearchCategory(SearchCategory category)
     {
         List!(ActionNode) actionNodes = collectCommandsForSearchCategory(this.rootNode, category);
         return actionNodes;
@@ -197,7 +198,7 @@ public class Definition
         return null;
     }
 
-    private List!(ActionNode) collectCommandsForSearchCategory(ContainerNode root, SearchIndexer.SearchCategory category)
+    private List!(ActionNode) collectCommandsForSearchCategory(ContainerNode root, SearchCategory category)
     {
         List!(ActionNode) results = new ArrayList();
         foreach (DefinitionNode node ; root.getChildNodes())

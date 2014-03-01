@@ -5,14 +5,14 @@ import org.serviio.library.search.SearchIndexer:SearchCategory;
 
 public class CategorySearchResultsRepresentation : ContentDirectoryRepresentation!(SearchResultRepresentation)
 {
-    @XStreamAsAttribute private SearchIndexer.SearchCategory category;
+    @XStreamAsAttribute private SearchCategory category;
 
-    public SearchIndexer.SearchCategory getCategory()
+    public SearchCategory getCategory()
     {
         return this.category;
     }
 
-    public void setCategory(SearchIndexer.SearchCategory category)
+    public void setCategory(SearchCategory category)
     {
         this.category = category;
     }

@@ -66,10 +66,10 @@ public class AudioService
       
       Long mediaItemId = Long.valueOf(DAOFactory.getMusicTrackDAO().create(track));
       if (ObjectValidator.isNotEmpty(metadata.getArtist())) {
-        DAOFactory.getPersonDAO().addPersonToMedia(metadata.getArtist(), Person.RoleType.ARTIST, mediaItemId);
+        DAOFactory.getPersonDAO().addPersonToMedia(metadata.getArtist(), RoleType.ARTIST, mediaItemId);
       }
       if (ObjectValidator.isNotEmpty(metadata.getAuthor())) {
-        DAOFactory.getPersonDAO().addPersonToMedia(metadata.getAuthor(), Person.RoleType.COMPOSER, mediaItemId);
+        DAOFactory.getPersonDAO().addPersonToMedia(metadata.getAuthor(), RoleType.COMPOSER, mediaItemId);
       }
       foreach (MetadataFile metadataFile ; metadata.getMetadataFiles())
       {
@@ -163,19 +163,19 @@ public class AudioService
       
 
 
-      List!(Long) originalArtistRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(Person.RoleType.ARTIST, mediaItemId);
-      List!(Long) originalComposerRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(Person.RoleType.COMPOSER, mediaItemId);
+      List!(Long) originalArtistRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(RoleType.ARTIST, mediaItemId);
+      List!(Long) originalComposerRoles = DAOFactory.getPersonDAO().getRoleIDsForMediaItem(RoleType.COMPOSER, mediaItemId);
       
       List!(Long) newArtistRoles = new ArrayList();
       List!(Long) newComposerRoles = new ArrayList();
       if (ObjectValidator.isNotEmpty(metadata.getArtist()))
       {
-        Long artistRoleId = DAOFactory.getPersonDAO().addPersonToMedia(metadata.getArtist(), Person.RoleType.ARTIST, mediaItemId);
+        Long artistRoleId = DAOFactory.getPersonDAO().addPersonToMedia(metadata.getArtist(), RoleType.ARTIST, mediaItemId);
         newArtistRoles.add(artistRoleId);
       }
       if (ObjectValidator.isNotEmpty(metadata.getAuthor()))
       {
-        Long composerRoleId = DAOFactory.getPersonDAO().addPersonToMedia(metadata.getAuthor(), Person.RoleType.COMPOSER, mediaItemId);
+        Long composerRoleId = DAOFactory.getPersonDAO().addPersonToMedia(metadata.getAuthor(), RoleType.COMPOSER, mediaItemId);
         newComposerRoles.add(composerRoleId);
       }
       DAOFactory.getMetadataDescriptorDAO().removeMetadataDescriptorsForMedia(mediaItemId);
@@ -301,22 +301,22 @@ public class AudioService
     return null;
   }
   
-  public static List!(MusicAlbum) getListOfAlbumsForTrackRole(Long artistId, Person.RoleType role, int startingIndex, int requestedCount)
+  public static List!(MusicAlbum) getListOfAlbumsForTrackRole(Long artistId, RoleType role, int startingIndex, int requestedCount)
   {
     return DAOFactory.getMusicAlbumDAO().retrieveMusicAlbumsForTrackRole(artistId, role, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfAlbumsForTrackRole(Long artistId, Person.RoleType role)
+  public static int getNumberOfAlbumsForTrackRole(Long artistId, RoleType role)
   {
     return DAOFactory.getMusicAlbumDAO().retrieveMusicAlbumsForTrackRoleCount(artistId, role);
   }
   
-  public static List!(MusicAlbum) getListOfAlbumsForTrackRole(String artistName, Person.RoleType role, int startingIndex, int requestedCount)
+  public static List!(MusicAlbum) getListOfAlbumsForTrackRole(String artistName, RoleType role, int startingIndex, int requestedCount)
   {
     return DAOFactory.getMusicAlbumDAO().retrieveMusicAlbumsForTrackRole(artistName, role, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfAlbumsForTrackRole(String artistName, Person.RoleType role)
+  public static int getNumberOfAlbumsForTrackRole(String artistName, RoleType role)
   {
     return DAOFactory.getMusicAlbumDAO().retrieveMusicAlbumsForTrackRoleCount(artistName, role);
   }
@@ -331,12 +331,12 @@ public class AudioService
     return DAOFactory.getMusicAlbumDAO().retrieveMusicAlbumsForAlbumArtistCount(artistId);
   }
   
-  public static List!(MusicTrack) getListOfSongsForTrackRoleAndAlbum(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
+  public static List!(MusicTrack) getListOfSongsForTrackRoleAndAlbum(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
   {
     return DAOFactory.getMusicTrackDAO().retrieveMusicTracksForTrackRoleAndAlbum(artistId, role, albumId, accessGroup, startingIndex, requestedCount);
   }
   
-  public static int getNumberOfSongsForTrackRoleAndAlbum(Long artistId, Person.RoleType role, Long albumId, AccessGroup accessGroup)
+  public static int getNumberOfSongsForTrackRoleAndAlbum(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup)
   {
     return DAOFactory.getMusicTrackDAO().retrieveMusicTracksForTrackRoleAndAlbumCount(artistId, role, albumId, accessGroup);
   }
@@ -388,9 +388,9 @@ public class AudioService
       {
         List!(Long) removedPersonIds = DAOFactory.getPersonDAO().removeAllPersonsFromMusicAlbum(track.getAlbumId());
         DAOFactory.getMusicAlbumDAO().delete_(track.getAlbumId());
-        SearchManager.getInstance().localIndexer().metadataRemoved(SearchIndexer.SearchCategory.ALBUMS, track.getAlbumId());
+        SearchManager.getInstance().localIndexer().metadataRemoved(SearchCategory.ALBUMS, track.getAlbumId());
         foreach (Long personId ; removedPersonIds) {
-          SearchManager.getInstance().localIndexer().metadataRemoved(SearchIndexer.SearchCategory.ALBUM_ARTISTS, personId);
+          SearchManager.getInstance().localIndexer().metadataRemoved(SearchCategory.ALBUM_ARTISTS, personId);
         }
       }
     }
@@ -410,7 +410,7 @@ public class AudioService
         album = new MusicAlbum(metadata.getAlbum());
         Long albumId = Long.valueOf(DAOFactory.getMusicAlbumDAO().create(album));
         
-        DAOFactory.getPersonDAO().addPersonToMusicAlbum(metadata.getAlbumArtist(), Person.RoleType.ALBUM_ARTIST, albumId);
+        DAOFactory.getPersonDAO().addPersonToMusicAlbum(metadata.getAlbumArtist(), RoleType.ALBUM_ARTIST, albumId);
         return albumId;
       }
       log.debug_(String.format("Album %s found, attaching the music track to it", cast(Object[])[ album.getTitle() ]));

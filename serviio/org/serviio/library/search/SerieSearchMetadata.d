@@ -9,7 +9,7 @@ public class SerieSearchMetadata
 {
   public this(Long seriesId, String seriesName, Long thumbnailId)
   {
-    super(seriesId, MediaFileType.VIDEO, ObjectType.CONTAINERS, SearchIndexer.SearchCategory.SERIES, seriesName, thumbnailId);
+    super(seriesId, MediaFileType.VIDEO, ObjectType.CONTAINERS, SearchCategory.SERIES, seriesName, thumbnailId);
     addCommandMapping(ListSeriesByNameCommand.class_, seriesId);
   }
 }

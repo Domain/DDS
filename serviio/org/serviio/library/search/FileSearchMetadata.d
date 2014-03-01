@@ -13,7 +13,7 @@ public class FileSearchMetadata
 {
   public this(Long mediaItemId, String fileName, Tupple!(Long, String) root, List!(Tupple!(Long, String)) hierarchy, MediaFileType fileType, Long thumbnailId)
   {
-    super(mediaItemId, fileType, ObjectType.ITEMS, SearchIndexer.SearchCategory.FILES, fileName, thumbnailId);
+    super(mediaItemId, fileType, ObjectType.ITEMS, SearchCategory.FILES, fileName, thumbnailId);
     
     String recursiveId = buildIdForTheHierarchy(root, hierarchy, mediaItemId);
     if (fileType == MediaFileType.AUDIO) {

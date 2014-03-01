@@ -1,68 +1,68 @@
 module org.serviio.library.entities.MetadataDescriptor;
 
+import java.lang;
 import java.util.Date;
 import org.serviio.db.entities.PersistedEntity;
 import org.serviio.library.local.metadata.extractor.ExtractorType;
 
-public class MetadataDescriptor
-  : PersistedEntity
+public class MetadataDescriptor : PersistedEntity
 {
-  private Date dateUpdated;
-  private ExtractorType extractorType;
-  private Long mediaItemId;
-  private String identifier;
-  
-  public this(ExtractorType extractorType, Long mediaItemId, Date dateUpdated, String identifier)
-  {
-    this.extractorType = extractorType;
-    this.mediaItemId = mediaItemId;
-    this.dateUpdated = dateUpdated;
-    this.identifier = identifier;
-  }
-  
-  public Date getDateUpdated()
-  {
-    return this.dateUpdated;
-  }
-  
-  public void setDateUpdated(Date dateUpdated)
-  {
-    this.dateUpdated = dateUpdated;
-  }
-  
-  public ExtractorType getExtractorType()
-  {
-    return this.extractorType;
-  }
-  
-  public void setExtractorType(ExtractorType extractorType)
-  {
-    this.extractorType = extractorType;
-  }
-  
-  public Long getMediaItemId()
-  {
-    return this.mediaItemId;
-  }
-  
-  public void setMediaItemId(Long mediaItemId)
-  {
-    this.mediaItemId = mediaItemId;
-  }
-  
-  public String getIdentifier()
-  {
-    return this.identifier;
-  }
-  
-  public void setIdentifier(String identifier)
-  {
-    this.identifier = identifier;
-  }
+    private Date dateUpdated;
+    private ExtractorType extractorType;
+    private Long mediaItemId;
+    private String identifier;
+
+    public this(ExtractorType extractorType, Long mediaItemId, Date dateUpdated, String identifier)
+    {
+        this.extractorType = extractorType;
+        this.mediaItemId = mediaItemId;
+        this.dateUpdated = dateUpdated;
+        this.identifier = identifier;
+    }
+
+    public Date getDateUpdated()
+    {
+        return this.dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated)
+    {
+        this.dateUpdated = dateUpdated;
+    }
+
+    public ExtractorType getExtractorType()
+    {
+        return this.extractorType;
+    }
+
+    public void setExtractorType(ExtractorType extractorType)
+    {
+        this.extractorType = extractorType;
+    }
+
+    public Long getMediaItemId()
+    {
+        return this.mediaItemId;
+    }
+
+    public void setMediaItemId(Long mediaItemId)
+    {
+        this.mediaItemId = mediaItemId;
+    }
+
+    public String getIdentifier()
+    {
+        return this.identifier;
+    }
+
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.entities.MetadataDescriptor
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.entities.MetadataDescriptor
+* JD-Core Version:    0.7.0.1
+*/

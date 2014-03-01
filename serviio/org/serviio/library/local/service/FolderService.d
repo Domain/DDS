@@ -42,7 +42,7 @@ public class FolderService
       {
         DAOFactory.getFolderDAO().delete_(folderId);
         
-        indexer.metadataRemoved(SearchIndexer.SearchCategory.FOLDERS, folderId);
+        indexer.metadataRemoved(SearchCategory.FOLDERS, folderId);
         
 
         removeFolderAndItsParents(folder.getParentFolderId(), indexer);
