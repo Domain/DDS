@@ -2,7 +2,9 @@ module org.serviio.library.local.H264LevelType;
 
 import std.conv;
 
+import java.lang.String;
 import java.util.Map;
+import org.serviio.library.local.EnumMapConverter;
 
 public enum H264LevelType
 {

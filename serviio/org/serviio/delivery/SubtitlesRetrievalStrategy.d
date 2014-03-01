@@ -20,7 +20,7 @@ public class SubtitlesRetrievalStrategy
 {
   private static final Logger log = LoggerFactory.getLogger!(SubtitlesRetrievalStrategy);
   
-  public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+  public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
   {
     SubtitlesReader subtitleReader = findSoftSubs(mediaItemId, client);
     
@@ -32,7 +32,7 @@ public class SubtitlesRetrievalStrategy
     return new StreamDeliveryContainer(new ByteArrayInputStream(subtitlesBytes), resourceInfo);
   }
   
-  public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+  public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
   {
     SubtitlesReader subtitleReader = findSoftSubs(mediaItemId, client);
     

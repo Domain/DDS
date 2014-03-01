@@ -9,7 +9,7 @@ public class ImageMediaInfo
   protected Integer width;
   protected Integer height;
   
-  public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, bool transcoded, String mimeType, DeliveryQuality.QualityType quality)
+  public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, bool transcoded, String mimeType, QualityType quality)
   {
     super(resourceId, profile, fileSize, transcoded, false, null, mimeType, quality);
     this.width = width;

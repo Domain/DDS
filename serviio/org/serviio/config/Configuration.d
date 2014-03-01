@@ -487,9 +487,9 @@ public class Configuration
     {
         String value = cast(String)cache.get("remote_preferred_quality");
         if (ObjectValidator.isNotEmpty(value)) {
-            return DeliveryQuality.QualityType.valueOf(value);
+            return QualityType.valueOf(value);
         }
-        return DeliveryQuality.QualityType.MEDIUM;
+        return QualityType.MEDIUM;
     }
 
     public static bool isRemotePortForwardingEnabled()

@@ -1,5 +1,6 @@
 module org.serviio.upnp.eventing.EventDispatcher;
 
+import java.lang.Runnable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
@@ -23,13 +24,14 @@ import org.serviio.upnp.protocol.http.RequestExecutor;
 import org.serviio.upnp.service.Service;
 import org.serviio.upnp.service.StateVariable;
 import org.serviio.util.ThreadUtils;
+import org.serviio.upnp.eventing.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EventDispatcher : Runnable
 {
-    private static final Logger log = LoggerFactory.getLogger!(EventDispatcher);
-    private static final int RESPONSE_TIMEOUT = 500;
+    private static Logger log = LoggerFactory.getLogger!(EventDispatcher);
+    private static immutable int RESPONSE_TIMEOUT = 500;
     private static Map!(Service, Queue!(EventContainer)) eventQueues = new HashMap();
     private bool workerRunning;
 

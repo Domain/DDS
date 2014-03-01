@@ -202,7 +202,7 @@ public class CDSBrowseServerResource
     private void storeContentUrls(DirectoryObjectRepresentation objRep, List!(Resource) resources)
     {
         List!(ContentURLRepresentation) urls = new ArrayList();
-        DeliveryQuality.QualityType preferredQualityType = findPreferredQualityType(resources);
+        QualityType preferredQualityType = findPreferredQualityType(resources);
         bool defaultQualityApplied = false;
         foreach (Resource resource ; resources)
         {
@@ -232,23 +232,23 @@ public class CDSBrowseServerResource
         }
     }
 
-    private DeliveryQuality.QualityType findPreferredQualityType(List!(Resource) resources)
+    private QualityType findPreferredQualityType(List!(Resource) resources)
     {
-        DeliveryQuality.QualityType preferredQuality = Configuration.getRemotePreferredDeliveryQuality();
-        Set!(DeliveryQuality.QualityType) availableQualities = getResourceQualities(resources);
+        QualityType preferredQuality = Configuration.getRemotePreferredDeliveryQuality();
+        Set!(QualityType) availableQualities = getResourceQualities(resources);
         if (availableQualities.contains(preferredQuality)) {
             return preferredQuality;
         }
-        if (preferredQuality == DeliveryQuality.QualityType.LOW) {
-            return findAlternativeQuality(availableQualities, DeliveryQuality.QualityType.MEDIUM, DeliveryQuality.QualityType.ORIGINAL);
+        if (preferredQuality == QualityType.LOW) {
+            return findAlternativeQuality(availableQualities, QualityType.MEDIUM, QualityType.ORIGINAL);
         }
-        if (preferredQuality == DeliveryQuality.QualityType.MEDIUM) {
-            return findAlternativeQuality(availableQualities, DeliveryQuality.QualityType.LOW, DeliveryQuality.QualityType.ORIGINAL);
+        if (preferredQuality == QualityType.MEDIUM) {
+            return findAlternativeQuality(availableQualities, QualityType.LOW, QualityType.ORIGINAL);
         }
-        return findAlternativeQuality(availableQualities, DeliveryQuality.QualityType.MEDIUM, DeliveryQuality.QualityType.LOW);
+        return findAlternativeQuality(availableQualities, QualityType.MEDIUM, QualityType.LOW);
     }
 
-    private DeliveryQuality.QualityType findAlternativeQuality(Set!(DeliveryQuality.QualityType) availableQualities, DeliveryQuality.QualityType firstChoice, DeliveryQuality.QualityType fallbackChoice)
+    private QualityType findAlternativeQuality(Set!(QualityType) availableQualities, QualityType firstChoice, QualityType fallbackChoice)
     {
         if (availableQualities.contains(firstChoice)) {
             return firstChoice;
@@ -256,9 +256,9 @@ public class CDSBrowseServerResource
         return fallbackChoice;
     }
 
-    private Set!(DeliveryQuality.QualityType) getResourceQualities(List!(Resource) resources)
+    private Set!(QualityType) getResourceQualities(List!(Resource) resources)
     {
-        Set!(DeliveryQuality.QualityType) qualities = new HashSet();
+        Set!(QualityType) qualities = new HashSet();
         foreach (Resource res ; resources) {
             qualities.add(res.getQuality());
         }
@@ -283,7 +283,7 @@ public class CDSBrowseServerResource
         }
         Collections.sort(resources, new ResourceComparator(null));
 
-        Set!(DeliveryQuality.QualityType) foundQualities = new HashSet();
+        Set!(QualityType) foundQualities = new HashSet();
         Iterator!(Resource) it = resources.iterator();
         while (it.hasNext())
         {

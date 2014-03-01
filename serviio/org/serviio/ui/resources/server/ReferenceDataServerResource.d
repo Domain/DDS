@@ -170,9 +170,9 @@ public class ReferenceDataServerResource
   private ReferenceDataRepresentation getRemoteDeliveryQualities()
   {
     ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(DeliveryQuality.QualityType.LOW.toString(), "Low");
-    rep.addValue(DeliveryQuality.QualityType.MEDIUM.toString(), "Medium");
-    rep.addValue(DeliveryQuality.QualityType.ORIGINAL.toString(), "High");
+    rep.addValue(QualityType.LOW.toString(), "Low");
+    rep.addValue(QualityType.MEDIUM.toString(), "Medium");
+    rep.addValue(QualityType.ORIGINAL.toString(), "High");
     return rep;
   }
   

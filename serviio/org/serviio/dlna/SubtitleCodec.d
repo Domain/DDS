@@ -3,6 +3,7 @@ module org.serviio.dlna.SubtitleCodec;
 import std.algorithm;
 import std.traits;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,5 +1,7 @@
 module org.serviio.dlna.SourceAspectRatio;
 
+import java.lang.String;
+import java.lang.Float;
 import java.io.Serializable;
 
 public class SourceAspectRatio : Serializable
@@ -35,7 +37,7 @@ public class SourceAspectRatio : Serializable
         return Float.valueOf(1.0F);
     }
 
-    public String toString()
+    override public String toString()
     {
         return this.sar;
     }

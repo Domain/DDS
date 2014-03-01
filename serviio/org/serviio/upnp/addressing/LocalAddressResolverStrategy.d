@@ -7,6 +7,7 @@
 */
 module org.serviio.upnp.addressing.LocalAddressResolverStrategy;
 
+import java.lang.String;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -27,9 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LocalAddressResolverStrategy {
-    private static final String BOUND_ADDRESS = System.getProperty("serviio.boundAddr");
-    private static final List!String INVALID_NIC_NAMES = Arrays.asList("vnic", "wmnet", "vmware", "bluetooth", "virtual");
-    private static final Logger log = LoggerFactory.getLogger(cast(Class)LocalAddressResolverStrategy.class_);
+    private static immutable String BOUND_ADDRESS = System.getProperty("serviio.boundAddr");
+    private static immutable List!String INVALID_NIC_NAMES = Arrays.asList("vnic", "wmnet", "vmware", "bluetooth", "virtual");
+    private static Logger log = LoggerFactory.getLogger(cast(Class)LocalAddressResolverStrategy.class_);
     private static IPMask invalidIPMask;
 
     public InetAddress getHostIpAddress() {
@@ -77,11 +78,11 @@ public class LocalAddressResolverStrategy {
         return localIP;
     }
 
-    private boolean ipIsFromInvalidRange(InetAddress ipAddress) {
+    private bool ipIsFromInvalidRange(InetAddress ipAddress) {
         return LocalAddressResolverStrategy.invalidIPMask.matches(ipAddress.getHostAddress());
     }
 
-    protected boolean isIPAcceptable(InetAddress localIP) {
+    protected bool isIPAcceptable(InetAddress localIP) {
         return !(localIP == null || this.ipIsFromInvalidRange(localIP));
     }
 
@@ -117,7 +118,7 @@ public class LocalAddressResolverStrategy {
         }
     }
 
-    private boolean isValidNICName(String name) {
+    private bool isValidNICName(String name) {
         if (name == null) return true;
         foreach (String prefix ; LocalAddressResolverStrategy.INVALID_NIC_NAMES) {
             if (StringUtils.localeSafeToLowercase(name).indexOf(prefix) <= -1) continue;

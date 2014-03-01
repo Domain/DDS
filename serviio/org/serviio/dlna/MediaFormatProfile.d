@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.serviio.library.metadata.MediaFileType;
 
-public enum MediaFormatProfile : MediaFileType
+public enum MediaFormatProfile// : MediaFileType
 {
     MP3,
     MP2_MPS,

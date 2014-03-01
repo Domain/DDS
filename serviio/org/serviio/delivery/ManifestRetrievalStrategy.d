@@ -22,7 +22,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
 {
     private static final Logger log = LoggerFactory.getLogger!(ManifestRetrievalStrategy);
 
-    public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+    public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {
         log.debug_(String.format("Retrieving Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
 
@@ -31,7 +31,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
         return new StreamDeliveryContainer(new ByteArrayInputStream(manifest.getBytes("UTF-8")), resourceInfo);
     }
 
-    public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+    public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
     {
         log.debug_(String.format("Retrieving info of Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
         String manifest = generateManifest(mediaItemId, client, selectedQuality);
@@ -43,7 +43,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
         return new ManifestInfo(mediaItemId, new Long(manifestFileSize), client.getRendererProfile().getMimeType(selectedVersion));
     }
 
-    private String generateManifest(Long mediaItemId, Client client, DeliveryQuality.QualityType selectedQuality)
+    private String generateManifest(Long mediaItemId, Client client, QualityType selectedQuality)
     {
         MediaItem mediaItem = MediaResourceRetrievalStrategy.loadMediaItem(mediaItemId);
         if (mediaItem !is null)

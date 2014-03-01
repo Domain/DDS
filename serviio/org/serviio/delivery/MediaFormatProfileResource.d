@@ -1,14 +1,16 @@
 module org.serviio.delivery.MediaFormatProfileResource;
 
+import java.lang;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
+import org.serviio.delivery.ResourceInfo;
 
 public abstract class MediaFormatProfileResource : ResourceInfo
 {
     private MediaFormatProfile formatProfile;
-    private DeliveryQuality.QualityType quality;
+    private QualityType quality;
 
-    public this(Long resourceId, MediaFormatProfile profile, Long fileSize, bool transcoded, bool live, Integer duration, String mimeType, DeliveryQuality.QualityType quality)
+    public this(Long resourceId, MediaFormatProfile profile, Long fileSize, bool transcoded, bool live, Integer duration, String mimeType, QualityType quality)
     {
         super(resourceId);
         this.live = live;
@@ -25,7 +27,7 @@ public abstract class MediaFormatProfileResource : ResourceInfo
         return this.formatProfile;
     }
 
-    public DeliveryQuality.QualityType getQuality()
+    public QualityType getQuality()
     {
         return this.quality;
     }

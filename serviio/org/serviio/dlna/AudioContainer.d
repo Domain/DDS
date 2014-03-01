@@ -1,5 +1,7 @@
 module org.serviio.dlna.AudioContainer;
 
+import java.lang.String;
+
 public enum AudioContainer
 {
     ANY,  MP3,  MP2,  ASF,  LPCM,  MP4,  FLAC,  OGG,  FLV,  RTP,  RTSP,  ADTS,  WAVPACK,  MUSEPACK,  APE

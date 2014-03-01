@@ -14,7 +14,7 @@ public class ContentURLRepresentation
     private Boolean transcoded;
     private Long fileSize;
 
-    public this(DeliveryQuality.QualityType quality, String url)
+    public this(QualityType quality, String url)
     {
         this.quality = quality.toString();
         this.url = url;

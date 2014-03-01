@@ -15,7 +15,7 @@ public class RequestedResourceDescriptor
     private Resource.ResourceType resourceType;
     private String targetProfileName;
     private Integer protocolInfoIndex;
-    private DeliveryQuality.QualityType quality;
+    private QualityType quality;
     private String path;
 
     public this(String requestUri)
@@ -33,7 +33,7 @@ public class RequestedResourceDescriptor
                 String[] protocolFields = requestFields[2].split("\\-");
                 this.targetProfileName = protocolFields[0];
                 this.protocolInfoIndex = Integer.valueOf(Integer.parseInt(protocolFields[1].trim()));
-                this.quality = DeliveryQuality.QualityType.valueOf(requestFields[3]);
+                this.quality = QualityType.valueOf(requestFields[3]);
             }
         }
         catch (Exception e)
@@ -62,7 +62,7 @@ public class RequestedResourceDescriptor
         return this.protocolInfoIndex;
     }
 
-    public DeliveryQuality.QualityType getQuality()
+    public QualityType getQuality()
     {
         return this.quality;
     }

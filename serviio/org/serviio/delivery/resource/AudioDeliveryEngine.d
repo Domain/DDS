@@ -37,27 +37,27 @@ public class AudioDeliveryEngine
         return instance;
     }
 
-    protected LinkedHashMap!(DeliveryQuality.QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
+    protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
-        LinkedHashMap!(DeliveryQuality.QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap();
+        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap();
         List!(AudioMediaInfo) mediaInfos = new ArrayList();
         foreach (MediaFormatProfile fileProfile ; fileProfiles) {
-            mediaInfos.add(new AudioMediaInfo(mediaItem.getId(), fileProfile, mediaItem.getFileSize(), false, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(fileProfile), mediaItem.getChannels(), mediaItem.getSampleFrequency(), mediaItem.getBitrate(), DeliveryQuality.QualityType.ORIGINAL));
+            mediaInfos.add(new AudioMediaInfo(mediaItem.getId(), fileProfile, mediaItem.getFileSize(), false, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(fileProfile), mediaItem.getChannels(), mediaItem.getSampleFrequency(), mediaItem.getBitrate(), QualityType.ORIGINAL));
         }
-        result.put(DeliveryQuality.QualityType.ORIGINAL, mediaInfos);
+        result.put(QualityType.ORIGINAL, mediaInfos);
         return result;
     }
 
-    protected LinkedHashMap!(DeliveryQuality.QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
+    protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
     {
-        LinkedHashMap!(DeliveryQuality.QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap();
-        Map!(DeliveryQuality.QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);
+        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap();
+        Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);
         if (trDefs.size() > 0)
         {
-            foreach (Map.Entry!(DeliveryQuality.QualityType, TranscodingDefinition) trDefEntry ; trDefs.entrySet())
+            foreach (Map.Entry!(QualityType, TranscodingDefinition) trDefEntry ; trDefs.entrySet())
             {
-                DeliveryQuality.QualityType qualityType = cast(DeliveryQuality.QualityType)trDefEntry.getKey();
+                QualityType qualityType = cast(QualityType)trDefEntry.getKey();
                 AudioTranscodingDefinition trDef = cast(AudioTranscodingDefinition)trDefEntry.getValue();
 
                 Integer targetSamplerate = FFMPEGWrapper.getAudioFrequency(trDef, mediaItem.getSampleFrequency(), trDef.getTargetContainer() == AudioContainer.LPCM);

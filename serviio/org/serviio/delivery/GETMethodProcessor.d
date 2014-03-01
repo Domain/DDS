@@ -21,14 +21,14 @@ public class GETMethodProcessor : AbstractMethodProcessor
         return ResourceDeliveryProcessor.HttpMethod.GET;
     }
 
-    protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)
+    protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)
     {
         bool markAsRead = markAsReadRequired(requestRangeHeaders);
 
         return retrieveResource(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, markAsRead, skipBytes, streamSize, timeOffsetInSeconds, requestedDurationInSeconds, partialContent, deliverStream, requestHttpVersion);
     }
 
-    protected HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType quality, String path, TransferMode transferMode, Client client, ProtocolVersion requestHttpVersion, Long fileSize, RangeHeaders fixedRange)
+    protected HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, ProtocolVersion requestHttpVersion, Long fileSize, RangeHeaders fixedRange)
     {
         bool markAsRead = markAsReadRequired(fixedRange);
 
@@ -75,7 +75,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
         return false;
     }
 
-    private HttpDeliveryContainer retrieveResource(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType quality, String path, TransferMode transferMode, Client client, bool markAsRead, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion)
+    private HttpDeliveryContainer retrieveResource(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, bool markAsRead, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion)
     {
         DeliveryContainer deliveryContainer = resourceRetrievalStrategy.retrieveResource(resourceInfo.getResourceId(), selectedVersion, quality, path, timeOffsetInSeconds, requestedDurationInSeconds, client, markAsRead);
         Long deliveredSize = deliveryContainer.getResourceInfo().getFileSize();

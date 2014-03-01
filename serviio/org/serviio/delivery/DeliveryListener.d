@@ -1,12 +1,14 @@
 module org.serviio.delivery.DeliveryListener;
 
+import org.serviio.delivery.Client;
+
 public abstract interface DeliveryListener
 {
-  public abstract void deliveryComplete(Client paramClient);
+    public abstract void deliveryComplete(Client paramClient);
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.delivery.DeliveryListener
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.delivery.DeliveryListener
+* JD-Core Version:    0.7.0.1
+*/

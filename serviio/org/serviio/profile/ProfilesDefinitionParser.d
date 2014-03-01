@@ -751,7 +751,7 @@ public class ProfilesDefinitionParser
                 TranscodingConfiguration onlineTranscodeConfig = getTranscodingConfiguration(profileId, qualityNode.getChild("OnlineTranscoding"), null, h264LevelCheck, false, false);
                 TranscodingConfiguration transcodeConfig = getTranscodingConfiguration(profileId, qualityNode.getChild("Transcoding"), null, h264LevelCheck, false, false);
                 TranscodingConfiguration hardSubsTranscodeConfig = getTranscodingConfiguration(profileId, qualityNode.getChild("HardSubsTranscoding"), null, h264LevelCheck, true, false);
-                DeliveryQuality.QualityType type = DeliveryQuality.QualityType.valueOf(qualityNode.getAttributeValue("type"));
+                QualityType type = QualityType.valueOf(qualityNode.getAttributeValue("type"));
                 qualities.add(new DeliveryQuality(type, transcodeConfig, onlineTranscodeConfig, hardSubsTranscodeConfig));
             }
         }

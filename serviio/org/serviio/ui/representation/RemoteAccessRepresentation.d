@@ -5,7 +5,7 @@ import org.serviio.profile.DeliveryQuality:QualityType;
 public class RemoteAccessRepresentation
 {
   private String remoteUserPassword;
-  private DeliveryQuality.QualityType preferredRemoteDeliveryQuality;
+  private QualityType preferredRemoteDeliveryQuality;
   private bool portMappingEnabled;
   private String externalAddress;
   
@@ -19,12 +19,12 @@ public class RemoteAccessRepresentation
     this.remoteUserPassword = remoteUserPassword;
   }
   
-  public DeliveryQuality.QualityType getPreferredRemoteDeliveryQuality()
+  public QualityType getPreferredRemoteDeliveryQuality()
   {
     return this.preferredRemoteDeliveryQuality;
   }
   
-  public void setPreferredRemoteDeliveryQuality(DeliveryQuality.QualityType preferredRemoteDeliveryQuality)
+  public void setPreferredRemoteDeliveryQuality(QualityType preferredRemoteDeliveryQuality)
   {
     this.preferredRemoteDeliveryQuality = preferredRemoteDeliveryQuality;
   }

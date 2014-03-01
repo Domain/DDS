@@ -1,5 +1,7 @@
 module org.serviio.dlna.ImageContainer;
 
+import java.lang.String;
+
 public enum ImageContainer
 {
     JPEG,  PNG,  GIF,  RAW

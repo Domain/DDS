@@ -25,15 +25,15 @@ public abstract class AbstractMethodProcessor
     private static immutable Long TRANSCODED_IMAGE_CONTENT_LENGTH = new Long(9000000L);
     private static immutable Long TRANSCODED_SUBTITLE_CONTENT_LENGTH = new Long(300000L);
 
-    protected abstract HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, long paramLong1, long paramLong2, Double paramDouble1, Double paramDouble2, bool paramBoolean1, bool paramBoolean2, ProtocolVersion paramProtocolVersion, RangeHeaders paramRangeHeaders);
+    protected abstract HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, long paramLong1, long paramLong2, Double paramDouble1, Double paramDouble2, bool paramBoolean1, bool paramBoolean2, ProtocolVersion paramProtocolVersion, RangeHeaders paramRangeHeaders);
 
-    protected abstract HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, ProtocolVersion paramProtocolVersion, Long paramLong, RangeHeaders paramRangeHeaders);
+    protected abstract HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, ProtocolVersion paramProtocolVersion, Long paramLong, RangeHeaders paramRangeHeaders);
 
     protected abstract HttpDeliveryContainer prepareContainer(Map!(String, Object) paramMap, DeliveryContainer paramDeliveryContainer, TransferMode paramTransferMode, Long paramLong1, Long paramLong2, bool paramBoolean1, ProtocolVersion paramProtocolVersion, bool paramBoolean2, bool paramBoolean3, bool paramBoolean4);
 
     protected abstract ResourceDeliveryProcessor.HttpMethod getMethod();
 
-    public HttpDeliveryContainer handleRequest(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType quality, String path, Map!(String, String) requestHeaders, RangeHeaders requestRangeHeaders, ProtocolVersion requestHttpVersion, Integer protocolInfoIndex, Client client, ResourceTransportProtocolHandler protocolHandler)
+    public HttpDeliveryContainer handleRequest(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, Map!(String, String) requestHeaders, RangeHeaders requestRangeHeaders, ProtocolVersion requestHttpVersion, Integer protocolInfoIndex, Client client, ResourceTransportProtocolHandler protocolHandler)
     {
         TransferMode transferMode = getTransferMode(requestHeaders, resourceInfo);
 

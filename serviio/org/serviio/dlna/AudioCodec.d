@@ -1,5 +1,7 @@
 module org.serviio.dlna.AudioCodec;
 
+import java.lang.String;
+
 public enum AudioCodec
 {
     MP3,  MP2,  MP1,  AAC,  AC3,  LPCM,  DTS,  WMA,  WMA_PRO,  FLAC,  VORBIS,  TRUEHD,  AMR,  REAL

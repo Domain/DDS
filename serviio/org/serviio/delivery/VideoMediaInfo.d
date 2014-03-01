@@ -1,7 +1,9 @@
 module org.serviio.delivery.VideoMediaInfo;
 
+import java.lang;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
+import org.serviio.delivery.MediaFormatProfileResource;
 
 public class VideoMediaInfo : MediaFormatProfileResource
 {
@@ -9,7 +11,7 @@ public class VideoMediaInfo : MediaFormatProfileResource
     protected Integer height;
     protected Integer bitrate;
 
-    public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, Integer bitrate, bool transcoded, bool live, Integer duration, String mimeType, DeliveryQuality.QualityType quality)
+    public this(Long resourceId, MediaFormatProfile profile, Long fileSize, Integer width, Integer height, Integer bitrate, bool transcoded, bool live, Integer duration, String mimeType, QualityType quality)
     {
         super(resourceId, profile, fileSize, transcoded, live, duration, mimeType, quality);
         this.width = width;

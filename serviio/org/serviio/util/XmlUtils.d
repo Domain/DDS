@@ -1,5 +1,6 @@
 module org.serviio.util.XmlUtils;
 
+import java.lang.String;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;

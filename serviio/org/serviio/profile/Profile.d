@@ -55,7 +55,7 @@ public class Profile
     this.deviceDescription = deviceDescription;
     this.protocolInfoType = protocolInfoType;
     this.cdDefinitionFilter = cdDefinitionFilter;
-    this.defaultDeliveryQuality = new DeliveryQuality(DeliveryQuality.QualityType.ORIGINAL, transcodingConfiguration, onlineTranscodingConfiguration, hardSubsTranscodingConfiguration);
+    this.defaultDeliveryQuality = new DeliveryQuality(QualityType.ORIGINAL, transcodingConfiguration, onlineTranscodingConfiguration, hardSubsTranscodingConfiguration);
     this.automaticImageRotation = automaticImageRotation;
     this.limitImageResolution = limitImageResolution;
     this.subtitlesConfiguration = subtitlesConfiguration;

@@ -1,5 +1,6 @@
 module org.serviio.delivery.subtitles.HardSubs;
 
+import java.lang.String;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 

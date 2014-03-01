@@ -15,9 +15,9 @@ public abstract interface DeliveryEngine(e, MI : MediaItem)
 {
   public abstract List!(RI) getMediaInfoForProfile(MI paramMI, Profile paramProfile);
   
-  public abstract RI getMediaInfoForMediaItem(MI paramMI, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, Profile paramProfile);
+  public abstract RI getMediaInfoForMediaItem(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile paramProfile);
   
-  public abstract DeliveryContainer deliver(MI paramMI, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client paramClient);
+  public abstract DeliveryContainer deliver(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client paramClient);
 }
 
 

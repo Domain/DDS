@@ -1,5 +1,6 @@
 module org.serviio.delivery.DefaultResourceURLGenerator;
 
+import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.serviio.dlna.MediaFormatProfile;
@@ -9,12 +10,14 @@ import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceExceptio
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.util.ObjectValidator;
+import org.serviio.delivery.ResourceURLGenerator;
+import org.serviio.delivery.HostInfo;
 
 public class DefaultResourceURLGenerator : ResourceURLGenerator
 {
     public static immutable String RESOURCE_SEPARATOR = "-";
 
-    public String getGeneratedURL(HostInfo hostInfo, Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, DeliveryQuality.QualityType quality)
+    public String getGeneratedURL(HostInfo hostInfo, Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
     {
         validate(resourceType, resourceId, ver, protocolInfoIndex, quality);
         StringBuffer file = new StringBuffer();
@@ -79,7 +82,7 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
         return path;
     }
 
-    private void validate(Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, DeliveryQuality.QualityType quality)
+    private void validate(Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
     {
         if ((resourceId is null) || (resourceType is null) || ((resourceType == Resource.ResourceType.MEDIA_ITEM) && ((ver is null) || (quality is null) || (protocolInfoIndex is null)))) {
             throw new InvalidResourceException("Resource is not valid.");

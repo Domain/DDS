@@ -20,7 +20,7 @@ public class CoverImageRetrievalStrategy
 {
   private static final Logger log = LoggerFactory.getLogger!(CoverImageRetrievalStrategy);
   
-  public DeliveryContainer retrieveResource(Long coverImageId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+  public DeliveryContainer retrieveResource(Long coverImageId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
   {
     CoverImage coverImage = retrieveCoverImage(coverImageId);
     ThumbnailResolution resolution = client.getRendererProfile().getThumbnailsResolution();
@@ -33,7 +33,7 @@ public class CoverImageRetrievalStrategy
     return container;
   }
   
-  public ResourceInfo retrieveResourceInfo(Long coverImageId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+  public ResourceInfo retrieveResourceInfo(Long coverImageId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
   {
     CoverImage coverImage = retrieveCoverImage(coverImageId);
     ThumbnailResolution resolution = client.getRendererProfile().getThumbnailsResolution();
@@ -49,7 +49,7 @@ public class CoverImageRetrievalStrategy
     Integer width = Integer.valueOf(useHD ? coverImage.getWidthHD() : coverImage.getWidth());
     Integer height = Integer.valueOf(useHD ? coverImage.getHeightHD() : coverImage.getHeight());
     
-    ResourceInfo resourceInfo = new ImageMediaInfo(coverImage.getId(), MediaFormatProfile.JPEG_TN, fileSize, width, height, false, coverImage.getMimeType(), DeliveryQuality.QualityType.ORIGINAL);
+    ResourceInfo resourceInfo = new ImageMediaInfo(coverImage.getId(), MediaFormatProfile.JPEG_TN, fileSize, width, height, false, coverImage.getMimeType(), QualityType.ORIGINAL);
     
     return resourceInfo;
   }

@@ -8,9 +8,9 @@ import org.serviio.profile.DeliveryQuality:QualityType;
 
 public abstract interface ResourceRetrievalStrategy
 {
-  public abstract DeliveryContainer retrieveResource(Long paramLong, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, String paramString, Double paramDouble1, Double paramDouble2, Client paramClient, bool paramBoolean);
+  public abstract DeliveryContainer retrieveResource(Long paramLong, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, Double paramDouble1, Double paramDouble2, Client paramClient, bool paramBoolean);
   
-  public abstract ResourceInfo retrieveResourceInfo(Long paramLong, MediaFormatProfile paramMediaFormatProfile, DeliveryQuality.QualityType paramQualityType, String paramString, Client paramClient);
+  public abstract ResourceInfo retrieveResourceInfo(Long paramLong, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, Client paramClient);
 }
 
 

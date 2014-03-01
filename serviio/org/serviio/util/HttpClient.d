@@ -1,5 +1,6 @@
 module org.serviio.util.HttpClient;
 
+import java.lang;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 public class HttpClient
 {
-    private static final Logger log = LoggerFactory.getLogger!(HttpClient);
-    private static final int CONNECT_TIMEOUT = 20000;
-    private static final int READ_TIMEOUT = 30000;
+    private static Logger log = LoggerFactory.getLogger!(HttpClient);
+    private static immutable int CONNECT_TIMEOUT = 20000;
+    private static immutable int READ_TIMEOUT = 30000;
 
     public static String retrieveTextFileFromURL(String url, String encoding)
     {

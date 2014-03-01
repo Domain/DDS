@@ -1,5 +1,6 @@
 module org.serviio.util.IPMask;
 
+import java.lang.String;
 import java.net.UnknownHostException;
 
 public class IPMask
@@ -59,9 +60,9 @@ public class IPMask
         return ba[0] << 24 | (ba[1] & 0xFF) << 16 | (ba[2] & 0xFF) << 8 | ba[3] & 0xFF;
     }
 
-    public String toString()
+    override public String toString()
     {
-        return "IPMask(" + this.i4addr + "/" + this.maskCtr + ")";
+        return "IPMask(" ~ this.i4addr ~ "/" ~ this.maskCtr ~ ")";
     }
 
     public override equals_t opEquals(Object obj)

@@ -53,13 +53,13 @@ public class ImageDeliveryEngine
     return instance;
   }
   
-  protected LinkedHashMap!(DeliveryQuality.QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(Image mediaItem, Profile rendererProfile, Long fileSize)
+  protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(Image mediaItem, Profile rendererProfile, Long fileSize)
   {
     log.debug_(String.format("Getting media info for transcoded versions of file %s", cast(Object[])[ mediaItem.getFileName() ]));
-    LinkedHashMap!(DeliveryQuality.QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap();
+    LinkedHashMap!(QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap();
     try
     {
-      originalWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, DeliveryQuality.QualityType.ORIGINAL);
+      originalWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, QualityType.ORIGINAL);
       if (originalWillBeTransformed) {
         try
         {
@@ -95,13 +95,13 @@ public class ImageDeliveryEngine
     return resourceInfos;
   }
   
-  protected ImageMediaInfo retrieveTranscodedMediaInfoForVersion(Image mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Profile rendererProfile)
+  protected ImageMediaInfo retrieveTranscodedMediaInfoForVersion(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
   {
     log.debug_(String.format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
     return createTranscodedImageInfoForProfile(mediaItem, selectedVersion, null, rendererProfile);
   }
   
-  protected DeliveryContainer retrieveTranscodedResource(Image mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
+  protected DeliveryContainer retrieveTranscodedResource(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
   {
     log.debug_(String.format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion ]));
     byte[] transcodedImageBytes = null;
@@ -128,7 +128,7 @@ public class ImageDeliveryEngine
     return imageIsResizable(mediaItem);
   }
   
-  protected bool fileWillBeTranscoded(Image mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Profile rendererProfile)
+  protected bool fileWillBeTranscoded(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
   {
     List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
     
@@ -147,17 +147,17 @@ public class ImageDeliveryEngine
     return false;
   }
   
-  protected LinkedHashMap!(DeliveryQuality.QualityType, List!(ImageMediaInfo)) retrieveOriginalMediaInfo(Image image, Profile rendererProfile)
+  protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveOriginalMediaInfo(Image image, Profile rendererProfile)
   {
-    if (!transcodeNeeded(image, rendererProfile, DeliveryQuality.QualityType.ORIGINAL))
+    if (!transcodeNeeded(image, rendererProfile, QualityType.ORIGINAL))
     {
       if (imageWillRotate(image, rendererProfile, false)) {
         return null;
       }
       List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(image);
-      LinkedHashMap!(DeliveryQuality.QualityType, List!(ImageMediaInfo)) result = new LinkedHashMap();
+      LinkedHashMap!(QualityType, List!(ImageMediaInfo)) result = new LinkedHashMap();
       foreach (MediaFormatProfile fileProfile ; fileProfiles) {
-        result.put(DeliveryQuality.QualityType.ORIGINAL, Collections.singletonList(new ImageMediaInfo(image.getId(), fileProfile, image.getFileSize(), image.getWidth(), image.getHeight(), false, rendererProfile.getMimeType(fileProfile), DeliveryQuality.QualityType.ORIGINAL)));
+        result.put(QualityType.ORIGINAL, Collections.singletonList(new ImageMediaInfo(image.getId(), fileProfile, image.getFileSize(), image.getWidth(), image.getHeight(), false, rendererProfile.getMimeType(fileProfile), QualityType.ORIGINAL)));
       }
       return result;
     }
@@ -183,7 +183,7 @@ public class ImageDeliveryEngine
     return null;
   }
   
-  private bool imageWillBeTransformed(Image mediaItem, Profile rendererProfile, DeliveryQuality.QualityType quality)
+  private bool imageWillBeTransformed(Image mediaItem, Profile rendererProfile, QualityType quality)
   {
     bool originalTranscoded = transcodeNeeded(mediaItem, rendererProfile, quality);
     bool imageRotated = imageWillRotate(mediaItem, rendererProfile, originalTranscoded);
@@ -196,7 +196,7 @@ public class ImageDeliveryEngine
     {
       int maxWidth = 0;
       int maxHeight = 0;
-      DeliveryQuality.QualityType quality = getQualityType(selectedVersion);
+      QualityType quality = getQualityType(selectedVersion);
       if (selectedVersion == MediaFormatProfile.JPEG_SM)
       {
         maxWidth = (cast(Integer)rendererProfile.getAllowedImageResolutions().getSmall().getValueA()).intValue();
@@ -221,15 +221,15 @@ public class ImageDeliveryEngine
     throw new UnsupportedDLNAMediaFileFormatException("Images can only be transformed to JPEG continer");
   }
   
-  private DeliveryQuality.QualityType getQualityType(MediaFormatProfile mediaFormatProfile)
+  private QualityType getQualityType(MediaFormatProfile mediaFormatProfile)
   {
     if (mediaFormatProfile == MediaFormatProfile.JPEG_SM) {
-      return DeliveryQuality.QualityType.LOW;
+      return QualityType.LOW;
     }
     if (mediaFormatProfile == MediaFormatProfile.JPEG_MED) {
-      return DeliveryQuality.QualityType.MEDIUM;
+      return QualityType.MEDIUM;
     }
-    return DeliveryQuality.QualityType.ORIGINAL;
+    return QualityType.ORIGINAL;
   }
   
   private byte[] transcodeImage(Image originalImage, MediaFormatProfile selectedVersion, Profile rendererProfile)
@@ -280,7 +280,7 @@ public class ImageDeliveryEngine
     }
   }
   
-  private bool transcodeNeeded(Image image, Profile rendererProfile, DeliveryQuality.QualityType quality)
+  private bool transcodeNeeded(Image image, Profile rendererProfile, QualityType quality)
   {
     if (getMatchingTranscodingDefinitions(image, rendererProfile, false).get(quality) !is null) {
       return true;

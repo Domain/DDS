@@ -4,6 +4,7 @@ module org.serviio.upnp.protocol.TemplateApplicator;
 //import freemarker.template.DefaultObjectWrapper;
 //import freemarker.template.Template;
 //import freemarker.template.TemplateException;
+import java.lang.String;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;

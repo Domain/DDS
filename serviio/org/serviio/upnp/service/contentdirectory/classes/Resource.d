@@ -1,14 +1,20 @@
 module org.serviio.upnp.service.contentdirectory.classes.Resource;
 
+import java.lang;
 import org.serviio.delivery.DefaultResourceURLGenerator;
 import org.serviio.delivery.HostInfo;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
 
+public enum ResourceType
+{
+    MEDIA_ITEM,  COVER_IMAGE,  SUBTITLE,  MANIFEST,  SEGMENT,
+}
+
 public class Resource
 {
-    private static final ResourceURLGenerator urlGenerator = new DefaultResourceURLGenerator();
+    private static ResourceURLGenerator urlGenerator = new DefaultResourceURLGenerator();
     private Long resourceId;
     private ResourceType resourceType;
     private MediaFormatProfile ver;
@@ -23,16 +29,11 @@ public class Resource
     private String protocolInfo;
     private String protection;
 
-    public static enum ResourceType
-    {
-        MEDIA_ITEM,  COVER_IMAGE,  SUBTITLE,  MANIFEST,  SEGMENT,
-    }
-
     private Integer protocolInfoIndex = Integer.valueOf(0);
-    private DeliveryQuality.QualityType quality;
+    private QualityType quality;
     private Boolean transcoded;
 
-    public this(ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, DeliveryQuality.QualityType quality, Boolean transcoded)
+    public this(ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality, Boolean transcoded)
     {
         this.resourceId = resourceId;
         this.resourceType = resourceType;
@@ -42,7 +43,7 @@ public class Resource
         this.transcoded = transcoded;
     }
 
-    public Resource clone(ResourceType newType, DeliveryQuality.QualityType selectedQuality)
+    public Resource clone(ResourceType newType, QualityType selectedQuality)
     {
         Resource r = new Resource(newType, this.resourceId, this.ver, this.protocolInfoIndex, selectedQuality, this.transcoded);
         r.setBitrate(this.bitrate);
@@ -185,7 +186,7 @@ public class Resource
         return this.protocolInfoIndex;
     }
 
-    public DeliveryQuality.QualityType getQuality()
+    public QualityType getQuality()
     {
         return this.quality;
     }

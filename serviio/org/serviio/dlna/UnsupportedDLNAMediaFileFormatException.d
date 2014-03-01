@@ -1,5 +1,7 @@
 module org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 
+import java.lang.String;
+
 public class UnsupportedDLNAMediaFileFormatException : Exception
 {
     private static immutable serialVersionUID = -896277702729810672L;

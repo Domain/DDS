@@ -1,6 +1,8 @@
 module org.serviio.library.local.OnlineDBIdentifier;
 
+import java.lang.String;
 import java.util.Map;
+import org.serviio.library.local.EnumMapConverter;
 
 public enum OnlineDBIdentifier
 {

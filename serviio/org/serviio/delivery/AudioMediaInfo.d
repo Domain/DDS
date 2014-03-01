@@ -10,7 +10,7 @@ public class AudioMediaInfo
   private Integer sampleFrequency;
   private Integer bitrate;
   
-  public this(Long resourceId, MediaFormatProfile profile, Long fileSize, bool transcoded, bool live, Integer duration, String mimeType, Integer channels, Integer sampleFrequency, Integer bitrate, DeliveryQuality.QualityType quality)
+  public this(Long resourceId, MediaFormatProfile profile, Long fileSize, bool transcoded, bool live, Integer duration, String mimeType, Integer channels, Integer sampleFrequency, Integer bitrate, QualityType quality)
   {
     super(resourceId, profile, fileSize, transcoded, live, duration, mimeType, quality);
     this.channels = channels;

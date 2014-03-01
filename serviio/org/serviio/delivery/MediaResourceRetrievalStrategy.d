@@ -76,7 +76,7 @@ public class MediaResourceRetrievalStrategy
     return mediaItem;
   }
   
-  public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+  public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
   {
     if (selectedVersion is null) {
       throw new FileNotFoundException("The request did not provide required version of the resource");
@@ -101,7 +101,7 @@ public class MediaResourceRetrievalStrategy
     return deliveryContainer;
   }
   
-  public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+  public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
   {
     if (selectedVersion is null) {
       throw new FileNotFoundException("The request did not provide required version of the resource");

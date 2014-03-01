@@ -1,5 +1,7 @@
 module org.serviio.dlna.VideoCodec;
 
+import java.lang.String;
+
 public enum VideoCodec
 {
     H264,  H263,  VC1,  MPEG4,  MSMPEG4,  MPEG2,  WMV,  MPEG1,  MJPEG,  FLV,  VP6,  VP8,  THEORA,  DV,  REAL,

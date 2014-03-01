@@ -68,9 +68,9 @@ public abstract class AbstractTranscodingDeliveryEngine(e, MI : MediaItem)
     }
   }
   
-  protected DeliveryContainer retrieveTranscodedResource(MI mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
+  protected DeliveryContainer retrieveTranscodedResource(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
   {
-    Map!(DeliveryQuality.QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, client.getRendererProfile(), true);
+    Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, client.getRendererProfile(), true);
     TranscodingDefinition trDef = cast(TranscodingDefinition)trDefs.get(selectedQuality);
     if (trDef !is null)
     {
@@ -95,17 +95,17 @@ public abstract class AbstractTranscodingDeliveryEngine(e, MI : MediaItem)
         log.debug_(String.format("Removing transcoding listener with id %s", cast(Object[])[ transcodingIdentifier ]));
         throw e;
       }
-      LinkedHashMap!(DeliveryQuality.QualityType, List!(RI)) transcodedMediaInfos = retrieveTranscodedMediaInfo(mediaItem, client.getRendererProfile(), stream.getFileSize());
+      LinkedHashMap!(QualityType, List!(RI)) transcodedMediaInfos = retrieveTranscodedMediaInfo(mediaItem, client.getRendererProfile(), stream.getFileSize());
       RI transcodedMediaInfo = findMediaInfoForFileProfile(cast(Collection)transcodedMediaInfos.get(selectedQuality), selectedVersion);
       return new StreamDeliveryContainer(new BufferedInputStream(stream.getStream(), 65536), transcodedMediaInfo, jobListener);
     }
     throw new IOException(String.format("Cannot find transcoding definition for %s quality", cast(Object[])[ selectedQuality.toString() ]));
   }
   
-  protected RI retrieveTranscodedMediaInfoForVersion(MI mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Profile rendererProfile)
+  protected RI retrieveTranscodedMediaInfoForVersion(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
   {
     log.debug_(String.format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
-    LinkedHashMap!(DeliveryQuality.QualityType, List!(RI)) mediaInfos = retrieveTranscodedMediaInfo(mediaItem, rendererProfile, null);
+    LinkedHashMap!(QualityType, List!(RI)) mediaInfos = retrieveTranscodedMediaInfo(mediaItem, rendererProfile, null);
     return findMediaInfoForFileProfile(cast(Collection)mediaInfos.get(selectedQuality), selectedVersion);
   }
   
@@ -119,7 +119,7 @@ public abstract class AbstractTranscodingDeliveryEngine(e, MI : MediaItem)
     return false;
   }
   
-  protected bool fileWillBeTranscoded(MI mediaItem, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, Profile rendererProfile)
+  protected bool fileWillBeTranscoded(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
   {
     return (fileCanBeTranscoded(mediaItem, rendererProfile)) && (getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false).get(selectedQuality) !is null);
   }

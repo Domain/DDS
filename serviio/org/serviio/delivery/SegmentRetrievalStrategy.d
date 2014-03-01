@@ -20,7 +20,7 @@ public class SegmentRetrievalStrategy : ResourceRetrievalStrategy
     private static final Logger log = LoggerFactory.getLogger!(SegmentRetrievalStrategy);
     private static immutable String segmentMimeType = "video/MP2T";
 
-    public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
+    public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {
         log.debug_(String.format("Retrieving Segment for media item with id %s: %s", cast(Object[])[ mediaItemId, path ]));
 
@@ -31,7 +31,7 @@ public class SegmentRetrievalStrategy : ResourceRetrievalStrategy
         return new StreamDeliveryContainer(new BufferedInputStream(segmentStream, 65536), resourceInfo);
     }
 
-    public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, DeliveryQuality.QualityType selectedQuality, String path, Client client)
+    public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
     {
         log.debug_(String.format("Retrieving info of Segment for media item with id %s: %s", cast(Object[])[ mediaItemId, path ]));
         File segmentFile = findSegmentFile(path);
