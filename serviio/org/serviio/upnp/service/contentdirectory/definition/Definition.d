@@ -9,6 +9,9 @@ import java.util.Map;
 import org.serviio.config.Configuration;
 import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.util.CollectionUtils;
+import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
+import org.serviio.upnp.service.contentdirectory.definition.ContainerVisibilityType;
+import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 
 public class Definition
 {

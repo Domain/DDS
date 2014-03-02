@@ -48,7 +48,7 @@ public class LicensingManager
 
     public synchronized void updateLicense()
     {
-        this.license = this.validator.getCurrentLicense();
+        //this.license = this.validator.getCurrentLicense();
     }
 
     public bool isProVersion()

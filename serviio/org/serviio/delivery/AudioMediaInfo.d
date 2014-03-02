@@ -1,10 +1,11 @@
 module org.serviio.delivery.AudioMediaInfo;
 
+import java.lang;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
+import org.serviio.delivery.MediaFormatProfileResource;
 
-public class AudioMediaInfo
-  : MediaFormatProfileResource
+public class AudioMediaInfo : MediaFormatProfileResource
 {
   private Integer channels;
   private Integer sampleFrequency;

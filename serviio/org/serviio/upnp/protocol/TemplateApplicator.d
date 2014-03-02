@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class TemplateApplicator
 {
-    private static final Logger log = LoggerFactory.getLogger!(TemplateApplicator);
+    private static Logger log = LoggerFactory.getLogger!(TemplateApplicator);
     private static Configuration cfg = new Configuration();
 
     static this()
@@ -22,8 +22,6 @@ public class TemplateApplicator
         try
         {
             cfg.setClassForTemplateLoading(TemplateApplicator.class_, "/");
-
-
             cfg.setObjectWrapper(new DefaultObjectWrapper());
             cfg.setOutputEncoding("UTF-8");
             cfg.setURLEscapingCharset(null);

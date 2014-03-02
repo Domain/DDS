@@ -1,5 +1,6 @@
 module org.serviio.delivery.resource.AbstractDeliveryEngine;
 
+import java.lang;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,12 +40,13 @@ import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.profile.DeliveryQuality;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
+import org.serviio.delivery.resource.DeliveryEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractDeliveryEngine(e, MI : MediaItem) : DeliveryEngine!(RI, MI)
+public abstract class AbstractDeliveryEngine(RI, MI : MediaItem) : DeliveryEngine!(RI, MI)
 {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log = LoggerFactory.getLogger!(AbstractDeliveryEngine);
 
     public static bool isHardSubsDelivered(DeliveryQuality quality, MediaItem mediaItem, Profile profile)
     {

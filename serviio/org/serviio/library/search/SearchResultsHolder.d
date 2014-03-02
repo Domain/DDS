@@ -2,6 +2,8 @@ module org.serviio.library.search.SearchResultsHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
+import org.serviio.library.search.SearchResult;
 
 public class SearchResultsHolder
 {

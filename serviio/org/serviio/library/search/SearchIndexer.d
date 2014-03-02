@@ -1,5 +1,6 @@
 module org.serviio.library.search.SearchIndexer;
 
+import java.lang;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.util.CollectionUtils;
+import org.serviio.library.search.SearchMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

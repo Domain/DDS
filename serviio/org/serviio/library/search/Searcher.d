@@ -1,5 +1,6 @@
 module org.serviio.library.search.Searcher;
 
+import java.lang.String;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.serviio.library.search.SearchIndexer;
+import org.serviio.library.search.SearchIndexer:SearchCategory;
+import org.serviio.library.search.SearchResultsHolder;
 
 public class Searcher
 {

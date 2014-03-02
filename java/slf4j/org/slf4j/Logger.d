@@ -43,7 +43,7 @@ public class Logger {
     *
     * @since 1.3
     */
-    const public String ROOT_LOGGER_NAME = "ROOT";
+    public static immutable String ROOT_LOGGER_NAME = "ROOT";
 
     private Appender!(string) writer;
     private String _name;
