@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.serviio.external.FFMPEGWrapper;
 import org.serviio.library.entities.MediaItem;
+import org.serviio.delivery.resource.transcode.TranscodingDefinition;
+import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 
 public abstract class AbstractTranscodingDeliveryStrategy
 {

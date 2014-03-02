@@ -12,6 +12,10 @@ import org.serviio.library.entities.MediaItem;
 import org.serviio.util.ThreadUtils;
 import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamDescriptor;
+import org.serviio.delivery.resource.transcode.TranscodingJobListener;
+import org.serviio.delivery.resource.transcode.TranscodingDefinition;
+import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

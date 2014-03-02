@@ -34,6 +34,7 @@ import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 import org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.SegmentBasedTranscodingDeliveryStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +42,22 @@ public abstract class AbstractTranscodingDeliveryEngine(RI, MI : MediaItem) : Ab
 {
     private static immutable String TRANSCODING_SUBFOLDER_NAME = "Serviio";
     public static immutable String TRANSCODED_FILE_EXTENSION = "stf";
-    private static Map!(Client, TranscodingJobListener) transcodeJobs = Collections.synchronizedMap(new HashMap!(Client, TranscodingJobListener)());
-    private static TranscodingDeliveryStrategy!(File) fileBasedStrategy = new FileBasedTranscodingDeliveryStrategy();
-    private static TranscodingDeliveryStrategy!(File) segmentBasedStrategy = new SegmentBasedTranscodingDeliveryStrategy();
-    private static TranscodingDeliveryStrategy!(File) liveSegmentBasedStrategy = new LiveSegmentBasedTranscodingDeliveryStrategy();
-    private static TranscodingDeliveryStrategy!(OutputStream) streamBasedStrategy = new StreamBasedTranscodingDeliveryStrategy();
-    private static Logger log = LoggerFactory.getLogger!(AbstractTranscodingDeliveryEngine);
+    private static Map!(Client, TranscodingJobListener) transcodeJobs;
+    private static TranscodingDeliveryStrategy!(File) fileBasedStrategy;
+    private static TranscodingDeliveryStrategy!(File) segmentBasedStrategy;
+    private static TranscodingDeliveryStrategy!(File) liveSegmentBasedStrategy;
+    private static TranscodingDeliveryStrategy!(OutputStream) streamBasedStrategy;
+    private static Logger log;
+
+    static this()
+    {
+        transcodeJobs = Collections.synchronizedMap(new HashMap!(Client, TranscodingJobListener)());
+        fileBasedStrategy = new FileBasedTranscodingDeliveryStrategy();
+        segmentBasedStrategy = new SegmentBasedTranscodingDeliveryStrategy();
+        liveSegmentBasedStrategy = new LiveSegmentBasedTranscodingDeliveryStrategy();
+        streamBasedStrategy = new StreamBasedTranscodingDeliveryStrategy();
+        log = LoggerFactory.getLogger!(AbstractTranscodingDeliveryEngine);
+    }
 
     public static void cleanupTranscodingEngine()
     {
