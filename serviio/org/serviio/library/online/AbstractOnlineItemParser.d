@@ -1,5 +1,6 @@
 module org.serviio.library.online.AbstractOnlineItemParser;
 
+import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
@@ -13,14 +14,20 @@ import org.serviio.library.online.feed.PluginCompilerThread;
 import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.ThreadUtils;
+import org.serviio.library.online.AbstractUrlExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractOnlineItemParser
 {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
     protected bool isAlive = true;
     private static PluginCompilerThread pluginCompiler;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger(getClass());
+    }
 
     public static synchronized void startPluginCompilerThread(CountDownLatch pluginsCompiled)
     {

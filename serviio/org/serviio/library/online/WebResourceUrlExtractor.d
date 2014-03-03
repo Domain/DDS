@@ -2,10 +2,15 @@ module org.serviio.library.online.WebResourceUrlExtractor;
 
 import java.net.URL;
 import org.serviio.config.Configuration;
+import org.serviio.library.online.AbstractUrlExtractor;
+import org.serviio.library.online.WebResourceContainer;
+import org.serviio.library.online.ContentURLContainer;
+import org.serviio.library.online.WebResourceItem;
+import org.serviio.library.online.PreferredQuality;
 
 public abstract class WebResourceUrlExtractor : AbstractUrlExtractor
 {
-    public final WebResourceContainer parseWebResource(final URL resourceUrl, final int maxItemsToRetrieve)
+    public final WebResourceContainer parseWebResource(immutable URL resourceUrl, immutable int maxItemsToRetrieve)
     {
         log("Starting parsing resource: " + resourceUrl);
         cast(WebResourceContainer)new class() PluginExecutionProcessor {
@@ -16,7 +21,7 @@ public abstract class WebResourceUrlExtractor : AbstractUrlExtractor
         }.execute(getExtractItemsTimeout() * 1000);
     }
 
-    public final ContentURLContainer extractItemUrl(final WebResourceItem item)
+    public final ContentURLContainer extractItemUrl(immutable WebResourceItem item)
     {
         log("Starting extraction of url for item: " + item.getTitle());
 
@@ -26,8 +31,6 @@ public abstract class WebResourceUrlExtractor : AbstractUrlExtractor
                 return this.outer.extractUrl(item, Configuration.getOnlineFeedPreferredQuality());
             }
         }.execute(30000);
-
-
 
         bool valid = validate(result);
         if ((result !is null) && (valid))

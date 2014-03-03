@@ -6,8 +6,9 @@ import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.library.online.ContentURLContainer;
 import org.serviio.library.online.OnlineItemId;
+import org.serviio.library.online.metadata.OnlineItem;
 
-public abstract class OnlineContainerItem/*!(C : OnlineResourceContainer!(?, ?))*/ : OnlineItem
+public abstract class OnlineContainerItem(C /*: OnlineResourceContainer!(?, ?)*/) : OnlineItem
 {
     protected int order;
     protected C parentContainer;
@@ -15,7 +16,7 @@ public abstract class OnlineContainerItem/*!(C : OnlineResourceContainer!(?, ?))
     protected bool expiresImmediately = false;
     protected AbstractUrlExtractor plugin;
 
-    protected OnlineItemId generateId()
+    override protected OnlineItemId generateId()
     {
         return new OnlineItemId(this.parentContainer.getOnlineRepositoryId().longValue(), this.order);
     }
@@ -29,7 +30,7 @@ public abstract class OnlineContainerItem/*!(C : OnlineResourceContainer!(?, ?))
         }
     }
 
-    public MediaItem toMediaItem()
+    override public MediaItem toMediaItem()
     {
         MediaItem item = super.toMediaItem();
         if (item !is null) {
@@ -56,7 +57,7 @@ public abstract class OnlineContainerItem/*!(C : OnlineResourceContainer!(?, ?))
         }
     }
 
-    public ImageDescriptor getThumbnail()
+    override public ImageDescriptor getThumbnail()
     {
         ImageDescriptor thumbnail = super.getThumbnail();
         return thumbnail !is null ? thumbnail : this.parentContainer.getThumbnail();

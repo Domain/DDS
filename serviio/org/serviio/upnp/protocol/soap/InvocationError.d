@@ -1,5 +1,7 @@
 module org.serviio.upnp.protocol.soap.InvocationError;
 
+import java.lang.String;
+
 public enum InvocationError
 {
     INVALID_ACTION,  

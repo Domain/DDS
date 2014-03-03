@@ -11,29 +11,34 @@ import org.slf4j.LoggerFactory;
 
 public abstract class Multicaster
 {
-  protected final Logger log = LoggerFactory.getLogger(getClass());
-  
-  protected synchronized NicIP getBoundNIC()
-  {
-    try
+    protected Logger log;
+
+    static this()
     {
-      Tupple!(NicIP, Boolean) nicIpResult = MultiCastUtils.findNicIPWithRetry(Device.getInstance().getBindAddress());
-      if ((cast(Boolean)nicIpResult.getValueB()).boolValue()) {
-        DiscoveryManager.instance().restartDiscoveryEngine();
-      }
-      return cast(NicIP)nicIpResult.getValueA();
+        log = LoggerFactory.getLogger(getClass());
     }
-    catch (IOException e)
+
+    protected synchronized NicIP getBoundNIC()
     {
-      this.log.warn(String.format("Cannot acquire NIC for current bound IP address %s, will re-acquire new IP", cast(Object[])[ Device.getInstance().getBindAddress().getHostAddress() ]));
-      DiscoveryManager.instance().restartDiscoveryEngine();
+        try
+        {
+            Tupple!(NicIP, Boolean) nicIpResult = MultiCastUtils.findNicIPWithRetry(Device.getInstance().getBindAddress());
+            if ((cast(Boolean)nicIpResult.getValueB()).boolValue()) {
+                DiscoveryManager.instance().restartDiscoveryEngine();
+            }
+            return cast(NicIP)nicIpResult.getValueA();
+        }
+        catch (IOException e)
+        {
+            this.log.warn(String.format("Cannot acquire NIC for current bound IP address %s, will re-acquire new IP", cast(Object[])[ Device.getInstance().getBindAddress().getHostAddress() ]));
+            DiscoveryManager.instance().restartDiscoveryEngine();
+        }
+        return MultiCastUtils.findNicIP(Device.getInstance().getBindAddress());
     }
-    return MultiCastUtils.findNicIP(Device.getInstance().getBindAddress());
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.discovery.Multicaster
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.discovery.Multicaster
+* JD-Core Version:    0.7.0.1
+*/

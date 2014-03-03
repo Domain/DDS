@@ -2,16 +2,17 @@ module org.serviio.upnp.protocol.ssdp.SSDPMessageBuilderFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.serviio.upnp.protocol.ssdp.SSDPRequestMessageBuilder;
+
+public enum SSDPMessageType
+{
+    ALIVE,  BYEBYE,  SEARCH
+}
 
 public class SSDPMessageBuilderFactory
 {
     private static SSDPMessageBuilderFactory instance;
     private Map!(SSDPMessageType, SSDPRequestMessageBuilder) builders;
-
-    public static enum SSDPMessageType
-    {
-        ALIVE,  BYEBYE,  SEARCH
-    }
 
     private this()
     {

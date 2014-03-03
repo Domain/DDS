@@ -1,22 +1,23 @@
 module org.serviio.library.online.AbstractUrlExtractor;
 
+import java.lang;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Map:Entry;
-//import org.restlet.Client;
-//import org.restlet.Request;
-//import org.restlet.Response;
-//import org.restlet.data.ClientInfo;
-//import org.restlet.data.Cookie;
-//import org.restlet.data.Encoding;
-//import org.restlet.data.Method;
-//import org.restlet.data.Protocol;
-//import org.restlet.data.Reference;
-//import org.restlet.data.Status;
-//import org.restlet.representation.Representation;
-//import org.restlet.util.Series;
+import org.restlet.Client;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.ClientInfo;
+import org.restlet.data.Cookie;
+import org.restlet.data.Encoding;
+import org.restlet.data.Method;
+import org.restlet.data.Protocol;
+import org.restlet.data.Reference;
+import org.restlet.data.Status;
+import org.restlet.representation.Representation;
+import org.restlet.util.Series;
 import org.serviio.config.Configuration;
 import org.serviio.external.FFMPEGWrapper;
 import org.serviio.library.online.metadata.FeedItem;
@@ -26,6 +27,7 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.util.SecurityUtils;
 import org.serviio.util.StringUtils;
 import org.serviio.util.ZipUtils;
+import org.serviio.library.online.ContentURLContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +35,13 @@ public abstract class AbstractUrlExtractor
 {
     protected static immutable int ITEM_LIST_TIMEOUT_SEC = 30;
     protected static immutable int URL_EXTRACTION_TIMEOUT_MS = 30000;
-    protected static final Logger log = LoggerFactory.getLogger!(FeedItemUrlExtractor);
+    protected static Logger logger;
     private Client restletClient = new Client(Protocol.HTTP);
+
+    static this()
+    {
+        logger = LoggerFactory.getLogger!(FeedItemUrlExtractor);
+    }
 
     public static ContentURLContainer extractItemUrl(AbstractUrlExtractor plugin, OnlineItem item)
     {
@@ -64,7 +71,7 @@ public abstract class AbstractUrlExtractor
         if ((container !is null) && 
             ((container.isExpiresImmediately()) || (container.getExpiresOn() !is null)) && (ObjectValidator.isEmpty(container.getCacheKey())))
         {
-            log.warn("Online item expires but no cache key has been set");
+            logger.warn("Online item expires but no cache key has been set");
             return false;
         }
         return true;
@@ -72,7 +79,7 @@ public abstract class AbstractUrlExtractor
 
     protected final void log(String message)
     {
-        log.debug_(String.format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
+        logger.debug_(String.format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
     }
 
     protected final Integer getOnlineFeedExpiryInterval()

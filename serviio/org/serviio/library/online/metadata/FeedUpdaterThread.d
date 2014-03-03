@@ -1,5 +1,6 @@
 module org.serviio.library.online.metadata.FeedUpdaterThread;
 
+import java.lang;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,6 +27,7 @@ import org.serviio.library.online.CannotRetrieveThumbnailException;
 import org.serviio.library.online.ContentURLContainer;
 import org.serviio.library.online.OnlineLibraryManager;
 import org.serviio.library.online.service.OnlineRepositoryService;
+import org.serviio.library.online.metadata.OnlineItem;
 import org.serviio.util.HttpClient;
 import org.serviio.util.Tupple;
 import org.slf4j.Logger;
@@ -33,18 +35,23 @@ import org.slf4j.LoggerFactory;
 
 public class FeedUpdaterThread : AbstractLibraryCheckerThread
 {
-    private static final Logger log = LoggerFactory.getLogger!(FeedUpdaterThread);
-    private static final int FEED_UPDATER_CHECK_INTERVAL = 1;
-    private static final int FEER_PARSE_RETRY_COUNT = 2;
-    private final OnlineLibraryManager onlineManager;
+    private static Logger log;
+    private static immutable int FEED_UPDATER_CHECK_INTERVAL = 1;
+    private static immutable int FEER_PARSE_RETRY_COUNT = 2;
+    private OnlineLibraryManager onlineManager;
     private Map!(Long, Integer) retryCounter = new HashMap();
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(FeedUpdaterThread);
+    }
 
     public this(OnlineLibraryManager onlineManager)
     {
         this.onlineManager = onlineManager;
     }
 
-    public void run()
+    override public void run()
     {
         log.info("Started looking for information about online resources");
         this.workerRunning = true;

@@ -1,11 +1,14 @@
 module org.serviio.library.online.metadata.OnlineResourceContainer;
 
+import java.lang.Long;
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import org.serviio.library.entities.OnlineRepository;
 import org.serviio.library.local.metadata.ImageDescriptor;
 import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.util.ObjectValidator;
+import org.serviio.library.online.metadata.OnlineCachable;
 
 public abstract class OnlineResourceContainer(T /*: OnlineContainerItem!(?)*/, E /*: AbstractUrlExtractor*/) : OnlineCachable
 {
@@ -13,7 +16,7 @@ public abstract class OnlineResourceContainer(T /*: OnlineContainerItem!(?)*/, E
     private String title;
     private String domain;
     private ImageDescriptor thumbnail;
-    private List!(T) items = new ArrayList();
+    private List!(T) items = new ArrayList!T();
     private E usedExtractor;
 
     public this(Long onlineRepositoryId)

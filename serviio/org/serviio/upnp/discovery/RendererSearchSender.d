@@ -1,5 +1,6 @@
 module org.serviio.upnp.discovery.RendererSearchSender;
 
+import java.lang;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -20,6 +21,7 @@ import org.serviio.util.MultiCastUtils;
 import org.serviio.util.NicIP;
 import org.serviio.util.ServiioThreadFactory;
 import org.serviio.util.ThreadExecutor;
+import org.serviio.upnp.discovery.AbstractSSDPMessageListener;
 import org.slf4j.Logger;
 
 public class RendererSearchSender : AbstractSSDPMessageListener
@@ -48,9 +50,7 @@ public class RendererSearchSender : AbstractSSDPMessageListener
         this.log.debug_("Finished searching for Renderer devices");
     }
 
-    private class RendererSearchWorker
-        : AbstractSSDPMessageListener
-        , Runnable
+    private class RendererSearchWorker : AbstractSSDPMessageListener, Runnable
     {
         private NicIP multicastInterface;
 
@@ -85,7 +85,7 @@ public class RendererSearchSender : AbstractSSDPMessageListener
                         this.log.debug_(String.format("Multicasting SSDP M-SEARCH using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
 
 
-                        List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageBuilderFactory.SSDPMessageType.SEARCH).generateSSDPMessages(Integer.valueOf(this.outer.mx), "urn:schemas-upnp-org:device:MediaRenderer:1");
+                        List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.SEARCH).generateSSDPMessages(Integer.valueOf(this.outer.mx), "urn:schemas-upnp-org:device:MediaRenderer:1");
 
                         this.log.debug_(String.format("Sending %s 'm-search' messages", cast(Object[])[ Integer.valueOf(messages.size()) ]));
                         foreach (String message ; messages) {

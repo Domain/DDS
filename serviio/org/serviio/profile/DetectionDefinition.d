@@ -1,15 +1,16 @@
 module org.serviio.profile.DetectionDefinition;
 
+import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
 
+public enum DetectionType
+{
+    UPNP_SEARCH,  HTTP_HEADERS
+}
+
 public class DetectionDefinition
 {
-    public static enum DetectionType
-    {
-        UPNP_SEARCH,  HTTP_HEADERS
-    }
-
     private Map!(String, String) fieldValues = new HashMap();
     private DetectionType type;
 

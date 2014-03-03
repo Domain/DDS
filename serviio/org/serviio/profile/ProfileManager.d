@@ -1,5 +1,6 @@
 module org.serviio.profile.ProfileManager;
 
+import java.lang.String;
 import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -15,6 +16,8 @@ import org.apache.http.Header;
 import org.serviio.renderer.RendererManager;
 import org.serviio.renderer.entities.Renderer;
 import org.serviio.util.FileUtils;
+import org.serviio.profile.Profile;
+import org.serviio.profile.DetectionDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +62,7 @@ public class ProfileManager
     {
         foreach (Profile profile ; profiles)
         {
-            DetectionDefinition detectionDef = getDetectionDefinitionByType(profile, DetectionDefinition.DetectionType.UPNP_SEARCH);
+            DetectionDefinition detectionDef = getDetectionDefinitionByType(profile, DetectionType.UPNP_SEARCH);
             if (detectionDef !is null)
             {
                 bool profileMatches = true;
@@ -91,7 +94,7 @@ public class ProfileManager
         for (Iterator i = profiles.iterator(); i.hasNext();)
         {
             profile = cast(Profile)i.next();
-            DetectionDefinition detectionDef = getDetectionDefinitionByType(profile, DetectionDefinition.DetectionType.HTTP_HEADERS);
+            DetectionDefinition detectionDef = getDetectionDefinitionByType(profile, DetectionType.HTTP_HEADERS);
             if (detectionDef !is null) {
                 foreach (Map.Entry!(String, String) entry ; detectionDef.getFieldValues().entrySet()) {
                     foreach (Header header ; headers) {
@@ -163,7 +166,7 @@ public class ProfileManager
         return false;
     }
 
-    private static DetectionDefinition getDetectionDefinitionByType(Profile profile, DetectionDefinition.DetectionType type)
+    private static DetectionDefinition getDetectionDefinitionByType(Profile profile, DetectionType type)
     {
         if (profile.getDetectionDefinitions() !is null) {
             foreach (DetectionDefinition dd ; profile.getDetectionDefinitions()) {

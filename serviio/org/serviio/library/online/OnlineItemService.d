@@ -1,5 +1,6 @@
 module org.serviio.library.online.OnlineItemService;
 
+import java.lang;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import org.serviio.library.online.metadata.OnlineResourceContainer;
 import org.serviio.library.online.metadata.OnlineResourceParseException;
 import org.serviio.library.online.metadata.SingleURLItem;
 import org.serviio.library.online.service.OnlineRepositoryService;
+import org.serviio.library.online.OnlineLibraryManager;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.util.CollectionUtils;
 import org.slf4j.Logger;
@@ -248,7 +250,7 @@ public class OnlineItemService
         return null;
     }
 
-    private static /*!(T : OnlineItem)*/ List/*!(T)*/ filterContainerResourceItems(List!(T) items, MediaFileType type)
+    private static /*!(T : OnlineItem)*/ List!(T) filterContainerResourceItems(T : OnlineItem)(List!(T) items, MediaFileType type)
     {
         List!(T) filteredItems = new ArrayList();
         foreach (T feedItem ; items)
@@ -261,7 +263,7 @@ public class OnlineItemService
         return filteredItems;
     }
 
-    private static /*!(T : OnlineItem)*/ T filterFeedItem(T)(T item, MediaFileType type)
+    private static /*!(T : OnlineItem)*/ T filterFeedItem(T : OnlineItem)(T item, MediaFileType type)
     {
         if ((item.getType() == type) && (item.isCompletelyLoaded())) {
             return item;

@@ -44,7 +44,7 @@ import org.serviio.delivery.resource.DeliveryEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractDeliveryEngine(RI, MI : MediaItem) : DeliveryEngine!(RI, MI)
+public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem) : DeliveryEngine!(RI, MI)
 {
     protected Logger log;
 

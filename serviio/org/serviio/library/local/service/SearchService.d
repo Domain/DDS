@@ -1,5 +1,6 @@
 module org.serviio.library.local.service.SearchService;
 
+import java.lang;
 import java.util.List;
 import org.serviio.library.entities.Image;
 import org.serviio.library.entities.MusicTrack;
@@ -50,7 +51,7 @@ public class SearchService
         makeUnsearchable(SearchMetadataFactory.imageIndexIds(mediaItemId, image));
     }
 
-    public static void makeOnlineSearchable(OnlineItem item, OnlineResourceContainer/*!(? : OnlineContainerItem!(?), ?)*/ container, OnlineRepository repo)
+    public static void makeOnlineSearchable(T1, T2)(OnlineItem item, OnlineResourceContainer!(T1 /*: OnlineContainerItem!(?)*/, T2) container, OnlineRepository repo)
     {
         makeSearchable(SearchMetadataFactory.onlineMetadata(item, container, repo), true);
     }

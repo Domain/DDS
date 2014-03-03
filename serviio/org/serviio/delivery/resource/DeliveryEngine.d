@@ -12,7 +12,7 @@ import org.serviio.library.entities.MediaItem;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 
-public abstract interface DeliveryEngine(RI, MI : MediaItem)
+public abstract interface DeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem)
 {
     public abstract List!(RI) getMediaInfoForProfile(MI paramMI, Profile paramProfile);
 

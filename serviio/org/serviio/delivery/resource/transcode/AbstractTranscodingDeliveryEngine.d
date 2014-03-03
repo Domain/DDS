@@ -38,7 +38,7 @@ import org.serviio.delivery.resource.transcode.SegmentBasedTranscodingDeliverySt
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTranscodingDeliveryEngine(RI, MI : MediaItem) : AbstractDeliveryEngine!(RI, MI), DeliveryListener
+public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem) : AbstractDeliveryEngine!(RI, MI), DeliveryListener
 {
     private static immutable String TRANSCODING_SUBFOLDER_NAME = "Serviio";
     public static immutable String TRANSCODED_FILE_EXTENSION = "stf";

@@ -348,13 +348,13 @@ public class ProfilesDefinitionParser
             Element httpHeadersNode = ddNode.getChild("HttpHeaders");
             if (upnpSearchNode !is null)
             {
-                DetectionDefinition dd = new DetectionDefinition(DetectionDefinition.DetectionType.UPNP_SEARCH);
+                DetectionDefinition dd = new DetectionDefinition(DetectionType.UPNP_SEARCH);
                 dd.getFieldValues().putAll(getAllDetectionFields(upnpSearchNode));
                 result.add(dd);
             }
             if (httpHeadersNode !is null)
             {
-                DetectionDefinition dd = new DetectionDefinition(DetectionDefinition.DetectionType.HTTP_HEADERS);
+                DetectionDefinition dd = new DetectionDefinition(DetectionType.HTTP_HEADERS);
                 dd.getFieldValues().putAll(getAllDetectionFields(httpHeadersNode));
                 result.add(dd);
             }

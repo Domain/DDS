@@ -136,7 +136,7 @@ public class DiscoveryAdvertisementNotifier
           this.log.debug_(String.format("Multicasting SSDP alive using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
           
 
-          List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageBuilderFactory.SSDPMessageType.ALIVE).generateSSDPMessages(Integer.valueOf(this.advertisementDuration), null);
+          List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.ALIVE).generateSSDPMessages(Integer.valueOf(this.advertisementDuration), null);
           
           this.log.debug_(String.format("Sending %s 'alive' messages describing device %s", cast(Object[])[ Integer.valueOf(messages.size()), device.getUuid() ]));
           foreach (String message ; messages) {
@@ -173,7 +173,7 @@ public class DiscoveryAdvertisementNotifier
           this.log.debug_(String.format("Multicasting SSDP byebye using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
           
 
-          List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageBuilderFactory.SSDPMessageType.BYEBYE).generateSSDPMessages(null, null);
+          List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.BYEBYE).generateSSDPMessages(null, null);
           foreach (String message ; messages) {
             for (int i = 0; i < this.advertisementSendCount; i++) {
               MultiCastUtils.send(message, socket, device.getMulticastGroupAddress());

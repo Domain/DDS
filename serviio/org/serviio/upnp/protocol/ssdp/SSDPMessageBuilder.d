@@ -1,14 +1,16 @@
 module org.serviio.upnp.protocol.ssdp.SSDPMessageBuilder;
 
+import java.lang.String;
+import java.lang.Integer;
 import java.util.List;
 
 public abstract interface SSDPMessageBuilder
 {
-  public abstract List!(String) generateSSDPMessages(Integer paramInteger, String paramString);
+    public abstract List!(String) generateSSDPMessages(Integer paramInteger, String paramString);
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.protocol.ssdp.SSDPMessageBuilder
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.protocol.ssdp.SSDPMessageBuilder
+* JD-Core Version:    0.7.0.1
+*/
