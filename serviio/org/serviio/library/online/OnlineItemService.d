@@ -282,14 +282,14 @@ public class OnlineItemService
         return onlineItems;
     }
 
-    private static List!(OnlineRepository.OnlineRepositoryType) getSingleUrlRepositoryTypes()
+    private static List!(OnlineRepositoryType) getSingleUrlRepositoryTypes()
     {
-        return Collections.singletonList(OnlineRepository.OnlineRepositoryType.LIVE_STREAM);
+        return Collections.singletonList(OnlineRepositoryType.LIVE_STREAM);
     }
 
-    private static List!(OnlineRepository.OnlineRepositoryType) getContainerResourceTypes()
+    private static List!(OnlineRepositoryType) getContainerResourceTypes()
     {
-        return Arrays.asList(cast(OnlineRepository.OnlineRepositoryType[])[ OnlineRepository.OnlineRepositoryType.FEED, OnlineRepository.OnlineRepositoryType.WEB_RESOURCE ]);
+        return Arrays.asList(cast(OnlineRepositoryType[])[ OnlineRepositoryType.FEED, OnlineRepositoryType.WEB_RESOURCE ]);
     }
 }
 

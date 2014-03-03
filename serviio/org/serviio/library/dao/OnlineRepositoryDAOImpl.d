@@ -185,7 +185,7 @@ public class OnlineRepositoryDAOImpl
     }
   }
   
-  public List!(OnlineRepository) getRepositories(List!(OnlineRepository.OnlineRepositoryType) repoTypes, MediaFileType fileType, AccessGroup accessGroup, bool onlyEnabled)
+  public List!(OnlineRepository) getRepositories(List!(OnlineRepositoryType) repoTypes, MediaFileType fileType, AccessGroup accessGroup, bool onlyEnabled)
   {
     log.debug_(String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
     Connection con = null;
@@ -201,7 +201,7 @@ public class OnlineRepositoryDAOImpl
       ps = con.prepareStatement(query);
       ps.setString(1, fileType.toString());
       for (int i = 0; i < repoTypes.size(); i++) {
-        ps.setString(i + 2, (cast(OnlineRepository.OnlineRepositoryType)repoTypes.get(i)).toString());
+        ps.setString(i + 2, (cast(OnlineRepositoryType)repoTypes.get(i)).toString());
       }
       ResultSet rs = ps.executeQuery();
       return mapResultSet(rs);
@@ -282,7 +282,7 @@ public class OnlineRepositoryDAOImpl
     Long id = Long.valueOf(rs.getLong("id"));
     String contentUrl = rs.getString("url");
     MediaFileType fileType = MediaFileType.valueOf(rs.getString("file_type"));
-    OnlineRepository.OnlineRepositoryType repoType = OnlineRepository.OnlineRepositoryType.valueOf(rs.getString("repo_type"));
+    OnlineRepositoryType repoType = OnlineRepositoryType.valueOf(rs.getString("repo_type"));
     URL thumbnailUrl = JdbcUtils.getURLFromResultSet(rs, "thumbnail_url");
     String name = rs.getString("name");
     bool enabled = rs.getBoolean("enabled");

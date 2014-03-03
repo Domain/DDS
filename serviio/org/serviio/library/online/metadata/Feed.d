@@ -18,7 +18,7 @@ public class Feed
   
   public OnlineRepository toOnlineRepository()
   {
-    OnlineRepository repo = new OnlineRepository(OnlineRepository.OnlineRepositoryType.FEED, null, null, null, null);
+    OnlineRepository repo = new OnlineRepository(OnlineRepositoryType.FEED, null, null, null, null);
     repo.setId(getOnlineRepositoryId());
     return repo;
   }

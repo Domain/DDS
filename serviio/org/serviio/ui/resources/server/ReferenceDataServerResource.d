@@ -152,9 +152,9 @@ public class ReferenceDataServerResource
   private ReferenceDataRepresentation getOnlineRepositoryTypes()
   {
     ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(OnlineRepository.OnlineRepositoryType.FEED.toString(), "RSS/Atom feed");
-    rep.addValue(OnlineRepository.OnlineRepositoryType.LIVE_STREAM.toString(), "Live stream");
-    rep.addValue(OnlineRepository.OnlineRepositoryType.WEB_RESOURCE.toString(), "Web Resource");
+    rep.addValue(OnlineRepositoryType.FEED.toString(), "RSS/Atom feed");
+    rep.addValue(OnlineRepositoryType.LIVE_STREAM.toString(), "Live stream");
+    rep.addValue(OnlineRepositoryType.WEB_RESOURCE.toString(), "Web Resource");
     return rep;
   }
   

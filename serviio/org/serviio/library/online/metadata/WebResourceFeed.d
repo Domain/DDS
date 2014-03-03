@@ -19,7 +19,7 @@ public class WebResourceFeed
   
   public OnlineRepository toOnlineRepository()
   {
-    OnlineRepository repo = new OnlineRepository(OnlineRepository.OnlineRepositoryType.WEB_RESOURCE, null, null, null, null);
+    OnlineRepository repo = new OnlineRepository(OnlineRepositoryType.WEB_RESOURCE, null, null, null, null);
     repo.setId(getOnlineRepositoryId());
     repo.setThumbnailUrl(getThumbnail() !is null ? getThumbnail().getImageUrl() : null);
     return repo;

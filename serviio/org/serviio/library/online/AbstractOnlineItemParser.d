@@ -62,10 +62,10 @@ public abstract class AbstractOnlineItemParser
         this.isAlive = true;
     }
 
-    protected AbstractUrlExtractor findSuitableExtractorPlugin(URL feedUrl, OnlineRepository.OnlineRepositoryType type)
+    protected AbstractUrlExtractor findSuitableExtractorPlugin(URL feedUrl, OnlineRepositoryType type)
     {
         if ((pluginCompiler !is null) && (pluginCompiler.getUrlExtractors() !is null)) {
-            foreach (Map.Entry!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) urlExtractorEntry ; pluginCompiler.getUrlExtractors().entrySet())
+            foreach (Map.Entry!(AbstractUrlExtractor, OnlineRepositoryType) urlExtractorEntry ; pluginCompiler.getUrlExtractors().entrySet())
             {
                 AbstractUrlExtractor urlExtractor = cast(AbstractUrlExtractor)urlExtractorEntry.getKey();
                 try

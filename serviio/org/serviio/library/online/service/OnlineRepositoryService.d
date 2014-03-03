@@ -72,7 +72,7 @@ public class OnlineRepositoryService
     }
   }
   
-  public static List!(OnlineRepository) getListOfRepositories(List!(OnlineRepository.OnlineRepositoryType) repoTypes, MediaFileType mediaType, AccessGroup accessGroup, bool onlyEnabled)
+  public static List!(OnlineRepository) getListOfRepositories(List!(OnlineRepositoryType) repoTypes, MediaFileType mediaType, AccessGroup accessGroup, bool onlyEnabled)
   {
     return DAOFactory.getOnlineRepositoryDAO().getRepositories(repoTypes, mediaType, accessGroup, onlyEnabled);
   }

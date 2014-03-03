@@ -1,65 +1,66 @@
 module org.serviio.util.NumberUtils;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class NumberUtils
 {
-  public static final Random randomGenerator = new Random();
-  
-  public static int getRandomInInterval(int start, int end)
-  {
-    int base = end - start;
-    if (base < 0) {
-      throw new RuntimeException("Invalid parameters passed into the random number generator");
-    }
-    if (base == 0) {
-      return 0;
-    }
-    int randomOffset = randomGenerator.nextInt(base);
-    return start + randomOffset;
-  }
-  
-  public static List!(Integer) getRandomSequenceInInterval(int start, int end, int count)
-  {
-    List!(Integer) sequence = new ArrayList(count);
-    int base = start;
-    for (int i = 0; i < count; i++)
+    public static Random randomGenerator = new Random();
+
+    public static int getRandomInInterval(int start, int end)
     {
-      base = getRandomInInterval(base, end);
-      sequence.add(Integer.valueOf(base));
+        int base = end - start;
+        if (base < 0) {
+            throw new RuntimeException("Invalid parameters passed into the random number generator");
+        }
+        if (base == 0) {
+            return 0;
+        }
+        int randomOffset = randomGenerator.nextInt(base);
+        return start + randomOffset;
     }
-    return sequence;
-  }
-  
-  public static bool isNumber(String string)
-  {
-    try
+
+    public static List!(Integer) getRandomSequenceInInterval(int start, int end, int count)
     {
-      new Integer(string);
-      return true;
+        List!(Integer) sequence = new ArrayList(count);
+        int base = start;
+        for (int i = 0; i < count; i++)
+        {
+            base = getRandomInInterval(base, end);
+            sequence.add(Integer.valueOf(base));
+        }
+        return sequence;
     }
-    catch (NumberFormatException e) {}
-    return false;
-  }
-  
-  public static Integer stringToInt(String value)
-  {
-    if (value is null) {
-      return null;
-    }
-    try
+
+    public static bool isNumber(String string)
     {
-      return new Integer(value);
+        try
+        {
+            new Integer(string);
+            return true;
+        }
+        catch (NumberFormatException e) {}
+        return false;
     }
-    catch (NumberFormatException e) {}
-    return null;
-  }
+
+    public static Integer stringToInt(String value)
+    {
+        if (value is null) {
+            return null;
+        }
+        try
+        {
+            return new Integer(value);
+        }
+        catch (NumberFormatException e) {}
+        return null;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.util.NumberUtils
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.util.NumberUtils
+* JD-Core Version:    0.7.0.1
+*/

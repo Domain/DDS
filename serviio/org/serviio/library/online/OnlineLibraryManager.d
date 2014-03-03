@@ -139,7 +139,7 @@ public class OnlineLibraryManager
       if ((!onlyCached) && (isResourceRefreshNeeded(resourceUrl, resource)))
       {
         log.debug_(String.format("Resource %s not in cache, cast(re)loading it", cast(Object[])[ resourceUrl.toString() ]));
-        if (onlineRepository.getRepoType() == OnlineRepository.OnlineRepositoryType.FEED) {
+        if (onlineRepository.getRepoType() == OnlineRepositoryType.FEED) {
           resource = this.feedParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
         } else {
           resource = this.webResourceParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());

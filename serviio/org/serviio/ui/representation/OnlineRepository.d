@@ -9,7 +9,7 @@ public class OnlineRepository
   : WithAccessGroups
 {
   private Long id;
-  private OnlineRepository.OnlineRepositoryType repositoryType;
+  private OnlineRepositoryType repositoryType;
   private String contentUrl;
   private MediaFileType fileType;
   private String thumbnailUrl;
@@ -19,7 +19,7 @@ public class OnlineRepository
   
   public this() {}
   
-  public this(OnlineRepository.OnlineRepositoryType repositoryType, String contentUrl, MediaFileType fileType, String thumbnailUrl, String repositoryName, bool enabled, LinkedHashSet!(Long) accessGroupIds)
+  public this(OnlineRepositoryType repositoryType, String contentUrl, MediaFileType fileType, String thumbnailUrl, String repositoryName, bool enabled, LinkedHashSet!(Long) accessGroupIds)
   {
     this.repositoryType = repositoryType;
     this.contentUrl = contentUrl;
@@ -40,12 +40,12 @@ public class OnlineRepository
     this.id = id;
   }
   
-  public OnlineRepository.OnlineRepositoryType getRepositoryType()
+  public OnlineRepositoryType getRepositoryType()
   {
     return this.repositoryType;
   }
   
-  public void setRepositoryType(OnlineRepository.OnlineRepositoryType repositoryType)
+  public void setRepositoryType(OnlineRepositoryType repositoryType)
   {
     this.repositoryType = repositoryType;
   }

@@ -150,7 +150,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
 
     private Tupple/*!(OnlineResourceContainer!(?, ?), List!(? : OnlineItem))*/ getOnlineItems(OnlineRepository repository)
     {
-        if ((repository.getRepoType() == OnlineRepository.OnlineRepositoryType.FEED) || (repository.getRepoType() == OnlineRepository.OnlineRepositoryType.WEB_RESOURCE))
+        if ((repository.getRepoType() == OnlineRepositoryType.FEED) || (repository.getRepoType() == OnlineRepositoryType.WEB_RESOURCE))
         {
             OnlineResourceContainer/*!(?, ?)*/ resource = this.onlineManager.findResourceInCacheOrParse(repository);
             List/*!(? : OnlineItem)*/ items = resource !is null ? resource.getItems() : new ArrayList();

@@ -172,7 +172,7 @@ public class RepositoryServerResource
                 org.serviio.ui.representation.OnlineRepository repository = cast(org.serviio.ui.representation.OnlineRepository)rep.getOnlineRepositories().get(i);
                 String contentUrl = validateUrl(StringUtils.trim(repository.getContentUrl()), repository.getRepositoryType());
                 org.serviio.library.entities.OnlineRepository repoToSave = new org.serviio.library.entities.OnlineRepository(repository.getRepositoryType(), contentUrl, repository.getFileType(), repository.getRepositoryName(), Integer.valueOf(i + 1));
-                if ((repository.getRepositoryType() == OnlineRepository.OnlineRepositoryType.LIVE_STREAM) && (ObjectValidator.isNotEmpty(repository.getThumbnailUrl()))) {
+                if ((repository.getRepositoryType() == OnlineRepositoryType.LIVE_STREAM) && (ObjectValidator.isNotEmpty(repository.getThumbnailUrl()))) {
                     repoToSave.setThumbnailUrl(validateFeedUrl(StringUtils.trim(repository.getThumbnailUrl())));
                 }
                 repoToSave.setId(repository.getId());
@@ -185,9 +185,9 @@ public class RepositoryServerResource
         }
     }
 
-    protected String validateUrl(String urlString, OnlineRepository.OnlineRepositoryType type)
+    protected String validateUrl(String urlString, OnlineRepositoryType type)
     {
-        if ((type == OnlineRepository.OnlineRepositoryType.FEED) || (type == OnlineRepository.OnlineRepositoryType.WEB_RESOURCE)) {
+        if ((type == OnlineRepositoryType.FEED) || (type == OnlineRepositoryType.WEB_RESOURCE)) {
             return validateFeedUrl(urlString).toString();
         }
         String urlToCheck = normalizeLiveStreamUrl(urlString);

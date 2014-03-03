@@ -44,7 +44,7 @@ public class FeedParser
       setFeedThumbnail(feed, syndfeed);
       List!(SyndEntry) entries = syndfeed.getEntries();
       int maxFeedItemsToRetrieve = Configuration.getMaxNumberOfItemsForOnlineFeeds().intValue() != -1 ? Configuration.getMaxNumberOfItemsForOnlineFeeds().intValue() : entries.size();
-      FeedItemUrlExtractor suitablePlugin = cast(FeedItemUrlExtractor)findSuitableExtractorPlugin(feedUrl, OnlineRepository.OnlineRepositoryType.FEED);
+      FeedItemUrlExtractor suitablePlugin = cast(FeedItemUrlExtractor)findSuitableExtractorPlugin(feedUrl, OnlineRepositoryType.FEED);
       feed.setUsedExtractor(suitablePlugin);
       int itemOrder = 1;
       for (int i = 0; (i < entries.size()) && (itemOrder <= maxFeedItemsToRetrieve) && (this.isAlive); i++)

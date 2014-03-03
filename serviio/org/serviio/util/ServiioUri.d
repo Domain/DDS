@@ -1,5 +1,6 @@
 module org.serviio.util.ServiioUri;
 
+import java.lang;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +10,7 @@ import org.serviio.library.metadata.MediaFileType;
 public class ServiioUri
 {
     public static immutable String SCHEMA = "serviio";
-    private static final Pattern linkPattern = Pattern.compile("serviio://(\\w+):(\\w+)/?\\?(.+)", 2);
+    private static Pattern linkPattern = Pattern.compile("serviio://(\\w+):(\\w+)/?\\?(.+)", 2);
     private static immutable String PARAM_URL = "url";
     private static immutable String PARAM_THURL = "thUrl";
     private static immutable String PARAM_NAME = "name";
@@ -20,14 +21,14 @@ public class ServiioUri
     private static immutable String FILE_TYPE_AUDIO = "audio";
     private static immutable String FILE_TYPE_VIDEO = "video";
     private String repositoryUrl;
-    private MediaFileType fileType;
-    private OnlineRepository.OnlineRepositoryType repoType;
+    private MediaFileType _fileType;
+    private OnlineRepositoryType repoType;
     private String thumbnailUrl;
     private String repositoryName;
 
-    public this(MediaFileType fileType, OnlineRepository.OnlineRepositoryType repoType, String repositoryUrl, String thumbnailUrl, String repositoryName)
+    public this(MediaFileType _fileType, OnlineRepositoryType repoType, String repositoryUrl, String thumbnailUrl, String repositoryName)
     {
-        this.fileType = fileType;
+        this._fileType = _fileType;
         this.repoType = repoType;
         this.repositoryUrl = repositoryUrl;
         this.thumbnailUrl = thumbnailUrl;
@@ -41,8 +42,8 @@ public class ServiioUri
             Matcher m = linkPattern.matcher(uri);
             if ((m.find()) && (m.groupCount() == 3))
             {
-                MediaFileType fileType = fileType(m.group(1));
-                OnlineRepository.OnlineRepositoryType repoType = repositoryType(m.group(2));
+                MediaFileType _fileType = _fileType(m.group(1));
+                OnlineRepositoryType repoType = repositoryType(m.group(2));
                 String query = m.group(3);
                 if (ObjectValidator.isEmpty(query)) {
                     throw new IllegalArgumentException("Serviio URI path is missing: " + uri);
@@ -51,14 +52,14 @@ public class ServiioUri
                 if (!queryMap.containsKey("url")) {
                     throw new IllegalArgumentException("Serviio URI is invalid, missing url parameter: " + uri);
                 }
-                return new ServiioUri(fileType, repoType, cast(String)queryMap.get("url"), cast(String)queryMap.get("thUrl"), cast(String)queryMap.get("name"));
+                return new ServiioUri(_fileType, repoType, cast(String)queryMap.get("url"), cast(String)queryMap.get("thUrl"), cast(String)queryMap.get("name"));
             }
             throw new IllegalArgumentException("Serviio URI is invalid: " + uri);
         }
         return null;
     }
 
-    public String toString()
+    override public String toString()
     {
         return toURI();
     }
@@ -66,7 +67,7 @@ public class ServiioUri
     public String toURI()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append("serviio").append("://").append(fileType(this.fileType)).append(":").append(repositoryType(this.repoType));
+        builder.append("serviio").append("://").append(_fileType(this._fileType)).append(":").append(repositoryType(this.repoType));
         builder.append("?").append("url").append("=").append(HttpUtils.urlEncode(this.repositoryUrl));
         if (ObjectValidator.isNotEmpty(this.thumbnailUrl)) {
             builder.append("&").append("thUrl").append("=").append(HttpUtils.urlEncode(this.thumbnailUrl));
@@ -84,10 +85,10 @@ public class ServiioUri
 
     public MediaFileType getFileType()
     {
-        return this.fileType;
+        return this._fileType;
     }
 
-    public OnlineRepository.OnlineRepositoryType getRepoType()
+    public OnlineRepositoryType getRepoType()
     {
         return this.repoType;
     }
@@ -130,21 +131,21 @@ public class ServiioUri
         throw new IllegalArgumentException("Invalid media file type: " + ft);
     }
 
-    private static OnlineRepository.OnlineRepositoryType repositoryType(String rt)
+    private static OnlineRepositoryType repositoryType(String rt)
     {
         if (rt.equalsIgnoreCase("feed")) {
-            return OnlineRepository.OnlineRepositoryType.FEED;
+            return OnlineRepositoryType.FEED;
         }
         if (rt.equalsIgnoreCase("live")) {
-            return OnlineRepository.OnlineRepositoryType.LIVE_STREAM;
+            return OnlineRepositoryType.LIVE_STREAM;
         }
         if (rt.equalsIgnoreCase("web")) {
-            return OnlineRepository.OnlineRepositoryType.WEB_RESOURCE;
+            return OnlineRepositoryType.WEB_RESOURCE;
         }
         throw new IllegalArgumentException("Invalid online repository type: " + rt);
     }
 
-    private String repositoryType(OnlineRepository.OnlineRepositoryType rt)
+    private String repositoryType(OnlineRepositoryType rt)
     {
         switch (rt)
         {

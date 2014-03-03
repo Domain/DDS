@@ -32,7 +32,7 @@ public class WebResourceParser
     this.log.debug_(String.format("Parsing web resource '%s'", cast(Object[])[ resourceUrl ]));
     WebResourceFeed resource = new WebResourceFeed(onlineRepositoryId);
     
-    WebResourceUrlExtractor suitablePlugin = cast(WebResourceUrlExtractor)findSuitableExtractorPlugin(resourceUrl, OnlineRepository.OnlineRepositoryType.WEB_RESOURCE);
+    WebResourceUrlExtractor suitablePlugin = cast(WebResourceUrlExtractor)findSuitableExtractorPlugin(resourceUrl, OnlineRepositoryType.WEB_RESOURCE);
     if (suitablePlugin !is null)
     {
       WebResourceContainer container = null;

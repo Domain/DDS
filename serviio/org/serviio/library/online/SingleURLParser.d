@@ -22,7 +22,7 @@ public class SingleURLParser
     if (repository.getThumbnailUrl() !is null) {
       item.setThumbnail(new ImageDescriptor(repository.getThumbnailUrl()));
     }
-    item.setLive(repository.getRepoType() == OnlineRepository.OnlineRepositoryType.LIVE_STREAM);
+    item.setLive(repository.getRepoType() == OnlineRepositoryType.LIVE_STREAM);
     if (HttpUtils.isHttpUrl(repository.getRepositoryUrl())) {
       credentials = HttpUtils.getCredentialsFormUrl(repository.getRepositoryUrl());
     }

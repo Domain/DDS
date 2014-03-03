@@ -28,7 +28,7 @@ public class PluginCompilerThread
   private static final Logger log = LoggerFactory.getLogger!(PluginCompilerThread);
   private static final int PLUGIN_COMPILER_CHECK_INTERVAL = 10;
   private File pluginsFolder;
-  protected final Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) urlExtractors = new HashMap();
+  protected final Map!(AbstractUrlExtractor, OnlineRepositoryType) urlExtractors = new HashMap();
   private Map!(File, Date) seenFilesCache = new HashMap();
   private GroovyClassLoader gcl = new GroovyClassLoader();
   private bool workerRunning;
@@ -139,11 +139,11 @@ public class PluginCompilerThread
         AbstractUrlExtractor pluginInstance = cast(AbstractUrlExtractor)pluginClass.newInstance();
         if (FeedItemUrlExtractor.class_.isAssignableFrom(pluginClass))
         {
-          storePluginInCache(pluginInstance, OnlineRepository.OnlineRepositoryType.FEED);
+          storePluginInCache(pluginInstance, OnlineRepositoryType.FEED);
         }
         else if (WebResourceUrlExtractor.class_.isAssignableFrom(pluginClass))
         {
-          storePluginInCache(pluginInstance, OnlineRepository.OnlineRepositoryType.WEB_RESOURCE);
+          storePluginInCache(pluginInstance, OnlineRepositoryType.WEB_RESOURCE);
           feedPlugin = false;
         }
         else
@@ -174,7 +174,7 @@ public class PluginCompilerThread
     }
   }
   
-  private synchronized void storePluginInCache(AbstractUrlExtractor plugin, OnlineRepository.OnlineRepositoryType type)
+  private synchronized void storePluginInCache(AbstractUrlExtractor plugin, OnlineRepositoryType type)
   {
     if (this.urlExtractors.containsKey(plugin)) {
       this.urlExtractors.remove(plugin);
@@ -182,7 +182,7 @@ public class PluginCompilerThread
     this.urlExtractors.put(plugin, type);
   }
   
-  public Map!(AbstractUrlExtractor, OnlineRepository.OnlineRepositoryType) getUrlExtractors()
+  public Map!(AbstractUrlExtractor, OnlineRepositoryType) getUrlExtractors()
   {
     return Collections.unmodifiableMap(this.urlExtractors);
   }

@@ -1,13 +1,13 @@
 module org.serviio.library.dao.MusicTrackDAO;
 
+import java.lang;
 import java.util.List;
 import org.serviio.db.dao.GenericDAO;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.MusicTrack;
 import org.serviio.library.entities.Person:RoleType;
 
-public abstract interface MusicTrackDAO
-  : GenericDAO!(MusicTrack)
+public abstract interface MusicTrackDAO : GenericDAO!(MusicTrack)
 {
   public abstract List!(MusicTrack) retrieveMusicTracksForArtist(Long paramLong, AccessGroup paramAccessGroup, int paramInt1, int paramInt2);
   

@@ -46,7 +46,12 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractDeliveryEngine(RI, MI : MediaItem) : DeliveryEngine!(RI, MI)
 {
-    protected Logger log = LoggerFactory.getLogger!(AbstractDeliveryEngine);
+    protected Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AbstractDeliveryEngine);
+    }
 
     public static bool isHardSubsDelivered(DeliveryQuality quality, MediaItem mediaItem, Profile profile)
     {

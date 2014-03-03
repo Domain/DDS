@@ -12,7 +12,7 @@ public abstract interface OnlineRepositoryDAO
 {
   public abstract List!(OnlineRepository) findAll();
   
-  public abstract List!(OnlineRepository) getRepositories(List!(OnlineRepository.OnlineRepositoryType) paramList, MediaFileType paramMediaFileType, AccessGroup paramAccessGroup, bool paramBoolean);
+  public abstract List!(OnlineRepository) getRepositories(List!(OnlineRepositoryType) paramList, MediaFileType paramMediaFileType, AccessGroup paramAccessGroup, bool paramBoolean);
 }
 
 

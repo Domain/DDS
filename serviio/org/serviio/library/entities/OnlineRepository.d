@@ -1,24 +1,24 @@
 module org.serviio.library.entities.OnlineRepository;
 
+import java.lang;
 import java.net.URL;
 import java.util.List;
 import org.serviio.db.entities.PersistedEntity;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.ServiioUri;
 
-public class OnlineRepository
-: PersistedEntity
+public enum OnlineRepositoryType
+{
+    FEED,  LIVE_STREAM,  WEB_RESOURCE
+}
+
+public class OnlineRepository : PersistedEntity
 {
     private String repositoryUrl;
     private MediaFileType fileType;
     private OnlineRepositoryType repoType;
     private URL thumbnailUrl;
     private String repositoryName;
-
-    public static enum OnlineRepositoryType
-    {
-        FEED,  LIVE_STREAM,  WEB_RESOURCE
-    }
 
     private bool enabled = true;
     private List!(Long) accessGroupIds;
@@ -118,7 +118,7 @@ public class OnlineRepository
         this.order = order;
     }
 
-    public String toString()
+    override public String toString()
     {
         StringBuilder builder = new StringBuilder();
         builder.append("OnlineRepository [repositoryUrl=").append(this.repositoryUrl)
