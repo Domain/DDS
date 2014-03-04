@@ -6,7 +6,7 @@ public class ApplicationRepresentation
 {
     private String updateVersionAvailable;
     private String ver;
-    private LicensingManager.ServiioEdition edition;
+    private ServiioEdition edition;
     private LicenseRepresentation license;
     private String databaseUpdateId;
 
@@ -30,12 +30,12 @@ public class ApplicationRepresentation
         this.ver = ver;
     }
 
-    public LicensingManager.ServiioEdition getEdition()
+    public ServiioEdition getEdition()
     {
         return this.edition;
     }
 
-    public void setEdition(LicensingManager.ServiioEdition edition)
+    public void setEdition(ServiioEdition edition)
     {
         this.edition = edition;
     }

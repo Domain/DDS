@@ -25,7 +25,7 @@ public class ApplicationServerResource
     ServiioLicense lic = LicensingManager.getInstance().getLicense();
     
     rep.setEdition(lic.getEdition());
-    if (lic.getEdition() != LicensingManager.ServiioEdition.FREE) {
+    if (lic.getEdition() != ServiioEdition.FREE) {
       rep.setLicense(buildLicense(lic));
     }
     return rep;

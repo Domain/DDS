@@ -207,7 +207,7 @@ public class MediaServer
     {
         ServiioLicense lic = LicensingManager.getInstance().getLicense();
         String licenseInfo = lic.getEdition().toString();
-        if (lic.getEdition() == LicensingManager.ServiioEdition.PRO) {
+        if (lic.getEdition() == ServiioEdition.PRO) {
             licenseInfo = licenseInfo + String.format(" (%s, id: %s)", cast(Object[])[ lic.getType(), lic.getId() ]);
         }
         log.info("------------------------------------------------------------------------");

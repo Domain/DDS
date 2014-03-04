@@ -1,6 +1,7 @@
 module org.serviio.library.playlist.PlaylistType;
 
 import std.traits;
+import java.lang.String;
 
 public enum PlaylistType
 {

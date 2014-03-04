@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class OnlineItemService
 {
     private static OnlineLibraryManager onlineLibraryManager = OnlineLibraryManager.getInstance();
-    private static final Logger log = LoggerFactory.getLogger!(OnlineItemService);
+    private static Logger log = LoggerFactory.getLogger!(OnlineItemService);
 
     public static OnlineResourceContainer/*!(?, ?)*/ findContainerResourceById(Long onlineRepositoryId)
     {

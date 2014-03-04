@@ -5,16 +5,16 @@ import org.serviio.licensing.LicensingManager;
 
 public class ServiioLicense
 {
-    private LicensingManager.ServiioEdition edition;
-    private LicensingManager.ServiioLicenseType type;
+    private ServiioEdition edition;
+    private ServiioLicenseType type;
     private String name;
     private String email;
     private String id;
     private String ver;
     private Long remainingMillis;
-    public static immutable ServiioLicense FREE_LICENSE = new ServiioLicense(null, LicensingManager.ServiioEdition.FREE, null, null, null, null, null);
+    public static immutable ServiioLicense FREE_LICENSE = new ServiioLicense(null, ServiioEdition.FREE, null, null, null, null, null);
 
-    public this(String id, LicensingManager.ServiioEdition edition, LicensingManager.ServiioLicenseType type, String name, String email, String ver, Long remainingMillis)
+    public this(String id, ServiioEdition edition, ServiioLicenseType type, String name, String email, String ver, Long remainingMillis)
     {
         this.id = id;
         this.edition = edition;
@@ -27,15 +27,15 @@ public class ServiioLicense
 
     public bool isBundled()
     {
-        return (this.type is null) || (this.type == LicensingManager.ServiioLicenseType.BETA) || (this.type == LicensingManager.ServiioLicenseType.EVALUATION);
+        return (this.type is null) || (this.type == ServiioLicenseType.BETA) || (this.type == ServiioLicenseType.EVALUATION);
     }
 
-    public LicensingManager.ServiioEdition getEdition()
+    public ServiioEdition getEdition()
     {
         return this.edition;
     }
 
-    public LicensingManager.ServiioLicenseType getType()
+    public ServiioLicenseType getType()
     {
         return this.type;
     }

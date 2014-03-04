@@ -3,10 +3,6 @@ module java.io.Closeable;
 
 import java.lang.exceptions;
 
-public class Closeable
+public interface Closeable
 {
-    public this()
-    {
-        implMissing();
-    }
 }

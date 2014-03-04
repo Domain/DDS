@@ -10,13 +10,13 @@ import org.serviio.library.online.AbstractUrlExtractor;
 import org.serviio.util.ObjectValidator;
 import org.serviio.library.online.metadata.OnlineCachable;
 
-public abstract class OnlineResourceContainer(T /*: OnlineContainerItem!(?)*/, E /*: AbstractUrlExtractor*/) : OnlineCachable
+public abstract class OnlineResourceContainer(I /*: OnlineContainerItem!(?)*/, E : AbstractUrlExtractor) : OnlineCachable
 {
     private Long onlineRepositoryId;
     private String title;
     private String domain;
     private ImageDescriptor thumbnail;
-    private List!(T) items = new ArrayList!T();
+    private List!(I) items = new ArrayList!I();
     private E usedExtractor;
 
     public this(Long onlineRepositoryId)
@@ -47,12 +47,12 @@ public abstract class OnlineResourceContainer(T /*: OnlineContainerItem!(?)*/, E
         this.title = title;
     }
 
-    public List!(T) getItems()
+    public List!(I) getItems()
     {
         return this.items;
     }
 
-    public void setItems(List!(T) items)
+    public void setItems(List!(I) items)
     {
         this.items = items;
     }

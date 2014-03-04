@@ -1,5 +1,6 @@
 module org.serviio.dlna.DisplayAspectRatio;
 
+import java.lang.String;
 import java.text.DecimalFormat;
 
 enum DisplayAspectRatio : int[]

@@ -1,5 +1,6 @@
 module org.serviio.delivery.subtitles.SubtitlesService;
 
+import java.lang;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,15 +28,15 @@ import org.serviio.profile.Profile;
 import org.serviio.util.CollectionUtils;
 import org.serviio.util.FileUtils;
 import org.serviio.util.StringUtils;
+import org.serviio.delivery.subtitles.SubtitlesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SubtitlesService
-: Service
+public class SubtitlesService : Service
 {
     public static immutable String FONT_CONFIG_XML = "fonts.conf";
     public static immutable String FONT_CONFIG_DIR = FileUtils.getFilePathOfClasspathResource("/fonts", SubtitlesService.class_);
-    private static final Logger log = LoggerFactory.getLogger!(SubtitlesService);
+    private static Logger log = LoggerFactory.getLogger!(SubtitlesService);
     private static immutable String subtitleFileExtensionsRegEx = "(" + CollectionUtils.listToCSV(SubtitleCodec.getAllSupportedExtensions(), "|", false) + ")";
 
     public static bool isSoftSubsAvailable(Video item, Profile rendererProfile)

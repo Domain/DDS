@@ -1,5 +1,6 @@
 module org.serviio.library.dao.PlaylistDAO;
 
+import java.lang;
 import java.util.List;
 import org.serviio.db.dao.GenericDAO;
 import org.serviio.library.entities.AccessGroup;

@@ -112,8 +112,8 @@ public class LicenseValidator
     //    String name = lic.getProperty(LicenseProperties.NAME.getName());
     //    String email = lic.getProperty(LicenseProperties.EMAIL.getName());
     //    String ver = lic.getProperty(LicenseProperties.VERSION.getName());
-    //    LicensingManager.ServiioEdition edition = LicensingManager.ServiioEdition.valueOf(lic.getProperty(LicenseProperties.EDITION.getName()));
-    //    LicensingManager.ServiioLicenseType type = LicensingManager.ServiioLicenseType.valueOf(lic.getProperty(LicenseProperties.TYPE.getName()));
+    //    ServiioEdition edition = ServiioEdition.valueOf(lic.getProperty(LicenseProperties.EDITION.getName()));
+    //    ServiioLicenseType type = ServiioLicenseType.valueOf(lic.getProperty(LicenseProperties.TYPE.getName()));
     //    return new ServiioLicense(id, edition, type, name, email, ver, cast(Long)license.getValueB());
     //}
 

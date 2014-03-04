@@ -5,7 +5,7 @@ import org.serviio.licensing.LicensingManager:ServiioLicenseType;
 public class LicenseRepresentation
 {
     private String id;
-    private LicensingManager.ServiioLicenseType type;
+    private ServiioLicenseType type;
     private String name;
     private String email;
     private Integer expiresInMinutes;
@@ -20,12 +20,12 @@ public class LicenseRepresentation
         this.id = id;
     }
 
-    public LicensingManager.ServiioLicenseType getType()
+    public ServiioLicenseType getType()
     {
         return this.type;
     }
 
-    public void setType(LicensingManager.ServiioLicenseType type)
+    public void setType(ServiioLicenseType type)
     {
         this.type = type;
     }

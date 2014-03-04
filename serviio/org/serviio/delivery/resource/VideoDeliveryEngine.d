@@ -1,5 +1,6 @@
 module org.serviio.delivery.resource.VideoDeliveryEngine;
 
+import java.lang.Long;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -41,7 +42,7 @@ public class VideoDeliveryEngine
         return instance;
     }
 
-    protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveOriginalMediaInfo(Video mediaItem, Profile rendererProfile)
+    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveOriginalMediaInfo(Video mediaItem, Profile rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
         LinkedHashMap!(QualityType, List!(VideoMediaInfo)) mediaInfoMap = new LinkedHashMap();
@@ -53,7 +54,7 @@ public class VideoDeliveryEngine
         return mediaInfoMap;
     }
 
-    protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveTranscodedMediaInfo(Video mediaItem, Profile rendererProfile, Long fileSize)
+    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveTranscodedMediaInfo(Video mediaItem, Profile rendererProfile, Long fileSize)
     {
         LinkedHashMap!(QualityType, List!(VideoMediaInfo)) transcodedMI = new LinkedHashMap();
         Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);
@@ -91,7 +92,7 @@ public class VideoDeliveryEngine
         return new LinkedHashMap();
     }
 
-    public TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, Video mediaItem)
+    override public TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, Video mediaItem)
     {
         Iterator i;
         if ((tDefs !is null) && (tDefs.size() > 0)) {

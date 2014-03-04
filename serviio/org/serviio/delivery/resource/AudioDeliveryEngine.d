@@ -37,7 +37,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
         return instance;
     }
 
-    protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
+    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
         LinkedHashMap!(QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap();
@@ -49,7 +49,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
         return result;
     }
 
-    protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
+    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
     {
         LinkedHashMap!(QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap();
         Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);
@@ -82,7 +82,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
         return new LinkedHashMap();
     }
 
-    protected TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, MusicTrack mediaItem)
+    override protected TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, MusicTrack mediaItem)
     {
         Iterator i;
         if ((tDefs !is null) && (tDefs.size() > 0)) {

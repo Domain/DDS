@@ -283,7 +283,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
         removeOnlineContentFromCache(feedUrl, onlineRepositoryId, false);
     }
 
-    private bool isResourceRefreshNeeded(URL resourceUrl, OnlineResourceContainer/*!(?, ?)*/ resource)
+    private bool isResourceRefreshNeeded(I, E)(URL resourceUrl, OnlineResourceContainer!(I, E) resource)
     {
         synchronized (this.feedExpiryMonitor)
         {
@@ -293,7 +293,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
                 Date currentDate = new Date();
                 bool resourceExpired = currentDate.after(expiryDate);
                 if ((!resourceExpired) && (resource !is null)) {
-                    foreach (OnlineContainerItem/*!(?)*/ item ; resource.getItems()) {
+                    foreach (OnlineContainerItem!I item ; resource.getItems()) {
                         if (item.getExpiresOn() !is null) {
                             if (currentDate.after(DateUtils.minusMinutes(item.getExpiresOn(), 5)))
                             {
@@ -314,10 +314,10 @@ public class OnlineLibraryManager : AbstractLibraryManager
         }
     }
 
-    private Date getEarliestItemExpiryDate(OnlineResourceContainer/*!(?, ?)*/ resource)
+    private Date getEarliestItemExpiryDate(I, E)(OnlineResourceContainer!(I, E) resource)
     {
         Date earliestDate = null;
-        foreach (OnlineContainerItem/*!(?)*/ item ; resource.getItems()) {
+        foreach (OnlineContainerItem!I item ; resource.getItems()) {
             if (item.getExpiresOn() !is null) {
                 earliestDate = earliestDate.after(item.getExpiresOn()) ? item.getExpiresOn() : earliestDate is null ? item.getExpiresOn() : earliestDate;
             }
@@ -354,7 +354,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
         return cal.getTime();
     }
 
-    private void storeResourceExpiryDate(String feedUrl, OnlineResourceContainer/*!(?, ?)*/ resource)
+    private void storeResourceExpiryDate(I, E)(String feedUrl, OnlineResourceContainer!(I, E) resource)
     {
         synchronized (this.feedExpiryMonitor)
         {

@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
 
+import java.lang.Long;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 public class ResourceValuesBuilder
 {
-    private static final Logger log = LoggerFactory.getLogger!(ResourceValuesBuilder);
+    private static Logger log = LoggerFactory.getLogger!(ResourceValuesBuilder);
 
     public static final Resource generateSubtitlesResource(Video item, Profile rendererProfile)
     {

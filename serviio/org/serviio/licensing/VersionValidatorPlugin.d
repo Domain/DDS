@@ -23,7 +23,7 @@ public final class VersionValidatorPlugin : ValidatorPlugin
         try
         {
             passed = isSupportedVersion(currentVersion, licenseVersion);
-            passed = (passed) || (license.getProperty(LicenseProperties.TYPE.getName()).equals(LicensingManager.ServiioLicenseType.UNLIMITED.toString()));
+            passed = (passed) || (license.getProperty(LicenseProperties.TYPE.getName()).equals(ServiioLicenseType.UNLIMITED.toString()));
         }
         catch (Exception e)
         {

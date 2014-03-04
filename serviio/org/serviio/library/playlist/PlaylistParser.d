@@ -1,5 +1,6 @@
 module org.serviio.library.playlist.PlaylistParser;
 
+import java.lang.String;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,12 +8,13 @@ import java.io.InputStream;
 import org.serviio.util.FileUtils;
 import org.serviio.util.HttpClient;
 import org.serviio.util.HttpUtils;
+import org.serviio.library.playlist.ParsedPlaylist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PlaylistParser
 {
-    private static final Logger log = LoggerFactory.getLogger!(PlaylistParser);
+    private static Logger log = LoggerFactory.getLogger!(PlaylistParser);
     private static immutable int ONLINE_MAX_BYTES_TO_READ = 102400;
     private static PlaylistParser instance;
 
