@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.PresentationServerResource;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,107 +21,105 @@ import org.serviio.upnp.service.contentdirectory.definition.StaticContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.i18n.BrowsingCategoriesMessages;
 import org.slf4j.Logger;
 
-public class PresentationServerResource
-  : AbstractServerResource
-  , PresentationResource
+public class PresentationServerResource : AbstractServerResource, PresentationResource
 {
-  public PresentationRepresentation load()
-  {
-    PresentationRepresentation rep = new PresentationRepresentation();
-    initCategories(rep);
-    rep.setLanguage(Configuration.getBrowseMenuPreferredLanguage());
-    rep.setShowParentCategoryTitle(Configuration.isBrowseMenuShowNameOfParentCategory());
-    rep.setNumberOfFilesForDynamicCategories(Configuration.getNumberOfFilesForDynamicCategories());
-    rep.setFilterOutSeries(Configuration.isBrowseFilterOutSeries());
-    return rep;
-  }
-  
-  public ResultRepresentation save(PresentationRepresentation rep)
-  {
-    bool cdsUpdateNeeded = updateCategories(rep);
-    if (!Configuration.getBrowseMenuPreferredLanguage().equals(rep.getLanguage()))
+    public PresentationRepresentation load()
     {
-      Configuration.setBrowseMenuPreferredLanguage(rep.getLanguage());
-      BrowsingCategoriesMessages.loadLocale(Language.getLocale(Configuration.getBrowseMenuPreferredLanguage()));
-      cdsUpdateNeeded = true;
+        PresentationRepresentation rep = new PresentationRepresentation();
+        initCategories(rep);
+        rep.setLanguage(Configuration.getBrowseMenuPreferredLanguage());
+        rep.setShowParentCategoryTitle(Configuration.isBrowseMenuShowNameOfParentCategory());
+        rep.setNumberOfFilesForDynamicCategories(Configuration.getNumberOfFilesForDynamicCategories());
+        rep.setFilterOutSeries(Configuration.isBrowseFilterOutSeries());
+        return rep;
     }
-    if (Configuration.isBrowseMenuShowNameOfParentCategory() != rep.isShowParentCategoryTitle())
+
+    public ResultRepresentation save(PresentationRepresentation rep)
     {
-      Configuration.setBrowseMenuShowNameOfParentCategory(rep.isShowParentCategoryTitle());
-      cdsUpdateNeeded = true;
-    }
-    if (Configuration.isBrowseFilterOutSeries() != rep.isFilterOutSeries())
-    {
-      Configuration.setBrowseFilterOutSeries(rep.isFilterOutSeries());
-      cdsUpdateNeeded = true;
-    }
-    if (Configuration.getNumberOfFilesForDynamicCategories() != rep.getNumberOfFilesForDynamicCategories())
-    {
-      Configuration.setNumberOfFilesForDynamicCategories(rep.getNumberOfFilesForDynamicCategories());
-      cdsUpdateNeeded = true;
-    }
-    if (cdsUpdateNeeded) {
-      getCDS().incrementUpdateID();
-    }
-    return responseOk();
-  }
-  
-  private void initCategories(PresentationRepresentation rep)
-  {
-    List!(BrowsingCategory) categories = findEditableContainers(Definition.instance().getContainer("0"));
-    
-    rep.getCategories().addAll(categories);
-  }
-  
-  private List!(BrowsingCategory) findEditableContainers(ContainerNode parent)
-  {
-    Definition def = Definition.instance();
-    List!(BrowsingCategory) categories = new ArrayList();
-    foreach (DefinitionNode node ; parent.getChildNodes()) {
-      if (( cast(StaticContainerNode)node !is null ))
-      {
-        StaticContainerNode container = cast(StaticContainerNode)node;
-        if (container.isEditable())
+        bool cdsUpdateNeeded = updateCategories(rep);
+        if (!Configuration.getBrowseMenuPreferredLanguage().equals(rep.getLanguage()))
         {
-          BrowsingCategory category = new BrowsingCategory(container.getId(), container.getTitle(), def.getContainerVisibility(container.getId(), false));
-          categories.add(category);
-          category.getSubCategories().addAll(findEditableContainers(container));
+            Configuration.setBrowseMenuPreferredLanguage(rep.getLanguage());
+            BrowsingCategoriesMessages.loadLocale(Language.getLocale(Configuration.getBrowseMenuPreferredLanguage()));
+            cdsUpdateNeeded = true;
         }
-      }
+        if (Configuration.isBrowseMenuShowNameOfParentCategory() != rep.isShowParentCategoryTitle())
+        {
+            Configuration.setBrowseMenuShowNameOfParentCategory(rep.isShowParentCategoryTitle());
+            cdsUpdateNeeded = true;
+        }
+        if (Configuration.isBrowseFilterOutSeries() != rep.isFilterOutSeries())
+        {
+            Configuration.setBrowseFilterOutSeries(rep.isFilterOutSeries());
+            cdsUpdateNeeded = true;
+        }
+        if (Configuration.getNumberOfFilesForDynamicCategories() != rep.getNumberOfFilesForDynamicCategories())
+        {
+            Configuration.setNumberOfFilesForDynamicCategories(rep.getNumberOfFilesForDynamicCategories());
+            cdsUpdateNeeded = true;
+        }
+        if (cdsUpdateNeeded) {
+            getCDS().incrementUpdateID();
+        }
+        return responseOk();
     }
-    return categories;
-  }
-  
-  private bool updateCategories(PresentationRepresentation rep)
-  {
-    if (rep.getCategories() !is null)
+
+    private void initCategories(PresentationRepresentation rep)
     {
-      this.log.debug_("Updating browsing categories' configuration");
-      Map!(String, String) config = new LinkedHashMap();
-      foreach (BrowsingCategory category ; rep.getCategories()) {
-        addCategoryToConfig(category, config);
-      }
-      Configuration.setBrowseMenuItemOptions(config);
-      return true;
+        List!(BrowsingCategory) categories = findEditableContainers(Definition.instance().getContainer("0"));
+
+        rep.getCategories().addAll(categories);
     }
-    return false;
-  }
-  
-  private void addCategoryToConfig(BrowsingCategory category, Map!(String, String) config)
-  {
-    if (category.getVisibility() != ContainerVisibilityType.DISPLAYED) {
-      config.put(category.getId(), category.getVisibility().toString());
+
+    private List!(BrowsingCategory) findEditableContainers(ContainerNode parent)
+    {
+        Definition def = Definition.instance();
+        List!(BrowsingCategory) categories = new ArrayList();
+        foreach (DefinitionNode node ; parent.getChildNodes()) {
+            if (( cast(StaticContainerNode)node !is null ))
+            {
+                StaticContainerNode container = cast(StaticContainerNode)node;
+                if (container.isEditable())
+                {
+                    BrowsingCategory category = new BrowsingCategory(container.getId(), container.getTitle(), def.getContainerVisibility(container.getId(), false));
+                    categories.add(category);
+                    category.getSubCategories().addAll(findEditableContainers(container));
+                }
+            }
+        }
+        return categories;
     }
-    if (category.getSubCategories() !is null) {
-      foreach (BrowsingCategory subCategory ; category.getSubCategories()) {
-        addCategoryToConfig(subCategory, config);
-      }
+
+    private bool updateCategories(PresentationRepresentation rep)
+    {
+        if (rep.getCategories() !is null)
+        {
+            this.log.debug_("Updating browsing categories' configuration");
+            Map!(String, String) config = new LinkedHashMap();
+            foreach (BrowsingCategory category ; rep.getCategories()) {
+                addCategoryToConfig(category, config);
+            }
+            Configuration.setBrowseMenuItemOptions(config);
+            return true;
+        }
+        return false;
     }
-  }
+
+    private void addCategoryToConfig(BrowsingCategory category, Map!(String, String) config)
+    {
+        if (category.getVisibility() != ContainerVisibilityType.DISPLAYED) {
+            config.put(category.getId(), category.getVisibility().toString());
+        }
+        if (category.getSubCategories() !is null) {
+            foreach (BrowsingCategory subCategory ; category.getSubCategories()) {
+                addCategoryToConfig(subCategory, config);
+            }
+        }
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.ui.resources.server.PresentationServerResource
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.ui.resources.server.PresentationServerResource
+* JD-Core Version:    0.7.0.1
+*/

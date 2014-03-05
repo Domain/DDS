@@ -26,10 +26,15 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoverySSDPMessageListener : AbstractSSDPMessageListener, Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(DiscoverySSDPMessageListener);
+    private static Logger log;
     private bool workerRunning = false;
     private MulticastSocket socket;
     private int advertisementDuration;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DiscoverySSDPMessageListener);
+    }
 
     public this(int advertisementDuration)
     {

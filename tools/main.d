@@ -247,6 +247,24 @@ class B
     }
 }
 
+class temp(T)
+{
+}
+
+auto returnTemp(int a)
+{
+    if (a % 2 == 0)
+    {
+        temp!int i;
+        return i;
+    }
+    else
+    {
+        temp!double d;
+        return d;
+    }
+}
+
 void test()
 {
     A a;

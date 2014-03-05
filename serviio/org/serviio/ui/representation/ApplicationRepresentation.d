@@ -1,6 +1,8 @@
 module org.serviio.ui.representation.ApplicationRepresentation;
 
+import java.lang.String;
 import org.serviio.licensing.LicensingManager:ServiioEdition;
+import org.serviio.ui.representation.LicenseRepresentation;
 
 public class ApplicationRepresentation
 {

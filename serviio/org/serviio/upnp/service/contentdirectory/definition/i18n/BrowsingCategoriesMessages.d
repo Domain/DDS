@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.definition.i18n.BrowsingCategoriesMessages;
 
+import java.lang.String;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -13,12 +14,12 @@ import org.slf4j.LoggerFactory;
 
 public class BrowsingCategoriesMessages
 {
-    private static final Logger log = LoggerFactory.getLogger!(BrowsingCategoriesMessages);
+    private static Logger log = LoggerFactory.getLogger!(BrowsingCategoriesMessages);
     private static ResourceBundle selectedRb;
     private static ResourceBundle defaultRb;
     private static Locale defaultLocale = Locale.ENGLISH;
     private static immutable String BUNDLE = "org.serviio.upnp.service.contentdirectory.definition.i18n.browsingCategories";
-    private static ResourceBundle.Control control = new GetLocalizationMessageBundleControl();
+    private static Control control = new GetLocalizationMessageBundleControl();
 
     static this()
     {

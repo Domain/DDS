@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.ReferenceDataServerResource;
 
+import java.lang.String;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -33,189 +34,187 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 
-public class ReferenceDataServerResource
-  : AbstractServerResource
-  , ReferenceDataResource
+public class ReferenceDataServerResource : AbstractServerResource, ReferenceDataResource
 {
-  private String name;
-  
-  public ReferenceDataRepresentation load()
-  {
-    return getData();
-  }
-  
-  protected void doInit()
-  {
-    this.name = (cast(String)getRequestAttributes().get("name"));
-  }
-  
-  private ReferenceDataRepresentation getData()
-  {
-    if (ObjectValidator.isEmpty(this.name))
+    private String name;
+
+    public ReferenceDataRepresentation load()
     {
-      setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        return getData();
     }
-    else
+
+    protected void doInit()
     {
-      if (this.name.equalsIgnoreCase("cpu-cores")) {
-        return new ReferenceDataRepresentation("numberOfCPUCores", String.valueOf(getNumberOfCPUCores()));
-      }
-      if (this.name.equalsIgnoreCase("profiles")) {
-        return getProfiles();
-      }
-      if (this.name.equalsIgnoreCase("metadataLanguages")) {
-        return getMetadataLanguages();
-      }
-      if (this.name.equalsIgnoreCase("browsingCategoriesLanguages")) {
-        return getBrowsingCategoriesLanguages();
-      }
-      if (this.name.equalsIgnoreCase("descriptiveMetadataExtractors")) {
-        return getDescriptionMetadataExtractors();
-      }
-      if (this.name.equalsIgnoreCase("categoryVisibilityTypes")) {
-        return getCategoryVisibilityTypes();
-      }
-      if (this.name.equalsIgnoreCase("onlineRepositoryTypes")) {
-        return getOnlineRepositoryTypes();
-      }
-      if (this.name.equalsIgnoreCase("onlineContentQualities")) {
-        return getOnlineContentQualities();
-      }
-      if (this.name.equalsIgnoreCase("accessGroups")) {
-        return getAccessGroups();
-      }
-      if (this.name.equalsIgnoreCase("remoteDeliveryQualities")) {
-        return getRemoteDeliveryQualities();
-      }
-      if (this.name.equalsIgnoreCase("networkInterfaces")) {
-        return getNetworkInterfaces();
-      }
-      setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        this.name = (cast(String)getRequestAttributes().get("name"));
     }
-    return null;
-  }
-  
-  private int getNumberOfCPUCores()
-  {
-    return Runtime.getRuntime().availableProcessors();
-  }
-  
-  private ReferenceDataRepresentation getProfiles()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    List!(Profile) allProfiles = ProfileManager.getAllSelectableProfiles();
-    Collections.sort(allProfiles);
-    foreach (Profile pd ; allProfiles) {
-      rep.addValue(pd.getId(), pd.getName());
-    }
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getMetadataLanguages()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    foreach (Language l ; MetadataLanguages.getLanguages()) {
-      rep.addValue(l.getCode(), l.getName());
-    }
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getBrowsingCategoriesLanguages()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    foreach (Language l ; BrowsingCategoriesLanguages.getLanguages()) {
-      rep.addValue(l.getCode(), l.getName());
-    }
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getDescriptionMetadataExtractors()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue("NONE", "No descriptive metadata");
-    rep.addValue(ExtractorType.ONLINE_VIDEO_SOURCES.toString(), "Online metadata sources");
-    rep.addValue(ExtractorType.SWISSCENTER.toString(), "Swisscenter");
-    rep.addValue(ExtractorType.XBMC.toString(), "XBMC .nfo files");
-    rep.addValue(ExtractorType.MYMOVIES.toString(), "MyMovies");
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getCategoryVisibilityTypes()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(ContainerVisibilityType.DISPLAYED.toString(), "Display category");
-    rep.addValue(ContainerVisibilityType.CONTENT_DISPLAYED.toString(), "Display content only");
-    rep.addValue(ContainerVisibilityType.DISABLED.toString(), "Disabled");
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getOnlineRepositoryTypes()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(OnlineRepositoryType.FEED.toString(), "RSS/Atom feed");
-    rep.addValue(OnlineRepositoryType.LIVE_STREAM.toString(), "Live stream");
-    rep.addValue(OnlineRepositoryType.WEB_RESOURCE.toString(), "Web Resource");
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getOnlineContentQualities()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(PreferredQuality.LOW.toString(), "Low");
-    rep.addValue(PreferredQuality.MEDIUM.toString(), "Medium");
-    rep.addValue(PreferredQuality.HIGH.toString(), "High");
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getRemoteDeliveryQualities()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    rep.addValue(QualityType.LOW.toString(), "Low");
-    rep.addValue(QualityType.MEDIUM.toString(), "Medium");
-    rep.addValue(QualityType.ORIGINAL.toString(), "High");
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getAccessGroups()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    List!(AccessGroup) groups = DAOFactory.getAccessGroupDAO().findAll();
-    foreach (AccessGroup group ; groups) {
-      rep.addValue(group.getId().toString(), group.getName());
-    }
-    return rep;
-  }
-  
-  private ReferenceDataRepresentation getNetworkInterfaces()
-  {
-    ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
-    try
+
+    private ReferenceDataRepresentation getData()
     {
-      List!(NetworkInterface) nics = new ArrayList(MultiCastUtils.findAllAvailableInterfaces());
-      Collections.sort(nics, new NetworkInterfaceComparator());
-      for (i = nics.iterator(); i.hasNext();)
-      {
-        nic = cast(NetworkInterface)i.next();
-        List!(NicIP) ips = MultiCastUtils.findIPAddresses(nic);
-        foreach (NicIP ip ; ips) {
-          if (ObjectValidator.isNotEmpty(ip.getNicName())) {
-            rep.addValue(ip.nameWithIndex(), String.format("%s (%s)", cast(Object[])[ ip.getIp().getHostAddress(), StringUtils.trimWithEllipsis(nic.getDisplayName(), 40) ]));
-          }
+        if (ObjectValidator.isEmpty(this.name))
+        {
+            setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
-      }
+        else
+        {
+            if (this.name.equalsIgnoreCase("cpu-cores")) {
+                return new ReferenceDataRepresentation("numberOfCPUCores", String.valueOf(getNumberOfCPUCores()));
+            }
+            if (this.name.equalsIgnoreCase("profiles")) {
+                return getProfiles();
+            }
+            if (this.name.equalsIgnoreCase("metadataLanguages")) {
+                return getMetadataLanguages();
+            }
+            if (this.name.equalsIgnoreCase("browsingCategoriesLanguages")) {
+                return getBrowsingCategoriesLanguages();
+            }
+            if (this.name.equalsIgnoreCase("descriptiveMetadataExtractors")) {
+                return getDescriptionMetadataExtractors();
+            }
+            if (this.name.equalsIgnoreCase("categoryVisibilityTypes")) {
+                return getCategoryVisibilityTypes();
+            }
+            if (this.name.equalsIgnoreCase("onlineRepositoryTypes")) {
+                return getOnlineRepositoryTypes();
+            }
+            if (this.name.equalsIgnoreCase("onlineContentQualities")) {
+                return getOnlineContentQualities();
+            }
+            if (this.name.equalsIgnoreCase("accessGroups")) {
+                return getAccessGroups();
+            }
+            if (this.name.equalsIgnoreCase("remoteDeliveryQualities")) {
+                return getRemoteDeliveryQualities();
+            }
+            if (this.name.equalsIgnoreCase("networkInterfaces")) {
+                return getNetworkInterfaces();
+            }
+            setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+        }
+        return null;
     }
-    catch (SocketException e)
+
+    private int getNumberOfCPUCores()
     {
-      Iterator i;
-      NetworkInterface nic;
-      this.log.warn("Could not get list of all available NICs", e);
+        return Runtime.getRuntime().availableProcessors();
     }
-    return rep;
-  }
+
+    private ReferenceDataRepresentation getProfiles()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        List!(Profile) allProfiles = ProfileManager.getAllSelectableProfiles();
+        Collections.sort(allProfiles);
+        foreach (Profile pd ; allProfiles) {
+            rep.addValue(pd.getId(), pd.getName());
+        }
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getMetadataLanguages()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        foreach (Language l ; MetadataLanguages.getLanguages()) {
+            rep.addValue(l.getCode(), l.getName());
+        }
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getBrowsingCategoriesLanguages()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        foreach (Language l ; BrowsingCategoriesLanguages.getLanguages()) {
+            rep.addValue(l.getCode(), l.getName());
+        }
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getDescriptionMetadataExtractors()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        rep.addValue("NONE", "No descriptive metadata");
+        rep.addValue(ExtractorType.ONLINE_VIDEO_SOURCES.toString(), "Online metadata sources");
+        rep.addValue(ExtractorType.SWISSCENTER.toString(), "Swisscenter");
+        rep.addValue(ExtractorType.XBMC.toString(), "XBMC .nfo files");
+        rep.addValue(ExtractorType.MYMOVIES.toString(), "MyMovies");
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getCategoryVisibilityTypes()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        rep.addValue(ContainerVisibilityType.DISPLAYED.toString(), "Display category");
+        rep.addValue(ContainerVisibilityType.CONTENT_DISPLAYED.toString(), "Display content only");
+        rep.addValue(ContainerVisibilityType.DISABLED.toString(), "Disabled");
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getOnlineRepositoryTypes()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        rep.addValue(OnlineRepositoryType.FEED.toString(), "RSS/Atom feed");
+        rep.addValue(OnlineRepositoryType.LIVE_STREAM.toString(), "Live stream");
+        rep.addValue(OnlineRepositoryType.WEB_RESOURCE.toString(), "Web Resource");
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getOnlineContentQualities()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        rep.addValue(PreferredQuality.LOW.toString(), "Low");
+        rep.addValue(PreferredQuality.MEDIUM.toString(), "Medium");
+        rep.addValue(PreferredQuality.HIGH.toString(), "High");
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getRemoteDeliveryQualities()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        rep.addValue(QualityType.LOW.toString(), "Low");
+        rep.addValue(QualityType.MEDIUM.toString(), "Medium");
+        rep.addValue(QualityType.ORIGINAL.toString(), "High");
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getAccessGroups()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        List!(AccessGroup) groups = DAOFactory.getAccessGroupDAO().findAll();
+        foreach (AccessGroup group ; groups) {
+            rep.addValue(group.getId().toString(), group.getName());
+        }
+        return rep;
+    }
+
+    private ReferenceDataRepresentation getNetworkInterfaces()
+    {
+        ReferenceDataRepresentation rep = new ReferenceDataRepresentation();
+        try
+        {
+            List!(NetworkInterface) nics = new ArrayList(MultiCastUtils.findAllAvailableInterfaces());
+            Collections.sort(nics, new NetworkInterfaceComparator());
+            for (i = nics.iterator(); i.hasNext();)
+            {
+                nic = cast(NetworkInterface)i.next();
+                List!(NicIP) ips = MultiCastUtils.findIPAddresses(nic);
+                foreach (NicIP ip ; ips) {
+                    if (ObjectValidator.isNotEmpty(ip.getNicName())) {
+                        rep.addValue(ip.nameWithIndex(), String.format("%s (%s)", cast(Object[])[ ip.getIp().getHostAddress(), StringUtils.trimWithEllipsis(nic.getDisplayName(), 40) ]));
+                    }
+                }
+            }
+        }
+        catch (SocketException e)
+        {
+            Iterator i;
+            NetworkInterface nic;
+            this.log.warn("Could not get list of all available NICs", e);
+        }
+        return rep;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.ui.resources.server.ReferenceDataServerResource
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.ui.resources.server.ReferenceDataServerResource
+* JD-Core Version:    0.7.0.1
+*/

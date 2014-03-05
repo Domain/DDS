@@ -1,5 +1,6 @@
 module org.serviio.ui.representation.LicenseRepresentation;
 
+import java.lang;
 import org.serviio.licensing.LicensingManager:ServiioLicenseType;
 
 public class LicenseRepresentation

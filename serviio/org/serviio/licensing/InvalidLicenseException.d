@@ -1,9 +1,10 @@
 module org.serviio.licensing.InvalidLicenseException;
 
-public class InvalidLicenseException
-  : Exception
+import java.lang.String;
+
+public class InvalidLicenseException : Exception
 {
-  private static final long serialVersionUID = 4647228477001777038L;
+  private static enum serialVersionUID = 4647228477001777038L;
   
   public this(String message, Throwable cause)
   {

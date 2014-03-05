@@ -1,5 +1,7 @@
 module org.serviio.ui.representation.OnlinePlugin;
 
+import java.lang;
+
 public class OnlinePlugin : Comparable!(OnlinePlugin)
 {
     private String name;

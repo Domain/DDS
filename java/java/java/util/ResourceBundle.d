@@ -182,14 +182,12 @@ nextline:
     public static ResourceBundle getBundleFromData( String data ){
         return new ResourceBundle( data );
     }
-
-    public static class Control
-    {
-        public this()
-        {
-            implMissing();
-        }
-    }
 }
 
-
+public class Control
+{
+    public this()
+    {
+        implMissing();
+    }
+}
