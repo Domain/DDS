@@ -52,12 +52,12 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
             {
                 List!(Resource) resources = ResourceValuesBuilder.buildResources(cast(Video)mediaItem, client.getRendererProfile());
                 foreach (Resource resource ; resources) {
-                    if (resource.getResourceType() == Resource.ResourceType.MANIFEST)
+                    if (resource.getResourceType() == ResourceType.MANIFEST)
                     {
                         StringBuffer sb = new StringBuffer();
                         try
                         {
-                            return "#EXTM3U" + "\n" + "#EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1600000" + "\n" + resource.clone(Resource.ResourceType.MEDIA_ITEM, selectedQuality).getGeneratedURL(client.getHostInfo());
+                            return "#EXTM3U" + "\n" + "#EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1600000" + "\n" + resource.clone(ResourceType.MEDIA_ITEM, selectedQuality).getGeneratedURL(client.getHostInfo());
                         }
                         catch (InvalidResourceException e)
                         {

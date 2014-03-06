@@ -40,7 +40,7 @@ public class CDSSearchServerResource : AbstractRestrictedCDSServerResource, CDSS
                 List!(SearchResultRepresentation) items = new ArrayList();
                 foreach (SearchResult sr ; holder.getItems())
                 {
-                    AbstractCDSObjectRepresentation.DirectoryObjectType objectType = sr.getObjectType() == ObjectType.ITEMS ? AbstractCDSObjectRepresentation.DirectoryObjectType.ITEM : AbstractCDSObjectRepresentation.DirectoryObjectType.CONTAINER;
+                    DirectoryObjectType objectType = sr.getObjectType() == ObjectType.ITEMS ? DirectoryObjectType.ITEM : DirectoryObjectType.CONTAINER;
                     SearchResultRepresentation rr = new SearchResultRepresentation(objectType, sr.getTitle(), sr.getCdsObjectId());
                     rr.setParentId(sr.getCdsParentId());
                     rr.setFileType(sr.getFileType());

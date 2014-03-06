@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractCDSServerResource;
 
+import java.lang.String;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map:Entry;
@@ -23,8 +24,7 @@ import org.serviio.util.CaseInsensitiveMap;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 
-public abstract class AbstractCDSServerResource
-: AbstractProEditionServerResource
+public abstract class AbstractCDSServerResource : AbstractProEditionServerResource
 {
     private static immutable String ORG_RESTLET_HTTP_HEADERS = "org.restlet.http.headers";
     protected static immutable String X_SERVIIO_CLIENTID_HEADER = "X-Serviio-ClientId";
@@ -34,7 +34,7 @@ public abstract class AbstractCDSServerResource
         getResponse().setCacheDirectives(Arrays.asList(cast(CacheDirective[])[ new CacheDirective("no-cache") ]));
     }
 
-    protected Representation doConditionalHandle()
+    override protected Representation doConditionalHandle()
     {
         if (MediaServer.getStatus() == UPnPServerStatus.STARTED) {
             return super.doConditionalHandle();
@@ -63,10 +63,10 @@ public abstract class AbstractCDSServerResource
         form.add(name, value);
     }
 
-    protected Object getHeaderValue(String headerName, Map/*!(String, ?)*/ headers)
+    protected Object getHeaderValue(V)(String headerName, Map!(String, V) headers)
     {
         String lowercaseHeaderName = StringUtils.localeSafeToLowercase(headerName);
-        foreach (Map.Entry/*!(String, ?)*/ header ; headers.entrySet()) {
+        foreach (Map.Entry!(String, V) header ; headers.entrySet()) {
             if (lowercaseHeaderName.equals(StringUtils.localeSafeToLowercase(cast(String)header.getKey()))) {
                 return header.getValue();
             }
@@ -74,7 +74,7 @@ public abstract class AbstractCDSServerResource
         return null;
     }
 
-    protected String getHeaderStringValue(String headerName, Map/*!(String, ?)*/ headers)
+    protected String getHeaderStringValue(V)(String headerName, Map!(String, V) headers)
     {
         Object value = getHeaderValue(headerName, headers);
         if (value !is null) {

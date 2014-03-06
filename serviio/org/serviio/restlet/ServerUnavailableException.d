@@ -1,18 +1,19 @@
 module org.serviio.restlet.ServerUnavailableException;
 
-public class ServerUnavailableException
-  : AbstractRestfulException
+import org.serviio.restlet.AbstractRestfulException;
+
+public class ServerUnavailableException : AbstractRestfulException
 {
-  private static final long serialVersionUID = 780974277742855498L;
-  
-  public this()
-  {
-    super("Server is not available", 557);
-  }
+    private static enum serialVersionUID = 780974277742855498L;
+
+    public this()
+    {
+        super("Server is not available", 557);
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.restlet.ServerUnavailableException
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.restlet.ServerUnavailableException
+* JD-Core Version:    0.7.0.1
+*/

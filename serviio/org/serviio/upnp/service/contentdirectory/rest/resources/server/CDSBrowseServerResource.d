@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSBrowseServerResource;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,13 +43,12 @@ import org.serviio.upnp.service.contentdirectory.rest.representation.ContentURLR
 import org.serviio.upnp.service.contentdirectory.rest.representation.DirectoryObjectRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.representation.OnlineIdentifierRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.CDSBrowseResource;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 
-public class CDSBrowseServerResource
-: AbstractRestrictedCDSServerResource
-, CDSBrowseResource
+public class CDSBrowseServerResource : AbstractRestrictedCDSServerResource, CDSBrowseResource
 {
     private String profileId;
     private String objectId;
@@ -95,7 +95,7 @@ public class CDSBrowseServerResource
         }
     }
 
-    protected void doInit()
+    override protected void doInit()
     {
         super.doInit();
         this.objectId = HttpUtils.urlDecode(cast(String)getRequestAttributes().get("objectId"));
@@ -133,10 +133,10 @@ public class CDSBrowseServerResource
         List!(DirectoryObjectRepresentation) objects = new ArrayList();
         foreach (DirectoryObject dirObject ; itemsHolder.getItems())
         {
-            AbstractCDSObjectRepresentation.DirectoryObjectType type = ( cast(Container)dirObject !is null ) ? AbstractCDSObjectRepresentation.DirectoryObjectType.CONTAINER : AbstractCDSObjectRepresentation.DirectoryObjectType.ITEM;
+            DirectoryObjectType type = ( cast(Container)dirObject !is null ) ? DirectoryObjectType.CONTAINER : DirectoryObjectType.ITEM;
             DirectoryObjectRepresentation objRep = new DirectoryObjectRepresentation(type, dirObject.getTitle(), dirObject.getId());
             objRep.setParentId(dirObject.getParentID());
-            if (objRep.getType() == AbstractCDSObjectRepresentation.DirectoryObjectType.CONTAINER)
+            if (objRep.getType() == DirectoryObjectType.CONTAINER)
             {
                 Container container = cast(Container)dirObject;
                 objRep.setChildCount(container.getChildCount());
@@ -277,7 +277,7 @@ public class CDSBrowseServerResource
     {
         List!(Resource) resources = new ArrayList();
         foreach (Resource res ; item.getResources()) {
-            if (((res.getResourceType() == Resource.ResourceType.MEDIA_ITEM) || (res.getResourceType() == Resource.ResourceType.MANIFEST)) && (res.getProtocolInfoIndex().intValue() == 0)) {
+            if (((res.getResourceType() == ResourceType.MEDIA_ITEM) || (res.getResourceType() == ResourceType.MANIFEST)) && (res.getProtocolInfoIndex().intValue() == 0)) {
                 resources.add(res);
             }
         }

@@ -12,7 +12,7 @@ public class RequestedResourceDescriptor
 {
     private static final Pattern URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
     private Long resourceId;
-    private Resource.ResourceType resourceType;
+    private ResourceType resourceType;
     private String targetProfileName;
     private Integer protocolInfoIndex;
     private QualityType quality;
@@ -27,8 +27,8 @@ public class RequestedResourceDescriptor
             this.path = requestUri.substring(requestUri.indexOf("/resource") + "/resource".length() + 1);
             this.resourceId = new Long(requestFields[0]);
             String resourceTypeParam = requestFields[1];
-            this.resourceType = Resource.ResourceType.valueOf(StringUtils.localeSafeToUppercase(resourceTypeParam));
-            if ((requestFields.length > 2) && (this.resourceType != Resource.ResourceType.SEGMENT))
+            this.resourceType = ResourceType.valueOf(StringUtils.localeSafeToUppercase(resourceTypeParam));
+            if ((requestFields.length > 2) && (this.resourceType != ResourceType.SEGMENT))
             {
                 String[] protocolFields = requestFields[2].split("\\-");
                 this.targetProfileName = protocolFields[0];
@@ -47,7 +47,7 @@ public class RequestedResourceDescriptor
         return this.resourceId;
     }
 
-    public Resource.ResourceType getResourceType()
+    public ResourceType getResourceType()
     {
         return this.resourceType;
     }

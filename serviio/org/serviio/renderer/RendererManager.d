@@ -323,7 +323,7 @@ public class RendererManager
             throw new UnsupportedOperationException();
         }
 
-        public Iterator/*!(?)*/ getPrefixes(String uri)
+        public Iterator!T getPrefixes(T)(String uri)
         {
             throw new UnsupportedOperationException();
         }

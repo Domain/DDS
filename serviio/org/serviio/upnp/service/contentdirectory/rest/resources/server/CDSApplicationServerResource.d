@@ -2,17 +2,16 @@ module org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSApplic
 
 import org.serviio.ui.resources.server.ApplicationServerResource;
 
-public class CDSApplicationServerResource
-  : ApplicationServerResource
+public class CDSApplicationServerResource : ApplicationServerResource
 {
-  protected bool includePersonalDetails()
-  {
-    return false;
-  }
+    override protected bool includePersonalDetails()
+    {
+        return false;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSApplicationServerResource
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSApplicationServerResource
+* JD-Core Version:    0.7.0.1
+*/

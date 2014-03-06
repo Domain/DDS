@@ -43,7 +43,7 @@ public class ResourceValuesBuilder
                 log.debug_(String.format("Softsubs for media item %s found, will be served as a resource", cast(Object[])[ item.getId() ]));
                 try
                 {
-                    Resource subtitle = new Resource(Resource.ResourceType.SUBTITLE, item.getId(), null, null, null, null);
+                    Resource subtitle = new Resource(ResourceType.SUBTITLE, item.getId(), null, null, null, null);
                     subtitle.setProtocolInfo(String.format("http-get:*:%s:*", cast(Object[])[ rendererProfile.getSubtitlesConfiguration().getSoftSubsMimeType() ]));
                     return subtitle;
                 }
@@ -76,7 +76,7 @@ public class ResourceValuesBuilder
                     i = 0;
                     foreach (String protocolInfo ; protocolInfos)
                     {
-                        Resource res = new Resource(Resource.ResourceType.MEDIA_ITEM, image.getId(), imageMediaInfo.getFormatProfile(), Integer.valueOf(i++), imageMediaInfo.getQuality(), Boolean.valueOf(resourceInfo.isTranscoded()));
+                        Resource res = new Resource(ResourceType.MEDIA_ITEM, image.getId(), imageMediaInfo.getFormatProfile(), Integer.valueOf(i++), imageMediaInfo.getQuality(), Boolean.valueOf(resourceInfo.isTranscoded()));
                         res.setSize(imageMediaInfo.getFileSize());
                         res.setProtocolInfo(protocolInfo);
                         res.setColorDepth(image.getColorDepth());
@@ -110,7 +110,7 @@ public class ResourceValuesBuilder
                     i = 0;
                     foreach (String protocolInfo ; protocolInfos)
                     {
-                        Resource res = new Resource(Resource.ResourceType.MEDIA_ITEM, song.getId(), audioMediaInfo.getFormatProfile(), Integer.valueOf(i++), audioMediaInfo.getQuality(), Boolean.valueOf(resourceInfo.isTranscoded()));
+                        Resource res = new Resource(ResourceType.MEDIA_ITEM, song.getId(), audioMediaInfo.getFormatProfile(), Integer.valueOf(i++), audioMediaInfo.getQuality(), Boolean.valueOf(resourceInfo.isTranscoded()));
                         res.setSize(audioMediaInfo.getFileSize());
                         res.setDuration(song.getDuration());
                         res.setProtocolInfo(protocolInfo);
@@ -142,7 +142,7 @@ public class ResourceValuesBuilder
                 i = 0;
                 foreach (String protocolInfo ; protocolInfos)
                 {
-                    Resource.ResourceType resourceType = videoMediaInfo.getFormatProfile().isManifestFormat() ? Resource.ResourceType.MANIFEST : Resource.ResourceType.MEDIA_ITEM;
+                    ResourceType resourceType = videoMediaInfo.getFormatProfile().isManifestFormat() ? ResourceType.MANIFEST : ResourceType.MEDIA_ITEM;
                     Resource res = new Resource(resourceType, video.getId(), videoMediaInfo.getFormatProfile(), Integer.valueOf(i++), videoMediaInfo.getQuality(), Boolean.valueOf(resourceInfo.isTranscoded()));
                     res.setSize(videoMediaInfo.getFileSize());
                     res.setDuration(video.getDuration());
@@ -178,7 +178,7 @@ public class ResourceValuesBuilder
                 if (isLocalThubmnail)
                 {
                     CoverImage thumbnail = MediaService.getCoverImage(thumbnailId);
-                    thRes = new Resource(Resource.ResourceType.COVER_IMAGE, thumbnail.getId(), null, null, null, null);
+                    thRes = new Resource(ResourceType.COVER_IMAGE, thumbnail.getId(), null, null, null, null);
                     if ((rendererProfile !is null) && (rendererProfile.getThumbnailsResolution() == ThumbnailResolution.HD)) {
                         thRes.setResolution(String.format("%sx%s", cast(Object[])[ Integer.valueOf(thumbnail.getWidthHD()), Integer.valueOf(thumbnail.getHeightHD()) ]));
                     } else {
@@ -187,7 +187,7 @@ public class ResourceValuesBuilder
                 }
                 else
                 {
-                    thRes = new Resource(Resource.ResourceType.COVER_IMAGE, entityId, null, null, null, null);
+                    thRes = new Resource(ResourceType.COVER_IMAGE, entityId, null, null, null, null);
                 }
                 if (rendererProfile !is null)
                 {
@@ -214,7 +214,7 @@ public class ResourceValuesBuilder
         if (thumbnailId !is null) {
             try
             {
-                return new Resource(Resource.ResourceType.COVER_IMAGE, thumbnailId, null, null, null, null);
+                return new Resource(ResourceType.COVER_IMAGE, thumbnailId, null, null, null, null);
             }
             catch (Exception e)
             {

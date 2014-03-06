@@ -16,9 +16,9 @@ import org.slf4j.Logger;
 
 public class GETMethodProcessor : AbstractMethodProcessor
 {
-    protected ResourceDeliveryProcessor.HttpMethod getMethod()
+    protected HttpMethod getMethod()
     {
-        return ResourceDeliveryProcessor.HttpMethod.GET;
+        return HttpMethod.GET;
     }
 
     protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)
@@ -41,8 +41,8 @@ public class GETMethodProcessor : AbstractMethodProcessor
             throw new HttpResponseCodeException(406);
         }
         TreeMap!(Double, TranscodingJobListener.ProgressData) filesizeMap = jobListener.getFilesizeMap();
-        Long startByte = convertSecondsToBytes(new Double(fixedRange.getStart(RangeHeaders.RangeUnit.SECONDS).doubleValue()), filesizeMap);
-        this.log.debug_(String.format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeHeaders.RangeUnit.SECONDS), fixedRange.getEnd(RangeHeaders.RangeUnit.SECONDS) ]));
+        Long startByte = convertSecondsToBytes(new Double(fixedRange.getStart(RangeUnit.SECONDS).doubleValue()), filesizeMap);
+        this.log.debug_(String.format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeUnit.SECONDS), fixedRange.getEnd(RangeUnit.SECONDS) ]));
         return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, startByte.longValue(), fileSize.longValue(), true, true, requestHttpVersion);
     }
 
@@ -65,8 +65,8 @@ public class GETMethodProcessor : AbstractMethodProcessor
         bool offsetRequested = false;
         if (rangeHeaders !is null)
         {
-            Long start = rangeHeaders.hasHeaders(RangeHeaders.RangeUnit.BYTES) ? rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.BYTES) : null;
-            start = (start is null) && (rangeHeaders.hasHeaders(RangeHeaders.RangeUnit.SECONDS)) ? rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.SECONDS) : null;
+            Long start = rangeHeaders.hasHeaders(RangeUnit.BYTES) ? rangeHeaders.getStartAsLong(RangeUnit.BYTES) : null;
+            start = (start is null) && (rangeHeaders.hasHeaders(RangeUnit.SECONDS)) ? rangeHeaders.getStartAsLong(RangeUnit.SECONDS) : null;
             offsetRequested = (start !is null) && (!start.equals(new Long(0L)));
         }
         if (!offsetRequested) {

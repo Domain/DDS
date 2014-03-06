@@ -14,13 +14,13 @@ import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+public enum HttpMethod
+{
+    GET,  HEAD
+}
+
 public class ResourceDeliveryProcessor
 {
-    public static enum HttpMethod
-    {
-        GET,  HEAD
-    }
-
     private static final Logger log = LoggerFactory.getLogger!(ResourceDeliveryProcessor);
     private ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
     private HEADMethodProcessor headMethodProcessor = new HEADMethodProcessor();

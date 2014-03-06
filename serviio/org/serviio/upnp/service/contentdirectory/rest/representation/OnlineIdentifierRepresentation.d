@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.representation.OnlineIdentifierRepresentation;
 
+import java.lang.String;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import com.thoughtworks.xstream.converters.extended.ToAttributedValueConverter;
 

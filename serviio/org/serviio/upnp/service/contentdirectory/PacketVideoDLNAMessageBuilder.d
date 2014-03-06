@@ -38,7 +38,7 @@ public class PacketVideoDLNAMessageBuilder : GenericDLNAMessageBuilder
                 i = 0;
                 foreach (Resource resource ; object.getResources())
                 {
-                    if (resource.getResourceType() == Resource.ResourceType.MEDIA_ITEM)
+                    if (resource.getResourceType() == ResourceType.MEDIA_ITEM)
                     {
                         Node resourceNode = XPathUtil.getNode(itemNode, "res[" + (i + 1) + "]");
                         bool subtitleAdded = storeAttribute(resourceNode, object, ClassProperties.SUBTITLES_URL, "pv:subtitleFileUri", false);

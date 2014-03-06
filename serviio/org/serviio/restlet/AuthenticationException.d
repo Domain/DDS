@@ -1,11 +1,12 @@
 module org.serviio.restlet.AuthenticationException;
 
+import java.lang.String;
 import java.util.List;
+import org.serviio.restlet.AbstractRestfulException;
 
-public class AuthenticationException
-  : AbstractRestfulException
+public class AuthenticationException : AbstractRestfulException
 {
-  private static final long serialVersionUID = 7325697136722794338L;
+  private static enum serialVersionUID = 7325697136722794338L;
   
   public this(int errorCode)
   {

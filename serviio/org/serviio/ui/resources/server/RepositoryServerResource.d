@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.RepositoryServerResource;
 
+import java.lang;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -34,9 +35,7 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
 
-public class RepositoryServerResource
-: AbstractServerResource
-, RepositoryResource
+public class RepositoryServerResource : AbstractServerResource, RepositoryResource
 {
     public RepositoryRepresentation load()
     {

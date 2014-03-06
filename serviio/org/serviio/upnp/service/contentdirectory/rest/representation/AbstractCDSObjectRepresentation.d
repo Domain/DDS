@@ -1,25 +1,26 @@
 module org.serviio.upnp.service.contentdirectory.rest.representation.AbstractCDSObjectRepresentation;
 
+import java.lang.String;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import org.serviio.library.metadata.MediaFileType;
+
+public enum DirectoryObjectType
+{
+    CONTAINER,  ITEM,
+}
 
 public abstract class AbstractCDSObjectRepresentation
 {
     @XStreamAsAttribute
-        private String id;
+    private String id;
     @XStreamAsAttribute
-        private DirectoryObjectType type;
+    private DirectoryObjectType type;
     @XStreamAsAttribute
-        private MediaFileType fileType;
+    private MediaFileType fileType;
     @XStreamAsAttribute
-        private String parentId;
+    private String parentId;
     private String title;
     private String thumbnailUrl;
-
-    public static enum DirectoryObjectType
-    {
-        CONTAINER,  ITEM,
-    }
 
     public this(DirectoryObjectType type, String title, String id)
     {

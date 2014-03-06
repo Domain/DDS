@@ -11,9 +11,9 @@ import org.serviio.upnp.protocol.http.transport.TransferMode;
 public class HEADMethodProcessor
   : AbstractMethodProcessor
 {
-  protected ResourceDeliveryProcessor.HttpMethod getMethod()
+  protected HttpMethod getMethod()
   {
-    return ResourceDeliveryProcessor.HttpMethod.HEAD;
+    return HttpMethod.HEAD;
   }
   
   protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)

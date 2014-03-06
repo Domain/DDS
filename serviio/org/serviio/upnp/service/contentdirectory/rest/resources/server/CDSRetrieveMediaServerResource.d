@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSRetrieveMediaServerResource;
 
+import java.lang;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -32,6 +33,7 @@ import org.serviio.upnp.protocol.http.transport.CDSProtocolHandler;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.rest.representation.ClosingInputRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.CDSRetrieveMediaResource;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
@@ -41,7 +43,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
     private static immutable int CACHE_SECONDS = 36000;
     public static immutable String RESOURCE_CONTEXT = "/resource";
     private static immutable String PARAM_CLIENT_ID = "clientId";
-    private static final ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
+    private static ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
     private Profile profile;
 
     public StreamRepresentation deliver()
@@ -55,7 +57,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
         try
         {
             Map!(String, String) requestHeaders = getRequestHeaders(request);
-            HttpDeliveryContainer container = processor.deliverContent(normalizedPath, ResourceDeliveryProcessor.HttpMethod.GET, getProtocol().getVersion().equals("1.1") ? HttpVersion.HTTP_1_1 : HttpVersion.HTTP_1_0, requestHeaders, parseRequestRangeHeaders(requestHeaders, request), new CDSProtocolHandler(), getClient(requestHeaders));
+            HttpDeliveryContainer container = processor.deliverContent(normalizedPath, HttpMethod.GET, getProtocol().getVersion().equals("1.1") ? HttpVersion.HTTP_1_1 : HttpVersion.HTTP_1_0, requestHeaders, parseRequestRangeHeaders(requestHeaders, request), new CDSProtocolHandler(), getClient(requestHeaders));
 
 
             ClosingInputRepresentation rep = new ClosingInputRepresentation(container.getContentStream(), getMediaType(container.getResponseHeaders()), getFullStreamSize(container), getDeliveredStreamSize(container), getRequest());
@@ -69,7 +71,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
                 getResponse().getServerInfo().setAcceptingRanges(true);
             }
             getResponse().setStatus(container.isPartialContent() ? Status.SUCCESS_PARTIAL_CONTENT : Status.SUCCESS_OK);
-            if (normalizedPath.indexOf(Resource.ResourceType.COVER_IMAGE.toString()) > -1) {
+            if (normalizedPath.indexOf(ResourceType.COVER_IMAGE.toString()) > -1) {
                 getResponse().setCacheDirectives(Arrays.asList(cast(CacheDirective[])[ new CacheDirective(String.format("private, max-age=%s", [ Integer.valueOf(36000) ])) ]));
                                                  }
                 return rep;
@@ -115,14 +117,14 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
             RangeHeaders range = getResponseRangeHeader(headers);
             if (range !is null)
             {
-                if (range.hasHeaders(RangeHeaders.RangeUnit.BYTES)) {
-                    getResponse().getEntity().setRange(new Range(range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeHeaders.RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue() + 1L));
+                if (range.hasHeaders(RangeUnit.BYTES)) {
+                    getResponse().getEntity().setRange(new Range(range.getStartAsLong(RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeUnit.BYTES).longValue() + 1L));
                 }
-                if (range.hasHeaders(RangeHeaders.RangeUnit.SECONDS))
+                if (range.hasHeaders(RangeUnit.SECONDS))
                 {
-                    Range rangeHeader = new Range(range.getStartAsLong(RangeHeaders.RangeUnit.SECONDS).longValue(), range.getEndAsLong(RangeHeaders.RangeUnit.SECONDS).longValue() - range.getStartAsLong(RangeHeaders.RangeUnit.SECONDS).longValue());
+                    Range rangeHeader = new Range(range.getStartAsLong(RangeUnit.SECONDS).longValue(), range.getEndAsLong(RangeUnit.SECONDS).longValue() - range.getStartAsLong(RangeUnit.SECONDS).longValue());
                     rangeHeader.setUnitName("seconds");
-                    rangeHeader.setTotalSize(range.getTotal(RangeHeaders.RangeUnit.SECONDS));
+                    rangeHeader.setTotalSize(range.getTotal(RangeUnit.SECONDS));
                     getResponse().getEntity().setRange(rangeHeader);
                 }
             }
@@ -137,8 +139,8 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
         private long getFullStreamSize(HttpDeliveryContainer container)
         {
             RangeHeaders range = getResponseRangeHeader(container.getResponseHeaders());
-            if ((container.isPartialContent()) && (range !is null) && (range.hasHeaders(RangeHeaders.RangeUnit.BYTES))) {
-                return range.getTotal(RangeHeaders.RangeUnit.BYTES).longValue();
+            if ((container.isPartialContent()) && (range !is null) && (range.hasHeaders(RangeUnit.BYTES))) {
+                return range.getTotal(RangeUnit.BYTES).longValue();
             }
             return container.getFileSize().longValue();
         }
@@ -146,8 +148,8 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
         private Long getDeliveredStreamSize(HttpDeliveryContainer container)
         {
             RangeHeaders range = getResponseRangeHeader(container.getResponseHeaders());
-            if ((container.isPartialContent()) && (range !is null) && (range.hasHeaders(RangeHeaders.RangeUnit.BYTES))) {
-                return Long.valueOf(range.getEndAsLong(RangeHeaders.RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue() + 1L);
+            if ((container.isPartialContent()) && (range !is null) && (range.hasHeaders(RangeUnit.BYTES))) {
+                return Long.valueOf(range.getEndAsLong(RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeUnit.BYTES).longValue() + 1L);
             }
             return null;
         }
@@ -167,7 +169,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
             String startSecond = getRequestQueryParam("start");
             try
             {
-                return RangeHeaders.parseHttpRange(RangeHeaders.RangeDefinition.CDS, rangeHeader, startSecond);
+                return RangeHeaders.parseHttpRange(RangeDefinition.CDS, rangeHeader, startSecond);
             }
             catch (NumberFormatException e)
             {

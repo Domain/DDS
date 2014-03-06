@@ -31,7 +31,7 @@ public abstract class AbstractMethodProcessor
 
     protected abstract HttpDeliveryContainer prepareContainer(Map!(String, Object) paramMap, DeliveryContainer paramDeliveryContainer, TransferMode paramTransferMode, Long paramLong1, Long paramLong2, bool paramBoolean1, ProtocolVersion paramProtocolVersion, bool paramBoolean2, bool paramBoolean3, bool paramBoolean4);
 
-    protected abstract ResourceDeliveryProcessor.HttpMethod getMethod();
+    protected abstract HttpMethod getMethod();
 
     public HttpDeliveryContainer handleRequest(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, Map!(String, String) requestHeaders, RangeHeaders requestRangeHeaders, ProtocolVersion requestHttpVersion, Integer protocolInfoIndex, Client client, ResourceTransportProtocolHandler protocolHandler)
     {
@@ -43,18 +43,18 @@ public abstract class AbstractMethodProcessor
         if (requestRangeHeaders !is null) {
             if (!resourceInfo.isLive())
             {
-                if (requestRangeHeaders.hasHeaders(RangeHeaders.RangeUnit.BYTES))
+                if (requestRangeHeaders.hasHeaders(RangeUnit.BYTES))
                 {
                     range = protocolHandler.handleByteRange(requestRangeHeaders, requestHttpVersion, resourceInfo, fileSize);
                     if (range !is null) {
-                        responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeHeaders.RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue() + 1L, null, null, true, range.getTotal(RangeHeaders.RangeUnit.BYTES).longValue() != -1L, requestHttpVersion, requestRangeHeaders);
+                        responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, range.getStartAsLong(RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeUnit.BYTES).longValue() + 1L, null, null, true, range.getTotal(RangeUnit.BYTES).longValue() != -1L, requestHttpVersion, requestRangeHeaders);
                     }
                 }
-                if ((responseContainer is null) && (requestRangeHeaders.hasHeaders(RangeHeaders.RangeUnit.SECONDS)) && (resourceInfo.getDuration() !is null))
+                if ((responseContainer is null) && (requestRangeHeaders.hasHeaders(RangeUnit.SECONDS)) && (resourceInfo.getDuration() !is null))
                 {
                     range = protocolHandler.handleTimeRange(requestRangeHeaders, requestHttpVersion, resourceInfo);
                     if (range !is null) {
-                        if ((range.getStart(RangeHeaders.RangeUnit.SECONDS).longValue() == 0L) && (range.getEnd(RangeHeaders.RangeUnit.SECONDS).longValue() == new Long(resourceInfo.getDuration().intValue()).longValue()))
+                        if ((range.getStart(RangeUnit.SECONDS).longValue() == 0L) && (range.getEnd(RangeUnit.SECONDS).longValue() == new Long(resourceInfo.getDuration().intValue()).longValue()))
                         {
                             responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, 0L, fileSize.longValue(), null, null, false, true, requestHttpVersion, requestRangeHeaders);
                         }
@@ -62,8 +62,8 @@ public abstract class AbstractMethodProcessor
                         {
                             if (client.isSupportsRandomTimeSeek())
                             {
-                                Double requestedTimeOffset = range.getStart(RangeHeaders.RangeUnit.SECONDS);
-                                Double requestedDuration = Double.valueOf(range.getEnd(RangeHeaders.RangeUnit.SECONDS).doubleValue() - range.getStart(RangeHeaders.RangeUnit.SECONDS).doubleValue());
+                                Double requestedTimeOffset = range.getStart(RangeUnit.SECONDS);
+                                Double requestedDuration = Double.valueOf(range.getEnd(RangeUnit.SECONDS).doubleValue() - range.getStart(RangeUnit.SECONDS).doubleValue());
                                 responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, 0L, fileSize.longValue(), requestedTimeOffset, requestedDuration, true, true, requestHttpVersion, requestRangeHeaders);
                             }
                             else
@@ -73,8 +73,8 @@ public abstract class AbstractMethodProcessor
                         }
                         else
                         {
-                            this.log.debug_(String.format("Delivering bytes %s - %s from native file, based on time range %s - %s", cast(Object[])[ range.getStart(RangeHeaders.RangeUnit.BYTES), range.getEnd(RangeHeaders.RangeUnit.BYTES), range.getStart(RangeHeaders.RangeUnit.SECONDS), range.getEnd(RangeHeaders.RangeUnit.SECONDS) ]));
-                            responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeHeaders.RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeHeaders.RangeUnit.BYTES).longValue() + 1L, null, null, true, true, requestHttpVersion, requestRangeHeaders);
+                            this.log.debug_(String.format("Delivering bytes %s - %s from native file, based on time range %s - %s", cast(Object[])[ range.getStart(RangeUnit.BYTES), range.getEnd(RangeUnit.BYTES), range.getStart(RangeUnit.SECONDS), range.getEnd(RangeUnit.SECONDS) ]));
+                            responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, range.getStartAsLong(RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeUnit.BYTES).longValue() + 1L, null, null, true, true, requestHttpVersion, requestRangeHeaders);
                         }
                     }
                 }

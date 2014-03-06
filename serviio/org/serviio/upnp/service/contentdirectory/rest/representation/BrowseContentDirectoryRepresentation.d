@@ -1,8 +1,11 @@
 module org.serviio.upnp.service.contentdirectory.rest.representation.BrowseContentDirectoryRepresentation;
 
-public class BrowseContentDirectoryRepresentation
-  : ContentDirectoryRepresentation!(DirectoryObjectRepresentation)
-{}
+import org.serviio.upnp.service.contentdirectory.rest.representation.ContentDirectoryRepresentation;
+import org.serviio.upnp.service.contentdirectory.rest.representation.DirectoryObjectRepresentation;
+
+public class BrowseContentDirectoryRepresentation : ContentDirectoryRepresentation!(DirectoryObjectRepresentation)
+{
+}
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar

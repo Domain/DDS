@@ -17,27 +17,27 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
 {
     public static immutable String RESOURCE_SEPARATOR = "-";
 
-    public String getGeneratedURL(HostInfo hostInfo, Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
+    public String getGeneratedURL(HostInfo hostInfo, ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
     {
         validate(resourceType, resourceId, ver, protocolInfoIndex, quality);
         StringBuffer file = new StringBuffer();
         file.append(resourceId.toString());
         file.append("/").append(resourceType.toString());
-        if ((resourceType == Resource.ResourceType.MEDIA_ITEM) || (resourceType == Resource.ResourceType.MANIFEST))
+        if ((resourceType == ResourceType.MEDIA_ITEM) || (resourceType == ResourceType.MANIFEST))
         {
             file.append("/").append(ver.toString());
             file.append("-").append(protocolInfoIndex);
             file.append("/").append(quality.toString());
         }
-        if (Resource.ResourceType.SUBTITLE == resourceType) {
+        if (ResourceType.SUBTITLE == resourceType) {
             file.append(".srt");
-        } else if ((Resource.ResourceType.MANIFEST == resourceType) || ((ver !is null) && (ver.isManifestFormat()))) {
+        } else if ((ResourceType.MANIFEST == resourceType) || ((ver !is null) && (ver.isManifestFormat()))) {
             file.append(".m3u8");
         }
         return generateUrl(hostInfo, generatePath(hostInfo, file.toString()));
     }
 
-    public String getGeneratedURL(HostInfo hostInfo, Resource.ResourceType resourceType, Long resourceId, String path)
+    public String getGeneratedURL(HostInfo hostInfo, ResourceType resourceType, Long resourceId, String path)
     {
         validate(resourceType, resourceId, null, null, null);
         StringBuffer file = new StringBuffer();
@@ -82,9 +82,9 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
         return path;
     }
 
-    private void validate(Resource.ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
+    private void validate(ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
     {
-        if ((resourceId is null) || (resourceType is null) || ((resourceType == Resource.ResourceType.MEDIA_ITEM) && ((ver is null) || (quality is null) || (protocolInfoIndex is null)))) {
+        if ((resourceId is null) || (resourceType is null) || ((resourceType == ResourceType.MEDIA_ITEM) && ((ver is null) || (quality is null) || (protocolInfoIndex is null)))) {
             throw new InvalidResourceException("Resource is not valid.");
         }
     }

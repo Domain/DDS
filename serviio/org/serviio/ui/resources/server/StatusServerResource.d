@@ -1,5 +1,6 @@
 module org.serviio.ui.resources.server.StatusServerResource;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -121,11 +122,11 @@ public class StatusServerResource : AbstractServerResource, StatusResource
             rr.setEnabled(renderer.isEnabled());
             rr.setAccessGroupId(getAccessGroupId(renderer.getAccessGroupId()));
             if (activeRenderers.containsKey(renderer.getUuid())) {
-                rr.setStatus(RendererRepresentation.RendererStatus.ACTIVE);
+                rr.setStatus(RendererStatus.ACTIVE);
             } else if (renderer.isManuallyAdded()) {
-                rr.setStatus(RendererRepresentation.RendererStatus.UNKNOWN);
+                rr.setStatus(RendererStatus.UNKNOWN);
             } else {
-                rr.setStatus(RendererRepresentation.RendererStatus.INACTIVE);
+                rr.setStatus(RendererStatus.INACTIVE);
             }
             renderers.add(rr);
         }

@@ -34,7 +34,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
         return false;
     }
 
-    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, ResourceDeliveryProcessor.HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
     {
         String contentFeaturesHeader = cast(String)requestHeaders.get("getcontentFeatures.dlna.org");
 
@@ -43,14 +43,14 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
         responseHeaders.put("Server", SSDPConstants.SERVER);
         responseHeaders.put("Cache-control", "no-cache");
         if (range !is null) {
-            if (range.hasHeaders(RangeHeaders.RangeUnit.SECONDS))
+            if (range.hasHeaders(RangeUnit.SECONDS))
             {
-                responseHeaders.put("TimeSeekRange.dlna.org", String.format("npt=%s-%s/%s", cast(Object[])[ range.getStartAsString(RangeHeaders.RangeUnit.SECONDS), range.getEndAsString(RangeHeaders.RangeUnit.SECONDS), range.getTotal(RangeHeaders.RangeUnit.SECONDS) ]));
+                responseHeaders.put("TimeSeekRange.dlna.org", String.format("npt=%s-%s/%s", cast(Object[])[ range.getStartAsString(RangeUnit.SECONDS), range.getEndAsString(RangeUnit.SECONDS), range.getTotal(RangeUnit.SECONDS) ]));
             }
-            else if (range.hasHeaders(RangeHeaders.RangeUnit.BYTES))
+            else if (range.hasHeaders(RangeUnit.BYTES))
             {
-                long total = range.getTotal(RangeHeaders.RangeUnit.BYTES).longValue();
-                responseHeaders.put("Content-Range", String.format("bytes %s-%s/%s", cast(Object[])[ range.getStartAsLong(RangeHeaders.RangeUnit.BYTES), range.getEndAsLong(RangeHeaders.RangeUnit.BYTES), total == -1L ? "50000000000" : Long.valueOf(total) ]));
+                long total = range.getTotal(RangeUnit.BYTES).longValue();
+                responseHeaders.put("Content-Range", String.format("bytes %s-%s/%s", cast(Object[])[ range.getStartAsLong(RangeUnit.BYTES), range.getEndAsLong(RangeUnit.BYTES), total == -1L ? "50000000000" : Long.valueOf(total) ]));
             }
         }
         if (contentFeaturesHeader !is null) {
@@ -64,15 +64,15 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
         responseHeaders.put("realTimeInfo.dlna.org", "DLNA.ORG_TLAG=*");
     }
 
-    public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
+    public bool supportsRangeHeader(RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
     {
-        if (type == RangeHeaders.RangeUnit.BYTES)
+        if (type == RangeUnit.BYTES)
         {
             if ((http11) || ((!http11) && (!transcoded))) {
                 return true;
             }
-            Long startByte = rangeHeaders.getStartAsLong(RangeHeaders.RangeUnit.BYTES);
-            Long endByte = rangeHeaders.getEndAsLong(RangeHeaders.RangeUnit.BYTES);
+            Long startByte = rangeHeaders.getStartAsLong(RangeUnit.BYTES);
+            Long endByte = rangeHeaders.getEndAsLong(RangeUnit.BYTES);
             if ((new Long(0L).equals(startByte)) && (endByte is null)) {
                 return true;
             }
@@ -84,11 +84,11 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
         return true;
     }
 
-    protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+    protected RangeHeaders unsupportedRangeHeader(RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
     {
-        if (type == RangeHeaders.RangeUnit.BYTES)
+        if (type == RangeUnit.BYTES)
         {
-            if ((!range.hasHeaders(RangeHeaders.RangeUnit.SECONDS)) || (!supportsRangeHeader(RangeHeaders.RangeUnit.SECONDS, http11, transcoded, range)))
+            if ((!range.hasHeaders(RangeUnit.SECONDS)) || (!supportsRangeHeader(RangeUnit.SECONDS, http11, transcoded, range)))
             {
                 this.log.debug_("Unsupported range request, sending back 416");
                 throw new HttpResponseCodeException(416);

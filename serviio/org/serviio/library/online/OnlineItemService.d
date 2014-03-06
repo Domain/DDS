@@ -137,12 +137,12 @@ public class OnlineItemService
         return null;
     }
 
-    public static List!(NamedOnlineResource!(OnlineItem)) getListOfFeedItems(OnlineResourceContainer/*!(?, ?)*/ resource, MediaFileType itemType, int start, int count)
+    public static List!(NamedOnlineResource!(OnlineItem)) getListOfFeedItems(I, E)(OnlineResourceContainer!(I, E) resource, MediaFileType itemType, int start, int count)
     {
-        List/*!(? : OnlineItem)*/ resourceItems = filterContainerResourceItems(resource.getItems(), itemType);
+        List!(I) resourceItems = filterContainerResourceItems(resource.getItems(), itemType);
         if (resourceItems.size() >= start)
         {
-            List/*!(? : OnlineItem)*/ requestedItems = CollectionUtils.getSubList(resourceItems, start, count);
+            List!(I) requestedItems = CollectionUtils.getSubList(resourceItems, start, count);
             List!(NamedOnlineResource!(OnlineItem)) result = new ArrayList();
             foreach (OnlineItem item ; requestedItems) {
                 result.add(new NamedOnlineResource(item, item.getTitle()));
@@ -219,9 +219,9 @@ public class OnlineItemService
         return filterContainerResourceItems(onlineItems, itemType).size();
     }
 
-    private static int getCountOfContainerItems(OnlineResourceContainer/*!(?, ?)*/ resource, MediaFileType itemType)
+    private static int getCountOfContainerItems(I, E)(OnlineResourceContainer!(I, E) resource, MediaFileType itemType)
     {
-        List/*!(?)*/ items = filterContainerResourceItems(resource.getItems(), itemType);
+        auto items = filterContainerResourceItems(resource.getItems(), itemType);
         return items.size();
     }
 
@@ -250,7 +250,7 @@ public class OnlineItemService
         return null;
     }
 
-    private static /*!(T : OnlineItem)*/ List!(T) filterContainerResourceItems(T : OnlineItem)(List!(T) items, MediaFileType type)
+    private static List!(T) filterContainerResourceItems(T : OnlineItem)(List!(T) items, MediaFileType type)
     {
         List!(T) filteredItems = new ArrayList();
         foreach (T feedItem ; items)
@@ -263,7 +263,7 @@ public class OnlineItemService
         return filteredItems;
     }
 
-    private static /*!(T : OnlineItem)*/ T filterFeedItem(T : OnlineItem)(T item, MediaFileType type)
+    private static T filterFeedItem(T : OnlineItem)(T item, MediaFileType type)
     {
         if ((item.getType() == type) && (item.isCompletelyLoaded())) {
             return item;

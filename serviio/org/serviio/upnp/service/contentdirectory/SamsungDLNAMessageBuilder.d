@@ -37,7 +37,7 @@ public class SamsungDLNAMessageBuilder
       bool smResourceExists = false;
       Resource newThumbnailResource = null;
       foreach (Resource resource ; object.getResources()) {
-        if (resource.getResourceType() == Resource.ResourceType.COVER_IMAGE)
+        if (resource.getResourceType() == ResourceType.COVER_IMAGE)
         {
           newThumbnailResource = new Resource(resource.getResourceType(), resource.getResourceId(), MediaFormatProfile.JPEG_SM, resource.getProtocolInfoIndex(), resource.getQuality(), resource.isTranscoded());
           

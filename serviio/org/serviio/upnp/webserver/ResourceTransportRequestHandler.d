@@ -42,14 +42,14 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
     {
         try
         {
-            ResourceDeliveryProcessor.HttpMethod method = ResourceDeliveryProcessor.HttpMethod.valueOf(StringUtils.localeSafeToUppercase(request.getRequestLine().getMethod()));
+            HttpMethod method = HttpMethod.valueOf(StringUtils.localeSafeToUppercase(request.getRequestLine().getMethod()));
             InetAddress clientIPAddress = getCallerIPAddress(context);
             Profile rendererProfile = ProfileManager.getProfile(clientIPAddress);
             Client client = new Client(clientIPAddress.getHostAddress(), rendererProfile, HostInfo.defaultHostInfo());
             String requestUri = getRequestUri(request);
             Map!(String, String) requestHeadersMap = getRequestHeadersMap(request);
             HttpDeliveryContainer container = new ResourceDeliveryProcessor(resourceRetrievalStrategyFactory).deliverContent(requestUri, method, getHttpVersion(), requestHeadersMap, parseRangeHeaders(requestHeadersMap), getProtocolHandler(client), client);
-            if (method == ResourceDeliveryProcessor.HttpMethod.GET) {
+            if (method == HttpMethod.GET) {
                 response.setEntity(createHttpEntity(container));
             }
             saveResponseHeaders(container.getResponseHeaders(), response);
@@ -94,7 +94,7 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
         String timeSeekHeader = cast(String)headers.get("TimeSeekRange.dlna.org");
         try
         {
-            return RangeHeaders.parseHttpRange(RangeHeaders.RangeDefinition.DLNA, rangeHeader, timeSeekHeader);
+            return RangeHeaders.parseHttpRange(RangeDefinition.DLNA, rangeHeader, timeSeekHeader);
         }
         catch (NumberFormatException e)
         {

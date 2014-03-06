@@ -55,7 +55,7 @@ public class SegmentRetrievalStrategy : ResourceRetrievalStrategy
     protected String getFilePathFromUrl(String path)
     {
         int filePathEnd = path.indexOf('?');
-        return path.substring(path.indexOf(Resource.ResourceType.SEGMENT.toString()) + Resource.ResourceType.SEGMENT.toString().length() + 1, filePathEnd > -1 ? filePathEnd : path.length());
+        return path.substring(path.indexOf(ResourceType.SEGMENT.toString()) + ResourceType.SEGMENT.toString().length() + 1, filePathEnd > -1 ? filePathEnd : path.length());
     }
 }
 

@@ -247,6 +247,57 @@ class B
     }
 }
 
+enum ResourceType
+{
+    A, B
+}
+
+class Resource
+{
+    ResourceType type;
+    string name;
+}
+
+class ResourceContainer(T)
+{
+}
+
+class ResourceA : ResourceContainer!(ResourceType.A)
+{
+}
+
+class ResourceB : ResourceContainer!(ResourceType.B)
+{
+}
+
+class ResourceAParser
+{
+    ResourceA parser(string name)
+    {
+        ResourceA a;
+        return a;
+    }
+}
+
+class ResourceBParser
+{
+    ResourceB parser(string name)
+    {
+        ResourceB b;
+        return b;
+    }
+}
+
+ResourceContainer!(?) getResource(Resource res)
+{
+    switch (res.type)
+    {
+        case ResourceType.A:
+            ResourceAParser parser
+            break;
+    }
+}
+
 class temp(T)
 {
 }

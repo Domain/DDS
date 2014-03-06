@@ -6,9 +6,9 @@ import org.serviio.delivery.RangeHeaders:RangeUnit;
 
 public class LGProtocolHandler : DLNAProtocolHandler
 {
-    public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
+    public bool supportsRangeHeader(RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
     {
-        if (type == RangeHeaders.RangeUnit.BYTES)
+        if (type == RangeUnit.BYTES)
         {
             if (!transcoded) {
                 return true;
@@ -18,11 +18,11 @@ public class LGProtocolHandler : DLNAProtocolHandler
         return super.supportsRangeHeader(type, http11, transcoded, rangeHeaders);
     }
 
-    protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+    protected RangeHeaders unsupportedRangeHeader(RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
     {
-        if ((type == RangeHeaders.RangeUnit.BYTES) && 
+        if ((type == RangeUnit.BYTES) && 
             (transcoded)) {
-                return RangeHeaders.create(RangeHeaders.RangeUnit.BYTES, range.getStart(RangeHeaders.RangeUnit.BYTES).doubleValue(), range.getEnd(RangeHeaders.RangeUnit.BYTES) !is null ? range.getEnd(RangeHeaders.RangeUnit.BYTES).doubleValue() : streamSize.longValue(), -1L);
+                return RangeHeaders.create(RangeUnit.BYTES, range.getStart(RangeUnit.BYTES).doubleValue(), range.getEnd(RangeUnit.BYTES) !is null ? range.getEnd(RangeUnit.BYTES).doubleValue() : streamSize.longValue(), -1L);
             }
         return super.unsupportedRangeHeader(type, range, http11, transcoded, streamSize);
     }

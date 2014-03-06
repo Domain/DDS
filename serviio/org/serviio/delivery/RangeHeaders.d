@@ -5,20 +5,20 @@ import java.util.HashMap;
 import java.util.Map;
 import org.serviio.util.ObjectValidator;
 
+public enum RangeUnit
+{
+    BYTES,  SECONDS
+}
+
+public enum RangeDefinition
+{
+    DLNA,  CDS
+}
+
 public class RangeHeaders
 {
-    public static final long UNSPECIFIED = -1L;
+    public static immutable long UNSPECIFIED = -1L;
     private Map!(RangeUnit, RangeTupple) headers;
-
-    public static enum RangeUnit
-    {
-        BYTES,  SECONDS
-    }
-
-    public static enum RangeDefinition
-    {
-        DLNA,  CDS
-    }
 
     private this(Map!(RangeUnit, RangeTupple) headers)
     {

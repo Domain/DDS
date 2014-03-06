@@ -1,15 +1,16 @@
 module org.serviio.delivery.CDSUrlParameters;
 
+import java.lang.String;
 import org.serviio.util.StringUtils;
+import org.serviio.delivery.URLParameters;
 
-public class CDSUrlParameters
-: URLParameters
+public class CDSUrlParameters : URLParameters
 {
     public static immutable String AUTH_PARAM_NAME = "authToken";
     public static immutable String PROFILE_PARAM_NAME = "profile";
     public static immutable String IGNORE_PRESENTATION_SETTINGS_PARAM_NAME = "ignorePresentationSettings";
     private static immutable String sharedSecurityToken = "";
-    private final bool useSharedSecurity;
+    private bool useSharedSecurity;
     private immutable String profileId;
 
     public this(bool useSharedSecurity, String profileId)

@@ -21,7 +21,7 @@ public class XBox360ProtocolHandler : DLNAProtocolHandler
             this.log.debug_("Found request for cover art, getting the cover art details");
 
             RequestedResourceDescriptor itemResourceDescriptor = getItemResourceDescriptor(requestUri, client);
-            if (itemResourceDescriptor.getResourceType() == Resource.ResourceType.MEDIA_ITEM)
+            if (itemResourceDescriptor.getResourceType() == ResourceType.MEDIA_ITEM)
             {
                 MediaItem item = getMediaItemResource(itemResourceDescriptor);
                 if (item !is null)

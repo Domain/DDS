@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.http.transport.CDSProtocolHandler;
 
+import java.lang;
 import java.util.Map;
 import org.apache.http.ProtocolVersion;
 import org.serviio.delivery.Client;
@@ -8,21 +9,23 @@ import org.serviio.delivery.RangeHeaders;
 import org.serviio.delivery.RangeHeaders:RangeUnit;
 import org.serviio.delivery.ResourceDeliveryProcessor:HttpMethod;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.upnp.protocol.http.transport.AbstractProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class CDSProtocolHandler : AbstractProtocolHandler
 {
     public static immutable String RANGE_HEADER = "Content-Range";
 
-    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, ResourceDeliveryProcessor.HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
     {
         if (range !is null) {
             responseHeaders.put("Content-Range", range);
         }
     }
 
-    public bool supportsRangeHeader(RangeHeaders.RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
+    override public bool supportsRangeHeader(RangeUnit type, bool http11, bool transcoded, RangeHeaders rangeHeaders)
     {
-        if (type == RangeHeaders.RangeUnit.BYTES)
+        if (type == RangeUnit.BYTES)
         {
             if (!transcoded) {
                 return true;
@@ -32,9 +35,9 @@ public class CDSProtocolHandler : AbstractProtocolHandler
         return true;
     }
 
-    protected RangeHeaders unsupportedRangeHeader(RangeHeaders.RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
+    override protected RangeHeaders unsupportedRangeHeader(RangeUnit type, RangeHeaders range, bool http11, bool transcoded, Long streamSize)
     {
-        if (type == RangeHeaders.RangeUnit.BYTES) {
+        if (type == RangeUnit.BYTES) {
             return null;
         }
         return null;

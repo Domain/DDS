@@ -1,5 +1,12 @@
 module org.serviio.ui.representation.RendererRepresentation;
 
+import java.lang;
+
+public enum RendererStatus
+{
+    ACTIVE,  INACTIVE,  UNKNOWN
+}
+
 public class RendererRepresentation : Comparable!(RendererRepresentation)
 {
     private String uuid;
@@ -11,11 +18,6 @@ public class RendererRepresentation : Comparable!(RendererRepresentation)
     private Long accessGroupId;
 
     public this() {}
-
-    public static enum RendererStatus
-    {
-        ACTIVE,  INACTIVE,  UNKNOWN
-    }
 
     public this(String uuid, String ipAddress, String name, String profileId, RendererStatus status, bool enabled, Long accessGroupId)
     {

@@ -1,5 +1,7 @@
 module org.serviio.upnp.protocol.http.transport.TransferMode;
 
+import java.lang.String;
+
 public enum TransferMode
 {
     INTERACTIVE,  BACKGROUND,  STREAMING

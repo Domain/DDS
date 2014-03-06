@@ -1,50 +1,50 @@
 module org.serviio.upnp.service.contentdirectory.rest.resources.server.TokenCache;
 
+import java.lang.String;
 import org.apache.jcs.JCS;
 import org.apache.jcs.access.exception.CacheException;
 import org.serviio.cache.AbstractCacheDecorator;
 import org.slf4j.Logger;
 
-public class TokenCache
-  : AbstractCacheDecorator
+public class TokenCache : AbstractCacheDecorator
 {
-  public this(String regionName)
-  {
-    super(regionName);
-  }
-  
-  public String retrieveToken(String token)
-  {
-    return cast(String)this.cache.get(token);
-  }
-  
-  public void storeToken(String token)
-  {
-    try
+    public this(String regionName)
     {
-      this.cache.put(token, token);
+        super(regionName);
     }
-    catch (CacheException e)
+
+    public String retrieveToken(String token)
     {
-      this.log.warn(String.format("Could not store token to local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+        return cast(String)this.cache.get(token);
     }
-  }
-  
-  public void evictToken(String token)
-  {
-    try
+
+    public void storeToken(String token)
     {
-      this.cache.remove(token);
+        try
+        {
+            this.cache.put(token, token);
+        }
+        catch (CacheException e)
+        {
+            this.log.warn(String.format("Could not store token to local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+        }
     }
-    catch (CacheException e)
+
+    public void evictToken(String token)
     {
-      this.log.debug_(String.format("Could not evict token from local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+        try
+        {
+            this.cache.remove(token);
+        }
+        catch (CacheException e)
+        {
+            this.log.debug_(String.format("Could not evict token from local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+        }
     }
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.TokenCache
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.rest.resources.server.TokenCache
+* JD-Core Version:    0.7.0.1
+*/

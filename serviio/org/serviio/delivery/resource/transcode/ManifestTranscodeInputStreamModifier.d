@@ -22,7 +22,7 @@ public class ManifestTranscodeInputStreamModifier
         try
         {
             String segmentsFolder = buildSegmentResourcePath(manifestFile);
-            String serverUrl = urlGenerator.getGeneratedURL(hostInfo, Resource.ResourceType.SEGMENT, resourceId, segmentsFolder);
+            String serverUrl = urlGenerator.getGeneratedURL(hostInfo, ResourceType.SEGMENT, resourceId, segmentsFolder);
             String[] serverUrlTemplate = buildTargetUrlTemplate(serverUrl);
             Modifier segmentUrlModifier = new RegexModifier(".*?(\\\\|/)(segment\\d{5}.ts)", 0, serverUrlTemplate[0] + "/$2" + serverUrlTemplate[1]);
 

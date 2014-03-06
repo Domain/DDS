@@ -9,9 +9,9 @@ import org.serviio.delivery.HostInfo;
 
 public abstract interface ResourceURLGenerator
 {
-    public abstract String getGeneratedURL(HostInfo paramHostInfo, Resource.ResourceType paramResourceType, Long paramLong, MediaFormatProfile paramMediaFormatProfile, Integer paramInteger, QualityType paramQualityType);
+    public abstract String getGeneratedURL(HostInfo paramHostInfo, ResourceType paramResourceType, Long paramLong, MediaFormatProfile paramMediaFormatProfile, Integer paramInteger, QualityType paramQualityType);
 
-    public abstract String getGeneratedURL(HostInfo paramHostInfo, Resource.ResourceType paramResourceType, Long paramLong, String paramString);
+    public abstract String getGeneratedURL(HostInfo paramHostInfo, ResourceType paramResourceType, Long paramLong, String paramString);
 }
 
 
