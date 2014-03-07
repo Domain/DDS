@@ -2,7 +2,6 @@ module org.serviio.upnp.service.contentdirectory.rest.representation.SearchResul
 
 import java.lang.String;
 import org.serviio.upnp.service.contentdirectory.rest.representation.AbstractCDSObjectRepresentation;
-import org.serviio.upnp.service.contentdirectory.rest.representation.DirectoryObjectType;
 
 public class SearchResultRepresentation : AbstractCDSObjectRepresentation
 {

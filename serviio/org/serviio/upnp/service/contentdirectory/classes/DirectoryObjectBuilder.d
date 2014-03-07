@@ -217,10 +217,10 @@ public class DirectoryObjectBuilder
         item.setRating((cast(MPAARating)values.get(ClassProperties.RATING)).toString());
         item.setLanguage(cast(String)values.get(ClassProperties.LANGUAGE));
         item.setSubtitlesUrlResource(cast(Resource)values.get(ClassProperties.SUBTITLES_URL));
-        item.setPublishers(getPersonsNames(cast(List)values.get(ClassProperties.PUBLISHER)));
-        item.setActors(getPersonsNames(cast(List)values.get(ClassProperties.ACTOR)));
-        item.setDirectors(getPersonsNames(cast(List)values.get(ClassProperties.DIRECTOR)));
-        item.setProducers(getPersonsNames(cast(List)values.get(ClassProperties.PRODUCER)));
+        item.setPublishers(getPersonsNames(cast(Listi!Person)values.get(ClassProperties.PUBLISHER)));
+        item.setActors(getPersonsNames(cast(List!Person)values.get(ClassProperties.ACTOR)));
+        item.setDirectors(getPersonsNames(cast(List!Person)values.get(ClassProperties.DIRECTOR)));
+        item.setProducers(getPersonsNames(cast(List!Person)values.get(ClassProperties.PRODUCER)));
         item.setLive(cast(Boolean)values.get(ClassProperties.LIVE));
         item.setContentType(cast(ContentType)values.get(ClassProperties.CONTENT_TYPE));
         item.setOnlineIdentifiers(cast(Map)values.get(ClassProperties.ONLINE_DB_IDENTIFIERS));

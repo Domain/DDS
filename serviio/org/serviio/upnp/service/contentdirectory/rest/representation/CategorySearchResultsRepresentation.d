@@ -3,6 +3,7 @@ module org.serviio.upnp.service.contentdirectory.rest.representation.CategorySea
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.upnp.service.contentdirectory.rest.representation.ContentDirectoryRepresentation;
+import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultRepresentation;
 
 public class CategorySearchResultsRepresentation : ContentDirectoryRepresentation!(SearchResultRepresentation)
 {
