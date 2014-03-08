@@ -1,6 +1,6 @@
 module org.serviio.delivery.DefaultResourceURLGenerator;
 
-import java.lang.String;
+import java.lang;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.serviio.dlna.MediaFormatProfile;

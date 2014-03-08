@@ -1,5 +1,6 @@
 module org.serviio.delivery.GETMethodProcessor;
 
+import java.lang;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,23 +13,24 @@ import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.protocol.http.transport.TransferMode;
+import org.serviio.delivery;
 import org.slf4j.Logger;
 
 public class GETMethodProcessor : AbstractMethodProcessor
 {
-    protected HttpMethod getMethod()
+    override protected HttpMethod getMethod()
     {
         return HttpMethod.GET;
     }
 
-    protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)
+    override protected HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, long skipBytes, long streamSize, Double timeOffsetInSeconds, Double requestedDurationInSeconds, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion, RangeHeaders requestRangeHeaders)
     {
         bool markAsRead = markAsReadRequired(requestRangeHeaders);
 
         return retrieveResource(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, markAsRead, skipBytes, streamSize, timeOffsetInSeconds, requestedDurationInSeconds, partialContent, deliverStream, requestHttpVersion);
     }
 
-    protected HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, ProtocolVersion requestHttpVersion, Long fileSize, RangeHeaders fixedRange)
+    override protected HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy resourceRetrievalStrategy, ResourceInfo resourceInfo, MediaFormatProfile selectedVersion, QualityType quality, String path, TransferMode transferMode, Client client, ProtocolVersion requestHttpVersion, Long fileSize, RangeHeaders fixedRange)
     {
         bool markAsRead = markAsReadRequired(fixedRange);
 
@@ -40,13 +42,13 @@ public class GETMethodProcessor : AbstractMethodProcessor
             this.log.debug_("Unsupported time range request because current filesize is_ not available, sending back 406");
             throw new HttpResponseCodeException(406);
         }
-        TreeMap!(Double, TranscodingJobListener.ProgressData) filesizeMap = jobListener.getFilesizeMap();
+        TreeMap!(Double, ProgressData) filesizeMap = jobListener.getFilesizeMap();
         Long startByte = convertSecondsToBytes(new Double(fixedRange.getStart(RangeUnit.SECONDS).doubleValue()), filesizeMap);
         this.log.debug_(String.format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeUnit.SECONDS), fixedRange.getEnd(RangeUnit.SECONDS) ]));
         return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, startByte.longValue(), fileSize.longValue(), true, true, requestHttpVersion);
     }
 
-    protected HttpDeliveryContainer prepareContainer(Map!(String, Object) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
+    override protected HttpDeliveryContainer prepareContainer(Map!(String, Object) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
     {
         InputStream is_ = deliverStream ? (cast(StreamDeliveryContainer)container).getFileStream() : new ByteArrayInputStream(new byte[0]);
         Long contentLengthToRead = Long.valueOf(deliverStream ? new Long(fileSize.longValue()).longValue() : 0L);

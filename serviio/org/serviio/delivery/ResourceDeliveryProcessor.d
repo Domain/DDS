@@ -1,5 +1,6 @@
 module org.serviio.delivery.ResourceDeliveryProcessor;
 
+import java.lang;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 import org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.util.ObjectValidator;
+import org.serviio.delivery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +23,7 @@ public enum HttpMethod
 
 public class ResourceDeliveryProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger!(ResourceDeliveryProcessor);
+    private static Logger log = LoggerFactory.getLogger!(ResourceDeliveryProcessor);
     private ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
     private HEADMethodProcessor headMethodProcessor = new HEADMethodProcessor();
     private GETMethodProcessor getMethodProcessor = new GETMethodProcessor();

@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.connectionmanager.ConnectionManager;
 
+import java.lang;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map:Entry;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConnectionManager : Service
 {
-    private static final Logger log = LoggerFactory.getLogger!(ConnectionManager);
+    private static Logger log = LoggerFactory.getLogger!(ConnectionManager);
     private static immutable int CONNECTION_ID = 0;
     private static immutable String VAR_A_ARG_TYPE_ProtocolInfo = "A_ARG_TYPE_ProtocolInfo";
     private static immutable String VAR_A_ARG_TYPE_ConnectionStatus = "A_ARG_TYPE_ConnectionStatus";
@@ -33,7 +34,7 @@ public class ConnectionManager : Service
     private static immutable String VAR_A_ARG_TYPE_ConnectionManager = "A_ARG_TYPE_ConnectionManager";
     private static immutable String VAR_A_ARG_TYPE_Direction = "A_ARG_TYPE_Direction";
 
-    protected void setupService()
+    override protected void setupService()
     {
         this.serviceId = "urn:upnp-org:serviceId:ConnectionManager";
         this.serviceType = "urn:schemas-upnp-org:service:ConnectionManager:1";

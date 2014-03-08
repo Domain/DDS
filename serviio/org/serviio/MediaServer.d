@@ -1,5 +1,6 @@
 module org.serviio.MediaServer;
 
+import java.lang;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -28,12 +29,14 @@ import org.serviio.upnp.service.contentdirectory.rest.access.PortMapper;
 import org.serviio.upnp.service.contentdirectory.rest.resources.server.LoginServerResource;
 import org.serviio.upnp.webserver.WebServer;
 import org.serviio.util.StringUtils;
+import org.serviio.UPnPServerStatus;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public class MediaServer
 {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger!(MediaServer);
+    private static Logger log = LoggerFactory.getLogger!(MediaServer);
     private static DiscoveryManager discoveryManager;
     private static UPnPServerStatus status = UPnPServerStatus.STOPPED;
     private static Map!(String, Object) arguments = new HashMap();
@@ -249,7 +252,7 @@ public class MediaServer
 
     private static class ShutdownHook : Thread
     {
-        public void run()
+        override public void run()
         {
             LibraryManager.getInstance().stopLibraryAdditionsCheckerThread();
             LibraryManager.getInstance().stopLibraryUpdatesCheckerThread();

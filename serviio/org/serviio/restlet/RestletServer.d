@@ -1,5 +1,6 @@
 module org.serviio.restlet.RestletServer;
 
+import java.lang.String;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

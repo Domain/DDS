@@ -217,30 +217,29 @@ public class TranscodingJobListener : ProcessListener
         }
         return true;
     }
-
-    public static class ProgressData
-    {
-        private Long fileSize;
-        private Float bitrate;
-
-        public this(Long fileSize, Float bitrate)
-        {
-            this.fileSize = fileSize;
-            this.bitrate = bitrate;
-        }
-
-        public Long getFileSize()
-        {
-            return this.fileSize;
-        }
-
-        public Float getBitrate()
-        {
-            return this.bitrate;
-        }
-    }
 }
 
+public class ProgressData
+{
+    private Long fileSize;
+    private Float bitrate;
+
+    public this(Long fileSize, Float bitrate)
+    {
+        this.fileSize = fileSize;
+        this.bitrate = bitrate;
+    }
+
+    public Long getFileSize()
+    {
+        return this.fileSize;
+    }
+
+    public Float getBitrate()
+    {
+        return this.bitrate;
+    }
+}
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
 * Qualified Name:     org.serviio.delivery.resource.transcode.TranscodingJobListener

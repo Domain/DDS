@@ -1,5 +1,6 @@
 module org.serviio.delivery.ManifestRetrievalStrategy;
 
+import java.lang;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,12 +16,16 @@ import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceExceptio
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
+import org.serviio.delivery.ResourceRetrievalStrategy;
+import org.serviio.delivery.DeliveryContainer;
+import org.serviio.delivery.Client;
+import org.serviio.delivery.ResourceInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
 {
-    private static final Logger log = LoggerFactory.getLogger!(ManifestRetrievalStrategy);
+    private static Logger log = LoggerFactory.getLogger!(ManifestRetrievalStrategy);
 
     public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {

@@ -1,5 +1,6 @@
 module org.serviio.delivery.AbstractMethodProcessor;
 
+import java.lang;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,12 +15,18 @@ import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler;
 import org.serviio.upnp.protocol.http.transport.TransferMode;
 import org.serviio.util.ObjectValidator;
+import org.serviio.delivery.HttpDeliveryContainer;
+import org.serviio.delivery.ResourceInfo;
+import org.serviio.delivery.Client;
+import org.serviio.delivery.RangeHeaders;
+import org.serviio.delivery.DeliveryContainer;
+import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractMethodProcessor
 {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log = LoggerFactory.getLogger(getClass());
     private static immutable Long TRANSCODED_VIDEO_CONTENT_LENGTH = new Long(50000000000L);
     private static immutable Long TRANSCODED_AUDIO_CONTENT_LENGTH = new Long(900000000L);
     private static immutable Long TRANSCODED_IMAGE_CONTENT_LENGTH = new Long(9000000L);
@@ -133,24 +140,24 @@ public abstract class AbstractMethodProcessor
         return prepareContainer(responseHeaders, deliveryContainer, transferMode, Long.valueOf(skipBytes), Long.valueOf(streamSize), partialContent, requestHttpVersion, resourceInfo.isTranscoded(), client.isExpectsClosedConnection(), deliverStream);
     }
 
-    protected Long convertSecondsToBytes(Double seconds, TreeMap!(Double, TranscodingJobListener.ProgressData) filesizeMap)
+    protected Long convertSecondsToBytes(Double seconds, TreeMap!(Double, ProgressData) filesizeMap)
     {
         if (seconds.doubleValue() == 0.0) {
             return Long.valueOf(0L);
         }
         if (seconds.doubleValue() <= (cast(Double)filesizeMap.lastKey()).doubleValue())
         {
-            Map.Entry!(Double, TranscodingJobListener.ProgressData) upperBoundary = filesizeMap.ceilingEntry(seconds);
-            Map.Entry!(Double, TranscodingJobListener.ProgressData) lowerBoundary = filesizeMap.floorEntry(seconds);
+            Map.Entry!(Double, ProgressData) upperBoundary = filesizeMap.ceilingEntry(seconds);
+            Map.Entry!(Double, ProgressData) lowerBoundary = filesizeMap.floorEntry(seconds);
             if (lowerBoundary is null) {
-                return convertSecondsToBytes((cast(TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), Long.valueOf(0L), Double.valueOf(0.0), seconds);
+                return convertSecondsToBytes((cast(ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), Long.valueOf(0L), Double.valueOf(0.0), seconds);
             }
-            return convertSecondsToBytes((cast(TranscodingJobListener.ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), (cast(TranscodingJobListener.ProgressData)lowerBoundary.getValue()).getFileSize(), cast(Double)lowerBoundary.getKey(), seconds);
+            return convertSecondsToBytes((cast(ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), (cast(ProgressData)lowerBoundary.getValue()).getFileSize(), cast(Double)lowerBoundary.getKey(), seconds);
         }
-        Map.Entry!(Double, TranscodingJobListener.ProgressData) lastEntry = filesizeMap.lastEntry();
+        Map.Entry!(Double, ProgressData) lastEntry = filesizeMap.lastEntry();
         Double secondsFromLast = Double.valueOf(seconds.doubleValue() - (cast(Double)lastEntry.getKey()).doubleValue());
-        Double approxFileSizeSinceLastEntry = Double.valueOf((cast(TranscodingJobListener.ProgressData)lastEntry.getValue()).getBitrate().floatValue() * secondsFromLast.doubleValue() / 8.0 * 1024.0);
-        return Long.valueOf((cast(TranscodingJobListener.ProgressData)lastEntry.getValue()).getFileSize().longValue() + approxFileSizeSinceLastEntry.longValue());
+        Double approxFileSizeSinceLastEntry = Double.valueOf((cast(ProgressData)lastEntry.getValue()).getBitrate().floatValue() * secondsFromLast.doubleValue() / 8.0 * 1024.0);
+        return Long.valueOf((cast(ProgressData)lastEntry.getValue()).getFileSize().longValue() + approxFileSizeSinceLastEntry.longValue());
     }
 
     private Long convertSecondsToBytes(Long upperFileSize, Double upperTime, Long lowerFilesize, Double lowerTime, Double seconds)

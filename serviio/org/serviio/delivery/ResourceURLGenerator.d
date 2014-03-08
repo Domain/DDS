@@ -1,6 +1,6 @@
 module org.serviio.delivery.ResourceURLGenerator;
 
-import java.lang.String;
+import java.lang;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;

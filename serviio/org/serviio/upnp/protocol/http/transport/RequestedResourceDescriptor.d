@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 
+import java.lang;
 import java.util.regex.Pattern;
 import org.serviio.profile.DeliveryQuality;
 import org.serviio.profile.DeliveryQuality:QualityType;
@@ -10,7 +11,7 @@ import org.serviio.util.StringUtils;
 
 public class RequestedResourceDescriptor
 {
-    private static final Pattern URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
+    private static Pattern URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
     private Long resourceId;
     private ResourceType resourceType;
     private String targetProfileName;

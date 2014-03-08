@@ -1,12 +1,13 @@
 module org.serviio.upnp.service.microsoft.MediaReceiverRegistrar;
 
+import java.lang;
 import org.serviio.upnp.protocol.soap.OperationResult;
 import org.serviio.upnp.protocol.soap.SOAPParameter;
 import org.serviio.upnp.service.Service;
 
 public class MediaReceiverRegistrar : Service
 {
-    protected void setupService()
+    override protected void setupService()
     {
         this.serviceId = "urn:microsoft.com:serviceId:X_MS_MediaReceiverRegistrar";
         this.serviceType = "urn:microsoft.com:service:X_MS_MediaReceiverRegistrar:1";

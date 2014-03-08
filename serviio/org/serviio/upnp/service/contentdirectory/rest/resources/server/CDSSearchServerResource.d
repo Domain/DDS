@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.rest.resources.server.CDSSearchServerResource;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.serviio.upnp.service.contentdirectory.rest.representation.CategorySea
 import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResultsRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.CDSSearchResource;
+import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.StringUtils;
 import org.slf4j.Logger;
@@ -68,7 +70,7 @@ public class CDSSearchServerResource : AbstractRestrictedCDSServerResource, CDSS
         }
     }
 
-    protected void doInit()
+    override protected void doInit()
     {
         super.doInit();
         this.term = HttpUtils.urlDecode(cast(String)getRequestAttributes().get("term"));
