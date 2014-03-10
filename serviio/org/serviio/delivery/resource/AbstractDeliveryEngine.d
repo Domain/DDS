@@ -41,6 +41,7 @@ import org.serviio.profile.DeliveryQuality;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.serviio.delivery.resource.DeliveryEngine;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +54,12 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         log = LoggerFactory.getLogger!(AbstractDeliveryEngine);
     }
 
-    public static bool isHardSubsDelivered(DeliveryQuality quality, MediaItem mediaItem, Profile profile)
+    public static bool isHardSubsDelivered(I : ProtocolAdditionalInfo)(DeliveryQuality quality, MediaItem mediaItem, Profile!I profile)
     {
         return findTranscodingForHardSubs(quality, mediaItem, profile, false) !is null;
     }
 
-    public List!(RI) getMediaInfoForProfile(MI mediaItem, Profile rendererProfile)
+    public List!(RI) getMediaInfoForProfile(I : ProtocolAdditionalInfo)(MI mediaItem, Profile!I rendererProfile)
     {
         this.log.debug_(String.format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId(), rendererProfile.getName() ]));
         Map!(QualityType, List!(RI)) infos = new LinkedHashMap();
@@ -76,7 +77,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return flattenMediaInfoMap(infos);
     }
 
-    public DeliveryContainer deliver(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
+    public DeliveryContainer deliver(I : ProtocolAdditionalInfo)(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client!I client)
     {
         this.log.debug_(String.format("Delivering item '%s' for client '%s'", cast(Object[])[ mediaItem.getId(), client ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, client.getRendererProfile()))
@@ -88,7 +89,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return retrieveOriginalFileContainer(mediaItem, selectedVersion, client);
     }
 
-    public RI getMediaInfoForMediaItem(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
+    public RI getMediaInfoForMediaItem(I : ProtocolAdditionalInfo)(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile!I rendererProfile)
     {
         this.log.debug_(String.format("Retrieving resource information for item %s, format %s and profile %s", cast(Object[])[ mediaItem.getId(), selectedVersion, rendererProfile.getName() ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, rendererProfile)) {
@@ -98,21 +99,21 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return findMediaInfoForFileProfile(cast(Collection)originalMediaInfos.get(QualityType.ORIGINAL), selectedVersion);
     }
 
-    protected abstract bool fileCanBeTranscoded(MI paramMI, Profile paramProfile);
+    protected abstract bool fileCanBeTranscoded(I : ProtocolAdditionalInfo)(MI paramMI, Profile!I paramProfile);
 
-    protected abstract bool fileWillBeTranscoded(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile paramProfile);
+    protected abstract bool fileWillBeTranscoded(I : ProtocolAdditionalInfo)(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile!I paramProfile);
 
-    protected abstract LinkedHashMap!(QualityType, List!(RI)) retrieveOriginalMediaInfo(MI paramMI, Profile paramProfile);
+    protected abstract LinkedHashMap!(QualityType, List!(RI)) retrieveOriginalMediaInfo(I : ProtocolAdditionalInfo)(MI paramMI, Profile!I paramProfile);
 
-    protected abstract LinkedHashMap!(QualityType, List!(RI)) retrieveTranscodedMediaInfo(MI paramMI, Profile paramProfile, Long paramLong);
+    protected abstract LinkedHashMap!(QualityType, List!(RI)) retrieveTranscodedMediaInfo(I : ProtocolAdditionalInfo)(MI paramMI, Profile!I paramProfile, Long paramLong);
 
-    protected abstract RI retrieveTranscodedMediaInfoForVersion(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile paramProfile);
+    protected abstract RI retrieveTranscodedMediaInfoForVersion(I : ProtocolAdditionalInfo)(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile!I paramProfile);
 
     protected abstract TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) paramList, MI paramMI);
 
-    protected abstract DeliveryContainer retrieveTranscodedResource(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client paramClient);
+    protected abstract DeliveryContainer retrieveTranscodedResource(I : ProtocolAdditionalInfo)(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client!I paramClient);
 
-    protected Map!(QualityType, TranscodingDefinition) getMatchingTranscodingDefinitions(MI mediaItem, Profile rendererProfile, bool delivering)
+    protected Map!(QualityType, TranscodingDefinition) getMatchingTranscodingDefinitions(I : ProtocolAdditionalInfo)(MI mediaItem, Profile!I rendererProfile, bool delivering)
     {
         Map!(QualityType, TranscodingDefinition) defs = new LinkedHashMap();
         TranscodingDefinition defaultDefinition = getMatchingTranscodingDefinitionForQuality(rendererProfile.getDefaultDeliveryQuality(), mediaItem, rendererProfile, delivering);
@@ -129,7 +130,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return defs;
     }
 
-    private TranscodingDefinition getMatchingTranscodingDefinitionForQuality(DeliveryQuality quality, MI mediaItem, Profile profile, bool delivering)
+    private TranscodingDefinition getMatchingTranscodingDefinitionForQuality(I : ProtocolAdditionalInfo)(DeliveryQuality quality, MI mediaItem, Profile!I profile, bool delivering)
     {
         List!(TranscodingDefinition) localTDefs = quality.getTranscodingConfiguration() !is null ? quality.getTranscodingConfiguration().getDefinitions(mediaItem.getFileType()) : null;
         List!(TranscodingDefinition) onlineTDefs = quality.getOnlineTranscodingConfiguration() !is null ? quality.getOnlineTranscodingConfiguration().getDefinitions(mediaItem.getFileType()) : null;
@@ -144,7 +145,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return result;
     }
 
-    private static TranscodingDefinition findTranscodingForHardSubs(DeliveryQuality quality, MediaItem mediaItem, Profile profile, bool delivering)
+    private static TranscodingDefinition findTranscodingForHardSubs(I : ProtocolAdditionalInfo)(DeliveryQuality quality, MediaItem mediaItem, Profile!I profile, bool delivering)
     {
         List!(TranscodingDefinition) hardSubsTDefs = quality.getHardSubsTranscodingConfiguration() !is null ? quality.getHardSubsTranscodingConfiguration().getDefinitions(mediaItem.getFileType()) : null;
         TranscodingDefinition result = null;
@@ -170,7 +171,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return result;
     }
 
-    protected DeliveryContainer retrieveOriginalFileContainer(MI mediaItem, MediaFormatProfile selectedVersion, Client client)
+    protected DeliveryContainer retrieveOriginalFileContainer(I : ProtocolAdditionalInfo)(MI mediaItem, MediaFormatProfile selectedVersion, Client!I client)
     {
         InputStream fis = null;
         if (mediaItem.isLocalMedia())
@@ -249,7 +250,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         return result;
     }
 
-    protected static bool hardSubsTranscodingConfigured(MediaItem mediaItem, Profile rendererProfile)
+    protected static bool hardSubsTranscodingConfigured(I : ProtocolAdditionalInfo)(MediaItem mediaItem, Profile!I rendererProfile)
     {
         return (mediaItem.getFileType() == MediaFileType.VIDEO) && (Configuration.isSubtitlesEnabled()) && (Configuration.isHardSubsEnabled()) && (rendererProfile.getSubtitlesConfiguration().isHardSubsSupported()) && (rendererProfile.hasAnyHardSubsTranscodingDefinitions());
     }

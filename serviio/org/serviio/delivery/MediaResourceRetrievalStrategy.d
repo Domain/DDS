@@ -27,6 +27,7 @@ import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
 {
     private static Logger log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy);
 
-    public static List/*!(? : ResourceInfo)*/ getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
+    public static List/*!(? : ResourceInfo)*/ getMediaInfoForAvailableProfiles(I : ProtocolAdditionalInfo)(MediaItem mediaItem, Profile!I rendererProfile)
     {
         bool isLocalMedia = mediaItem.isLocalMedia();
         if (mediaItem.getFileType() == MediaFileType.IMAGE)

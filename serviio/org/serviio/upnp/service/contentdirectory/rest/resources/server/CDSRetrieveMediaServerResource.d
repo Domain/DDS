@@ -34,17 +34,18 @@ import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.rest.representation.ClosingInputRepresentation;
 import org.serviio.upnp.service.contentdirectory.rest.resources.CDSRetrieveMediaResource;
 import org.serviio.upnp.service.contentdirectory.rest.resources.server.AbstractRestrictedCDSServerResource;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.ObjectValidator;
 import org.slf4j.Logger;
 
-public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResource, CDSRetrieveMediaResource
+public class CDSRetrieveMediaServerResource(I : ProtocolAdditionalInfo) : AbstractRestrictedCDSServerResource, CDSRetrieveMediaResource
 {
     private static immutable int CACHE_SECONDS = 36000;
     public static immutable String RESOURCE_CONTEXT = "/resource";
     private static immutable String PARAM_CLIENT_ID = "clientId";
     private static ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
-    private Profile profile;
+    private Profile!I profile;
 
     public StreamRepresentation deliver()
     {
@@ -87,7 +88,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
             String profile = getRequestQueryParam("profile");
             if (ObjectValidator.isNotEmpty(profile))
             {
-                this.profile = ProfileManager.getProfileById(profile);
+                this.profile = ProfileManager!I.getProfileById(profile);
                 if (this.profile !is null) {
                     return;
                 }

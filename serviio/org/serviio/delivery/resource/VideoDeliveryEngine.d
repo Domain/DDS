@@ -24,15 +24,15 @@ import org.serviio.external.ResizeDefinition;
 import org.serviio.library.entities.Video;
 import org.serviio.library.local.metadata.TransportStreamTimestamp;
 import org.serviio.profile.DeliveryQuality:QualityType;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class VideoDeliveryEngine
-: AbstractTranscodingDeliveryEngine!(VideoMediaInfo, Video)
+public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMediaInfo, Video)
 {
     private static VideoDeliveryEngine instance;
-    private static final Logger log = LoggerFactory.getLogger!(VideoDeliveryEngine);
+    private static Logger log = LoggerFactory.getLogger!(VideoDeliveryEngine);
 
     public static VideoDeliveryEngine getInstance()
     {
@@ -42,7 +42,7 @@ public class VideoDeliveryEngine
         return instance;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveOriginalMediaInfo(Video mediaItem, Profile rendererProfile)
+    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveOriginalMediaInfo(I : ProtocolAdditionalInfo)(Video mediaItem, Profile!I rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
         LinkedHashMap!(QualityType, List!(VideoMediaInfo)) mediaInfoMap = new LinkedHashMap();
@@ -54,7 +54,7 @@ public class VideoDeliveryEngine
         return mediaInfoMap;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveTranscodedMediaInfo(Video mediaItem, Profile rendererProfile, Long fileSize)
+    override protected LinkedHashMap!(QualityType, List!(VideoMediaInfo)) retrieveTranscodedMediaInfo(I : ProtocolAdditionalInfo)(Video mediaItem, Profile!I rendererProfile, Long fileSize)
     {
         LinkedHashMap!(QualityType, List!(VideoMediaInfo)) transcodedMI = new LinkedHashMap();
         Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);

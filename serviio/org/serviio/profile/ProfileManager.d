@@ -18,24 +18,25 @@ import org.serviio.renderer.entities.Renderer;
 import org.serviio.util.FileUtils;
 import org.serviio.profile.Profile;
 import org.serviio.profile.DetectionDefinition;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProfileManager
+public class ProfileManager(I : ProtocolAdditionalInfo)
 {
-    private static List!(Profile) profiles = new ArrayList();
+    private static List!(Profile!I) profiles = new ArrayList!(Profile!I)();
     public static immutable String DEFAULT_PROFILE_ID = "1";
     private static immutable String PROFILES_XML_PATH = "/profiles.xml";
     private static immutable String APP_PROFILES_XML_PATH = "/application-profiles.xml";
-    private static final Logger log = LoggerFactory.getLogger!(ProfileManager);
+    private static Logger log = LoggerFactory.getLogger!(ProfileManager);
 
-    public static Profile getProfile(InetAddress clientIPAddress)
+    public static Profile!I getProfile(InetAddress clientIPAddress)
     {
         Renderer renderer = RendererManager.getInstance().getStoredRendererByIPAddress(clientIPAddress);
         return getProfile(renderer);
     }
 
-    public static Profile getProfile(String clientIPAddress)
+    public static Profile!I getProfile(String clientIPAddress)
     {
         try
         {
@@ -48,7 +49,7 @@ public class ProfileManager
         return getProfileById("1");
     }
 
-    public static Profile getProfile(Renderer renderer)
+    public static Profile!I getProfile(Renderer renderer)
     {
         if (renderer !is null) {
             return getProfileById(renderer.getProfileId());
@@ -58,9 +59,9 @@ public class ProfileManager
         return getProfileById("1");
     }
 
-    public static Profile findProfileByDescription(String friendlyName, String modelName, String modelNumber, String productCode, String serverName, String manufacturer)
+    public static Profile!I findProfileByDescription(String friendlyName, String modelName, String modelNumber, String productCode, String serverName, String manufacturer)
     {
-        foreach (Profile profile ; profiles)
+        foreach (Profile!I profile ; profiles)
         {
             DetectionDefinition detectionDef = getDetectionDefinitionByType(profile, DetectionType.UPNP_SEARCH);
             if (detectionDef !is null)
@@ -89,7 +90,7 @@ public class ProfileManager
         return null;
     }
 
-    public static Profile findProfileByHeader(Header[] headers)
+    public static Profile!I findProfileByHeader(Header[] headers)
     {
         for (Iterator i = profiles.iterator(); i.hasNext();)
         {
@@ -109,7 +110,7 @@ public class ProfileManager
         return null;
     }
 
-    public static Profile getProfileById(String id)
+    public static Profile!I getProfileById(String id)
     {
         foreach (Profile profile ; profiles) {
             if (profile.getId().equals(id)) {
@@ -125,15 +126,15 @@ public class ProfileManager
         profiles = parseProfilesFromFile("/application-profiles.xml", profiles);
     }
 
-    public static List!(Profile) getAllProfiles()
+    public static List!(Profile!I) getAllProfiles()
     {
         return profiles;
     }
 
-    public static List!(Profile) getAllSelectableProfiles()
+    public static List!(Profile!I) getAllSelectableProfiles()
     {
-        List!(Profile) selectableProfiles = new ArrayList();
-        foreach (Profile profile ; profiles) {
+        List!(Profile!I) selectableProfiles = new ArrayList();
+        foreach (Profile!I profile ; profiles) {
             if (profile.isSelectable()) {
                 selectableProfiles.add(profile);
             }
@@ -141,7 +142,7 @@ public class ProfileManager
         return selectableProfiles;
     }
 
-    private static List!(Profile) parseProfilesFromFile(String fileName, List!(Profile) currentProfiles)
+    private static List!(Profile!I) parseProfilesFromFile(String fileName, List!(Profile!I) currentProfiles)
     {
         InputStream definitionStream = ProfileManager.class_.getResourceAsStream(fileName);
         try
@@ -166,7 +167,7 @@ public class ProfileManager
         return false;
     }
 
-    private static DetectionDefinition getDetectionDefinitionByType(Profile profile, DetectionType type)
+    private static DetectionDefinition getDetectionDefinitionByType(Profile!I profile, DetectionType type)
     {
         if (profile.getDetectionDefinitions() !is null) {
             foreach (DetectionDefinition dd ; profile.getDetectionDefinitions()) {

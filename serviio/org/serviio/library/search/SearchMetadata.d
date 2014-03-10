@@ -5,12 +5,13 @@ import java.util.List;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
 public abstract interface SearchMetadata
 {
-    public abstract String generateCDSIdentifier(ActionNode paramActionNode);
+    public abstract String generateCDSIdentifier(I : ProtocolAdditionalInfo)(ActionNode!I paramActionNode);
 
-    public abstract String generateCDSParentIdentifier(ActionNode paramActionNode);
+    public abstract String generateCDSParentIdentifier(I : ProtocolAdditionalInfo)(ActionNode!I paramActionNode);
 
     public abstract String getIndexId();
 

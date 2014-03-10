@@ -14,20 +14,21 @@ import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.upnp.service.contentdirectory.command.Command;
 import org.serviio.upnp.service.contentdirectory.command.CommandExecutionException;
 import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class ContainerNode : DefinitionNode
+public abstract class ContainerNode(I : ProtocolAdditionalInfo) : DefinitionNode!I
 {
     private static Logger log = LoggerFactory.getLogger!(ContainerNode);
-    protected List!(DefinitionNode) childNodes = new ArrayList!DefinitionNode();
+    protected List!(DefinitionNode!I) childNodes = new ArrayList!(DefinitionNode!I)();
 
-    public this(ObjectClassType objectClass, DefinitionNode parent, String cacheRegion)
+    public this(ObjectClassType objectClass, DefinitionNode!I parent, String cacheRegion)
     {
         super(objectClass, parent, cacheRegion);
     }
 
-    public BrowseItemsHolder!(DirectoryObject) retrieveContainerItems(String containerId, ObjectType objectType, SearchCriteria searchCriteria, int startIndex, int count, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
+    public BrowseItemsHolder!(DirectoryObject) retrieveContainerItems(String containerId, ObjectType objectType, SearchCriteria searchCriteria, int startIndex, int count, Profile!I rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
     {
         BrowseItemsHolder!(DirectoryObject) resultHolder = new BrowseItemsHolder();
         new ArrayList();
@@ -46,7 +47,7 @@ public abstract class ContainerNode : DefinitionNode
     {
         int totalFound = 0;
         Definition def = Definition.instance();
-        foreach (DefinitionNode childNode ; this.childNodes) {
+        foreach (DefinitionNode!I childNode ; this.childNodes) {
             if (( cast(StaticDefinitionNode)childNode !is null ))
             {
                 String childNodeId = (cast(StaticDefinitionNode)childNode).getId();
@@ -86,7 +87,7 @@ public abstract class ContainerNode : DefinitionNode
     {
         List!(DirectoryObject) items = new ArrayList();
         Definition def = Definition.instance();
-        foreach (DefinitionNode node ; this.childNodes) {
+        foreach (DefinitionNode!I node ; this.childNodes) {
             if (( cast(StaticContainerNode)node !is null ))
             {
                 StaticContainerNode staticContainer = cast(StaticContainerNode)node;
@@ -181,7 +182,7 @@ public abstract class ContainerNode : DefinitionNode
         }
     }
 
-    public List!(DefinitionNode) getChildNodes()
+    public List!(DefinitionNode!I) getChildNodes()
     {
         return this.childNodes;
     }

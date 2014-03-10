@@ -15,6 +15,7 @@ import org.serviio.upnp.protocol.soap.SOAPParameter;
 import org.serviio.upnp.service.Service;
 import org.serviio.upnp.service.StateVariable;
 import org.serviio.upnp.service.contentdirectory.ProtocolInfo;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +92,7 @@ public class ConnectionManager : Service
         return result;
     }
 
-    private String getSourceProtocolInfo(Profile profile)
+    private String getSourceProtocolInfo(I : ProtocolAdditionalInfo)(Profile!I profile)
     {
         log.debug_(String.format("Sending protocol info using profile '%s'", cast(Object[])[ profile ]));
         Set!(String) protocolInfos = new LinkedHashSet();

@@ -15,12 +15,13 @@ import org.serviio.upnp.service.contentdirectory.command.CommandExecutionExcepti
 import org.serviio.util.ObjectValidator;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ActionNode : ContainerNode
+public class ActionNode(I : ProtocolAdditionalInfo) : ContainerNode
 {
-    private static final Logger log = LoggerFactory.getLogger!(ActionNode);
+    private static Logger log = LoggerFactory.getLogger!(ActionNode);
     private String commandClass;
     private String idPrefix;
     private bool recursive;

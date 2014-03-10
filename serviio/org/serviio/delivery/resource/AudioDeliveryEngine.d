@@ -21,13 +21,14 @@ import org.serviio.external.FFMPEGWrapper;
 import org.serviio.library.entities.MusicTrack;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMediaInfo, MusicTrack)
+public class AudioDeliveryEngine(I : ProtocolAdditionalInfo) : AbstractTranscodingDeliveryEngine!(AudioMediaInfo, MusicTrack, I)
 {
     private static AudioDeliveryEngine instance;
-    private static final Logger log = LoggerFactory.getLogger!(AudioDeliveryEngine);
+    private static Logger log = LoggerFactory.getLogger!(AudioDeliveryEngine);
 
     public static AudioDeliveryEngine getInstance()
     {
@@ -37,7 +38,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
         return instance;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
+    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile!I rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
         LinkedHashMap!(QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap();
@@ -49,7 +50,7 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
         return result;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
+    override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile!I rendererProfile, Long fileSize)
     {
         LinkedHashMap!(QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap();
         Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);

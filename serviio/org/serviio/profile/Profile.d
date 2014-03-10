@@ -16,10 +16,11 @@ import org.serviio.profile.DetectionDefinition;
 import org.serviio.profile.DeliveryQuality;
 import org.serviio.profile.H264LevelCheckType;
 import org.serviio.profile.ImageResolutions;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Profile : Comparable!(Profile)
+public class Profile(T : ProtocolAdditionalInfo) : Comparable!(Profile)
 {
     private static Logger log = LoggerFactory.getLogger!(Profile);
     public static immutable String DETECTION_FIELD_SERVER = "Server";
@@ -33,7 +34,7 @@ public class Profile : Comparable!(Profile)
     private bool alwaysEnableTranscoding;
     private Class/*!(?)*/ contentDirectoryMessageBuilderClass;
     private List!(DetectionDefinition) detectionDefinitions;
-    private Map!(MediaFormatProfile, ProtocolInfo) protocolInfo;
+    private Map!(MediaFormatProfile, ProtocolInfo!T) protocolInfo;
     private DeviceDescription deviceDescription;
     private ResourceTransportProtocolHandler resourceTransportProtocolHandler;
     private String protocolInfoType;
@@ -48,7 +49,7 @@ public class Profile : Comparable!(Profile)
     private ThumbnailResolution thumbnailsResolution;
     private ImageResolutions allowedImageResolutions;
 
-    public this(String id, String name, Class/*!(?)*/ contentDirectoryMessageBuilderClass, ResourceTransportProtocolHandler resourceTransportProtocolHandler, List!(DetectionDefinition) detectionDefinitions, Map!(MediaFormatProfile, ProtocolInfo) protocolInfo, String protocolInfoType, DeviceDescription deviceDescription, ContentDirectoryDefinitionFilter cdDefinitionFilter, TranscodingConfiguration transcodingConfiguration, TranscodingConfiguration onlineTranscodingConfiguration, TranscodingConfiguration hardSubsTranscodingConfiguration, bool automaticImageRotation, bool limitImageResolution, SubtitlesConfiguration subtitlesConfiguration, bool alwaysEnableTranscoding, bool selectable, List!(DeliveryQuality) deliveryQualities, H264LevelCheckType h264LevelCheck, ThumbnailResolution thumbnailsResolution, ImageResolutions allowedImageResolutions)
+    public this(String id, String name, Class/*!(?)*/ contentDirectoryMessageBuilderClass, ResourceTransportProtocolHandler resourceTransportProtocolHandler, List!(DetectionDefinition) detectionDefinitions, Map!(MediaFormatProfile, ProtocolInfo!T) protocolInfo, String protocolInfoType, DeviceDescription deviceDescription, ContentDirectoryDefinitionFilter cdDefinitionFilter, TranscodingConfiguration transcodingConfiguration, TranscodingConfiguration onlineTranscodingConfiguration, TranscodingConfiguration hardSubsTranscodingConfiguration, bool automaticImageRotation, bool limitImageResolution, SubtitlesConfiguration subtitlesConfiguration, bool alwaysEnableTranscoding, bool selectable, List!(DeliveryQuality) deliveryQualities, H264LevelCheckType h264LevelCheck, ThumbnailResolution thumbnailsResolution, ImageResolutions allowedImageResolutions)
     {
         this.id = id;
         this.name = name;
@@ -77,7 +78,7 @@ public class Profile : Comparable!(Profile)
         this.name = name;
     }
 
-    public ProtocolInfo getResourceProtocolInfo(MediaFormatProfile mediaFormatProfile)
+    public ProtocolInfo!T getResourceProtocolInfo(MediaFormatProfile mediaFormatProfile)
     {
         if (this.protocolInfo.containsKey(mediaFormatProfile)) {
             return cast(ProtocolInfo)this.protocolInfo.get(mediaFormatProfile);
@@ -171,7 +172,7 @@ public class Profile : Comparable!(Profile)
         return this.protocolInfoType;
     }
 
-    public Map!(MediaFormatProfile, ProtocolInfo) getProtocolInfo()
+    public Map!(MediaFormatProfile, ProtocolInfo!T) getProtocolInfo()
     {
         return this.protocolInfo;
     }
@@ -263,7 +264,7 @@ public class Profile : Comparable!(Profile)
         return true;
     }
 
-    public String toString()
+    override public String toString()
     {
         return this.name;
     }

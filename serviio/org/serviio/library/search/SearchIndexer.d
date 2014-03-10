@@ -25,6 +25,7 @@ import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.util.CollectionUtils;
 import org.serviio.library.search.SearchMetadata;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,7 +140,7 @@ public class SearchIndexer
         }
     }
 
-    private synchronized void addItemToIndex(SearchMetadata searchMetadata, ActionNode node, IndexWriter writer)
+    private synchronized void addItemToIndex(I : ProtocolAdditionalInfo)(SearchMetadata searchMetadata, ActionNode!I node, IndexWriter writer)
     {
         Document doc = new Document();
         try

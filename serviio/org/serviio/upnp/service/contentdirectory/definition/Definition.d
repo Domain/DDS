@@ -12,8 +12,9 @@ import org.serviio.util.CollectionUtils;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerVisibilityType;
 import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
+import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
-public class Definition
+public class Definition(I : ProtocolAdditionalInfo)
 {
     public static immutable String ROOT_NODE_ID = "0";
     public static immutable String ROOT_NODE_PARENT_ID = "-1";
@@ -22,15 +23,15 @@ public class Definition
     public static immutable String NODE_ID_AUDIO = "A";
     public static immutable String SEGMENT_SEPARATOR = "^";
     private static immutable String SEGMENT_SEPARATOR_REGEX = "\\^";
-    private static Definition _instance;
-    private ContainerNode rootNode;
+    private static Definition!I _instance;
+    private ContainerNode!I rootNode;
 
-    public this(ContainerNode rootNode)
+    public this(ContainerNode!I rootNode)
     {
         this.rootNode = rootNode;
     }
 
-    public static Definition instance()
+    public static Definition!I instance()
     {
         if (_instance is null)
         {
@@ -47,7 +48,7 @@ public class Definition
         return _instance;
     }
 
-    public static void setInstance(Definition instance)
+    public static void setInstance(Definition!I instance)
     {
         instance = instance;
     }
@@ -57,16 +58,16 @@ public class Definition
         setInstance(null);
     }
 
-    public ContainerNode getContainer(String nodeId)
+    public ContainerNode!I getContainer(String nodeId)
     {
         String[] idSegments = nodeId.split("\\^");
-        ContainerNode staticNode = findStaticContainer(idSegments[0], this.rootNode);
+        ContainerNode!I staticNode = findStaticContainer(idSegments[0], this.rootNode);
         if (idSegments.length == 1) {
             return staticNode;
         }
         if (idSegments.length > 1)
         {
-            ContainerNode contextNode = staticNode;
+            ContainerNode!I contextNode = staticNode;
             for (int i = 1; (i < idSegments.length) && (contextNode !is null); i++)
             {
                 if ((contextNode !is null) && (( cast(ActionNode)contextNode !is null )) && ((cast(ActionNode)contextNode).isRecursive())) {
