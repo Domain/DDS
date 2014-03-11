@@ -1,5 +1,6 @@
 module org.serviio.library.dao.PlaylistDAOImpl;
 
+import java.lang;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +17,14 @@ import org.serviio.library.entities.Playlist;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.JdbcUtils;
 import org.serviio.util.ObjectValidator;
+import org.serviio.library.dao.AbstractAccessibleDao;
+import org.serviio.library.dao.PlaylistDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 {
-    private static final Logger log = LoggerFactory.getLogger!(PlaylistDAOImpl);
+    private static Logger log = LoggerFactory.getLogger!(PlaylistDAOImpl);
 
     public long create(Playlist newInstance)
     {
