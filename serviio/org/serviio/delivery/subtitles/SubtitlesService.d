@@ -29,7 +29,6 @@ import org.serviio.util.CollectionUtils;
 import org.serviio.util.FileUtils;
 import org.serviio.util.StringUtils;
 import org.serviio.delivery.subtitles.SubtitlesReader;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,7 @@ public class SubtitlesService : Service
     private static Logger log = LoggerFactory.getLogger!(SubtitlesService);
     private static immutable String subtitleFileExtensionsRegEx = "(" + CollectionUtils.listToCSV(SubtitleCodec.getAllSupportedExtensions(), "|", false) + ")";
 
-    public static bool isSoftSubsAvailable(I : ProtocolAdditionalInfo)(Video item, Profile!T rendererProfile)
+    public static bool isSoftSubsAvailable(Video item, Profile rendererProfile)
     {
         if (rendererProfile.getSubtitlesConfiguration().isSoftSubsEnabled())
         {
@@ -61,7 +60,7 @@ public class SubtitlesService : Service
         return false;
     }
 
-    public static SubtitlesReader getSoftSubs(I : ProtocolAdditionalInfo)(Long itemId, Profile!I rendererProfile)
+    public static SubtitlesReader getSoftSubs(Long itemId, Profile rendererProfile)
     {
         if (rendererProfile.getSubtitlesConfiguration().isSoftSubsEnabled())
         {
@@ -73,7 +72,7 @@ public class SubtitlesService : Service
         return null;
     }
 
-    public static SubtitlesReader getHardSubs(I : ProtocolAdditionalInfo)(Video video, Profile!I rendererProfile)
+    public static SubtitlesReader getHardSubs(Video video, Profile rendererProfile)
     {
         List!(VideoContainer) requiredForContainers = rendererProfile.getSubtitlesConfiguration().getHardSubsRequiredFor();
         if ((Configuration.isHardSubsForced()) || (requiredForContainers.contains(VideoContainer.ANY)) || (requiredForContainers.contains(video.getContainer()))) {
@@ -178,7 +177,8 @@ public class SubtitlesService : Service
         return subtitleFiles[0];
     }
 
-    private static class SubtitleFilesComparator : Comparator!(File)
+    private static class SubtitleFilesComparator
+        : Comparator!(File)
     {
         private List!(String) preferredLanguages;
 

@@ -26,7 +26,6 @@ import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ProtocolInfo;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.util.MediaUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class ResourceValuesBuilder
 {
     private static Logger log = LoggerFactory.getLogger!(ResourceValuesBuilder);
 
-    public static final Resource generateSubtitlesResource(I : ProtocolAdditionalInfo)(Video item, Profile!I rendererProfile)
+    public static final Resource generateSubtitlesResource(Video item, Profile rendererProfile)
     {
         bool hardSubsDelivered = AbstractDeliveryEngine.isHardSubsDelivered(rendererProfile.getDefaultDeliveryQuality(), item, rendererProfile);
         if (!hardSubsDelivered) {
@@ -58,7 +57,7 @@ public class ResourceValuesBuilder
         return null;
     }
 
-    public static List!(Resource) buildResources(I : ProtocolAdditionalInfo)(MediaItem entity, Profile!I rendererProfile)
+    public static List!(Resource) buildResources(MediaItem entity, Profile rendererProfile)
     {
         List!(Resource) resources = new ArrayList();
         List/*!(? : ResourceInfo)*/ resourceInfos = MediaResourceRetrievalStrategy.getMediaInfoForAvailableProfiles(entity, rendererProfile);
@@ -170,7 +169,7 @@ public class ResourceValuesBuilder
         return resources;
     }
 
-    public static final Resource generateThumbnailResource(I : ProtocolAdditionalInfo)(Long entityId, Long thumbnailId, Profile!I rendererProfile, bool isLocalThubmnail)
+    public static final Resource generateThumbnailResource(Long entityId, Long thumbnailId, Profile rendererProfile, bool isLocalThubmnail)
     {
         if (thumbnailId !is null) {
             try
@@ -205,7 +204,7 @@ public class ResourceValuesBuilder
         return null;
     }
 
-    public static final Resource generateThumbnailResource(I : ProtocolAdditionalInfo)(MediaItem item, Profile!I rendererProfile)
+    public static final Resource generateThumbnailResource(MediaItem item, Profile rendererProfile)
     {
         return generateThumbnailResource(item.getId(), item.getThumbnailId(), rendererProfile, item.isLocalMedia());
     }

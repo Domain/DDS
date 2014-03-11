@@ -19,7 +19,6 @@ import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 import org.serviio.upnp.service.contentdirectory.definition.StaticContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.i18n.BrowsingCategoriesMessages;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 
 public class PresentationServerResource : AbstractServerResource, PresentationResource
@@ -72,7 +71,7 @@ public class PresentationServerResource : AbstractServerResource, PresentationRe
         rep.getCategories().addAll(categories);
     }
 
-    private List!(BrowsingCategory) findEditableContainers(I : ProtocolAdditionalInfo)(ContainerNode!I parent)
+    private List!(BrowsingCategory) findEditableContainers(ContainerNode parent)
     {
         Definition def = Definition.instance();
         List!(BrowsingCategory) categories = new ArrayList();

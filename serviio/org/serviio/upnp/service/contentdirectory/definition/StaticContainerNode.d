@@ -18,9 +18,8 @@ import org.serviio.util.ObjectValidator;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.StaticDefinitionNode;
 import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
-public class StaticContainerNode(I : ProtocolAdditionalInfo) : ContainerNode!I, StaticDefinitionNode
+public class StaticContainerNode : ContainerNode, StaticDefinitionNode
 {
     private static Set!(ObjectClassType) supportedClasses = new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
     private String id;
@@ -28,14 +27,14 @@ public class StaticContainerNode(I : ProtocolAdditionalInfo) : ContainerNode!I, 
     private bool browsable = true;
     private bool editable = false;
 
-    public this(String id, String titleKey, ObjectClassType objectClass, DefinitionNode!I parent, String cacheRegion)
+    public this(String id, String titleKey, ObjectClassType objectClass, DefinitionNode parent, String cacheRegion)
     {
         super(objectClass, parent, cacheRegion);
         this.id = id;
         this.titleKey = titleKey;
     }
 
-    override public DirectoryObject retrieveDirectoryObject(String objectId, ObjectType objectType, Profile!I rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
+    override public DirectoryObject retrieveDirectoryObject(String objectId, ObjectType objectType, Profile rendererProfile, AccessGroup userProfile, bool disablePresentationSettings)
     {
         Map!(ClassProperties, Object) values = new HashMap();
         values.put(ClassProperties.ID, getId());

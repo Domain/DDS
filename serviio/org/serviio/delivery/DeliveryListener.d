@@ -1,11 +1,10 @@
 module org.serviio.delivery.DeliveryListener;
 
 import org.serviio.delivery.Client;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
 public abstract interface DeliveryListener
 {
-    public abstract void deliveryComplete(I : ProtocolAdditionalInfo)(Client!I paramClient);
+    public abstract void deliveryComplete(Client paramClient);
 }
 
 

@@ -2,24 +2,24 @@ module org.serviio.delivery.Client;
 
 import java.lang.String;
 import org.serviio.profile.Profile;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
+import org.serviio.delivery.HostInfo;
 
-public class Client(I : ProtocolAdditionalInfo)
+public class Client
 {
     private immutable String clientIdentifier;
-    private Profile!I rendererProfile;
+    private Profile rendererProfile;
     private HostInfo hostInfo;
     private bool expectsClosedConnection = false;
     private bool supportsRandomTimeSeek = false;
 
-    public this(String clientIdentifier, Profile!I rendererProfile, HostInfo hostInfo)
+    public this(String clientIdentifier, Profile rendererProfile, HostInfo hostInfo)
     {
         this.clientIdentifier = clientIdentifier;
         this.rendererProfile = rendererProfile;
         this.hostInfo = hostInfo;
     }
 
-    public Profile!I getRendererProfile()
+    public Profile getRendererProfile()
     {
         return this.rendererProfile;
     }

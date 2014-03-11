@@ -35,15 +35,14 @@ import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 import org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.SegmentBasedTranscodingDeliveryStrategy;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem, I : ProtocolAdditionalInfo) : AbstractDeliveryEngine!(RI, MI), DeliveryListener
+public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem) : AbstractDeliveryEngine!(RI, MI), DeliveryListener
 {
     private static immutable String TRANSCODING_SUBFOLDER_NAME = "Serviio";
     public static immutable String TRANSCODED_FILE_EXTENSION = "stf";
-    private static Map!(Client!I, TranscodingJobListener) transcodeJobs;
+    private static Map!(Client, TranscodingJobListener) transcodeJobs;
     private static TranscodingDeliveryStrategy/*!(File)*/ fileBasedStrategy;
     private static TranscodingDeliveryStrategy/*!(File)*/ segmentBasedStrategy;
     private static TranscodingDeliveryStrategy/*!(File)*/ liveSegmentBasedStrategy;
@@ -114,14 +113,14 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         throw new IOException(String.format("Cannot find transcoding definition for %s quality", cast(Object[])[ selectedQuality.toString() ]));
     }
 
-    override protected RI retrieveTranscodedMediaInfoForVersion(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile!I rendererProfile)
+    override protected RI retrieveTranscodedMediaInfoForVersion(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
         log.debug_(String.format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         LinkedHashMap!(QualityType, List!(RI)) mediaInfos = retrieveTranscodedMediaInfo(mediaItem, rendererProfile, null);
         return findMediaInfoForFileProfile(cast(Collection)mediaInfos.get(selectedQuality), selectedVersion);
     }
 
-    override protected bool fileCanBeTranscoded(MI mediaItem, Profile!I rendererProfile)
+    override protected bool fileCanBeTranscoded(MI mediaItem, Profile rendererProfile)
     {
         if (((mediaItem.isLocalMedia()) && ((Configuration.isTranscodingEnabled()) || (rendererProfile.isAlwaysEnableTranscoding())) && (rendererProfile.hasAnyTranscodingDefinitions())) || ((!mediaItem.isLocalMedia()) && (rendererProfile.hasAnyOnlineTranscodingDefinitions())) || (hardSubsTranscodingConfigured(mediaItem, rendererProfile))) {
             if (getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false).size() > 0) {
@@ -131,7 +130,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         return false;
     }
 
-    override protected bool fileWillBeTranscoded(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile!I rendererProfile)
+    override protected bool fileWillBeTranscoded(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
         return (fileCanBeTranscoded(mediaItem, rendererProfile)) && (getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false).get(selectedQuality) !is null);
     }
@@ -147,7 +146,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         return OnlineContentType.VOD;
     }
 
-    private void prepareClientStream(Client!I client, String transcodingIdentifier, TranscodingDefinition trDef)
+    private void prepareClientStream(Client client, String transcodingIdentifier, TranscodingDefinition trDef)
     {
         if (transcodeJobs.containsKey(client))
         {
@@ -220,7 +219,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         return newListener;
     }
 
-    private void registerJob(Client!I client, TranscodingJobListener jobListener)
+    private void registerJob(Client client, TranscodingJobListener jobListener)
     {
         synchronized (transcodeJobs)
         {
@@ -228,7 +227,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         }
     }
 
-    private Collection!(TranscodingJobListener) findExistingJobListeners(Client!I client, bool liveStream, bool keepLiveStreamsOpen)
+    private Collection!(TranscodingJobListener) findExistingJobListeners(Client client, bool liveStream, bool keepLiveStreamsOpen)
     {
         synchronized (transcodeJobs)
         {

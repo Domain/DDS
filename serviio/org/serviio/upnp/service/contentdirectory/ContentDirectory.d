@@ -22,7 +22,6 @@ import org.serviio.upnp.service.contentdirectory.definition.ContentDirectoryDefi
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.upnp.service.contentdirectory.ContentDirectoryEngine;
 import org.serviio.upnp.service.contentdirectory.BrowseItemsHolder;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.serviio.util.XmlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,7 +244,7 @@ public class ContentDirectory : Service
         this.stateVariables.add(new StateVariable("A_ARG_TYPE_Featurelist", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Features xmlns=\"urn:schemas-upnp-org:av:avs\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\" urn:schemas-upnp-org:av:avs http://www.upnp.org/schemas/av/avs.xsd\"><Feature name=\"samsung.com_BASICVIEW\" version=\"1\"><container id=\"I\" type=\"object.item.imageItem\"/><container id=\"A\" type=\"object.item.audioItem\"/><container id=\"V\" type=\"object.item.videoItem\"/></Feature></Features>"));
     }
 
-    private void setupSuccessfulResult(I : ProtocolAdditionalInfo)(OperationResult result, BrowseItemsHolder!(DirectoryObject) itemsHolder, String filter, Profile!I rendererProfile)
+    private void setupSuccessfulResult(OperationResult result, BrowseItemsHolder!(DirectoryObject) itemsHolder, String filter, Profile rendererProfile)
     {
         ContentDirectoryMessageBuilder messageBuilder = instantiateMessageBuilder(filter, rendererProfile);
         Document xmlDocument = messageBuilder.buildXML(itemsHolder.getItems());
@@ -256,7 +255,7 @@ public class ContentDirectory : Service
         result.addOutputParameter("UpdateID", getStateVariable("SystemUpdateID").getValue());
     }
 
-    private /*!(T : ContentDirectoryMessageBuilder)*/ ContentDirectoryMessageBuilder instantiateMessageBuilder(T, I : ProtocolAdditionalInfo)(String filter, Profile!I rendererProfile)
+    private /*!(T : ContentDirectoryMessageBuilder)*/ ContentDirectoryMessageBuilder instantiateMessageBuilder(T)(String filter, Profile rendererProfile)
     {
         Class/*!(?)*/ builderClass = rendererProfile.getContentDirectoryMessageBuilder();
         if (builderClass is null) {

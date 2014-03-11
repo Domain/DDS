@@ -11,15 +11,14 @@ import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.library.entities.MediaItem;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
 public abstract interface DeliveryEngine(RI : MediaFormatProfileResource, MI : MediaItem)
 {
-    public abstract List!(RI) getMediaInfoForProfile(I : ProtocolAdditionalInfo)(MI paramMI, Profile!I paramProfile);
+    public abstract List!(RI) getMediaInfoForProfile(MI paramMI, Profile paramProfile);
 
-    public abstract RI getMediaInfoForMediaItem(I : ProtocolAdditionalInfo)(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile!I paramProfile);
+    public abstract RI getMediaInfoForMediaItem(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Profile paramProfile);
 
-    public abstract DeliveryContainer deliver(I : ProtocolAdditionalInfo)(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client!I paramClient);
+    public abstract DeliveryContainer deliver(MI paramMI, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, Double paramDouble1, Double paramDouble2, Client paramClient);
 }
 
 

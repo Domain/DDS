@@ -36,7 +36,6 @@ import org.serviio.util.FileUtils;
 import org.serviio.util.ImageUtils;
 import org.serviio.util.Tupple;
 import org.serviio.delivery.resource.AbstractDeliveryEngine;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +54,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return instance;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(I : ProtocolAdditionalInfo)(Image mediaItem, Profile!I rendererProfile, Long fileSize)
+    override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(Image mediaItem, Profile rendererProfile, Long fileSize)
     {
         log.debug_(String.format("Getting media info for transcoded versions of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         LinkedHashMap!(QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap();
@@ -97,7 +96,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return resourceInfos;
     }
 
-    override protected ImageMediaInfo retrieveTranscodedMediaInfoForVersion(I : ProtocolAdditionalInfo)(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile!I rendererProfile)
+    override protected ImageMediaInfo retrieveTranscodedMediaInfoForVersion(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
         log.debug_(String.format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         return createTranscodedImageInfoForProfile(mediaItem, selectedVersion, null, rendererProfile);
@@ -125,12 +124,12 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return container;
     }
 
-    override protected bool fileCanBeTranscoded(I : ProtocolAdditionalInfo)(Image mediaItem, Profile!I rendererProfile)
+    override protected bool fileCanBeTranscoded(Image mediaItem, Profile rendererProfile)
     {
         return imageIsResizable(mediaItem);
     }
 
-    override protected bool fileWillBeTranscoded(I : ProtocolAdditionalInfo)(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile!I rendererProfile)
+    override protected bool fileWillBeTranscoded(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
 
@@ -149,7 +148,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return false;
     }
 
-    override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveOriginalMediaInfo(I : ProtocolAdditionalInfo)(Image image, Profile!I rendererProfile)
+    override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveOriginalMediaInfo(Image image, Profile rendererProfile)
     {
         if (!transcodeNeeded(image, rendererProfile, QualityType.ORIGINAL))
         {
@@ -185,14 +184,14 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return null;
     }
 
-    private bool imageWillBeTransformed(I : ProtocolAdditionalInfo)(Image mediaItem, Profile!I rendererProfile, QualityType quality)
+    private bool imageWillBeTransformed(Image mediaItem, Profile rendererProfile, QualityType quality)
     {
         bool originalTranscoded = transcodeNeeded(mediaItem, rendererProfile, quality);
         bool imageRotated = imageWillRotate(mediaItem, rendererProfile, originalTranscoded);
         return (originalTranscoded) || (imageRotated);
     }
 
-    private ImageMediaInfo createTranscodedImageInfoForProfile(I : ProtocolAdditionalInfo)(Image originalImage, MediaFormatProfile selectedVersion, Long fileSize, Profile!I rendererProfile)
+    private ImageMediaInfo createTranscodedImageInfoForProfile(Image originalImage, MediaFormatProfile selectedVersion, Long fileSize, Profile rendererProfile)
     {
         if (isTranscodingValid(originalImage, selectedVersion))
         {
@@ -234,7 +233,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return QualityType.ORIGINAL;
     }
 
-    private byte[] transcodeImage(I : ProtocolAdditionalInfo)(Image originalImage, MediaFormatProfile selectedVersion, Profile!I rendererProfile)
+    private byte[] transcodeImage(Image originalImage, MediaFormatProfile selectedVersion, Profile rendererProfile)
     {
         byte[] originalImageBytes = getImageBytes(originalImage);
         if (isTranscodingValid(originalImage, selectedVersion)) {
@@ -282,7 +281,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         }
     }
 
-    private bool transcodeNeeded(I : ProtocolAdditionalInfo)(Image image, Profile!I rendererProfile, QualityType quality)
+    private bool transcodeNeeded(Image image, Profile rendererProfile, QualityType quality)
     {
         if (getMatchingTranscodingDefinitions(image, rendererProfile, false).get(quality) !is null) {
             return true;
@@ -316,7 +315,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         return false;
     }
 
-    private bool imageWillRotate(I : ProtocolAdditionalInfo)(Image image, Profile!I profile, bool willBeResized)
+    private bool imageWillRotate(Image image, Profile profile, bool willBeResized)
     {
         if ((image.getRotation() !is null) && (!image.getRotation().equals(new Integer(0))) && ((profile.isAutomaticImageRotation()) || (willBeResized))) {
             return true;

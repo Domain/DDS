@@ -7,14 +7,14 @@ import java.util.Set;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
-public class ProtocolInfo(T : ProtocolAdditionalInfo)
+public class ProtocolInfo//(T : ProtocolAdditionalInfo)
 {
     private String protocol = "http-get";
     private String context = "*";
     private String mimeType;
-    private List!T additionalInfos;
+    private List!ProtocolAdditionalInfo additionalInfos;
 
-    public this(String mimeType, List!T additionalInfos)
+    public this(String mimeType, List!ProtocolAdditionalInfo additionalInfos)
     {
         this.mimeType = mimeType;
         this.additionalInfos = additionalInfos;
@@ -42,7 +42,7 @@ public class ProtocolInfo(T : ProtocolAdditionalInfo)
         return result;
     }
 
-    public List!T getAdditionalInfos()
+    public List!ProtocolAdditionalInfo getAdditionalInfos()
     {
         return this.additionalInfos;
     }
@@ -57,7 +57,7 @@ public class ProtocolInfo(T : ProtocolAdditionalInfo)
         this.mimeType = mimeType;
     }
 
-    public void setAdditionalInfos(List!T additionalInfos)
+    public void setAdditionalInfos(List!ProtocolAdditionalInfo additionalInfos)
     {
         this.additionalInfos = additionalInfos;
     }

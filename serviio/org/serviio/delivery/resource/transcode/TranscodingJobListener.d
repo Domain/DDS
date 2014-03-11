@@ -1,5 +1,6 @@
 module org.serviio.delivery.resource.transcode.TranscodingJobListener;
 
+import java.lang;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,12 +14,13 @@ import org.serviio.external.ProcessExecutor;
 import org.serviio.external.ProcessListener;
 import org.serviio.util.DateUtils;
 import org.serviio.util.FileUtils;
+import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TranscodingJobListener : ProcessListener
 {
-    private static final Logger log = LoggerFactory.getLogger!(TranscodingJobListener);
+    private static Logger log = LoggerFactory.getLogger!(TranscodingJobListener);
     private String transcodingIdentifier;
     private File transcodedFile;
     private PipedInputStream transcodedStream;
@@ -36,7 +38,7 @@ public class TranscodingJobListener : ProcessListener
     private TreeMap!(Double, ProgressData) timeFilesizeMap = new TreeMap();
     private /*volatile*/ bool shuttingDown = false;
 
-    public void processEnded(bool success)
+    override public void processEnded(bool success)
     {
         log.debug_(String.format("Transcoding finished; successful: %s", cast(Object[])[ Boolean.valueOf(success) ]));
         foreach (TranscodeInputStream stream ; this.processingStreams) {
@@ -46,7 +48,7 @@ public class TranscodingJobListener : ProcessListener
         this.successful = success;
     }
 
-    public void outputUpdated(String updatedLine)
+    override public void outputUpdated(String updatedLine)
     {
         if (!this.started)
         {

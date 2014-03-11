@@ -247,7 +247,7 @@ public class DirectoryObjectBuilder
         setupContainer(container, values, resources, entityId, disablePresentationSettings);
     }
 
-    private static String[] getPersonsNames(List!(org.serviio.library.entities.Person) persons)
+    private static String[] getPersonsNames(List!(Person) persons)
     {
         if ((persons !is null) && (persons.size() > 0))
         {

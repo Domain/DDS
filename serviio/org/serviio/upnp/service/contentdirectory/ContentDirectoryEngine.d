@@ -14,7 +14,6 @@ import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.upnp.service.contentdirectory.CDSCacheDecorator;
 import org.serviio.upnp.service.contentdirectory.BrowseItemsHolder;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
-import org.serviio.upnp.service.contentdirectory.ProtocolAdditionalInfo;
 
 public class ContentDirectoryEngine
 {
@@ -39,7 +38,7 @@ public class ContentDirectoryEngine
         return instance;
     }
 
-    public BrowseItemsHolder!(DirectoryObject) browse(I : ProtocolAdditionalInfo)(String objectID, ObjectType objectType, String browseFlag, String filter, int startingIndex, int requestedCount, String sortCriteria, Profile!I rendererProfile, AccessGroup accessGroup, bool disablePresentationSettings)
+    public BrowseItemsHolder!(DirectoryObject) browse(String objectID, ObjectType objectType, String browseFlag, String filter, int startingIndex, int requestedCount, String sortCriteria, Profile rendererProfile, AccessGroup accessGroup, bool disablePresentationSettings)
     {
         if ((!browseFlag.equals("BrowseMetadata")) && (!browseFlag.equals("BrowseDirectChildren"))) {
             throw new InvalidBrowseFlagException(String.format("Unsupported browse flag: %s", cast(Object[])[ browseFlag ]));
