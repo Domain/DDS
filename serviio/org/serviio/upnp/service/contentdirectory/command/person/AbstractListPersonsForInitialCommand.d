@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.person.AbstractListPersonsForInitialCommand;
 
+import java.lang.String;
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.Person;
@@ -10,6 +11,7 @@ import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.SearchCriteria;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
+import org.serviio.upnp.service.contentdirectory.command.person.AbstractPersonsRetrievalCommand;
 
 public abstract class AbstractListPersonsForInitialCommand : AbstractPersonsRetrievalCommand
 {
@@ -21,14 +23,14 @@ public abstract class AbstractListPersonsForInitialCommand : AbstractPersonsRetr
         this.roleType = roleType;
     }
 
-    protected List!(Person) retrieveEntityList()
+    override protected List!(Person) retrieveEntityList()
     {
         List!(Person) persons = PersonService.getListOfPersonsForInitial(getInitialFromId(getInternalObjectId()), this.roleType, this.startIndex, this.count);
 
         return persons;
     }
 
-    public int retrieveItemCount()
+    override public int retrieveItemCount()
     {
         return PersonService.getNumberOfPersonsForInitial(getInitialFromId(getInternalObjectId()), this.roleType);
     }

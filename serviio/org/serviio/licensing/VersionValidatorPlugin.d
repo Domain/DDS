@@ -1,10 +1,11 @@
 module org.serviio.licensing.VersionValidatorPlugin;
 
-//import net.padlocksoftware.padlock.license.License;
-//import net.padlocksoftware.padlock.license.LicenseTest;
-//import net.padlocksoftware.padlock.license.TestResult;
-//import net.padlocksoftware.padlock.validator.ValidationParameters;
-//import net.padlocksoftware.padlock.validator.ValidatorPlugin;
+import java.lang.String;
+import net.padlocksoftware.padlock.license.License;
+import net.padlocksoftware.padlock.license.LicenseTest;
+import net.padlocksoftware.padlock.license.TestResult;
+import net.padlocksoftware.padlock.validator.ValidationParameters;
+import net.padlocksoftware.padlock.validator.ValidatorPlugin;
 import org.serviio.MediaServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

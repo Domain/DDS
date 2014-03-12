@@ -2,13 +2,14 @@ module org.serviio.library.local.metadata.extractor.embedded.JPEGSamplingTypeRea
 
 import std.traits;
 
+import java.lang.String;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.common.bytesource.ByteSourceInputStream;
 import org.apache.commons.imaging.formats.jpeg.JpegUtils;
-import org.apache.commons.imaging.formats.jpeg.JpegUtils:Visitor;
+//import org.apache.commons.imaging.formats.jpeg.JpegUtils:Visitor;
 import org.serviio.dlna.SamplingMode;
 
 public class JPEGSamplingTypeReader
@@ -91,9 +92,6 @@ public class JPEGSamplingTypeReader
                     this.imageParams.setSamplingMode(ByteSourceInputStream.readByte("Sampling Factors", ins, "Unable to read the sampling factor from the 'Y' channel component spec"));
 
                     ByteSourceInputStream.readByte("Quantization Table Index", ins, "Unable to read Quantization table index of 'Y' channel");
-
-
-
 
                     ByteSourceInputStream.skipBytes(ins, 2L, "Not a Valid JPEG File");
                     ByteSourceInputStream.readByte("Quantization Table Index", ins, "Unable to read Quantization table index of 'Cb' Channel");

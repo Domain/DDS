@@ -9,7 +9,7 @@ import org.serviio.delivery.resource.transcode.StreamDescriptor;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 
-public abstract interface TranscodingDeliveryStrategy//(T)
+public abstract interface TranscodingDeliveryStrategy(T)
 {
     public abstract StreamDescriptor createInputStream(TranscodingJobListener paramTranscodingJobListener, Long paramLong, TranscodingDefinition paramTranscodingDefinition, Client paramClient, DeliveryListener paramDeliveryListener);
 

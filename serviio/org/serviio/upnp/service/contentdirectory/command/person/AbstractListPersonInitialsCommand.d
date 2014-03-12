@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.person.AbstractListPersonInitialsCommand;
 
+import java.lang.String;
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.Person:RoleType;
@@ -22,7 +23,7 @@ public abstract class AbstractListPersonInitialsCommand : AbstractListInitialsCo
         this.roleType = roleType;
     }
 
-    protected List!(String) getListOfInitials(int startIndex, int count)
+    override protected List!(String) getListOfInitials(int startIndex, int count)
     {
         return PersonService.getListOfPersonInitials(this.roleType, startIndex, count);
     }

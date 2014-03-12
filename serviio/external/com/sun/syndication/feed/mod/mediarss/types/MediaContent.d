@@ -1,9 +1,9 @@
 /// Generate by tools
-module com.sun.syndication.feed.module.Module;
+module com.sun.syndication.feed.mod.mediarss.types.MediaContent;
 
 import java.lang.exceptions;
 
-public class Module
+public class MediaContent
 {
     public this()
     {

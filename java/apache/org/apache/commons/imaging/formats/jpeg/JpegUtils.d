@@ -9,4 +9,12 @@ public class JpegUtils
     {
         implMissing();
     }
+
+    public static class Visitor
+    {
+        public this()
+        {
+            implMissing();
+        }
+    }
 }

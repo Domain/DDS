@@ -1,5 +1,7 @@
 module org.serviio.licensing.LicenseProperties;
 
+import java.lang.String;
+
 public enum LicenseProperties
 {
     TYPE,  EDITION,  VERSION,  ID,  NAME,  EMAIL

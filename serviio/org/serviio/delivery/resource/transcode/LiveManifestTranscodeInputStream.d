@@ -1,5 +1,6 @@
 module org.serviio.delivery.resource.transcode.LiveManifestTranscodeInputStream;
 
+import java.lang;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,64 +14,64 @@ import org.serviio.delivery.DeliveryListener;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.delivery.TimeoutStreamDelegator;
 import org.serviio.external.ProcessListener;
+import org.serviio.delivery.resource.transcode.ManifestTranscodeInputStream;
+import org.serviio.delivery.resource.transcode.LiveSegmentBasedTranscodingDeliveryStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LiveManifestTranscodeInputStream
-  : ManifestTranscodeInputStream
-  , ClosableStreamDelegator
+public class LiveManifestTranscodeInputStream : ManifestTranscodeInputStream, ClosableStreamDelegator
 {
-  private static final Logger log = LoggerFactory.getLogger!(LiveManifestTranscodeInputStream);
-  private static final Map!(File, TimeoutStreamDelegator) delegators = Collections.synchronizedMap(new HashMap());
-  private final TimeoutStreamDelegator closingDelegator;
-  private final File manifestFile;
-  
-  public this(ProcessListener processListener, File file, Client client, ResourceURLGenerator urlGenerator, Long resourceId, DeliveryListener deliveryListener, bool forceClosing, LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover)
-  {
-    super(file, client, urlGenerator, resourceId, true, segmentRemover);
-    this.manifestFile = file;
-    this.closingDelegator = getClosingDelegator(this, processListener, file, client, deliveryListener, forceClosing);
-  }
-  
-  public synchronized int read()
-  {
-    this.closingDelegator.onRead();
-    return super.read();
-  }
-  
-  public synchronized int read(byte[] b, int off, int len)
-  {
-    this.closingDelegator.onRead();
-    return super.read(b, off, len);
-  }
-  
-  public synchronized void close()
-  {
-    this.closingDelegator.close();
-  }
-  
-  public void closeParent()
-  {
-    super.close();
-    delegators.remove(this.manifestFile);
-  }
-  
-  private static synchronized TimeoutStreamDelegator getClosingDelegator(InputStream is_, ProcessListener processListener, File manifestFile, Client client, DeliveryListener deliveryListener, bool forceClosing)
-  {
-    if (delegators.containsKey(manifestFile))
+    private static Logger log = LoggerFactory.getLogger!(LiveManifestTranscodeInputStream);
+    private static Map!(File, TimeoutStreamDelegator) delegators = Collections.synchronizedMap(new HashMap());
+    private TimeoutStreamDelegator closingDelegator;
+    private File manifestFile;
+
+    public this(ProcessListener processListener, File file, Client client, ResourceURLGenerator urlGenerator, Long resourceId, DeliveryListener deliveryListener, bool forceClosing, LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover)
     {
-      log.debug_(String.format("Using existing TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
-      return cast(TimeoutStreamDelegator)delegators.get(manifestFile);
+        super(file, client, urlGenerator, resourceId, true, segmentRemover);
+        this.manifestFile = file;
+        this.closingDelegator = getClosingDelegator(this, processListener, file, client, deliveryListener, forceClosing);
     }
-    log.debug_(String.format("Creating new TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
-    TimeoutStreamDelegator closingDelegator = new TimeoutStreamDelegator(is_, processListener, client, deliveryListener, forceClosing);
-    delegators.put(manifestFile, closingDelegator);
-    return closingDelegator;
-  }
+
+    public synchronized int read()
+    {
+        this.closingDelegator.onRead();
+        return super.read();
+    }
+
+    public synchronized int read(byte[] b, int off, int len)
+    {
+        this.closingDelegator.onRead();
+        return super.read(b, off, len);
+    }
+
+    public synchronized void close()
+    {
+        this.closingDelegator.close();
+    }
+
+    public void closeParent()
+    {
+        super.close();
+        delegators.remove(this.manifestFile);
+    }
+
+    private static synchronized TimeoutStreamDelegator getClosingDelegator(InputStream is_, ProcessListener processListener, File manifestFile, Client client, DeliveryListener deliveryListener, bool forceClosing)
+    {
+        if (delegators.containsKey(manifestFile))
+        {
+            log.debug_(String.format("Using existing TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
+            return cast(TimeoutStreamDelegator)delegators.get(manifestFile);
+        }
+        log.debug_(String.format("Creating new TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
+        TimeoutStreamDelegator closingDelegator = new TimeoutStreamDelegator(is_, processListener, client, deliveryListener, forceClosing);
+        delegators.put(manifestFile, closingDelegator);
+        return closingDelegator;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.delivery.resource.transcode.LiveManifestTranscodeInputStream
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.delivery.resource.transcode.LiveManifestTranscodeInputStream
+* JD-Core Version:    0.7.0.1
+*/

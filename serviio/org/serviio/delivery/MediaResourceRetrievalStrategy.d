@@ -34,7 +34,7 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
 {
     private static Logger log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy);
 
-    public static List/*!(? : ResourceInfo)*/ getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
+    public static List!(Object/*? : ResourceInfo*/) getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
     {
         bool isLocalMedia = mediaItem.isLocalMedia();
         if (mediaItem.getFileType() == MediaFileType.IMAGE)

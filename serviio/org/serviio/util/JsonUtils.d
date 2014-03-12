@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
+import java.lang.String;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,8 +28,7 @@ public class JsonUtils
         return cast(Map)gson.fromJson(json, Object.class_);
     }
 
-    private static class NaturalDeserializer
-        : JsonDeserializer!(Object)
+    private static class NaturalDeserializer : JsonDeserializer!(Object)
     {
         public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
         {

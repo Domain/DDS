@@ -1,5 +1,6 @@
 module org.serviio.restlet.ServiioStatusService;
 
+import java.lang;
 import java.io.FileNotFoundException;
 import java.util.List;
 import org.restlet.Request;
@@ -12,13 +13,13 @@ import org.restlet.ext.gson.GsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.service.StatusService;
+import org.serviio.restlet.ResultRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ServiioStatusService
-: StatusService
+public class ServiioStatusService : StatusService
 {
-    private static final Logger log = LoggerFactory.getLogger!(ServiioStatusService);
+    private static Logger log = LoggerFactory.getLogger!(ServiioStatusService);
 
     public Representation getRepresentation(Status status, Request request, Response response)
     {

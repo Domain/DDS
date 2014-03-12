@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.http.transport.XBox360ProtocolHandler;
 
+import java.lang.String;
 import java.io.FileNotFoundException;
 import org.serviio.delivery.Client;
 import org.serviio.library.entities.MediaItem;
@@ -7,13 +8,16 @@ import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceExceptio
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
+import org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
+import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 import org.slf4j.Logger;
 
 public class XBox360ProtocolHandler : DLNAProtocolHandler
 {
     private static immutable String ALBUM_ART_TRUE = "?albumArt=true";
 
-    public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri, Client client)
+    override public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri, Client client)
     {
         bool showThumbnail = requestUri.endsWith("?albumArt=true");
         if (showThumbnail)

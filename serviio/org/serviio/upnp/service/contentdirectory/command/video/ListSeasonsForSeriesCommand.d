@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.video.ListSeasonsForSeriesCommand;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,25 +25,24 @@ import org.serviio.upnp.service.contentdirectory.command.ObjectValuesBuilder;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 import org.serviio.upnp.service.contentdirectory.definition.i18n.BrowsingCategoriesMessages;
 
-public class ListSeasonsForSeriesCommand
-: AbstractCommand!(Container)
+public class ListSeasonsForSeriesCommand : AbstractCommand!(Container)
 {
     public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
     {
         super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.VIDEO, idPrefix, startIndex, count, disablePresentationSettings);
     }
 
-    protected Set!(ObjectClassType) getSupportedClasses()
+    override protected Set!(ObjectClassType) getSupportedClasses()
     {
         return new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
     }
 
-    protected Set!(ObjectType) getSupportedObjectTypes()
+    override protected Set!(ObjectType) getSupportedObjectTypes()
     {
         return ObjectType.getContainerTypes();
     }
 
-    protected List!(Container) retrieveList()
+    override protected List!(Container) retrieveList()
     {
         List!(Container) items = new ArrayList();
 
@@ -60,7 +60,7 @@ public class ListSeasonsForSeriesCommand
         return items;
     }
 
-    protected Container retrieveSingleItem()
+    override protected Container retrieveSingleItem()
     {
         Long seriesId = Long.valueOf(Long.parseLong(getInternalObjectId(Definition.instance().getParentNodeId(this.objectId, this.disablePresentationSettings))));
         Integer seasonNumber = new Integer(getInternalObjectId());

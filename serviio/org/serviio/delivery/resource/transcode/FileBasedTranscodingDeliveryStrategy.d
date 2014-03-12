@@ -19,7 +19,7 @@ import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy//!(File)
+public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(File)
 {
     private static Logger log = LoggerFactory.getLogger!(FileBasedTranscodingDeliveryStrategy);
 

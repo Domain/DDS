@@ -1,13 +1,13 @@
 module org.serviio.library.online.feed.MediaFeedEntryParser;
 
-//import com.sun.syndication.feed.mod.mediarss.MediaEntryModule;
-//import com.sun.syndication.feed.mod.mediarss.types.Credit;
-//import com.sun.syndication.feed.mod.mediarss.types.MediaContent;
-//import com.sun.syndication.feed.mod.mediarss.types.MediaGroup;
-//import com.sun.syndication.feed.mod.mediarss.types.Metadata;
-//import com.sun.syndication.feed.mod.mediarss.types.Thumbnail;
-//import com.sun.syndication.feed.mod.mediarss.types.UrlReference;
-//import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.mod.mediarss.MediaEntryModule;
+import com.sun.syndication.feed.mod.mediarss.types.Credit;
+import com.sun.syndication.feed.mod.mediarss.types.MediaContent;
+import com.sun.syndication.feed.mod.mediarss.types.MediaGroup;
+import com.sun.syndication.feed.mod.mediarss.types.Metadata;
+import com.sun.syndication.feed.mod.mediarss.types.Thumbnail;
+import com.sun.syndication.feed.mod.mediarss.types.UrlReference;
+import com.sun.syndication.feed.synd.SyndEntry;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.Arrays;
@@ -18,12 +18,13 @@ import org.serviio.library.online.PreferredQuality;
 import org.serviio.library.online.metadata.FeedItem;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
+import org.serviio.library.online.feed.FeedEntryParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MediaFeedEntryParser : FeedEntryParser
 {
-    private static final Logger log = LoggerFactory.getLogger!(MediaFeedEntryParser);
+    private static Logger log = LoggerFactory.getLogger!(MediaFeedEntryParser);
 
     public void parseFeedEntry(SyndEntry entry, FeedItem item)
     {

@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.http.transport.SamsungWiseLinkProtocolHandler;
 
+import java.lang;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +27,14 @@ import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceExceptio
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
 import org.serviio.upnp.service.contentdirectory.command.ResourceValuesBuilder;
+import org.serviio.upnp.protocol.http.transport.DLNAProtocolHandler;
+import org.serviio.upnp.protocol.http.transport.TransferMode;
+import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 import org.slf4j.Logger;
 
 public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
 {
-    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+    override public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
     {
         super.handleResponse(requestHeaders, responseHeaders, httpMethod, requestHttpVersion, mediaFileResourceInfo, protocolInfoIndex, transferMode, client, streamSize, range);
         if (httpMethod == HttpMethod.HEAD)
@@ -70,7 +74,7 @@ public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
         }
     }
 
-    public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri, Client client)
+    override public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri, Client client)
     {
         RequestedResourceDescriptor originalDescriptor = super.getRequestedResourceDescription(requestUri, client);
         if ((originalDescriptor.getResourceType() == ResourceType.MEDIA_ITEM) && (originalDescriptor.getTargetProfileName() !is null) && (originalDescriptor.getTargetProfileName().equals(MediaFormatProfile.JPEG_SM.toString())))

@@ -1,5 +1,6 @@
 module org.serviio.library.search.AbstractSearchMetadata;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,17 +13,18 @@ import org.serviio.upnp.service.contentdirectory.command.NonRecursiveIdGenerator
 import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
 import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
 import org.serviio.upnp.service.contentdirectory.definition.StaticContainerNode;
+import org.serviio.library.search.SearchMetadata;
 
 public abstract class AbstractSearchMetadata : SearchMetadata
 {
-    private final Long entityId;
-    private final MediaFileType fileType;
-    private final ObjectType objectType;
-    private final SearchCategory category;
+    private Long entityId;
+    private MediaFileType fileType;
+    private ObjectType objectType;
+    private SearchCategory category;
     private immutable String searchableValue;
-    private final Long thumbnailId;
-    private final List!(String) context = new ArrayList();
-    private final Map/*!(Class!(?), Object)*/ commands = new HashMap();
+    private Long thumbnailId;
+    private List!(String) context = new ArrayList();
+    private Map!(Class/*!(?)*/, Object) commands = new HashMap();
 
     public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchCategory category, String searchableValue, Long thumbnailId)
     {
@@ -134,7 +136,7 @@ public abstract class AbstractSearchMetadata : SearchMetadata
         try
         {
             clazz = Class.forName(an.getCommandClass());
-            foreach (Map.Entry/*!(Class!(?), Object)*/ entry ; this.commands.entrySet()) {
+            foreach (Map.Entry!(Class/*!(?)*/, Object) entry ; this.commands.entrySet()) {
                 if ((cast(Class)entry.getKey()).isAssignableFrom(clazz)) {
                     return entry.getValue();
                 }

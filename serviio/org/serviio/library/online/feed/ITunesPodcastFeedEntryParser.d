@@ -1,10 +1,11 @@
 module org.serviio.library.online.feed.ITunesPodcastFeedEntryParser;
 
-//import com.sun.syndication.feed.mod.itunes.EntryInformation;
-//import com.sun.syndication.feed.mod.itunes.types.Duration;
-//import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.mod.itunes.EntryInformation;
+import com.sun.syndication.feed.mod.itunes.types.Duration;
+import com.sun.syndication.feed.synd.SyndEntry;
 import org.serviio.library.online.metadata.FeedItem;
 import org.serviio.library.online.metadata.TechnicalMetadata;
+import org.serviio.library.online.feed.FeedEntryParser;
 import org.serviio.util.ObjectValidator;
 
 public class ITunesPodcastFeedEntryParser : FeedEntryParser

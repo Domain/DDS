@@ -102,7 +102,7 @@ class BigInteger : Number {
         implMissing(__FILE__, __LINE__ );
         return null;
     }
-    double doubleValue(){
+    override double doubleValue(){
         implMissing(__FILE__, __LINE__ );
         return 0;
     }
@@ -114,7 +114,7 @@ class BigInteger : Number {
         implMissing(__FILE__, __LINE__ );
         return null;
     }
-    float floatValue(){
+    override float floatValue(){
         implMissing(__FILE__, __LINE__ );
         return 0;
     }
@@ -130,7 +130,7 @@ class BigInteger : Number {
         implMissing(__FILE__, __LINE__ );
         return 0;
     }
-    int intValue(){
+    override int intValue(){
         implMissing(__FILE__, __LINE__ );
         return 0;
     }
@@ -138,7 +138,7 @@ class BigInteger : Number {
         implMissing(__FILE__, __LINE__ );
         return 0;
     }
-    long longValue(){
+    override long longValue(){
         version(Tango){
             getDwtLogger.error( __FILE__, __LINE__, "{}", bi.toHex );
             long res = 0;
@@ -276,7 +276,7 @@ class BigInteger : Number {
         implMissing(__FILE__, __LINE__ );
         return null;
     }
-    String toString(){
+    override String toString(){
         implMissing(__FILE__, __LINE__ );
         return null;
     }

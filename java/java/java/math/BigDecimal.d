@@ -96,7 +96,7 @@ class BigDecimal : Number {
         implMissing(__FILE__, __LINE__);
         return null;
     }
-    double doubleValue(){
+    override double doubleValue(){
         implMissing(__FILE__, __LINE__);
         return 0;
     }
@@ -104,7 +104,7 @@ class BigDecimal : Number {
         implMissing(__FILE__, __LINE__);
         return 0;
     }
-    float floatValue(){
+    override float floatValue(){
         implMissing(__FILE__, __LINE__);
         return 0;
     }
@@ -112,11 +112,11 @@ class BigDecimal : Number {
         implMissing(__FILE__, __LINE__);
         return 0;
     }
-    int intValue(){
+    override int intValue(){
         implMissing(__FILE__, __LINE__);
         return 0;
     }
-    long longValue(){
+    override long longValue(){
         implMissing(__FILE__, __LINE__);
         return 0;
     }
@@ -168,7 +168,7 @@ class BigDecimal : Number {
         implMissing(__FILE__, __LINE__);
         return null;
     }
-    String toString(){
+    override String toString(){
         implMissing(__FILE__, __LINE__);
         return null;
     }

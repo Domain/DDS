@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.soap.ServiceInvoker;
 
+import java.lang.String;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +35,7 @@ import org.serviio.upnp.Device;
 import org.serviio.upnp.service.Service;
 import org.serviio.upnp.service.StateVariable;
 import org.serviio.util.XmlUtils;
+import org.serviio.upnp.protocol.soap.OperationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -42,7 +44,7 @@ import org.w3c.dom.NodeList;
 
 public class ServiceInvoker
 {
-    private static final Logger log = LoggerFactory.getLogger!(ServiceInvoker);
+    private static Logger log = LoggerFactory.getLogger!(ServiceInvoker);
     private static MessageFactory messageFactory;
     private static immutable String QUERY_STATE_VARIABLE = "QueryStateVariable";
 

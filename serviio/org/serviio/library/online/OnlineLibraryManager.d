@@ -135,12 +135,12 @@ public class OnlineLibraryManager : AbstractLibraryManager
         }
     }
 
-    public OnlineResourceContainer/*!(?, ?)*/ findResource(OnlineRepository onlineRepository, bool onlyCached)
+    public OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) findResource(OnlineRepository onlineRepository, bool onlyCached)
     {
         try
         {
             URL resourceUrl = new URL(onlineRepository.getRepositoryUrl());
-            OnlineResourceContainer/*!(?, ?)*/ resource = null;
+            OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = null;
             synchronized (this.onlineCache)
             {
                 resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(resourceUrl.toString());
@@ -170,7 +170,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
         return null;
     }
 
-    public OnlineResourceContainer/*!(?, ?)*/ findResourceInCacheOrParse(OnlineRepository onlineRepository)
+    public OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) findResourceInCacheOrParse(OnlineRepository onlineRepository)
     {
         return findResource(onlineRepository, false);
     }
@@ -216,7 +216,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
             Set!(String) urls = new HashSet(this.feedExpiryMonitor.keySet());
             foreach (String feedUrl ; urls)
             {
-                OnlineResourceContainer/*!(?, ?)*/ resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(feedUrl);
+                OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(feedUrl);
                 if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().equals(plugin)))
                 {
                     log.debug_(String.format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));

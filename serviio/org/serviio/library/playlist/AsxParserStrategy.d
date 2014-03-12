@@ -1,5 +1,6 @@
 module org.serviio.library.playlist.AsxParserStrategy;
 
+import java.lang.String;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,76 +12,77 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.serviio.util.StringUtils;
+import org.serviio.library.playlist.ParsedPlaylist;
+import org.serviio.library.playlist.AbstractPlaylistParserStrategy;
 
-public class AsxParserStrategy
-  : AbstractPlaylistParserStrategy
+public class AsxParserStrategy : AbstractPlaylistParserStrategy
 {
-  public ParsedPlaylist parsePlaylist(byte[] playlist, String playlistLocation)
-  {
-    String title = FilenameUtils.getBaseName(playlistLocation);
-    SAXBuilder builder = new SAXBuilder();
-    List!(String) files = new ArrayList();
-    try
+    public ParsedPlaylist parsePlaylist(byte[] playlist, String playlistLocation)
     {
-      Document doc = builder.build(new ByteArrayInputStream(playlist));
-      Element root = doc.getRootElement();
-      if ((root !is null) && (StringUtils.localeSafeToLowercase(root.getName()).equals("asx")))
-      {
-        List!(Element) children = root.getChildren();
-        foreach (Element entryNode ; children)
+        String title = FilenameUtils.getBaseName(playlistLocation);
+        SAXBuilder builder = new SAXBuilder();
+        List!(String) files = new ArrayList();
+        try
         {
-          if (StringUtils.localeSafeToLowercase(entryNode.getName()).equals("title")) {
-            title = entryNode.getValue();
-          }
-          if (StringUtils.localeSafeToLowercase(entryNode.getName()).equals("entry"))
-          {
-            List!(Element) refNodes = entryNode.getChildren();
-            foreach (Element refNode ; refNodes) {
-              if (StringUtils.localeSafeToLowercase(refNode.getName()).equals("ref"))
-              {
-                List!(Attribute) attributes = refNode.getAttributes();
-                foreach (Attribute attribute ; attributes) {
-                  if (StringUtils.localeSafeToLowercase(attribute.getName()).equals("href"))
-                  {
-                    files.add(attribute.getValue().trim());
-                    break;
-                  }
+            Document doc = builder.build(new ByteArrayInputStream(playlist));
+            Element root = doc.getRootElement();
+            if ((root !is null) && (StringUtils.localeSafeToLowercase(root.getName()).equals("asx")))
+            {
+                List!(Element) children = root.getChildren();
+                foreach (Element entryNode ; children)
+                {
+                    if (StringUtils.localeSafeToLowercase(entryNode.getName()).equals("title")) {
+                        title = entryNode.getValue();
+                    }
+                    if (StringUtils.localeSafeToLowercase(entryNode.getName()).equals("entry"))
+                    {
+                        List!(Element) refNodes = entryNode.getChildren();
+                        foreach (Element refNode ; refNodes) {
+                            if (StringUtils.localeSafeToLowercase(refNode.getName()).equals("ref"))
+                            {
+                                List!(Attribute) attributes = refNode.getAttributes();
+                                foreach (Attribute attribute ; attributes) {
+                                    if (StringUtils.localeSafeToLowercase(attribute.getName()).equals("href"))
+                                    {
+                                        files.add(attribute.getValue().trim());
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
-                break;
-              }
+                ParsedPlaylist pl = new ParsedPlaylist(title);
+                foreach (String file ; files) {
+                    pl.addItem(file);
+                }
+                return pl;
             }
-          }
+            throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, "Cannot find root ASX element");
         }
-        ParsedPlaylist pl = new ParsedPlaylist(title);
-        foreach (String file ; files) {
-          pl.addItem(file);
+        catch (JDOMException e)
+        {
+            throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, e.getMessage());
         }
-        return pl;
-      }
-      throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, "Cannot find root ASX element");
+        catch (IOException e)
+        {
+            throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, e.getMessage());
+        }
     }
-    catch (JDOMException e)
+
+    public bool matches(byte[] playlist, String playlistLocation)
     {
-      throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, e.getMessage());
+        String content = readPlaylistContent(playlist);
+        if (content !is null) {
+            return StringUtils.localeSafeToLowercase(content).indexOf("<asx") > -1;
+        }
+        return false;
     }
-    catch (IOException e)
-    {
-      throw new CannotParsePlaylistException(PlaylistType.ASX, playlistLocation, e.getMessage());
-    }
-  }
-  
-  public bool matches(byte[] playlist, String playlistLocation)
-  {
-    String content = readPlaylistContent(playlist);
-    if (content !is null) {
-      return StringUtils.localeSafeToLowercase(content).indexOf("<asx") > -1;
-    }
-    return false;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.playlist.AsxParserStrategy
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.playlist.AsxParserStrategy
+* JD-Core Version:    0.7.0.1
+*/

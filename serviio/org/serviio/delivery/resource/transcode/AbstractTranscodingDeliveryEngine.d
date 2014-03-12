@@ -43,10 +43,10 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
     private static immutable String TRANSCODING_SUBFOLDER_NAME = "Serviio";
     public static immutable String TRANSCODED_FILE_EXTENSION = "stf";
     private static Map!(Client, TranscodingJobListener) transcodeJobs;
-    private static TranscodingDeliveryStrategy/*!(File)*/ fileBasedStrategy;
-    private static TranscodingDeliveryStrategy/*!(File)*/ segmentBasedStrategy;
-    private static TranscodingDeliveryStrategy/*!(File)*/ liveSegmentBasedStrategy;
-    private static TranscodingDeliveryStrategy/*!(OutputStream)*/ streamBasedStrategy;
+    private static TranscodingDeliveryStrategy!(File) fileBasedStrategy;
+    private static TranscodingDeliveryStrategy!(File) segmentBasedStrategy;
+    private static TranscodingDeliveryStrategy!(File) liveSegmentBasedStrategy;
+    private static TranscodingDeliveryStrategy!(OutputStream) streamBasedStrategy;
     private static Logger log;
 
     static this()
@@ -265,7 +265,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         }
     }
 
-    private TranscodingDeliveryStrategy/*!(?)*/ getDeliveryStrategy(MI mediaItem, MediaFormatProfile formatProfile)
+    private TranscodingDeliveryStrategy!(Object) getDeliveryStrategy(MI mediaItem, MediaFormatProfile formatProfile)
     {
         if (formatProfile.isManifestFormat()) {
             return mediaItem.isLive() ? liveSegmentBasedStrategy : segmentBasedStrategy;

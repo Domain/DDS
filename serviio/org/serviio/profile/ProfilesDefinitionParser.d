@@ -1,5 +1,6 @@
 module org.serviio.profile.ProfilesDefinitionParser;
 
+import java.lang;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -49,12 +50,17 @@ import org.serviio.upnp.service.contentdirectory.definition.ContentDirectoryDefi
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.StringUtils;
 import org.serviio.util.XmlUtils;
+import org.serviio.profile.Profile;
+import org.serviio.profile.ImageResolutions;
+import org.serviio.profile.DetectionDefinition;
+import org.serviio.profile.H264LevelCheckType;
+import org.serviio.profile.DeliveryQuality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProfilesDefinitionParser
 {
-    private static final Logger log = LoggerFactory.getLogger!(ProfilesDefinitionParser);
+    private static Logger log = LoggerFactory.getLogger!(ProfilesDefinitionParser);
     private static immutable String PROFILES_XSD = "Profiles.xsd";
     private static immutable String TAG_PROFILE = "Profile";
     private static immutable String TAG_CONTENT_DIRECTORY_MESSAGE_BUILDER = "ContentDirectoryMessageBuilder";
@@ -676,7 +682,7 @@ public class ProfilesDefinitionParser
                     {
                         MediaFormatProfile formatProfile = MediaFormatProfile.valueOf(formatName);
                         String profileFormatNames = formatNode.getAttributeValue("name");
-                        List/*!(? : ProtocolAdditionalInfo)*/ protocolAdditionalInfos = createProtocolInfos(profileId, protocolInfoType, formatProfile, profileFormatNames);
+                        List!(/*? : */ProtocolAdditionalInfo) protocolAdditionalInfos = createProtocolInfos(profileId, protocolInfoType, formatProfile, profileFormatNames);
 
                         protocolInfos.put(formatProfile, new ProtocolInfo(mimeType, protocolAdditionalInfos));
                     }
@@ -695,7 +701,7 @@ public class ProfilesDefinitionParser
                         }
                         else
                         {
-                            List/*!(? : ProtocolAdditionalInfo)*/ protocolAdditionalInfos = createProtocolInfos(profileId, protocolInfoType, cast(MediaFormatProfile)parentPI.getKey(), null);
+                            List!(/*? : */ProtocolAdditionalInfo) protocolAdditionalInfos = createProtocolInfos(profileId, protocolInfoType, cast(MediaFormatProfile)parentPI.getKey(), null);
 
                             protocolInfos.put(parentPI.getKey(), new ProtocolInfo((cast(ProtocolInfo)parentPI.getValue()).getMimeType(), protocolAdditionalInfos));
                         }
@@ -706,7 +712,7 @@ public class ProfilesDefinitionParser
         return protocolInfos;
     }
 
-    private static List/*!(? : ProtocolAdditionalInfo)*/ createProtocolInfos(String profileId, String protocolInfoType, MediaFormatProfile formatProfile, String profileFormatNames)
+    private static List!(/*? : */ProtocolAdditionalInfo) createProtocolInfos(String profileId, String protocolInfoType, MediaFormatProfile formatProfile, String profileFormatNames)
     {
         if (protocolInfoType.equals("simple")) {
             return Collections.singletonList(new SimpleProtocolInfo());

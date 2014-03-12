@@ -28,6 +28,8 @@ import org.serviio.library.online.ContentURLContainer;
 import org.serviio.library.online.OnlineLibraryManager;
 import org.serviio.library.online.service.OnlineRepositoryService;
 import org.serviio.library.online.metadata.OnlineItem;
+import org.serviio.library.online.metadata.OnlineResourceContainer;
+import org.serviio.library.online.metadata.OnlineContainerItem;
 import org.serviio.util.HttpClient;
 import org.serviio.util.Tupple;
 import org.slf4j.Logger;
@@ -65,8 +67,8 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
                 {
                     if ((this.workerRunning) && (repository.isEnabled()) && (OnlineRepositoryService.getRepository(repository.getId()) !is null))
                     {
-                        Tupple/*!(OnlineResourceContainer!(?, ?), List!(? : OnlineItem))*/ parsedResource = getOnlineItems(repository);
-                        Iterator/*!(? : OnlineItem)*/ it = (cast(List)parsedResource.getValueB()).iterator();
+                        Tupple!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/), List!(/*? : */OnlineItem)) parsedResource = getOnlineItems(repository);
+                        Iterator!(/*? : */OnlineItem) it = (cast(List)parsedResource.getValueB()).iterator();
                         feedParsedSuccessfully(repository.getId());
                         while ((this.workerRunning) && (it.hasNext()))
                         {
@@ -155,16 +157,16 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
         log.info("Finished looking for online resources information");
     }
 
-    private Tupple/*!(OnlineResourceContainer!(?, ?), List!(? : OnlineItem))*/ getOnlineItems(OnlineRepository repository)
+    private Tupple!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/), List!(Object/*? : OnlineItem*/)) getOnlineItems(OnlineRepository repository)
     {
         if ((repository.getRepoType() == OnlineRepositoryType.FEED) || (repository.getRepoType() == OnlineRepositoryType.WEB_RESOURCE))
         {
-            OnlineResourceContainer/*!(?, ?)*/ resource = this.onlineManager.findResourceInCacheOrParse(repository);
-            List/*!(? : OnlineItem)*/ items = resource !is null ? resource.getItems() : new ArrayList();
+            OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = this.onlineManager.findResourceInCacheOrParse(repository);
+            List!(/*? : */OnlineItem) items = resource !is null ? resource.getItems() : new ArrayList();
             return new Tupple(resource, items);
         }
         SingleURLItem item = this.onlineManager.findSingleURLItemInCacheOrParse(repository);
-        List/*!(? : OnlineItem)*/ items = item is null ? new ArrayList() : Collections.singletonList(item);
+        List!(/*? : */OnlineItem) items = item is null ? new ArrayList() : Collections.singletonList(item);
         return new Tupple(null, items);
     }
 

@@ -32,7 +32,7 @@ public class OnlineVideoSourcesMetadataExtractor : MetadataExtractor
     override protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
     {
         VideoDescription videoDescription = FileNameParser.parse(mediaFile, repository);
-        if ((videoDescription.isSearchRecommended()) && (videoDescription.getType() != VideoDescription.VideoType.SPECIAL) && (fileType == MediaFileType.VIDEO))
+        if ((videoDescription.isSearchRecommended()) && (videoDescription.getType() != VideoType.SPECIAL) && (fileType == MediaFileType.VIDEO))
         {
             SearchSourceAdaptor adaptor = SearchSourceFactory.getSearchSourceAdaptor(videoDescription.getType());
             if (adaptor !is null)

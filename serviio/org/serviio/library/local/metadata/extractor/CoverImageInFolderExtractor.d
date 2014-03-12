@@ -1,5 +1,6 @@
 module org.serviio.library.local.metadata.extractor.CoverImageInFolderExtractor;
 
+import java.lang.String;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -17,23 +18,26 @@ import org.serviio.library.local.metadata.LocalItemMetadata;
 import org.serviio.library.local.metadata.VideoMetadata;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.util.FileUtils;
+import org.serviio.library.local.metadata.extractor.AbstractLocalFileExtractor;
+import org.serviio.library.local.metadata.extractor.ExtractorType;
+import org.serviio.library.local.metadata.extractor.MetadataFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
 {
-    private static final Logger log = LoggerFactory.getLogger!(CoverImageInFolderExtractor);
+    private static Logger log = LoggerFactory.getLogger!(CoverImageInFolderExtractor);
     private static immutable String[] AUDIO_FILES = { "folder.jpg", "cover.jpg", "front_cover.jpg", ".*\\[front\\].jpg", "albumart.jpg" };
     private static immutable String[] VIDEO_FILES = { "dvdcover.jpg", "folder.jpg", "movie.jpg", ".*poster.*.jpg" };
     private Pattern[] audioPatterns;
     private Pattern[] videoPatterns;
 
-    public ExtractorType getExtractorType()
+    override public ExtractorType getExtractorType()
     {
         return ExtractorType.COVER_IMAGE_IN_FOLDER;
     }
 
-    protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
+    override protected MetadataFile getMetadataFile(File mediaFile, MediaFileType fileType, Repository repository)
     {
         if ((fileType == MediaFileType.AUDIO) || (fileType == MediaFileType.VIDEO))
         {
@@ -63,7 +67,7 @@ public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
         return null;
     }
 
-    protected void retrieveMetadata(LocalItemMetadata metadata, File imageFile, File mediaFile)
+    override protected void retrieveMetadata(LocalItemMetadata metadata, File imageFile, File mediaFile)
     {
         try
         {

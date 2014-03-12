@@ -3,6 +3,11 @@ module org.serviio.library.local.metadata.extractor.video.VideoDescription;
 import java.lang;
 import java.util.Arrays;
 
+public enum VideoType
+{
+    FILM,  EPISODE,  SPECIAL
+}
+
 public class VideoDescription
 {
     private VideoType type;
@@ -11,11 +16,6 @@ public class VideoDescription
     private Integer season;
     private Integer episode;
     private Integer year;
-
-    public static enum VideoType
-    {
-        FILM,  EPISODE,  SPECIAL
-    }
 
     public this(VideoType type, bool searchRecommended, String[] filmNames, Integer year)
     {

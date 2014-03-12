@@ -37,7 +37,7 @@ public class DiscoveryManager : WakeUpListener
     private Thread discoverySearchListenerThread;
     private Thread subscriptionExpiryCheckerThread;
     private Thread eventDispatcherThread;
-    private ScheduledFuture/*!(?)*/ wakeUpMonitorSchedule;
+    private ScheduledFuture!(Object) wakeUpMonitorSchedule;
     private ScheduledThreadPoolExecutor wakeUpMonitorExecutor = new ScheduledThreadPoolExecutor(1, ServiioThreadFactory.getInstance());
     private int advertisementSendCount = 3;
 

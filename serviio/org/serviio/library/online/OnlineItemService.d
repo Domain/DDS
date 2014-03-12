@@ -21,6 +21,8 @@ import org.serviio.library.online.service.OnlineRepositoryService;
 import org.serviio.library.online.OnlineLibraryManager;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.util.CollectionUtils;
+import org.serviio.library.online.metadata.OnlineContainerItem;
+import org.serviio.library.online.AbstractUrlExtractor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,21 +31,21 @@ public class OnlineItemService
     private static OnlineLibraryManager onlineLibraryManager = OnlineLibraryManager.getInstance();
     private static Logger log = LoggerFactory.getLogger!(OnlineItemService);
 
-    public static OnlineResourceContainer/*!(?, ?)*/ findContainerResourceById(Long onlineRepositoryId)
+    public static OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) findContainerResourceById(Long onlineRepositoryId)
     {
-        NamedOnlineResource/*!(OnlineResourceContainer!(?, ?))*/ resource = findNamedContainerResourceById(onlineRepositoryId);
+        NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/)) resource = findNamedContainerResourceById(onlineRepositoryId);
         if (resource !is null) {
             return cast(OnlineResourceContainer)resource.getOnlineItem();
         }
         return null;
     }
 
-    public static NamedOnlineResource/*!(OnlineResourceContainer!(?, ?))*/ findNamedContainerResourceById(Long onlineRepositoryId)
+    public static NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/)) findNamedContainerResourceById(Long onlineRepositoryId)
     {
         OnlineRepository onlineRepository = OnlineRepositoryService.getRepository(onlineRepositoryId);
         try
         {
-            OnlineResourceContainer/*!(?, ?)*/ resource = findContainerResourceById(onlineRepository);
+            OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = findContainerResourceById(onlineRepository);
             if (resource !is null) {
                 return new NamedOnlineResource(resource, onlineRepository.getRepositoryName());
             }
@@ -84,7 +86,7 @@ public class OnlineItemService
         {
             if (getContainerResourceTypes().contains(onlineRepository.getRepoType()))
             {
-                OnlineResourceContainer/*!(?, ?)*/ resource = findContainerResourceById(Long.valueOf(itemId.getRepositoryId()));
+                OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = findContainerResourceById(Long.valueOf(itemId.getRepositoryId()));
                 if (resource !is null) {
                     try
                     {
@@ -157,9 +159,9 @@ public class OnlineItemService
         OnlineLibraryManager.getInstance().removeOnlineContentFromCache(repoUrl, onlineRepositoryId, true);
     }
 
-    public static List/*!(NamedOnlineResource!(OnlineResourceContainer!(?, ?)))*/ getListOfParsedContainerResources(MediaFileType itemType, AccessGroup accessGroup, int start, int count, bool onlyEnabled)
+    public static List!(NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/))) getListOfParsedContainerResources(MediaFileType itemType, AccessGroup accessGroup, int start, int count, bool onlyEnabled)
     {
-        List/*!(NamedOnlineResource!(OnlineResourceContainer!(?, ?)))*/ result = getAllParsedContainerResources(itemType, accessGroup, onlyEnabled);
+        List!(NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/))) result = getAllParsedContainerResources(itemType, accessGroup, onlyEnabled);
         return CollectionUtils.getSubList(result, start, count);
     }
 
@@ -183,7 +185,7 @@ public class OnlineItemService
         }
         if (objectType.supportsItems())
         {
-            OnlineResourceContainer/*!(?, ?)*/ resource = findContainerResourceById(onlineRepositoryId);
+            OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = findContainerResourceById(onlineRepositoryId);
             return getCountOfContainerItems(resource, itemType);
         }
         return 0;
@@ -225,14 +227,14 @@ public class OnlineItemService
         return items.size();
     }
 
-    private static List/*!(NamedOnlineResource!(OnlineResourceContainer!(?, ?)))*/ getAllParsedContainerResources(MediaFileType itemType, AccessGroup accessGroup, bool onlyEnabled)
+    private static List!(NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/))) getAllParsedContainerResources(MediaFileType itemType, AccessGroup accessGroup, bool onlyEnabled)
     {
         List!(OnlineRepository) allRepositories = OnlineRepositoryService.getListOfRepositories(getContainerResourceTypes(), itemType, accessGroup, onlyEnabled);
-        List/*!(NamedOnlineResource!(OnlineResourceContainer!(?, ?)))*/ result = new ArrayList();
+        List!(NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/))) result = new ArrayList();
         foreach (OnlineRepository repo ; allRepositories) {
             try
             {
-                OnlineResourceContainer/*!(?, ?)*/ parsedResource = onlineLibraryManager.findResource(repo, true);
+                OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) parsedResource = onlineLibraryManager.findResource(repo, true);
                 if (parsedResource !is null) {
                     result.add(new NamedOnlineResource(parsedResource, repo.getRepositoryName()));
                 }
@@ -242,7 +244,7 @@ public class OnlineItemService
         return result;
     }
 
-    private static OnlineResourceContainer/*!(?, ?)*/ findContainerResourceById(OnlineRepository onlineRepository)
+    private static OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) findContainerResourceById(OnlineRepository onlineRepository)
     {
         if (onlineRepository !is null) {
             return onlineLibraryManager.findResource(onlineRepository, true);

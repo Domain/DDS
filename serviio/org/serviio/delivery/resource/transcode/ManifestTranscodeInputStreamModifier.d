@@ -5,6 +5,7 @@ import com.googlecode.streamflyer.core.Modifier;
 import com.googlecode.streamflyer.core.ModifyingReader;
 import com.googlecode.streamflyer.regex.RegexModifier;
 import com.googlecode.streamflyer.util.ModificationFactory;
+import java.lang;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Reader;
@@ -14,6 +15,7 @@ import org.serviio.delivery.HostInfo;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.upnp.service.contentdirectory.classes.InvalidResourceException;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
+import org.serviio.delivery.resource.transcode.LiveSegmentBasedTranscodingDeliveryStrategy;
 
 public class ManifestTranscodeInputStreamModifier
 {
@@ -60,8 +62,7 @@ public class ManifestTranscodeInputStreamModifier
         return result;
     }
 
-    private static class LiveStreamSegmentListener
-        : Modifier
+    private static class LiveStreamSegmentListener : Modifier
     {
         private static enum ModifierState
         {
@@ -75,18 +76,18 @@ public class ManifestTranscodeInputStreamModifier
 
         private ModifierState state = ModifierState.INITIAL;
         private ModificationFactory factory = new ModificationFactory(0, 4096);
-        private final LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover;
+        private LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover;
 
         public AfterModification modify(StringBuilder characterBuffer, int firstModifiableCharacterInBuffer, bool endOfStreamHit)
         {
             switch (state)
             {
-                case 1: 
+                case SEGMENT_FOUND: 
                     return this.factory.skipEntireBuffer(characterBuffer, firstModifiableCharacterInBuffer, endOfStreamHit);
-                case 2: 
+                case INITIAL: 
                     this.state = ModifierState.SEGMENT_SEARCH;
                     return this.factory.modifyAgainImmediately(4096, firstModifiableCharacterInBuffer);
-                case 3: 
+                case SEGMENT_SEARCH: 
                     Matcher matcher = LiveSegmentBasedTranscodingDeliveryStrategy.segmentPattern.matcher(characterBuffer.toString());
                     if ((matcher.find()) && (matcher.groupCount() == 1))
                     {
@@ -97,7 +98,7 @@ public class ManifestTranscodeInputStreamModifier
                     }
                     return this.factory.skipEntireBuffer(characterBuffer, firstModifiableCharacterInBuffer, endOfStreamHit);
             }
-            throw new IllegalStateException("state " + this.state + " not supported");
+            throw new IllegalStateException("state " ~ this.state ~ " not supported");
         }
     }
 }

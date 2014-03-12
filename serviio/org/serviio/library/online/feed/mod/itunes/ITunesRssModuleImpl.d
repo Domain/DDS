@@ -1,9 +1,12 @@
 module org.serviio.library.online.feed.mod.itunes.ITunesRssModuleImpl;
 
 //import com.sun.syndication.feed.mod.ModuleImpl;
+import java.lang;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.serviio.library.online.feed.mod.itunes.ITunesRssModule;
+import org.serviio.library.online.feed.mod.itunes.Image;
 
 public class ITunesRssModuleImpl : /*ModuleImpl, */ITunesRssModule
 {

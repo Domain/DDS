@@ -1,5 +1,6 @@
 module org.serviio.upnp.protocol.http.HttpMessageBuilder;
 
+import java.lang.String;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import org.apache.http.HttpRequest;
@@ -14,63 +15,63 @@ import org.slf4j.LoggerFactory;
 
 public class HttpMessageBuilder
 {
-  private static final Logger log = LoggerFactory.getLogger!(HttpMessageBuilder);
-  
-  public static String transformToString(HttpRequest request)
-  {
-    ByteArrayOutputStream stream = new ByteArrayOutputStream(1024);
-    SessionOutputBuffer outbuffer = new StreamSessionOutputBuffer(stream, 1024);
-    HttpMessageWriter requestWriter = new HttpRequestWriter(outbuffer, new BasicLineFormatter(), null);
-    try
+    private static Logger log = LoggerFactory.getLogger!(HttpMessageBuilder);
+
+    public static String transformToString(HttpRequest request)
     {
-      requestWriter.write(request);
-      outbuffer.flush();
-      return stream.toString();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(1024);
+        SessionOutputBuffer outbuffer = new StreamSessionOutputBuffer(stream, 1024);
+        HttpMessageWriter requestWriter = new HttpRequestWriter(outbuffer, new BasicLineFormatter(), null);
+        try
+        {
+            requestWriter.write(request);
+            outbuffer.flush();
+            return stream.toString();
+        }
+        catch (Exception e)
+        {
+            log.error("Error during generating HTTP request message", e);
+        }
+        finally
+        {
+            try
+            {
+                stream.close();
+            }
+            catch (IOException e) {}
+        }
+        return null;
     }
-    catch (Exception e)
+
+    public static String transformToString(HttpResponse response)
     {
-      log.error("Error during generating HTTP request message", e);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(1024);
+        SessionOutputBuffer outbuffer = new StreamSessionOutputBuffer(stream, 1024);
+        HttpMessageWriter responseWriter = new HttpResponseWriter(outbuffer, new BasicLineFormatter(), null);
+        try
+        {
+            responseWriter.write(response);
+            outbuffer.flush();
+            return stream.toString();
+        }
+        catch (Exception e)
+        {
+            log.error("Error during generating HTTP response message", e);
+        }
+        finally
+        {
+            try
+            {
+                stream.close();
+            }
+            catch (IOException e) {}
+        }
+        return null;
     }
-    finally
-    {
-      try
-      {
-        stream.close();
-      }
-      catch (IOException e) {}
-    }
-    return null;
-  }
-  
-  public static String transformToString(HttpResponse response)
-  {
-    ByteArrayOutputStream stream = new ByteArrayOutputStream(1024);
-    SessionOutputBuffer outbuffer = new StreamSessionOutputBuffer(stream, 1024);
-    HttpMessageWriter responseWriter = new HttpResponseWriter(outbuffer, new BasicLineFormatter(), null);
-    try
-    {
-      responseWriter.write(response);
-      outbuffer.flush();
-      return stream.toString();
-    }
-    catch (Exception e)
-    {
-      log.error("Error during generating HTTP response message", e);
-    }
-    finally
-    {
-      try
-      {
-        stream.close();
-      }
-      catch (IOException e) {}
-    }
-    return null;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.protocol.http.HttpMessageBuilder
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.protocol.http.HttpMessageBuilder
+* JD-Core Version:    0.7.0.1
+*/

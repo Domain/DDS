@@ -1,5 +1,6 @@
 module org.serviio.library.local.service.SearchMetadataFactory;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.List;
 import org.serviio.library.entities.Image;
@@ -32,6 +33,7 @@ import org.serviio.library.search.SearchMetadata;
 import org.serviio.library.search.SerieSearchMetadata;
 import org.serviio.util.CollectionUtils;
 import org.serviio.util.Tupple;
+import org.serviio.library.online.AbstractUrlExtractor;
 
 public class SearchMetadataFactory
 {
@@ -78,7 +80,7 @@ public class SearchMetadataFactory
         return allMetadata;
     }
 
-    public static List!(SearchMetadata) onlineMetadata(OnlineItem item, OnlineResourceContainer/*!(? : OnlineContainerItem!(?), ?)*/ container, OnlineRepository repository)
+    public static List!(SearchMetadata) onlineMetadata(OnlineItem item, OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) container, OnlineRepository repository)
     {
         List!(SearchMetadata) allMetadata = new ArrayList();
 
@@ -128,7 +130,6 @@ public class SearchMetadataFactory
 
         allPairs.add(new Tupple(SearchCategory.MUSIC_TRACKS, mediaItemId));
         allPairs.add(new Tupple(SearchCategory.FILES, mediaItemId));
-
 
         return allPairs;
     }

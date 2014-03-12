@@ -9,6 +9,7 @@ import org.serviio.library.online.feed.mod.itunes.Image;
 import org.serviio.library.online.metadata.FeedItem;
 import org.serviio.library.online.metadata.TechnicalMetadata;
 import org.serviio.util.ObjectValidator;
+import org.serviio.library.online.feed.FeedEntryParser;
 
 public class ITunesRssFeedEntryParser : FeedEntryParser
 {

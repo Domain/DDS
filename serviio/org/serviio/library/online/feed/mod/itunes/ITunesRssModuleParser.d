@@ -1,7 +1,8 @@
 module org.serviio.library.online.feed.mod.itunes.ITunesRssModuleParser;
 
-//import com.sun.syndication.feed.mod.Module;
-//import com.sun.syndication.io.ModuleParser;
+import com.sun.syndication.feed.mod.Module;
+import com.sun.syndication.io.ModuleParser;
+import java.lang.String;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -15,12 +16,12 @@ import org.jdom.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ITunesRssModuleParser /*: ModuleParser*/
+public class ITunesRssModuleParser : ModuleParser
 {
-    private static final Logger log = LoggerFactory.getLogger!(ITunesRssModuleParser);
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.UK);
-    private static final Namespace NS = Namespace.getNamespace("http://itunes.apple.com/rss");
-    private static final Namespace ATOM_NS = Namespace.getNamespace("http://www.w3.org/2005/Atom");
+    private static Logger log = LoggerFactory.getLogger!(ITunesRssModuleParser);
+    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.UK);
+    private static Namespace NS = Namespace.getNamespace("http://itunes.apple.com/rss");
+    private static Namespace ATOM_NS = Namespace.getNamespace("http://www.w3.org/2005/Atom");
 
     static this()
     {

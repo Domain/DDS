@@ -7,23 +7,23 @@ import org.jaudiotagger.tag.Tag;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.library.local.metadata.AudioMetadata;
 import org.serviio.library.local.metadata.extractor.InvalidMediaFormatException;
+import org.serviio.library.local.metadata.extractor.embedded.AudioExtractionStrategy;
 
-public class FLACExtractionStrategy
-  : AudioExtractionStrategy
+public class FLACExtractionStrategy : AudioExtractionStrategy
 {
-  public void extractMetadata(AudioMetadata metadata, AudioFile f, AudioHeader header, Tag tag)
-  {
-    super.extractMetadata(metadata, f, header, tag);
-  }
-  
-  protected AudioContainer getContainer()
-  {
-    return AudioContainer.FLAC;
-  }
+    override public void extractMetadata(AudioMetadata metadata, AudioFile f, AudioHeader header, Tag tag)
+    {
+        super.extractMetadata(metadata, f, header, tag);
+    }
+
+    override protected AudioContainer getContainer()
+    {
+        return AudioContainer.FLAC;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.FLACExtractionStrategy
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.FLACExtractionStrategy
+* JD-Core Version:    0.7.0.1
+*/

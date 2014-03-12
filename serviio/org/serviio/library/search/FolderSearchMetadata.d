@@ -1,5 +1,6 @@
 module org.serviio.library.search.FolderSearchMetadata;
 
+import java.lang;
 import java.util.List;
 import org.serviio.library.metadata.MediaFileType;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
@@ -7,6 +8,7 @@ import org.serviio.upnp.service.contentdirectory.command.audio.ListAudioFoldersB
 import org.serviio.upnp.service.contentdirectory.command.image.ListImageFoldersByNameCommand;
 import org.serviio.upnp.service.contentdirectory.command.video.ListVideoFoldersByNameCommand;
 import org.serviio.util.Tupple;
+import org.serviio.library.search.AbstractRecursiveSearchMetadata;
 
 public class FolderSearchMetadata : AbstractRecursiveSearchMetadata
 {

@@ -1,38 +1,39 @@
 module org.serviio.licensing.BundledLicenseProvider;
 
+import java.lang.String;
 import java.io.IOException;
 import org.serviio.util.FileUtils;
 import org.serviio.util.StringUtils;
+import org.serviio.licensing.LicenseProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BundledLicenseProvider
-  : LicenseProvider
+public class BundledLicenseProvider : LicenseProvider
 {
-  private static final Logger log = LoggerFactory.getLogger!(BundledLicenseProvider);
-  private static immutable String BUNDLED_LICENSE_CONTENT = readBundledLicense();
-  
-  public String readLicense()
-  {
-    return BUNDLED_LICENSE_CONTENT;
-  }
-  
-  private static String readBundledLicense()
-  {
-    try
+    private static Logger log = LoggerFactory.getLogger!(BundledLicenseProvider);
+    private static immutable String BUNDLED_LICENSE_CONTENT = readBundledLicense();
+
+    public String readLicense()
     {
-      return StringUtils.readStreamAsString(FileUtils.getStreamFromClasspath("/default.lic", LicenseValidator.class_), "UTF-8");
+        return BUNDLED_LICENSE_CONTENT;
     }
-    catch (IOException e)
+
+    private static String readBundledLicense()
     {
-      log.warn("Cannot find bundled license");
+        try
+        {
+            return StringUtils.readStreamAsString(FileUtils.getStreamFromClasspath("/default.lic", LicenseValidator.class_), "UTF-8");
+        }
+        catch (IOException e)
+        {
+            log.warn("Cannot find bundled license");
+        }
+        return null;
     }
-    return null;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.licensing.BundledLicenseProvider
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.licensing.BundledLicenseProvider
+* JD-Core Version:    0.7.0.1
+*/

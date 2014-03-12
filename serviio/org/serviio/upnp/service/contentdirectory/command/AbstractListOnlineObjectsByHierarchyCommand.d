@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.AbstractListOnlineObjectsByHierarchyCommand;
 
+import java.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,26 +24,26 @@ import org.serviio.upnp.service.contentdirectory.classes.DirectoryObjectBuilder;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
+import org.serviio.upnp.service.contentdirectory.command.AbstractCommand;
 
-public abstract class AbstractListOnlineObjectsByHierarchyCommand
-: AbstractCommand!(DirectoryObject)
+public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractCommand!(DirectoryObject)
 {
     public this(String objectId, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, MediaFileType fileType, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
     {
         super(objectId, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, fileType, idPrefix, startIndex, count, disablePresentationSettings);
     }
 
-    protected Set!(ObjectClassType) getSupportedClasses()
+    override protected Set!(ObjectClassType) getSupportedClasses()
     {
         return new HashSet(Arrays.asList(ObjectClassType.values()));
     }
 
-    protected Set!(ObjectType) getSupportedObjectTypes()
+    override protected Set!(ObjectType) getSupportedObjectTypes()
     {
         return ObjectType.getAllTypes();
     }
 
-    protected List!(DirectoryObject) retrieveList()
+    override protected List!(DirectoryObject) retrieveList()
     {
         List!(DirectoryObject) objects = new ArrayList();
         Long folderId = getFolderId();
@@ -53,10 +54,10 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand
             existingFoldersCount = folderId is null ? OnlineItemService.getCountOfParsedFeeds(this.fileType, this.accessGroup, true) : 0;
             if (this.startIndex < existingFoldersCount)
             {
-                List/*!(NamedOnlineResource!(OnlineResourceContainer!(?, ?)))*/ resources = OnlineItemService.getListOfParsedContainerResources(this.fileType, this.accessGroup, this.startIndex, this.count, true);
-                foreach (NamedOnlineResource/*!(OnlineResourceContainer!(?, ?))*/ folder ; resources)
+                List!(NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/))) resources = OnlineItemService.getListOfParsedContainerResources(this.fileType, this.accessGroup, this.startIndex, this.count, true);
+                foreach (NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/)) folder ; resources)
                 {
-                    OnlineResourceContainer/*!(?, ?)*/ resource = cast(OnlineResourceContainer)folder.getOnlineItem();
+                    OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = cast(OnlineResourceContainer)folder.getOnlineItem();
                     String runtimeId = generateFolderObjectId(resource.getOnlineRepositoryId());
                     Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(resource.toOnlineRepository(), runtimeId, getDisplayedContainerId(this.objectId), this.objectType, this.searchCriteria, resource.getDisplayName(folder.getRepositoryName()), this.rendererProfile, this.accessGroup, this.fileType, this.disablePresentationSettings);
 
@@ -83,7 +84,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand
         return objects;
     }
 
-    protected DirectoryObject retrieveSingleItem()
+    override protected DirectoryObject retrieveSingleItem()
     {
         Long itemId = getMediaItemId();
         if (itemId !is null)
@@ -103,10 +104,10 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand
         Long folderId = getFolderId();
         if (folderId !is null)
         {
-            NamedOnlineResource/*!(OnlineResourceContainer!(?, ?))*/ resource = OnlineItemService.findNamedContainerResourceById(folderId);
+            NamedOnlineResource!(OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/)) resource = OnlineItemService.findNamedContainerResourceById(folderId);
             if (resource !is null)
             {
-                OnlineResourceContainer/*!(?, ?)*/ feed = cast(OnlineResourceContainer)resource.getOnlineItem();
+                OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) feed = cast(OnlineResourceContainer)resource.getOnlineItem();
                 Map!(ClassProperties, Object) values = ObjectValuesBuilder.buildObjectValues(feed.toOnlineRepository(), this.objectId, Definition.instance().getParentNodeId(this.objectId, this.disablePresentationSettings), this.objectType, this.searchCriteria, feed.getDisplayName(resource.getRepositoryName()), this.rendererProfile, this.accessGroup, this.fileType, this.disablePresentationSettings);
 
 
@@ -164,7 +165,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand
         if (folderId is null) {
             return OnlineItemService.getListOfSingleURLItems(this.fileType, this.accessGroup, startIndex, count, true);
         }
-        OnlineResourceContainer/*!(?, ?)*/ cachedContainerResource = OnlineItemService.findContainerResourceById(folderId);
+        OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) cachedContainerResource = OnlineItemService.findContainerResourceById(folderId);
         return OnlineItemService.getListOfFeedItems(cachedContainerResource, this.fileType, startIndex, count);
     }
 

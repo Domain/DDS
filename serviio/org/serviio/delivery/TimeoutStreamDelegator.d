@@ -23,7 +23,7 @@ public class TimeoutStreamDelegator
     private static int CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC = ApplicationSettings.getIntegerProperty("transcoded_stream_after_close_inactivity_timeout").intValue();
     private InputStream stream;
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture/*!(?)*/ scheduledFuture;
+    private ScheduledFuture!(Object) scheduledFuture;
     private ProcessListener processListener;
     private AtomicReference!(Date) lastBytesRead = new AtomicReference(new Date());
     private Client client;
