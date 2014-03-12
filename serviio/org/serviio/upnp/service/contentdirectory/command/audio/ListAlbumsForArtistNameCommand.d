@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.audio.ListAlbumsForArtistNameCommand;
 
+import java.lang;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -13,46 +14,46 @@ import org.serviio.upnp.service.contentdirectory.SearchCriteria;
 import org.serviio.upnp.service.contentdirectory.classes.ClassProperties;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.util.ObjectValidator;
+import org.serviio.upnp.service.contentdirectory.command.audio.AbstractAlbumsRetrievalCommand;
 
-public class ListAlbumsForArtistNameCommand
-  : AbstractAlbumsRetrievalCommand
+public class ListAlbumsForArtistNameCommand : AbstractAlbumsRetrievalCommand
 {
-  public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
-  {
-    super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, disablePresentationSettings);
-  }
-  
-  protected List!(MusicAlbum) retrieveEntityList()
-  {
-    String artistName = getArtistName();
-    if (ObjectValidator.isNotEmpty(artistName))
+    public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
     {
-      List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(artistName, RoleType.ARTIST, this.startIndex, this.count);
-      return albums;
+        super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, disablePresentationSettings);
     }
-    return Collections.emptyList();
-  }
-  
-  public int retrieveItemCount()
-  {
-    String artistName = getArtistName();
-    if (ObjectValidator.isNotEmpty(artistName)) {
-      return AudioService.getNumberOfAlbumsForTrackRole(artistName, RoleType.ARTIST);
+
+    override protected List!(MusicAlbum) retrieveEntityList()
+    {
+        String artistName = getArtistName();
+        if (ObjectValidator.isNotEmpty(artistName))
+        {
+            List!(MusicAlbum) albums = AudioService.getListOfAlbumsForTrackRole(artistName, RoleType.ARTIST, this.startIndex, this.count);
+            return albums;
+        }
+        return Collections.emptyList();
     }
-    return 0;
-  }
-  
-  private String getArtistName()
-  {
-    if ((this.searchCriteria !is null) && ((cast(String)this.searchCriteria.getMap().get(ClassProperties.OBJECT_CLASS)).equalsIgnoreCase(ObjectClassType.MUSIC_ALBUM.getClassName()))) {
-      return cast(String)this.searchCriteria.getMap().get(ClassProperties.ARTIST);
+
+    override public int retrieveItemCount()
+    {
+        String artistName = getArtistName();
+        if (ObjectValidator.isNotEmpty(artistName)) {
+            return AudioService.getNumberOfAlbumsForTrackRole(artistName, RoleType.ARTIST);
+        }
+        return 0;
     }
-    return null;
-  }
+
+    private String getArtistName()
+    {
+        if ((this.searchCriteria !is null) && ((cast(String)this.searchCriteria.getMap().get(ClassProperties.OBJECT_CLASS)).equalsIgnoreCase(ObjectClassType.MUSIC_ALBUM.getClassName()))) {
+            return cast(String)this.searchCriteria.getMap().get(ClassProperties.ARTIST);
+        }
+        return null;
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.ListAlbumsForArtistNameCommand
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.audio.ListAlbumsForArtistNameCommand
+* JD-Core Version:    0.7.0.1
+*/
