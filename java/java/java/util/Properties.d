@@ -1,7 +1,7 @@
 /// Generate by tools
 module java.util.Properties;
 
-import java.lang.String;
+import java.lang;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.lang.exceptions;

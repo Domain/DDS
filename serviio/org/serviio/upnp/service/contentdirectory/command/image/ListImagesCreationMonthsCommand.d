@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationMonthsCommand;
 
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,57 +22,56 @@ import org.serviio.upnp.service.contentdirectory.command.CommandExecutionExcepti
 import org.serviio.upnp.service.contentdirectory.command.ObjectValuesBuilder;
 import org.serviio.upnp.service.contentdirectory.definition.Definition;
 
-public class ListImagesCreationMonthsCommand
-  : AbstractCommand!(Container)
+public class ListImagesCreationMonthsCommand : AbstractCommand!(Container)
 {
-  public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
-  {
-    super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.IMAGE, idPrefix, startIndex, count, disablePresentationSettings);
-  }
-  
-  protected Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
-  }
-  
-  protected Set!(ObjectType) getSupportedObjectTypes()
-  {
-    return ObjectType.getContainerTypes();
-  }
-  
-  protected List!(Container) retrieveList()
-  {
-    List!(Container) items = new ArrayList();
-    Integer year = Integer.valueOf(Integer.parseInt(getInternalObjectId()));
-    
-    List!(Integer) months = ImageService.getListOfImagesCreationMonths(year, this.accessGroup, this.startIndex, this.count);
-    foreach (Integer month ; months)
+    public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
     {
-      String runtimeId = generateRuntimeObjectId(month);
-      Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(month.toString(), runtimeId, getDisplayedContainerId(this.objectId), this.objectType, this.searchCriteria, this.accessGroup, null, this.disablePresentationSettings);
-      
-      items.add(cast(Container)DirectoryObjectBuilder.createInstance(this.containerClassType, values, null, null, this.disablePresentationSettings));
+        super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.IMAGE, idPrefix, startIndex, count, disablePresentationSettings);
     }
-    return items;
-  }
-  
-  protected Container retrieveSingleItem()
-  {
-    Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(getInternalObjectId(), this.objectId, Definition.instance().getParentNodeId(this.objectId, this.disablePresentationSettings), this.objectType, this.searchCriteria, this.accessGroup, null, this.disablePresentationSettings);
-    
 
-    return cast(Container)DirectoryObjectBuilder.createInstance(this.containerClassType, values, null, null, this.disablePresentationSettings);
-  }
-  
-  public int retrieveItemCount()
-  {
-    Integer year = Integer.valueOf(Integer.parseInt(getInternalObjectId()));
-    return ImageService.getNumberOfImagesCreationMonths(year, this.accessGroup);
-  }
+    override protected Set!(ObjectClassType) getSupportedClasses()
+    {
+        return new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
+    }
+
+    override protected Set!(ObjectType) getSupportedObjectTypes()
+    {
+        return ObjectType.getContainerTypes();
+    }
+
+    override protected List!(Container) retrieveList()
+    {
+        List!(Container) items = new ArrayList();
+        Integer year = Integer.valueOf(Integer.parseInt(getInternalObjectId()));
+
+        List!(Integer) months = ImageService.getListOfImagesCreationMonths(year, this.accessGroup, this.startIndex, this.count);
+        foreach (Integer month ; months)
+        {
+            String runtimeId = generateRuntimeObjectId(month);
+            Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(month.toString(), runtimeId, getDisplayedContainerId(this.objectId), this.objectType, this.searchCriteria, this.accessGroup, null, this.disablePresentationSettings);
+
+            items.add(cast(Container)DirectoryObjectBuilder.createInstance(this.containerClassType, values, null, null, this.disablePresentationSettings));
+        }
+        return items;
+    }
+
+    override protected Container retrieveSingleItem()
+    {
+        Map!(ClassProperties, Object) values = ObjectValuesBuilder.instantiateValuesForContainer(getInternalObjectId(), this.objectId, Definition.instance().getParentNodeId(this.objectId, this.disablePresentationSettings), this.objectType, this.searchCriteria, this.accessGroup, null, this.disablePresentationSettings);
+
+
+        return cast(Container)DirectoryObjectBuilder.createInstance(this.containerClassType, values, null, null, this.disablePresentationSettings);
+    }
+
+    public int retrieveItemCount()
+    {
+        Integer year = Integer.valueOf(Integer.parseInt(getInternalObjectId()));
+        return ImageService.getNumberOfImagesCreationMonths(year, this.accessGroup);
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationMonthsCommand
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.ListImagesCreationMonthsCommand
+* JD-Core Version:    0.7.0.1
+*/

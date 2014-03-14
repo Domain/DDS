@@ -1,5 +1,6 @@
 module org.serviio.util.StringComparators;
 
+import java.lang.String;
 import java.text.Collator;
 import java.util.Comparator;
 

@@ -1,12 +1,6 @@
-/*
-* Decompiled with CFR 0_66.
-* 
-* Could not load the following classes:
-*  org.slf4j.Logger
-*  org.slf4j.LoggerFactory
-*/
 module org.serviio.ApplicationInstanceManager;
 
+import java.lang.String;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,21 +16,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationInstanceManager {
-    private static final Logger log = LoggerFactory.getLogger(cast(Class)ApplicationInstanceManager.class_);
+    private static Logger log = LoggerFactory.getLogger(cast(Class)ApplicationInstanceManager.class_);
     private static ApplicationInstanceListener subListener;
     public static immutable int SINGLE_INSTANCE_NETWORK_SOCKET = 44331;
     public static immutable String SINGLE_INSTANCE_SHARED_KEY = "$$NewInstance$$\n";
     public static immutable String CLOSE_INSTANCE_SHARED_KEY = "$$CloseInstance$$\n";
     private static ServerSocket socket;
 
-    public static boolean registerInstance(boolean stopInstance) {
-        boolean returnValueOnError = true;
+    public static bool registerInstance(bool stopInstance) {
+        bool returnValueOnError = true;
         try {
             ApplicationInstanceManager.socket = new ServerSocket(44331, 10, InetAddress.getLocalHost());
             ApplicationInstanceManager.log.debug_("Listening for application instances on socket 44331");
             Thread instanceListenerThread = new class(new class() Runnable {
 
-                override public void run() {
+                public void run() {
                         boolean socketClosed = false;
                         while (!socketClosed) {
                             if (ApplicationInstanceManager.socket.isClosed()) {
@@ -113,7 +107,7 @@ public class ApplicationInstanceManager {
         ApplicationInstanceManager.subListener = listener;
     }
 
-    private static void fireNewInstance(boolean closeRequest) {
+    private static void fireNewInstance(bool closeRequest) {
         if (ApplicationInstanceManager.subListener is null) return;
         ApplicationInstanceManager.subListener.newInstanceCreated(closeRequest);
     }

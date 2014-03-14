@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.definition.ContentDirectoryDefinitionParser;
 
+import java.lang.String;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,10 @@ import org.serviio.library.search.SearchIndexer:SearchCategory;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.util.ObjectValidator;
 import org.serviio.util.XPathUtil;
+import org.serviio.upnp.service.contentdirectory.definition.Definition;
+import org.serviio.upnp.service.contentdirectory.definition.ContainerNode;
+import org.serviio.upnp.service.contentdirectory.definition.ActionNode;
+import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -15,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 public class ContentDirectoryDefinitionParser
 {
-    private static final Logger log = LoggerFactory.getLogger!(ContentDirectoryDefinitionParser);
+    private static Logger log = LoggerFactory.getLogger!(ContentDirectoryDefinitionParser);
     private static immutable String TAG_ACTION = "action";
     private static immutable String TAG_CONTAINER = "container";
 

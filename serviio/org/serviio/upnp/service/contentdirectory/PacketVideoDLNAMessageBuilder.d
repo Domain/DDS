@@ -1,10 +1,12 @@
 module org.serviio.upnp.service.contentdirectory.PacketVideoDLNAMessageBuilder;
 
+import java.lang.String;
 import javax.xml.xpath.XPathExpressionException;
 import org.serviio.upnp.service.contentdirectory.classes.ClassProperties;
 import org.serviio.upnp.service.contentdirectory.classes.DirectoryObject;
 import org.serviio.upnp.service.contentdirectory.classes.Resource;
 import org.serviio.upnp.service.contentdirectory.classes.Resource:ResourceType;
+import org.serviio.upnp.service.contentdirectory.GenericDLNAMessageBuilder;
 import org.serviio.util.XPathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,7 @@ import org.w3c.dom.Node;
 
 public class PacketVideoDLNAMessageBuilder : GenericDLNAMessageBuilder
 {
-    private static final Logger log = LoggerFactory.getLogger!(SamsungDLNAMessageBuilder);
+    private static Logger log = LoggerFactory.getLogger!(SamsungDLNAMessageBuilder);
     private static immutable String PV_NAMESPACE_URL = "http://www.pv.com/pvns/";
 
     public this(String filter)
@@ -22,14 +24,14 @@ public class PacketVideoDLNAMessageBuilder : GenericDLNAMessageBuilder
         super(filter);
     }
 
-    protected Node storeRootNode(Document document)
+    override protected Node storeRootNode(Document document)
     {
         Element node = cast(Element)super.storeRootNode(document);
         node.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:pv", "http://www.pv.com/pvns/");
         return node;
     }
 
-    protected void storeItemFields(Node itemNode, DirectoryObject object)
+    override protected void storeItemFields(Node itemNode, DirectoryObject object)
     {
         super.storeItemFields(itemNode, object);
         if ((isResourceRequired()) && (includedFieldsContainsAnyPropertyFilterName(ClassProperties.SUBTITLES_URL))) {

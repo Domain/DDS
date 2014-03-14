@@ -1,5 +1,5 @@
 /// Generate by tools
-module freemarker.template.TemplateException;
+module freemarker.Template.TemplateException;
 
 import java.lang.exceptions;
 

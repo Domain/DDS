@@ -1,5 +1,6 @@
 module org.serviio.upnp.webserver.DeviceDescriptionRequestHandler;
 
+import java.lang.String;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -17,11 +18,12 @@ import org.serviio.renderer.RendererManager;
 import org.serviio.upnp.Device;
 import org.serviio.upnp.protocol.TemplateApplicator;
 import org.serviio.util.HttpUtils;
+import org.serviio.upnp.webserver.AbstractDescriptionRequestHandler;
 import org.slf4j.Logger;
 
 public class DeviceDescriptionRequestHandler : AbstractDescriptionRequestHandler
 {
-    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
+    override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
         String[] requestFields = getRequestPathFields(getRequestUri(request), "/deviceDescription", null);
         if (requestFields.length > 1)

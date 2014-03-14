@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.image.AbstractImagesRetrievalCommand;
 
+import java.lang;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,33 +14,32 @@ import org.serviio.upnp.service.contentdirectory.SearchCriteria;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
 import org.serviio.upnp.service.contentdirectory.command.AbstractEntityItemCommand;
 
-public abstract class AbstractImagesRetrievalCommand
-  : AbstractEntityItemCommand!(Image)
+public abstract class AbstractImagesRetrievalCommand : AbstractEntityItemCommand!(Image)
 {
-  public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
-  {
-    super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.IMAGE, idPrefix, startIndex, count, disablePresentationSettings);
-  }
-  
-  protected final Set!(ObjectClassType) getSupportedClasses()
-  {
-    return new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.IMAGE_ITEM, ObjectClassType.PHOTO ]));
-  }
-  
-  protected Image retrieveSingleEntity(Long entityId)
-  {
-    Image image = ImageService.getImage(entityId);
-    return image;
-  }
-  
-  protected String getItemTitle(Image image, bool markItem)
-  {
-    return image.getTitle();
-  }
+    public this(String contextIdentifier, ObjectType objectType, SearchCriteria searchCriteria, ObjectClassType containerClassType, ObjectClassType itemClassType, Profile rendererProfile, AccessGroup accessGroup, String idPrefix, int startIndex, int count, bool disablePresentationSettings)
+    {
+        super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.IMAGE, idPrefix, startIndex, count, disablePresentationSettings);
+    }
+
+    override protected final Set!(ObjectClassType) getSupportedClasses()
+    {
+        return new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.IMAGE_ITEM, ObjectClassType.PHOTO ]));
+    }
+
+    override protected Image retrieveSingleEntity(Long entityId)
+    {
+        Image image = ImageService.getImage(entityId);
+        return image;
+    }
+
+    override protected String getItemTitle(Image image, bool markItem)
+    {
+        return image.getTitle();
+    }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.AbstractImagesRetrievalCommand
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.upnp.service.contentdirectory.command.image.AbstractImagesRetrievalCommand
+* JD-Core Version:    0.7.0.1
+*/

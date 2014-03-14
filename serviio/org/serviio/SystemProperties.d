@@ -1,5 +1,7 @@
 module org.serviio.SystemProperties;
 
+import java.lang.String;
+
 public abstract interface SystemProperties
 {
     public static immutable String SERVIIO_HOME = "serviio.home";

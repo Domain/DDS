@@ -1,5 +1,6 @@
 module org.serviio.upnp.webserver.ServiceControlRequestHandler;
 
+import java.lang.String;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -22,12 +23,12 @@ import org.serviio.renderer.entities.Renderer;
 import org.serviio.upnp.protocol.soap.ServiceInvocationException;
 import org.serviio.upnp.protocol.soap.ServiceInvoker;
 import org.serviio.util.StringUtils;
+import org.serviio.upnp.webserver.AbstractRequestHandler;
 import org.slf4j.Logger;
 
-public class ServiceControlRequestHandler
-: AbstractRequestHandler
+public class ServiceControlRequestHandler : AbstractRequestHandler
 {
-    protected void checkMethod(HttpRequest request)
+    override protected void checkMethod(HttpRequest request)
     {
         String method = StringUtils.localeSafeToUppercase(request.getRequestLine().getMethod());
         if (!method.equals("POST")) {
@@ -35,7 +36,7 @@ public class ServiceControlRequestHandler
         }
     }
 
-    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
+    override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
         String soapAction = request.getFirstHeader("SOAPACTION").getValue();
         InetAddress clientIPAddress = getCallerIPAddress(context);

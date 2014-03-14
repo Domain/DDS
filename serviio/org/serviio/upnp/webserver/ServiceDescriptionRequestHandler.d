@@ -1,5 +1,6 @@
 module org.serviio.upnp.webserver.ServiceDescriptionRequestHandler;
 
+import java.lang.String;
 import java.io.IOException;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -9,12 +10,12 @@ import org.apache.http.protocol.HttpContext;
 import org.serviio.upnp.Device;
 import org.serviio.upnp.protocol.TemplateApplicator;
 import org.serviio.upnp.service.Service;
+import org.serviio.upnp.webserver.AbstractDescriptionRequestHandler;
 import org.slf4j.Logger;
 
-public class ServiceDescriptionRequestHandler
-: AbstractDescriptionRequestHandler
+public class ServiceDescriptionRequestHandler : AbstractDescriptionRequestHandler
 {
-    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
+    override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
         String[] requestFields = getRequestPathFields(getRequestUri(request), "/serviceDescription", null);
         String serviceShortName = requestFields[0];

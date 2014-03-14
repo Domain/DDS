@@ -1,5 +1,6 @@
 module org.serviio.util.UnicodeReader;
 
+import java.lang.String;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +10,7 @@ import java.io.Reader;
 public class UnicodeReader : Reader
 {
     private static immutable int BOM_SIZE = 4;
-    private final InputStreamReader reader;
+    private InputStreamReader reader;
 
     public this(InputStream input, String defaultEncoding)
     {
@@ -84,12 +85,12 @@ public class UnicodeReader : Reader
         return this.reader.getEncoding();
     }
 
-    public int read(char[] cbuf, int off, int len)
+    override public int read(char[] cbuf, int off, int len)
     {
         return this.reader.read(cbuf, off, len);
     }
 
-    public void close()
+    override public void close()
     {
         this.reader.close();
     }

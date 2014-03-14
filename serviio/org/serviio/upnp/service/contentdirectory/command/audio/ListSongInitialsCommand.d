@@ -19,7 +19,7 @@ public class ListSongInitialsCommand : AbstractListInitialsCommand
         super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.AUDIO, idPrefix, startIndex, count, disablePresentationSettings);
     }
 
-    protected List!(String) getListOfInitials(int startIndex, int count)
+    override protected List!(String) getListOfInitials(int startIndex, int count)
     {
         return AudioService.getListOfSongInitials(this.accessGroup, startIndex, count);
     }

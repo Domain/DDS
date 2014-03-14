@@ -1,5 +1,6 @@
 module org.serviio.upnp.service.contentdirectory.command.person.ListArtistsByNameCommand;
 
+import java.lang.String;
 import java.util.List;
 import org.serviio.library.entities.AccessGroup;
 import org.serviio.library.entities.Person;
@@ -10,6 +11,7 @@ import org.serviio.profile.Profile;
 import org.serviio.upnp.service.contentdirectory.ObjectType;
 import org.serviio.upnp.service.contentdirectory.SearchCriteria;
 import org.serviio.upnp.service.contentdirectory.classes.ObjectClassType;
+import org.serviio.upnp.service.contentdirectory.command.person.AbstractPersonsRetrievalCommand;
 
 public class ListArtistsByNameCommand : AbstractPersonsRetrievalCommand
 {
@@ -18,13 +20,13 @@ public class ListArtistsByNameCommand : AbstractPersonsRetrievalCommand
         super(objectId, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, MediaFileType.AUDIO, idPrefix, startIndex, count, disablePresentationSettings);
     }
 
-    protected List!(Person) retrieveEntityList()
+    override protected List!(Person) retrieveEntityList()
     {
         List!(Person) artists = PersonService.getListOfPersons(RoleType.ARTIST, this.startIndex, this.count);
         return artists;
     }
 
-    public int retrieveItemCount()
+    override public int retrieveItemCount()
     {
         return PersonService.getNumberOfPersons(RoleType.ARTIST);
     }

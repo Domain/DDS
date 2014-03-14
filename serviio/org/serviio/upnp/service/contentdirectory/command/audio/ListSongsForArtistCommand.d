@@ -18,7 +18,7 @@ public class ListSongsForArtistCommand : AbstractSongsRetrievalCommand
         super(contextIdentifier, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, accessGroup, idPrefix, startIndex, count, disablePresentationSettings);
     }
 
-    protected List!(MusicTrack) retrieveEntityList()
+    override protected List!(MusicTrack) retrieveEntityList()
     {
         List!(MusicTrack) songs = AudioService.getListOfSongsForArtist(new Long(getInternalObjectId()), this.accessGroup, this.startIndex, this.count);
         return songs;

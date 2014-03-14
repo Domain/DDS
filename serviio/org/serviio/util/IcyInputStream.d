@@ -1,5 +1,6 @@
 module org.serviio.util.IcyInputStream;
 
+import java.lang.String;
 import java.io.BufferedInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -9,8 +10,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class IcyInputStream
-: FilterInputStream
+public class IcyInputStream : FilterInputStream
 {
     private int metaInt = 0;
     private int bytesRead = 0;

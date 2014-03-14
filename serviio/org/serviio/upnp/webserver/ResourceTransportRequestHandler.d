@@ -1,5 +1,6 @@
 module org.serviio.upnp.webserver.ResourceTransportRequestHandler;
 
+import java.lang.String;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Map;
@@ -31,6 +32,7 @@ import org.serviio.upnp.protocol.http.transport.ResourceTransportProtocolHandler
 import org.serviio.util.CaseInsensitiveMap;
 import org.serviio.util.HttpUtils;
 import org.serviio.util.StringUtils;
+import org.serviio.upnp.webserver.AbstractRequestHandler;
 import org.slf4j.Logger;
 
 public class ResourceTransportRequestHandler : AbstractRequestHandler
@@ -38,7 +40,7 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
     private static final ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
     private ResourceTransportProtocolHandler dlnaProtocolHandler = new DLNAProtocolHandler();
 
-    protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
+    override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {
         try
         {
@@ -71,7 +73,7 @@ public class ResourceTransportRequestHandler : AbstractRequestHandler
         }
     }
 
-    protected void checkMethod(HttpRequest request)
+    override protected void checkMethod(HttpRequest request)
     {
         String method = StringUtils.localeSafeToUppercase(request.getRequestLine().getMethod());
         if ((!method.equals("GET")) && (!method.equals("HEAD"))) {

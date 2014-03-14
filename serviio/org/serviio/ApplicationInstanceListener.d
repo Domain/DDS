@@ -1,7 +1,7 @@
 module org.serviio.ApplicationInstanceListener;
 
 public interface ApplicationInstanceListener {
-    public void newInstanceCreated(boolean var1);
+    public void newInstanceCreated(bool var1);
 }
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
