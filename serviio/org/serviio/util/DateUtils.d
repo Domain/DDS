@@ -12,13 +12,15 @@ import java.util.TimeZone;
 public class DateUtils
 {
     private static DateFormat dateFormatRFC1123;
-    private static DateFormat dateFormatISO8601YYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
+    private static DateFormat dateFormatISO8601YYYYMMDD;
     private static DateFormat dateFormatHHMMSS;
 
     static this()
     {
         dateFormatRFC1123 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
         dateFormatRFC1123.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        dateFormatISO8601YYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
 
         dateFormatHHMMSS = new SimpleDateFormat("HH:mm:ss", Locale.US);
         dateFormatHHMMSS.setTimeZone(TimeZone.getTimeZone("GMT"));

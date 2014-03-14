@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 public class GenreDAOImpl : AbstractDao, GenreDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(GenreDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(GenreDAOImpl);
+    }
 
     public long create(Genre newInstance)
     {

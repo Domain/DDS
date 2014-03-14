@@ -11,7 +11,7 @@ import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 public class TranscodingConfiguration
 {
     private bool keepStreamOpen = true;
-    private Map!(MediaFileType, List!(TranscodingDefinition)) config = new HashMap();
+    private Map!(MediaFileType, List!(TranscodingDefinition)) config = new HashMap!(MediaFileType, List!(TranscodingDefinition))();
 
     public List!(TranscodingDefinition) getDefinitions(MediaFileType fileType)
     {

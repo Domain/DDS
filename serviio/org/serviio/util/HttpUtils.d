@@ -23,9 +23,16 @@ import org.apache.http.HttpResponse;
 
 public class HttpUtils
 {
-    private static final Pattern maxAgePattern = Pattern.compile("([\\d]+)");
-    private static final Pattern uriPattern = Pattern.compile("^.+?://.+");
-    private static final Pattern urlPattern = Pattern.compile("(.*)://(\\S+):(\\S+)@(.*)?");
+    private static Pattern maxAgePattern;
+    private static Pattern uriPattern;
+    private static Pattern urlPattern;
+
+    static this()
+    {
+        maxAgePattern = Pattern.compile("([\\d]+)");
+        uriPattern = Pattern.compile("^.+?://.+");
+        urlPattern = Pattern.compile("(.*)://(\\S+):(\\S+)@(.*)?");
+    }
 
     public static bool isHttpUrl(String url)
     {
@@ -70,7 +77,7 @@ public class HttpUtils
         sb.append("[");
         List!(String) headersList = new ArrayList();
         foreach (Header header ; headers) {
-            headersList.add(header.getName() + ": " + header.getValue());
+            headersList.add(header.getName() ~ ": " ~ header.getValue());
         }
         sb.append(CollectionUtils.listToCSV(headersList, ",", false));
         sb.append("]");
@@ -83,7 +90,7 @@ public class HttpUtils
         sb.append("[");
         List!(String) headersList = new ArrayList();
         foreach (Map.Entry!(String, String) header ; headers.entrySet()) {
-            headersList.add(cast(String)header.getKey() + ": " + cast(String)header.getValue());
+            headersList.add(cast(String)header.getKey() ~ ": " ~ cast(String)header.getValue());
         }
         sb.append(CollectionUtils.listToCSV(headersList, ",", false));
         sb.append("]");
@@ -147,9 +154,9 @@ public class HttpUtils
             return url.openConnection();
         }
         URLConnection uc = url.openConnection();
-        String val = credentials[0] + ":" + credentials[1];
+        String val = credentials[0] + ":" ~ credentials[1];
         byte[] base = val.getBytes();
-        String authorizationString = "Basic " + new String(Base64.encode(base));
+        String authorizationString = "Basic " ~ new String(Base64.encode(base));
         uc.setRequestProperty("Authorization", authorizationString);
         return uc;
     }
@@ -161,7 +168,7 @@ public class HttpUtils
         }
         URI uri = null;
         if (!isUri(url)) {
-            uri = new URI("http://" + url);
+            uri = new URI("http://" ~ url);
         } else {
             uri = new URI(url);
         }

@@ -9,12 +9,17 @@ import org.slf4j.LoggerFactory;
 
 public class ImageDescriptor
 {
-    private static final Logger log = LoggerFactory.getLogger!(ImageDescriptor);
+    private static Logger log;
     private byte[] imageData;
     private URL imageUrl;
     private String mimeType;
     private Integer width;
     private Integer height;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ImageDescriptor);
+    }
 
     public this(byte[] imageData, String mimeType)
     {

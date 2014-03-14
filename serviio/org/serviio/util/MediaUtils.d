@@ -6,7 +6,12 @@ import org.slf4j.LoggerFactory;
 
 public class MediaUtils
 {
-    private static Logger log = LoggerFactory.getLogger!(MediaUtils);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MediaUtils);
+    }
 
     public static Integer convertBitrateFromKbpsToByPS(Integer bitrate)
     {
@@ -23,21 +28,21 @@ public class MediaUtils
             try
             {
                 double fr = Double.parseDouble(fps);
-                if ((fr > 23.899999999999999) && (fr < 23.989999999999998)) {
+                if ((fr > 23.9) && (fr < 23.99)) {
                     validFrameRate = "23.976";
-                } else if ((fr > 23.989999999999998) && (fr < 24.100000000000001)) {
+                } else if ((fr > 23.99) && (fr < 24.1)) {
                     validFrameRate = "24";
-                } else if ((fr >= 24.989999999999998) && (fr < 25.100000000000001)) {
+                } else if ((fr >= 24.99) && (fr < 25.1)) {
                     validFrameRate = "25";
-                } else if ((fr > 29.899999999999999) && (fr < 29.989999999999998)) {
+                } else if ((fr > 29.9) && (fr < 29.99)) {
                     validFrameRate = "29.97";
-                } else if ((fr >= 29.989999999999998) && (fr < 30.100000000000001)) {
+                } else if ((fr >= 29.99) && (fr < 30.1)) {
                     validFrameRate = "30";
-                } else if ((fr > 49.899999999999999) && (fr < 50.100000000000001)) {
+                } else if ((fr > 49.9) && (fr < 50.1)) {
                     validFrameRate = "50";
-                } else if ((fr > 59.899999999999999) && (fr < 59.990000000000002)) {
+                } else if ((fr > 59.9) && (fr < 59.99)) {
                     validFrameRate = "59.94";
-                } else if ((fr >= 59.990000000000002) && (fr < 60.100000000000001)) {
+                } else if ((fr >= 59.99) && (fr < 60.1)) {
                     validFrameRate = "60";
                 } else {
                     validFrameRate = "23.976";

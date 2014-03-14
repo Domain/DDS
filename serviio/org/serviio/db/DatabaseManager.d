@@ -11,22 +11,23 @@ import org.slf4j.LoggerFactory;
 
 public class DatabaseManager
 {
-    private static Logger log = LoggerFactory.getLogger!(DatabaseManager);
+    private static Logger log;
     private static String DB_SCHEMA_URL;
+    private static DBConnectionPool pool;
+    private static enum MAX_POOL_CONNECTION = 20;
+    private static enum CONNECTION_TIMEOUT = 2000L;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(DatabaseManager);
         String systemURL = System.getProperty("dbURL");
         if (systemURL !is null) {
             DB_SCHEMA_URL = systemURL;
         } else {
             DB_SCHEMA_URL = ApplicationSettings.getStringProperty("db_schema_url");
         }
+        pool = new DBConnectionPool("Serviio DB Pool", DB_SCHEMA_URL, MAX_POOL_CONNECTION);
     }
-
-    private static DBConnectionPool pool = new DBConnectionPool("Serviio DB Pool", DB_SCHEMA_URL, 20);
-    private static immutable int MAX_POOL_CONNECTION = 20;
-    private static immutable long CONNECTION_TIMEOUT = 2000L;
 
     public static Connection getConnection()
     {
@@ -35,7 +36,7 @@ public class DatabaseManager
 
     public static Connection getConnection(bool autoCommit)
     {
-        return pool.getConnection(2000L, autoCommit);
+        return pool.getConnection(CONNECTION_TIMEOUT, autoCommit);
     }
 
     public static void releaseConnection(Connection con)
@@ -53,7 +54,7 @@ public class DatabaseManager
         }
         catch (SQLException e)
         {
-            log.debug_("DB shutdown returned: " + e.getMessage());
+            log.debug_("DB shutdown returned: " ~ e.getMessage());
         }
     }
 

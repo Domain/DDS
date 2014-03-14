@@ -5,9 +5,15 @@ import org.serviio.db.entities.PersistedEntity;
 
 public class AccessGroup : PersistedEntity
 {
-    public static Long NO_LIMIT_ACCESS_GROUP_ID = Long.valueOf(1L);
-    public static AccessGroup ANY = new AccessGroup("Any");
+    public static Long NO_LIMIT_ACCESS_GROUP_ID;
+    public static AccessGroup ANY;
     private String name;
+
+    static this()
+    {
+        NO_LIMIT_ACCESS_GROUP_ID = Long.valueOf(1L);
+        ANY = new AccessGroup("Any");
+    }
 
     public this(String name)
     {

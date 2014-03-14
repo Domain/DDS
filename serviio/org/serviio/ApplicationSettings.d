@@ -8,7 +8,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ApplicationSettings {
-    private static Properties properties = new Properties();
+    private static Properties properties;
+
+    static this()
+    {
+        properties = new Properties();
+    }
 
     public static Properties getProperties() {
         return ApplicationSettings.properties;

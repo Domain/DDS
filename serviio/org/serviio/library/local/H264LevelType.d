@@ -11,7 +11,12 @@ public enum H264LevelType
     H,  RF
 }
 
-private static EnumMapConverter!(H264LevelType) converter = new EnumMapConverter!(H264LevelType)();
+private static EnumMapConverter!(H264LevelType) converter;
+
+static this()
+{
+    converter = new EnumMapConverter!(H264LevelType)();
+}
 
 public Map!(H264LevelType, String) parseFromString(String identifiersCSV)
 {

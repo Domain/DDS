@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public class Configuration
 {
-    private static Logger log = LoggerFactory.getLogger!(Configuration);
+    private static Logger log;
     private static immutable String DATABASE_UPDATE_ID = "db_update_id";
     private static immutable String SEARCH_HIDDEN_FILES = "search_hidden_files";
     private static immutable String SEARCH_FOR_UPDATED_FILES = "search_updated_files";
@@ -63,13 +63,15 @@ public class Configuration
     private static immutable String RENDERER_ENABLED_BY_DEFAULT = "renderer_enabled_default";
     private static immutable String RENDERER_DEFAULT_ACCESS_GROUP_ID = "renderer_default_access_group_id";
     private static immutable String BROWSE_FILTER_OUT_SERIES = "browse_filter_out_series";
-    private static Map!(String, String) cache = new HashMap();
+    private static Map!(String, String) cache;
     private static ConfigStorage storage;
 
     static this()
     {
-        instantiateStorage();
+        log = LoggerFactory.getLogger!(Configuration);
+        cache = new HashMap();
 
+        instantiateStorage();
 
         Map!(String, String) currentValues = storage.readAllConfigurationValues();
         foreach (Map.Entry!(String, String) configEntry ; currentValues.entrySet()) {

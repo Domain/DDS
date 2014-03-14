@@ -42,20 +42,20 @@ public class VideoMetadata : LocalItemMetadata
     private Integer audioBitrate;
     private TransportStreamTimestamp timestampType;
     private H264Profile h264Profile;
-    private HashMap!(H264LevelType, String) h264Levels = new HashMap();
+    private HashMap!(H264LevelType, String) h264Levels = new HashMap!(H264LevelType, String)();
     private String ftyp;
     private SourceAspectRatio sar;
-    private List!(String) actors = new ArrayList();
-    private List!(String) directors = new ArrayList();
-    private List!(String) producers = new ArrayList();
+    private List!(String) actors = new ArrayList!(String)();
+    private List!(String) directors = new ArrayList!(String)();
+    private List!(String) producers = new ArrayList!(String)();
     private MPAARating mpaaRating;
     private String seriesName;
     private Integer seasonNumber;
     private ImageDescriptor seriesCoverImage;
     private Integer episodeNumber;
     private ContentType contentType;
-    private Map!(OnlineDBIdentifier, String) onlineIdentifiers = new HashMap();
-    private List!(EmbeddedSubtitles) embeddedSubtitles = new ArrayList();
+    private Map!(OnlineDBIdentifier, String) onlineIdentifiers = new HashMap!(OnlineDBIdentifier, String)();
+    private List!(EmbeddedSubtitles) embeddedSubtitles = new ArrayList!(EmbeddedSubtitles)();
 
     override public void merge(LocalItemMetadata additionalMetadata)
     {

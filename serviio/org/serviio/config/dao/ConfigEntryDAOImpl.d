@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class ConfigEntryDAOImpl : ConfigEntryDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(ConfigEntryDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ConfigEntryDAOImpl);
+    }
 
     public long create(ConfigEntry newInstance)
     {

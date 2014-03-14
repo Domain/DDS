@@ -9,7 +9,12 @@ public enum OnlineDBIdentifier
     IMDB,  TVDB,  TMDB
 }
 
-private static EnumMapConverter!(OnlineDBIdentifier) converter = EnumMapConverter!(OnlineDBIdentifier)();
+private static EnumMapConverter!(OnlineDBIdentifier) converter;
+
+static this()
+{
+    converter = EnumMapConverter!(OnlineDBIdentifier)();
+}
 
 public Map!(OnlineDBIdentifier, String) parseFromString(String identifiersCSV)
 {

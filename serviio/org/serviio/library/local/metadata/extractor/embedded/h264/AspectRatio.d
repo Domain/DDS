@@ -2,7 +2,7 @@ module org.serviio.library.local.metadata.extractor.embedded.h264.AspectRatio;
 
 public class AspectRatio
 {
-  public static final AspectRatio Extended_SAR = new AspectRatio(255);
+  public static const AspectRatio Extended_SAR = new AspectRatio(255);
   private int value;
   
   private this(int value)

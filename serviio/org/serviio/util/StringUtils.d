@@ -18,8 +18,14 @@ import java.util.regex.Pattern;
 public class StringUtils
 {
     public static immutable String UTF_8_ENCODING = "UTF-8";
-    public static String LINE_SEPARATOR = System.getProperty("line.separator");
-    private static final Pattern articlesPattern = Pattern.compile("^(the|a)(\\s|\\.(?!\\s)|_)(?!&)", 2);
+    public static String LINE_SEPARATOR;
+    private static immutable Pattern articlesPattern;
+
+    static this()
+    {
+        LINE_SEPARATOR = System.getProperty("line.separator");
+        articlesPattern = Pattern.compile("^(the|a)(\\s|\\.(?!\\s)|_)(?!&)", 2);
+    }
 
     public static String removeArticles(String value)
     {

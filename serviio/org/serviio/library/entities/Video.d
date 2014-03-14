@@ -45,11 +45,11 @@ public class Video : MediaItem
     private ContentType contentType;
     private TransportStreamTimestamp timestampType;
     private H264Profile h264Profile;
-    private Map!(H264LevelType, String) h264Levels = new HashMap();
+    private Map!(H264LevelType, String) h264Levels = new HashMap!(H264LevelType, String)();
     private String ftyp;
     private SourceAspectRatio sar;
-    private Map!(OnlineDBIdentifier, String) onlineIdentifiers = new HashMap();
-    private List!(EmbeddedSubtitles) embeddedSubtitles = new ArrayList();
+    private Map!(OnlineDBIdentifier, String) onlineIdentifiers = new HashMap!(OnlineDBIdentifier, String)();
+    private List!(EmbeddedSubtitles) embeddedSubtitles = new ArrayList!(EmbeddedSubtitles)();
 
     public this(String title, VideoContainer container, String fileName, String filePath, Long fileSize, Long folderId, Long repositoryId, Date date)
     {

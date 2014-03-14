@@ -12,12 +12,17 @@ import org.slf4j.LoggerFactory;
 
 class DBConnectionPool
 {
-    private static Logger log = LoggerFactory.getLogger!(DBConnectionPool);
+    private static Logger log;
     private int checkedOut;
-    private Vector!(Connection) freeConnections = new Vector();
+    private Vector!(Connection) freeConnections = new Vector!(Connection)();
     private int maxConn;
     private String name;
     private String URL;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DBConnectionPool);
+    }
 
     public this(String name, String URL, int maxConn)
     {

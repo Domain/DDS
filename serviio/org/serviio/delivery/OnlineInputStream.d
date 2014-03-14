@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineInputStream : InputStream
 {
-    private static immutable int DEFAULT_CHUNK_SIZE = 1512000;
-    private static Logger log = LoggerFactory.getLogger!(OnlineInputStream);
+    private static enum DEFAULT_CHUNK_SIZE = 1512000;
+    private static Logger log;
     private URL contentURL;
     private String[] credentials;
     private Long contentSize;
@@ -37,11 +37,17 @@ public class OnlineInputStream : InputStream
     bool allConsumed = false;
     bool supportsRange = true;
     private InputStream wholeStream;
-    private Client restletClient = new Client(Protocol.HTTP);
-    private int chunkSize = 1512000;
+    private Client restletClient;
+    private int chunkSize = DEFAULT_CHUNK_SIZE;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OnlineInputStream);
+    }
 
     public this(URL contentUrl, Long contentSize, bool supportsByterange)
     {
+        restletClient = new Client(Protocol.HTTP);
         this.contentURL = contentUrl;
         this.contentSize = contentSize;
         this.credentials = HttpUtils.getCredentialsFormUrl(contentUrl.toString());

@@ -18,7 +18,12 @@ import org.slf4j.LoggerFactory;
 
 public class AccessGroupDAOImpl : AccessGroupDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(AccessGroupDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AccessGroupDAOImpl);
+    }
 
     public long create(AccessGroup newInstance)
     {

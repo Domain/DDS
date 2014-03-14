@@ -24,7 +24,12 @@ import org.serviio.util.Tupple;
 
 public class MultiCastUtils
 {
-    private static Logger log = LoggerFactory.getLogger!(MultiCastUtils);
+    private static Logger log;
+    
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MultiCastUtils);
+    }
 
     public static MulticastSocket startMultiCastSocketForListening(InetSocketAddress group, NetworkInterface networkInterface, int ttl)
     {

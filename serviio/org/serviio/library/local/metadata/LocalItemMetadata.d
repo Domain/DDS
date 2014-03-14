@@ -13,7 +13,7 @@ public abstract class LocalItemMetadata : ItemMetadata
 {
     protected long fileSize;
     protected String filePath;
-    protected List!(MetadataFile) metadataFiles = new ArrayList();
+    protected List!(MetadataFile) metadataFiles = new ArrayList!(MetadataFile)();
     private ImageDescriptor coverImage;
 
     public void merge(LocalItemMetadata additionalMetadata)

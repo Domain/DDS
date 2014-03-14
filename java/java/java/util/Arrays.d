@@ -65,7 +65,7 @@ class Arrays {
         }
         tango.core.Array.sort( a, &isLess );
     }
-    static List!T    asList(T)(T[] a) {
+    static List!T    asList(T)(T[] a...) {
         //static if( is(T==String)){
         //    if( a.length is 0 ) return Collections.EMPTY_LIST;
         //    ArrayList res = new ArrayList( a.length );

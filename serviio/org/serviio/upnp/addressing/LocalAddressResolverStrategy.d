@@ -7,7 +7,7 @@
 */
 module org.serviio.upnp.addressing.LocalAddressResolverStrategy;
 
-import java.lang.String;
+import java.lang;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -29,9 +29,15 @@ import org.slf4j.LoggerFactory;
 
 public class LocalAddressResolverStrategy {
     private static immutable String BOUND_ADDRESS = System.getProperty("serviio.boundAddr");
-    private static immutable List!String INVALID_NIC_NAMES = Arrays.asList("vnic", "wmnet", "vmware", "bluetooth", "virtual");
-    private static Logger log = LoggerFactory.getLogger(cast(Class)LocalAddressResolverStrategy.class_);
+    private static List!String INVALID_NIC_NAMES;
+    private static Logger log;
     private static IPMask invalidIPMask;
+
+    static this()
+    {
+        INVALID_NIC_NAMES = Arrays.asList!String("vnic", "wmnet", "vmware", "bluetooth", "virtual");
+        log = LoggerFactory.getLogger(cast(Class)LocalAddressResolverStrategy.class_);
+    }
 
     public InetAddress getHostIpAddress() {
         String boundNICName;

@@ -14,9 +14,14 @@ import org.slf4j.LoggerFactory;
 
 public class UniversalHttpServerConnection : DefaultHttpServerConnection
 {
-    private static Logger log = LoggerFactory.getLogger!(UniversalHttpServerConnection);
+    private static Logger log;
     private String connectionId;
     private HttpEntity streamedEntity;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(UniversalHttpServerConnection);
+    }
 
     public this(String connectionId)
     {

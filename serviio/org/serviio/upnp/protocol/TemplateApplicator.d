@@ -14,11 +14,13 @@ import org.slf4j.LoggerFactory;
 
 public class TemplateApplicator
 {
-    private static Logger log = LoggerFactory.getLogger!(TemplateApplicator);
-    private static Configuration cfg = new Configuration();
+    private static Logger log;
+    private static Configuration cfg;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(TemplateApplicator);
+        cfg = new Configuration();
         try
         {
             cfg.setClassForTemplateLoading(TemplateApplicator.class_, "/");

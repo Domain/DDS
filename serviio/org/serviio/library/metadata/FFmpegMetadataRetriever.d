@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 
 public class FFmpegMetadataRetriever
 {
-    private static Logger log = LoggerFactory.getLogger!(FFmpegMetadataRetriever);
-    private static immutable Pattern streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})(\\((\\w+)\\))?");
+    private static Logger log;
+    private static immutable Pattern streamIndexPattern;
     private static immutable String CONTAINER = "container";
     private static immutable String DURATION = "duration";
     private static immutable String BITRATE = "bitrate";
@@ -56,10 +56,13 @@ public class FFmpegMetadataRetriever
     private static immutable String SAR = "sar";
     private static immutable String EMBEDDED_SUBTITLES = "embedded_subtitles";
     private static immutable String TOKEN_STREAM = "Stream";
-    private static Map!(String, Integer) maxDpbMbs = new LinkedHashMap();
+    private static Map!(String, Integer) maxDpbMbs;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(FFmpegMetadataRetriever);
+        streamIndexPattern = Pattern.compile("#[\\d][\\.:]([\\d]{1,2})(\\((\\w+)\\))?");
+        maxDpbMbs = new LinkedHashMap!(String, Integer)();
         prepareMaxDpbMbs();
     }
 

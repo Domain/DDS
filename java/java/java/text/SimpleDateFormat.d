@@ -8,4 +8,9 @@ public class SimpleDateFormat
 	{
 		implMissing();
 	}
+
+    public this(String strDate)
+	{
+		implMissing();
+	}
 }

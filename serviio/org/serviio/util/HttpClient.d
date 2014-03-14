@@ -13,9 +13,14 @@ import org.slf4j.LoggerFactory;
 
 public class HttpClient
 {
-    private static Logger log = LoggerFactory.getLogger!(HttpClient);
-    private static immutable int CONNECT_TIMEOUT = 20000;
-    private static immutable int READ_TIMEOUT = 30000;
+    private static Logger log;
+    private static enum CONNECT_TIMEOUT = 20000;
+    private static enum READ_TIMEOUT = 30000;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(HttpClient);
+    }
 
     public static String retrieveTextFileFromURL(String url, String encoding)
     {
@@ -87,8 +92,8 @@ public class HttpClient
     {
         URL fileURL = new URL(url);
         URLConnection connection = HttpUtils.getUrlConnection(fileURL, HttpUtils.getCredentialsFormUrl(url));
-        connection.setConnectTimeout(20000);
-        connection.setReadTimeout(30000);
+        connection.setConnectTimeout(CONNECT_TIMEOUT);
+        connection.setReadTimeout(READ_TIMEOUT);
         if (ObjectValidator.isNotEmpty(userAgent)) {
             connection.setRequestProperty("User-Agent", userAgent);
         }

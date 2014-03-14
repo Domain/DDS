@@ -12,7 +12,12 @@ public class ServiioLicense
     private String id;
     private String ver;
     private Long remainingMillis;
-    public static immutable ServiioLicense FREE_LICENSE = new ServiioLicense(null, ServiioEdition.FREE, null, null, null, null, null);
+    public static immutable ServiioLicense FREE_LICENSE;
+
+    static this()
+    {
+        FREE_LICENSE = new ServiioLicense(null, ServiioEdition.FREE, null, null, null, null, null);
+    }
 
     public this(String id, ServiioEdition edition, ServiioLicenseType type, String name, String email, String ver, Long remainingMillis)
     {

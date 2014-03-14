@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
 
 public class EventDispatcher : Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(EventDispatcher);
-    private static immutable int RESPONSE_TIMEOUT = 500;
-    private static Map!(Service, Queue!(EventContainer)) eventQueues = new HashMap();
+    private static Logger log;
+    private static enum RESPONSE_TIMEOUT = 500;
+    private static Map!(Service, Queue!(EventContainer)) eventQueues;
     private bool workerRunning;
 
     public this()
@@ -42,6 +42,8 @@ public class EventDispatcher : Runnable
 
     static this()
     {
+        log = LoggerFactory.getLogger!(EventDispatcher);
+        eventQueues = new HashMap();
         foreach (Service service ; Device.getInstance().getServices()) {
             eventQueues.put(service, new ConcurrentLinkedQueue());
         }
@@ -97,7 +99,7 @@ public class EventDispatcher : Runnable
                 }
             }
             Set!(EventContainer) events;
-            ThreadUtils.currentThreadSleep(500L);
+            ThreadUtils.currentThreadSleep(RESPONSE_TIMEOUT);
         }
         log.info("Leaving EventDispatcher");
     }

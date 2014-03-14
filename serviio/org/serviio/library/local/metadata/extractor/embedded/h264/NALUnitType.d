@@ -4,20 +4,20 @@ import java.lang.String;
 
 public class NALUnitType
 {
-    public static immutable NALUnitType NON_IDR_SLICE = new NALUnitType(1, "non IDR slice");
-    public static immutable NALUnitType SLICE_PART_A = new NALUnitType(2, "slice part a");
-    public static immutable NALUnitType SLICE_PART_B = new NALUnitType(3, "slice part b");
-    public static immutable NALUnitType SLICE_PART_C = new NALUnitType(4, "slice part c");
-    public static immutable NALUnitType IDR_SLICE = new NALUnitType(5, "idr slice");
-    public static immutable NALUnitType SEI = new NALUnitType(6, "sei");
-    public static immutable NALUnitType SPS = new NALUnitType(7, "sequence parameter set");
-    public static immutable NALUnitType PPS = new NALUnitType(8, "picture parameter set");
-    public static immutable NALUnitType ACC_UNIT_DELIM = new NALUnitType(9, "access unit delimiter");
-    public static immutable NALUnitType END_OF_SEQ = new NALUnitType(10, "end of sequence");
-    public static immutable NALUnitType END_OF_STREAM = new NALUnitType(11, "end of stream");
-    public static immutable NALUnitType FILTER_DATA = new NALUnitType(12, "filter data");
-    public static immutable NALUnitType SEQ_PAR_SET_EXT = new NALUnitType(13, "sequence parameter set extension");
-    public static immutable NALUnitType AUX_SLICE = new NALUnitType(19, "auxilary slice");
+    public static const NALUnitType NON_IDR_SLICE = new NALUnitType(1, "non IDR slice");
+    public static const NALUnitType SLICE_PART_A = new NALUnitType(2, "slice part a");
+    public static const NALUnitType SLICE_PART_B = new NALUnitType(3, "slice part b");
+    public static const NALUnitType SLICE_PART_C = new NALUnitType(4, "slice part c");
+    public static const NALUnitType IDR_SLICE = new NALUnitType(5, "idr slice");
+    public static const NALUnitType SEI = new NALUnitType(6, "sei");
+    public static const NALUnitType SPS = new NALUnitType(7, "sequence parameter set");
+    public static const NALUnitType PPS = new NALUnitType(8, "picture parameter set");
+    public static const NALUnitType ACC_UNIT_DELIM = new NALUnitType(9, "access unit delimiter");
+    public static const NALUnitType END_OF_SEQ = new NALUnitType(10, "end of sequence");
+    public static const NALUnitType END_OF_STREAM = new NALUnitType(11, "end of stream");
+    public static const NALUnitType FILTER_DATA = new NALUnitType(12, "filter data");
+    public static const NALUnitType SEQ_PAR_SET_EXT = new NALUnitType(13, "sequence parameter set extension");
+    public static const NALUnitType AUX_SLICE = new NALUnitType(19, "auxilary slice");
     private immutable int value;
     private immutable String name;
 

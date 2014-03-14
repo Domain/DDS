@@ -33,15 +33,16 @@ class HashMap(K, V) : Map!(K, V) {
     // The HashMap  class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.
     version(Tango){
         alias tango.util.container.HashMap.HashMap!(ObjRef!K,ObjRef!V) MapType;
-        private MapType map;
     } else { // Phobos
+        alias V[K] MapType;
     }
+    
+    private MapType map;
 
     public this(){
         version(Tango){
             map = new MapType();
         } else { // Phobos
-            implMissingInPhobos();
         }
     }
     public this(int initialCapacity){

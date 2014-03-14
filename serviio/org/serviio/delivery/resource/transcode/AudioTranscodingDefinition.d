@@ -11,7 +11,7 @@ import org.serviio.delivery.resource.transcode.TranscodingConfiguration;
 public class AudioTranscodingDefinition : AbstractTranscodingDefinition
 {
     private AudioContainer targetContainer;
-    private List!(AudioTranscodingMatch) matches = new ArrayList();
+    private List!(AudioTranscodingMatch) matches = new ArrayList!(AudioTranscodingMatch)();
 
     public this(TranscodingConfiguration parentConfig, AudioContainer targetContainer, Integer audioBitrate, Integer audioSamplerate, bool forceInheritance)
     {

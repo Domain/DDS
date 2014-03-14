@@ -8,7 +8,7 @@ import org.serviio.dlna.VideoContainer;
 public class SubtitlesConfiguration
 {
     private String softSubsMimeType;
-    private List!(VideoContainer) hardSubsRequiredFor = new ArrayList();
+    private List!(VideoContainer) hardSubsRequiredFor = new ArrayList!(VideoContainer)();
     private bool hardSubsSupported = true;
 
     public this(String softSubsMimeType, List!(VideoContainer) hardSubsRequiredFor, bool hardSubsSupported)

@@ -19,17 +19,17 @@ public static enum ServiioLicenseType
 
 public class LicensingManager
 {
-    private static immutable int LICENSE_UPDATER_INTERVAL_SEC = 3600;
-    private static LicensingManager instance;
-    private ServiioLicense license;
-
-    private LicenseValidator validator = new LicenseValidator();
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    //private static immutable int LICENSE_UPDATER_INTERVAL_SEC = 3600;
+    //private static LicensingManager instance;
+    //private ServiioLicense license;
+    //
+    //private LicenseValidator validator = new LicenseValidator();
+    //private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private this()
     {
-        updateLicense();
-        startCheckingThread();
+        //updateLicense();
+        //startCheckingThread();
     }
 
     public static LicensingManager getInstance()
@@ -42,8 +42,9 @@ public class LicensingManager
 
     public ServiioLicense validateLicense(String licenseBody)
     {
-        ServiioLicense license = this.validator.validateProvidedLicense(licenseBody);
-        return license;
+        //ServiioLicense license = this.validator.validateProvidedLicense(licenseBody);
+        //return license;
+        return ServiioLicense.FREE_LICENSE;
     }
 
     public synchronized void updateLicense()
@@ -53,24 +54,25 @@ public class LicensingManager
 
     public bool isProVersion()
     {
-        return this.license.getEdition() == ServiioEdition.PRO;
+        return true;//this.license.getEdition() == ServiioEdition.PRO;
     }
 
     public ServiioLicense getLicense()
     {
-        return this.license;
+        //return this.license;
+        return ServiioLicense.FREE_LICENSE;
     }
 
-    private void startCheckingThread()
-    {
-        Runnable checker = new class() Runnable {
-            public void run()
-            {
-                this.outer.updateLicense();
-            }
-        };
-        this.scheduler.scheduleAtFixedRate(checker, 3600L, 3600L, TimeUnit.SECONDS);
-    }
+    //private void startCheckingThread()
+    //{
+    //    Runnable checker = new class() Runnable {
+    //        public void run()
+    //        {
+    //            this.outer.updateLicense();
+    //        }
+    //    };
+    //    this.scheduler.scheduleAtFixedRate(checker, 3600L, 3600L, TimeUnit.SECONDS);
+    //}
 }
 
 

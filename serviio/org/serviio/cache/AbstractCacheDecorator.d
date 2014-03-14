@@ -10,9 +10,14 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractCacheDecorator : CacheDecorator
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
     protected JCS cache;
     protected String regionName;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AbstractCacheDecorator);
+    }
 
     public this(String regionName)
     {

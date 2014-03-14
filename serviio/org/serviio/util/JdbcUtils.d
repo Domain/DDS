@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class JdbcUtils
 {
-    private static Logger log = LoggerFactory.getLogger!(JdbcUtils);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(JdbcUtils);
+    }
 
     public static void executeBatchStatement(String sqlFile)
     {
