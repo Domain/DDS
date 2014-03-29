@@ -166,7 +166,15 @@ class System {
         /* else get values for global system keys (environment) */
         } else {
             switch( key ){
-                case "os.name": return "linux";
+                case "os.name": 
+                    version(Windows)
+                        return "Windows";
+                    version(OSX)
+                        return "Mac";
+                    version(linux)
+                        return "Linux";
+                    return "Unknown";
+
                 case "user.name": return "";
                 case "user.home": return "";
                 case "user.dir" : return "";
