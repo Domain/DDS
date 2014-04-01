@@ -1,6 +1,7 @@
 module org.serviio.util.Platform;
 
 import java.lang.String;
+import java.lang.System;
 
 public class Platform
 {

@@ -14,10 +14,10 @@ public class PipedOutputBytesReader : OutputReader
     private static Logger log;
     private PipedOutputStream outputStream;
 
-	static this()
-	{
-		log = LoggerFactory.getLogger!(PipedOutputBytesReader);
-	}
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PipedOutputBytesReader);
+    }
 
     public this(InputStream inputStream)
     {

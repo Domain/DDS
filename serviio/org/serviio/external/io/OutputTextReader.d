@@ -23,10 +23,10 @@ public class OutputTextReader : OutputReader
     private Object linesLock;
     private ProcessExecutor executor;
 
-	static this()
-	{
-		log = LoggerFactory.getLogger!(OutputTextReader);
-	}
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OutputTextReader);
+    }
 
     public this(ProcessExecutor executor, InputStream inputStream)
     {
