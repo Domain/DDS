@@ -6,7 +6,12 @@ import org.serviio.external.ProcessExecutor;
 
 public abstract class AbstractExecutableWrapper
 {
-    private static Logger log = LoggerFactory.getLogger!(AbstractExecutableWrapper);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AbstractExecutableWrapper);
+    }
 
     protected static void executeSynchronously(ProcessExecutor executor)
     {

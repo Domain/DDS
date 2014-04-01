@@ -7,7 +7,12 @@ import java.util.Random;
 
 public class NumberUtils
 {
-    public static Random randomGenerator = new Random();
+    public static Random randomGenerator;
+
+    static this()
+    {
+        randomGenerator = new Random();
+    }
 
     public static int getRandomInInterval(int start, int end)
     {

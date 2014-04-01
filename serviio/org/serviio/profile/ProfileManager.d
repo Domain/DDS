@@ -23,11 +23,17 @@ import org.slf4j.LoggerFactory;
 
 public class ProfileManager
 {
-    private static List!(Profile) profiles = new ArrayList();
+    private static List!(Profile) profiles;
     public static immutable String DEFAULT_PROFILE_ID = "1";
     private static immutable String PROFILES_XML_PATH = "/profiles.xml";
     private static immutable String APP_PROFILES_XML_PATH = "/application-profiles.xml";
-    private static final Logger log = LoggerFactory.getLogger!(ProfileManager);
+    private static Logger log;
+
+    static this()
+    {
+        profiles = new ArrayList!(Profile)();
+        log = LoggerFactory.getLogger!(ProfileManager);
+    }
 
     public static Profile getProfile(InetAddress clientIPAddress)
     {

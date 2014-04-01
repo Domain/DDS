@@ -6,7 +6,12 @@ import java.util.concurrent.Executors;
 
 public class ThreadExecutor
 {
-    private static ExecutorService executor = Executors.newFixedThreadPool(10);
+    private static ExecutorService executor;
+
+    static this()
+    {
+        executor = Executors.newFixedThreadPool(10);
+    }
 
     public static void execute(Runnable r)
     {

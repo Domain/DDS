@@ -19,8 +19,13 @@ import org.slf4j.LoggerFactory;
 
 public abstract class ContainerNode : DefinitionNode
 {
-    private static Logger log = LoggerFactory.getLogger!(ContainerNode);
+    private static Logger log;
     protected List!(DefinitionNode) childNodes = new ArrayList!DefinitionNode();
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ContainerNode);
+    }
 
     public this(ObjectClassType objectClass, DefinitionNode parent, String cacheRegion)
     {

@@ -7,10 +7,15 @@ import org.serviio.util.Tupple;
 
 public class ImageResolutions
 {
-    private static Pattern pattern = Pattern.compile("^(\\d+)x(\\d+)$", 2);
+    private static Pattern pattern;
     private Tupple!(Integer, Integer) large;
     private Tupple!(Integer, Integer) medium;
     private Tupple!(Integer, Integer) small;
+
+    static this()
+    {
+        pattern = Pattern.compile("^(\\d+)x(\\d+)$", 2);
+    }
 
     public this(String large, String medium, String small)
     {

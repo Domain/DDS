@@ -41,10 +41,17 @@ import org.slf4j.LoggerFactory;
 
 public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image)
 {
-    private static Logger log = LoggerFactory.getLogger!(ImageDeliveryEngine);
-    private static List!(MediaFormatProfile) JPEG_PROFILES = Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.JPEG_LRG, MediaFormatProfile.JPEG_MED, MediaFormatProfile.JPEG_SM ]);
-    private static TranscodingCache transcodingCache = new TranscodingCache();
+    private static Logger log;
+    private static List!(MediaFormatProfile) JPEG_PROFILES;
+    private static TranscodingCache transcodingCache;
     private static ImageDeliveryEngine instance;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ImageDeliveryEngine);
+        JPEG_PROFILES = Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.JPEG_LRG, MediaFormatProfile.JPEG_MED, MediaFormatProfile.JPEG_SM ]);
+        transcodingCache = new TranscodingCache();
+    }
 
     public static ImageDeliveryEngine getInstance()
     {

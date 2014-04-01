@@ -8,7 +8,7 @@ import org.serviio.delivery.resource.transcode.TranscodingConfiguration;
 
 public class ImageTranscodingDefinition : AbstractTranscodingDefinition
 {
-    private List!(ImageTranscodingMatch) matches = new ArrayList();
+    private List!(ImageTranscodingMatch) matches = new ArrayList!(ImageTranscodingMatch)();
 
     public this(TranscodingConfiguration parentConfig, bool forceInheritance)
     {

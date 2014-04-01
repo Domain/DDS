@@ -18,7 +18,12 @@ import org.xml.sax.InputSource;
 
 public class XPathUtil
 {
-    private static XPathFactory factory = XPathFactory.newInstance();
+    private static XPathFactory factory;
+
+    static this()
+    {
+        factory = XPathFactory.newInstance();
+    }
 
     public static synchronized Node getRootNode(InputStream xmlDocument)
     {

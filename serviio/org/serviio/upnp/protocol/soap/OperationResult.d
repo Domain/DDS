@@ -7,10 +7,13 @@ import org.serviio.upnp.protocol.soap.InvocationError;
 
 public class OperationResult
 {
-    private Map!(String, Object) outputParameters = new LinkedHashMap();
+    private Map!(String, Object) outputParameters;
     private InvocationError error;
 
-    public this() {}
+    public this() 
+    {
+        outputParameters = new LinkedHashMap!(String, Object)();
+    }
 
     public this(InvocationError error)
     {

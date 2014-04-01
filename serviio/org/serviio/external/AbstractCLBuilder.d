@@ -1,6 +1,7 @@
 module org.serviio.external.AbstractCLBuilder;
 
 import java.lang.String;
+import java.lang.System;
 import java.io.File;
 import org.serviio.ApplicationSettings;
 import org.serviio.util.ObjectValidator;
@@ -19,7 +20,7 @@ public abstract class AbstractCLBuilder
             if (System.getProperty("serviio.home") is null) {
                 return ApplicationSettings.getStringProperty(builtInPropertyName);
             }
-            return System.getProperty("serviio.home") + File.separator + ApplicationSettings.getStringProperty(builtInPropertyName);
+            return System.getProperty("serviio.home") ~ File.separator ~ ApplicationSettings.getStringProperty(builtInPropertyName);
         }
         return System.getProperty(systemPropertyName);
     }

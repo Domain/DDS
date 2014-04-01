@@ -44,13 +44,18 @@ public enum SearchCategory
 
 public class SearchIndexer
 {
-    private static Logger log = LoggerFactory.getLogger!(SearchIndexer);
+    private static Logger log;
     private bool inMemory;
     private immutable FieldType indexedTokenizedStored;
     private immutable FieldType storedNotIndexed;
     private immutable FieldType storedIndexed;
     private immutable IndexWriter writer;
     private immutable Directory directory;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(SearchIndexer);
+    }
 
     public this(bool inMemory)
     {

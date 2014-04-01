@@ -10,27 +10,32 @@ import org.slf4j.LoggerFactory;
 
 public class ImageMetadataRetriever
 {
-  private static final Logger log = LoggerFactory.getLogger!(ImageMetadataRetriever);
-  
-  public static void retrieveImageMetadata(ImageMetadata md, String imageLocation, bool local)
-  {
-    try
+    private static Logger log;
+
+    static this()
     {
-      SanselanMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
+        log = LoggerFactory.getLogger!(ImageMetadataRetriever);
     }
-    catch (InvalidMediaFormatException e)
+
+    public static void retrieveImageMetadata(ImageMetadata md, String imageLocation, bool local)
     {
-      if (DCRawWrapper.dcrawPresent())
-      {
-        log.debug_("Unknown image format, trying raw format");
-        DCRawMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
-      }
+        try
+        {
+            SanselanMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
+        }
+        catch (InvalidMediaFormatException e)
+        {
+            if (DCRawWrapper.dcrawPresent())
+            {
+                log.debug_("Unknown image format, trying raw format");
+                DCRawMetadataRetriever.retrieveImageMetadata(md, imageLocation, local);
+            }
+        }
     }
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.metadata.ImageMetadataRetriever
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.metadata.ImageMetadataRetriever
+* JD-Core Version:    0.7.0.1
+*/

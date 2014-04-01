@@ -43,8 +43,13 @@ import org.slf4j.LoggerFactory;
 
 public class EmbeddedMetadataExtractor : MetadataExtractor
 {
-    private static Logger log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+    private static Logger log;
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+    }
 
     override public ExtractorType getExtractorType()
     {

@@ -13,7 +13,7 @@ public abstract class DirectoryObject
     protected String parentID;
     protected String title;
     protected String creator;
-    protected List!(Resource) resources = new ArrayList();
+    protected List!(Resource) resources = new ArrayList!(Resource)();
     protected bool restricted = true;
     protected String writeStatus = "NOT_WRITABLE";
     protected Resource icon;

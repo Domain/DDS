@@ -11,7 +11,12 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessUtils
 {
-    private static Logger log = LoggerFactory.getLogger!(ProcessUtils);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ProcessUtils);
+    }
 
     public static void destroy(Process p)
     {

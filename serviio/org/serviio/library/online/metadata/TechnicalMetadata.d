@@ -31,7 +31,7 @@ public class TechnicalMetadata : Serializable, Cloneable
     private Integer audioBitrate;
     private String ftyp;
     private H264Profile h264Profile;
-    private HashMap!(H264LevelType, String) h264Levels = new HashMap();
+    private HashMap!(H264LevelType, String) h264Levels = new HashMap!(H264LevelType, String)();
     private SourceAspectRatio sar;
     private Long fileSize;
     private Integer width;

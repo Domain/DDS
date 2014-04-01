@@ -10,7 +10,7 @@ import org.serviio.library.metadata.MediaFileType;
 public class ServiioUri
 {
     public static immutable String SCHEMA = "serviio";
-    private static Pattern linkPattern = Pattern.compile("serviio://(\\w+):(\\w+)/?\\?(.+)", 2);
+    private static Pattern linkPattern;
     private static immutable String PARAM_URL = "url";
     private static immutable String PARAM_THURL = "thUrl";
     private static immutable String PARAM_NAME = "name";
@@ -25,6 +25,11 @@ public class ServiioUri
     private OnlineRepositoryType repoType;
     private String thumbnailUrl;
     private String repositoryName;
+
+    static this()
+    {
+        linkPattern = Pattern.compile("serviio://(\\w+):(\\w+)/?\\?(.+)", 2);
+    }
 
     public this(MediaFileType _fileType, OnlineRepositoryType repoType, String repositoryUrl, String thumbnailUrl, String repositoryName)
     {

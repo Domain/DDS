@@ -11,7 +11,7 @@ public enum DetectionType
 
 public class DetectionDefinition
 {
-    private Map!(String, String) fieldValues = new HashMap();
+    private Map!(String, String) fieldValues = new HashMap!(String, String)();
     private DetectionType type;
 
     public this(DetectionType type)

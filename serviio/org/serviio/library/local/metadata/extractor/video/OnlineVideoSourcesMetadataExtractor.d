@@ -22,7 +22,12 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineVideoSourcesMetadataExtractor : MetadataExtractor
 {
-    private static Logger log = LoggerFactory.getLogger!(OnlineVideoSourcesMetadataExtractor);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OnlineVideoSourcesMetadataExtractor);
+    }
 
     override public ExtractorType getExtractorType()
     {

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessExecutor : Thread
 {
-    private static Logger log = LoggerFactory.getLogger!(ProcessExecutor);
+    private static Logger log;
     private static immutable int OUTPUT_STREAM_TIMEOUT = 5000;
     private ProcessExecutorParameter[] commandArguments;
     private bool destroyed = false;
@@ -39,7 +39,12 @@ public class ProcessExecutor : Thread
     private bool success = true;
     private bool unlimitedPipe = false;
     private bool useStdOutForTextOutput = false;
-    private Set!(ProcessListener) listeners = new HashSet();
+    private Set!(ProcessListener) listeners = new HashSet!(ProcessListener)();
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ProcessExecutor);
+    }
 
     public this(ProcessExecutorParameter[] commandArguments)
     {

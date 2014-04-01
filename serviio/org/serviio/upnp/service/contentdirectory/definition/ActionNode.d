@@ -20,11 +20,16 @@ import org.slf4j.LoggerFactory;
 
 public class ActionNode : ContainerNode
 {
-    private static final Logger log = LoggerFactory.getLogger!(ActionNode);
+    private static Logger log;
     private String commandClass;
     private String idPrefix;
     private bool recursive;
     private List!(SearchCategory) searchCategories;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ActionNode);
+    }
 
     public this(String commandClassName, String idPrefix, ObjectClassType containerClass, ObjectClassType itemClass, DefinitionNode parent, String cacheRegion, bool recursive, List!(SearchCategory) searchCategories)
     {

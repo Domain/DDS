@@ -11,8 +11,13 @@ import org.serviio.util.ObjectValidator;
 
 public class SearchCriteria
 {
-    private static Pattern parserPattern = Pattern.compile("\\(?([\\w:]+)\\s*=\\s*(?<!\\\\)\"(.*?)(?<!\\\\)\"\\)?");
-    private Map!(ClassProperties, String) crit = new HashMap();
+    private static Pattern parserPattern;
+    private Map!(ClassProperties, String) crit = new HashMap!(ClassProperties, String)();
+
+    static this()
+    {
+        parserPattern = Pattern.compile("\\(?([\\w:]+)\\s*=\\s*(?<!\\\\)\"(.*?)(?<!\\\\)\"\\)?");
+    }
 
     public static SearchCriteria parse(String criteria)
     {

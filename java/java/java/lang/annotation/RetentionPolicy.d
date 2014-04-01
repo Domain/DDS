@@ -5,6 +5,10 @@ import java.lang.exceptions;
 
 public class RetentionPolicy
 {
+    struct RUNTIME
+    {
+    }
+
     public this()
     {
         implMissing();

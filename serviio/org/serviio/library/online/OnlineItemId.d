@@ -5,10 +5,15 @@ import org.serviio.util.NumberUtils;
 
 public class OnlineItemId
 {
-    private static Long FEED_ITEM_ID_PREFIX = new Long(100000L);
+    private static Long FEED_ITEM_ID_PREFIX;
     private long repositoryId;
     private int sequence;
     private int salt;
+
+    static this()
+    {
+        FEED_ITEM_ID_PREFIX = new Long(100000L);
+    }
 
     public this(long repoId, int sequence)
     {

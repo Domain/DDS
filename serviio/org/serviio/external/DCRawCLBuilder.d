@@ -10,8 +10,13 @@ import org.serviio.external.ProcessExecutorParameter;
 public class DCRawCLBuilder : AbstractCLBuilder
 {
     private ProcessExecutorParameter file;
-    private List!(ProcessExecutorParameter) fileOptions = new ArrayList();
-    static String executablePath = setupExecutablePath("dcraw.location", "dcraw_executable");
+    private List!(ProcessExecutorParameter) fileOptions = new ArrayList!(ProcessExecutorParameter)();
+    static String executablePath;
+
+    static this()
+    {
+        executablePath = setupExecutablePath("dcraw.location", "dcraw_executable");
+    }
 
     override public ProcessExecutorParameter[] build()
     {

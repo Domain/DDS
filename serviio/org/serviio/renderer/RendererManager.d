@@ -38,15 +38,22 @@ public class RendererManager
     private static RendererManager instance;
     private static Logger log;
     private static UPnPDeviceNamespaceContext nsContext;
-    private Map!(String, ActiveRenderer) activeRenderers = Collections.synchronizedMap(new HashMap());
+    private Map!(String, ActiveRenderer) activeRenderers;
     private RendererExpirationChecker expirationChecker;
-    private RendererSearchSender searchSender = new RendererSearchSender(4, 3);
-    private RendererDAO rendererDao = DAOFactory.getRendererDAO();
+    private RendererSearchSender searchSender;
+    private RendererDAO rendererDao;
 
     static this()
     {
         log = LoggerFactory.getLogger!(RendererManager);
         nsContext = new UPnPDeviceNamespaceContext(null);
+    }
+
+    public this()
+    {
+        activeRenderers = Collections.synchronizedMap(new HashMap!(String, ActiveRenderer)());
+        searchSender = new RendererSearchSender(4, 3);
+        rendererDao = DAOFactory.getRendererDAO();
     }
 
     public static synchronized RendererManager getInstance()
@@ -107,7 +114,6 @@ public class RendererManager
             log.debug_(String.format("Looking for a renderer profile for Http headers: %s", cast(Object[])[ HttpUtils.headersToString(httpHeaders) ]));
             Profile profileByDescription = ProfileManager.findProfileByHeader(httpHeaders);
 
-
             Renderer renderer = new Renderer(UUID.randomUUID().toString(), ipAddress, null, null, true, false, Configuration.isRendererEnabledByDefault(), Configuration.getRendererDefaultAccessGroupId());
             if (profileByDescription !is null)
             {
@@ -126,8 +132,6 @@ public class RendererManager
             else if ((profileByDescription !is null) && (!existingRenderer.isForcedProfile()) && (!existingRenderer.getProfileId().equalsIgnoreCase(renderer.getProfileId())))
             {
                 log.debug_(String.format("Updating renderer on IP %s (forced: %s, profile: %s) with profile %s", cast(Object[])[ ipAddress, Boolean.valueOf(existingRenderer.isForcedProfile()), existingRenderer.getProfileId(), renderer.getProfileId() ]));
-
-
 
                 removeRendererWithIPAddress(ipAddress);
 

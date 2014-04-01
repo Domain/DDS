@@ -12,7 +12,12 @@ import org.serviio.upnp.discovery.Multicaster;
 
 public abstract class AbstractSSDPMessageListener : Multicaster
 {
-    private static final Pattern usnPattern = Pattern.compile("uuid:(.+)::urn:.+", 2);
+    private static final Pattern usnPattern;
+
+    static this()
+    {
+        usnPattern = Pattern.compile("uuid:(.+)::urn:.+", 2);
+    }
 
     protected String getDeviceUuidFromUSN(String usn)
     {

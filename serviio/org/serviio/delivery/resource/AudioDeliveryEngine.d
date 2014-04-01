@@ -27,7 +27,12 @@ import org.slf4j.LoggerFactory;
 public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMediaInfo, MusicTrack)
 {
     private static AudioDeliveryEngine instance;
-    private static final Logger log = LoggerFactory.getLogger!(AudioDeliveryEngine);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(AudioDeliveryEngine);
+    }
 
     public static AudioDeliveryEngine getInstance()
     {

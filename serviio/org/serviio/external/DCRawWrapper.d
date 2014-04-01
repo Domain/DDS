@@ -14,8 +14,14 @@ import org.serviio.external.DCRawCLBuilder;
 
 public class DCRawWrapper : AbstractExecutableWrapper
 {
-    private static Logger log = LoggerFactory.getLogger!(DCRawWrapper);
-    protected static AtomicReference!(Boolean) present = new AtomicReference();
+    private static Logger log;
+    protected static AtomicReference!(Boolean) present;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DCRawWrapper);
+        present = new AtomicReference!(Boolean)();
+    }
 
     public static bool dcrawPresent()
     {
