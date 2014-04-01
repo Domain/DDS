@@ -11,8 +11,13 @@ import org.serviio.external.io.OutputReader;
 
 public class OutputBytesReader : OutputReader
 {
-    private static Logger log = LoggerFactory.getLogger!(OutputBytesReader);
+    private static Logger log;
     private ByteArrayOutputStream outputStream;
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(OutputBytesReader);
+	}
 
     public this(InputStream inputStream)
     {

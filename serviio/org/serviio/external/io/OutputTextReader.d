@@ -18,10 +18,15 @@ import org.slf4j.LoggerFactory;
 
 public class OutputTextReader : OutputReader
 {
-    private static Logger log = LoggerFactory.getLogger!(OutputTextReader);
-    private List!(String) lines = new ArrayList();
+    private static Logger log;
+    private List!(String) lines = new ArrayList!(String)();
     private Object linesLock;
     private ProcessExecutor executor;
+
+	static this()
+	{
+		log = LoggerFactory.getLogger!(OutputTextReader);
+	}
 
     public this(ProcessExecutor executor, InputStream inputStream)
     {
