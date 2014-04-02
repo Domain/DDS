@@ -14,13 +14,9 @@ public abstract class AbstractCacheDecorator : CacheDecorator
     protected JCS cache;
     protected String regionName;
 
-    static this()
-    {
-        log = LoggerFactory.getLogger!(AbstractCacheDecorator);
-    }
-
     public this(String regionName)
     {
+        log = LoggerFactory.getLogger!(AbstractCacheDecorator);
         try
         {
             this.cache = JCS.getInstance(regionName);
@@ -37,11 +33,11 @@ public abstract class AbstractCacheDecorator : CacheDecorator
         try
         {
             this.cache.clear();
-            this.log.debug_(String.format("Cleared cache (%s)", cast(Object[])[ this.regionName ]));
+            this.log.debug_(String_format("Cleared cache (%s)", cast(Object[])[ this.regionName ]));
         }
         catch (CacheException e)
         {
-            this.log.warn(String.format("Could not clean local cache (%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+            this.log.warn(String_format("Could not clean local cache (%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
         }
     }
 

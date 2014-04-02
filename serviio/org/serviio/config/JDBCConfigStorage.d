@@ -13,7 +13,7 @@ public class JDBCConfigStorage : ConfigStorage
 {
     public Map!(String, String) readAllConfigurationValues()
     {
-        Map!(String, String) values = new HashMap();
+        Map!(String, String) values = new HashMap!(String, String)();
         List!(ConfigEntry) configEntries = DAOFactory.getConfigEntryDAO().findAllConfigEntries();
         foreach (ConfigEntry configEntry ; configEntries) {
             values.put(configEntry.getName(), configEntry.getValue());

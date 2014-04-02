@@ -66,10 +66,10 @@ public class LiveManifestTranscodeInputStream : ManifestTranscodeInputStream, Cl
     {
         if (delegators.containsKey(manifestFile))
         {
-            log.debug_(String.format("Using existing TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
+            log.debug_(String_format("Using existing TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
             return cast(TimeoutStreamDelegator)delegators.get(manifestFile);
         }
-        log.debug_(String.format("Creating new TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
+        log.debug_(String_format("Creating new TimeoutStreamDelegator for file %s", cast(Object[])[ manifestFile.getPath() ]));
         TimeoutStreamDelegator closingDelegator = new TimeoutStreamDelegator(is_, processListener, client, deliveryListener, forceClosing);
         delegators.put(manifestFile, closingDelegator);
         return closingDelegator;

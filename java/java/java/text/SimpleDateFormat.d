@@ -1,8 +1,9 @@
 module java.text.SimpleDateFormat;
 
 import java.lang;
+import java.text.DateFormat;
 
-public class SimpleDateFormat
+public class SimpleDateFormat : DateFormat
 {
 	public this()
 	{
@@ -11,6 +12,6 @@ public class SimpleDateFormat
 
     public this(String strDate)
 	{
-		implMissing();
+        implMissing();
 	}
 }

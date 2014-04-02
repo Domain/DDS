@@ -63,7 +63,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
     override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(Image mediaItem, Profile rendererProfile, Long fileSize)
     {
-        log.debug_(String.format("Getting media info for transcoded versions of file %s", cast(Object[])[ mediaItem.getFileName() ]));
+        log.debug_(String_format("Getting media info for transcoded versions of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         LinkedHashMap!(QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap();
         try
         {
@@ -75,7 +75,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
                 }
                 catch (UnsupportedDLNAMediaFileFormatException ex)
                 {
-                    log.warn(String.format("Cannot get media info for resized original file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex.getMessage() ]));
+                    log.warn(String_format("Cannot get media info for resized original file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex.getMessage() ]));
                 }
             }
             List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
@@ -89,7 +89,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
                         }
                         catch (UnsupportedDLNAMediaFileFormatException ex)
                         {
-                            log.warn(String.format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex.getMessage() ]));
+                            log.warn(String_format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex.getMessage() ]));
                         }
                     }
                 }
@@ -98,20 +98,20 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         catch (UnsupportedDLNAMediaFileFormatException ex1)
         {
             bool originalWillBeTransformed;
-            log.warn(String.format("Unknown DLNA format profile of file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex1.getMessage() ]));
+            log.warn(String_format("Unknown DLNA format profile of file %s: %s", cast(Object[])[ mediaItem.getFileName(), ex1.getMessage() ]));
         }
         return resourceInfos;
     }
 
     override protected ImageMediaInfo retrieveTranscodedMediaInfoForVersion(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
-        log.debug_(String.format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
+        log.debug_(String_format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         return createTranscodedImageInfoForProfile(mediaItem, selectedVersion, null, rendererProfile);
     }
 
     override protected DeliveryContainer retrieveTranscodedResource(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
     {
-        log.debug_(String.format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion ]));
+        log.debug_(String_format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion ]));
         byte[] transcodedImageBytes = null;
         synchronized (transcodingCache)
         {
@@ -254,7 +254,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
                 } else if (selectedVersion == MediaFormatProfile.JPEG_LRG) {
                     transcodedImage = ImageUtils.resizeImageAsJPG(originalImageBytes, (cast(Integer)rendererProfile.getAllowedImageResolutions().getLarge().getValueA()).intValue(), (cast(Integer)rendererProfile.getAllowedImageResolutions().getLarge().getValueB()).intValue()).getImageData();
                 } else {
-                    throw new UnsupportedDLNAMediaFileFormatException(String.format("Unsupported transcoding profile requested: %s", cast(Object[])[ selectedVersion.toString() ]));
+                    throw new UnsupportedDLNAMediaFileFormatException(String_format("Unsupported transcoding profile requested: %s", cast(Object[])[ selectedVersion.toString() ]));
                 }
                 if (imageWillRotate(originalImage, rendererProfile, true)) {}
                 return ImageUtils.rotateImage(transcodedImage, originalImage.getRotation().intValue()).getImageData();

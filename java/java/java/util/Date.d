@@ -4,7 +4,7 @@ import java.lang;
 
 class Date {
     public this(){
-        implMissing(__FILE__,__LINE__);
+        //implMissing(__FILE__,__LINE__);
     }
     public this( long millis ){
         implMissing(__FILE__,__LINE__);

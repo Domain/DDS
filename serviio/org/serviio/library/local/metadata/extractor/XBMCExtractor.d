@@ -34,8 +34,14 @@ import org.w3c.dom.NodeList;
 
 public class XBMCExtractor : AbstractLocalFileExtractor
 {
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static DateFormat DATE_FORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
+    private static DateFormat DATE_FORMAT;
+    private static DateFormat DATE_FORMAT2;
+
+    static this()
+    {
+        DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+        DATE_FORMAT2 = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     override public ExtractorType getExtractorType()
     {

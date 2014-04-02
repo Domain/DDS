@@ -60,7 +60,7 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
     {
         MediaItem mediaItem = null;
         bool localMedia = MediaItem.isLocalMedia(mediaItemId);
-        log.debug_(String.format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId, localMedia ? "local" : "online" ]));
+        log.debug_(String_format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId, localMedia ? "local" : "online" ]));
         if (localMedia)
         {
             mediaItem = MediaService.readMediaItemById(mediaItemId);
@@ -80,7 +80,7 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
             }
         }
         if (mediaItem is null) {
-            throw new FileNotFoundException(String.format("Media item %s cannot be found", cast(Object[])[ mediaItemId ]));
+            throw new FileNotFoundException(String_format("Media item %s cannot be found", cast(Object[])[ mediaItemId ]));
         }
         return mediaItem;
     }

@@ -79,7 +79,7 @@ public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMedia
                     List!(MediaFormatProfile) transcodedProfiles = MediaFormatProfileResolver.resolveVideoFormat(mediaItem.getFileName(), trDef.getTargetContainer(), targetVideoCodec, targetAudioCodec, Integer.valueOf(targetDimensions.width), Integer.valueOf(targetDimensions.height), targetBitrate, trDef.getTargetContainer() == VideoContainer.M2TS ? TransportStreamTimestamp.VALID : TransportStreamTimestamp.NONE);
                     foreach (MediaFormatProfile transcodedProfile ; transcodedProfiles)
                     {
-                        log.debug_(String.format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile ]));
+                        log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile ]));
 
                         mediaInfos.add(new VideoMediaInfo(mediaItem.getId(), transcodedProfile, fileSize, Integer.valueOf(targetDimensions.width), Integer.valueOf(targetDimensions.height), targetBitrate, true, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(transcodedProfile), qualityType));
                     }
@@ -87,12 +87,12 @@ public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMedia
                 }
                 catch (UnsupportedDLNAMediaFileFormatException e)
                 {
-                    log.warn(String.format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), e.getMessage() ]));
+                    log.warn(String_format("Cannot get media info for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), e.getMessage() ]));
                 }
             }
             return transcodedMI;
         }
-        log.warn(String.format("Cannot find matching transcoding definition for file %s", cast(Object[])[ mediaItem.getFileName() ]));
+        log.warn(String_format("Cannot find matching transcoding definition for file %s", cast(Object[])[ mediaItem.getFileName() ]));
         return new LinkedHashMap();
     }
 

@@ -34,7 +34,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
 
     public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {
-        log.debug_(String.format("Retrieving Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
+        log.debug_(String_format("Retrieving Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
 
         String manifest = generateManifest(mediaItemId, client, selectedQuality);
         ResourceInfo resourceInfo = retrieveResourceInfo(mediaItemId, selectedVersion, client, manifest.length());
@@ -43,7 +43,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
 
     public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
     {
-        log.debug_(String.format("Retrieving info of Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
+        log.debug_(String_format("Retrieving info of Manifest for media item with id %s", cast(Object[])[ mediaItemId ]));
         String manifest = generateManifest(mediaItemId, client, selectedQuality);
         return retrieveResourceInfo(mediaItemId, selectedVersion, client, manifest.length());
     }
@@ -79,7 +79,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
             }
             throw new RuntimeException("Only video files are supported for manifest files.");
         }
-        throw new FileNotFoundException(String.format("Video with id %s not found", cast(Object[])[ mediaItemId ]));
+        throw new FileNotFoundException(String_format("Video with id %s not found", cast(Object[])[ mediaItemId ]));
     }
 }
 

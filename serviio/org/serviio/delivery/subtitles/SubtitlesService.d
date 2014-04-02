@@ -93,13 +93,13 @@ public class SubtitlesService : Service
         File externalFile = findExternalSubtitleFile(item);
         if (externalFile !is null)
         {
-            log.debug_(String.format("Found external subtitle file: %s", cast(Object[])[ externalFile.toString() ]));
+            log.debug_(String_format("Found external subtitle file: %s", cast(Object[])[ externalFile.toString() ]));
             return new ExternalFileSubtitlesReader(externalFile);
         }
         EmbeddedSubtitles es = findEmbeddedSubtitles(item);
         if (es !is null)
         {
-            log.debug_(String.format("Found embedded subtitle track: %s (%s)", cast(Object[])[ es.getStreamId(), es.getLanguageCode() ]));
+            log.debug_(String_format("Found embedded subtitle track: %s (%s)", cast(Object[])[ es.getStreamId(), es.getLanguageCode() ]));
             return new EmbeddedSubtitlesReader(item, es);
         }
         return null;

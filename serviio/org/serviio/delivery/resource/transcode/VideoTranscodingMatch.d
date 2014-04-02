@@ -101,7 +101,7 @@ public class VideoTranscodingMatch
             }
             catch (NumberFormatException e)
             {
-                log.warn(String.format("H264 level of the file is not a valid number: %s", cast(Object[])[ videoH264Level ]));
+                log.warn(String_format("H264 level of the file is not a valid number: %s", cast(Object[])[ videoH264Level ]));
                 return false;
             }
         }

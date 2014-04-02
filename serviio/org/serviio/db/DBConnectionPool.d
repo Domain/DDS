@@ -39,7 +39,7 @@ class DBConnectionPool
         this.checkedOut -= 1;
         notifyAll();
         if (log.isTraceEnabled()) {
-            log.trace(String.format("Releasing connection from pool %s", cast(Object[])[ this.name ]));
+            log.trace(String_format("Releasing connection from pool %s", cast(Object[])[ this.name ]));
         }
     }
 
@@ -51,7 +51,7 @@ class DBConnectionPool
             con = cast(Connection)this.freeConnections.firstElement();
             this.freeConnections.removeElementAt(0);
             if (log.isTraceEnabled()) {
-                log.trace(String.format("Getting pooled connection from pool %s", cast(Object[])[ this.name ]));
+                log.trace(String_format("Getting pooled connection from pool %s", cast(Object[])[ this.name ]));
             }
             try
             {

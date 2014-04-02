@@ -1,5 +1,7 @@
 module org.serviio.config.Configuration;
 
+import std.conv;
+
 import java.lang;
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,12 +71,12 @@ public class Configuration
     static this()
     {
         log = LoggerFactory.getLogger!(Configuration);
-        cache = new HashMap();
+        cache = new HashMap!(String, String)();
 
         instantiateStorage();
 
         Map!(String, String) currentValues = storage.readAllConfigurationValues();
-        foreach (Map.Entry!(String, String) configEntry ; currentValues.entrySet()) {
+        foreach (Entry!(String, String) configEntry ; currentValues.entrySet()) {
             cache.put(configEntry.getKey(), configEntry.getValue());
         }
     }
@@ -319,7 +321,7 @@ public class Configuration
         if (ObjectValidator.isNotEmpty(value)) {
             return CollectionUtils.CSVToMap(value, ",");
         }
-        return Collections.emptyMap();
+        return Collections.emptyMap!(String, String)();
     }
 
     public static void setBrowseMenuItemOptions(Map!(String, String) itemsMap)
@@ -421,7 +423,7 @@ public class Configuration
     {
         String value = cast(String)cache.get("online_feed_prefered_quality");
         if (ObjectValidator.isNotEmpty(value)) {
-            return PreferredQuality.valueOf(value);
+            return to!PreferredQuality(value);
         }
         return PreferredQuality.MEDIUM;
     }
@@ -489,7 +491,7 @@ public class Configuration
     {
         String value = cast(String)cache.get("remote_preferred_quality");
         if (ObjectValidator.isNotEmpty(value)) {
-            return QualityType.valueOf(value);
+            return to!QualityType(value);
         }
         return QualityType.MEDIUM;
     }
@@ -725,15 +727,15 @@ public class Configuration
         }
         catch (ClassNotFoundException e)
         {
-            log.error(String.format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
+            log.error(String_format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         catch (InstantiationException e)
         {
-            log.error(String.format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
+            log.error(String_format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         catch (IllegalAccessException e)
         {
-            log.error(String.format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
+            log.error(String_format("Cannot instantiate Profile. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 }

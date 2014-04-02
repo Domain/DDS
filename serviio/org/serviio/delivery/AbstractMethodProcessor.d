@@ -93,7 +93,7 @@ public abstract class AbstractMethodProcessor
                         }
                         else
                         {
-                            this.log.debug_(String.format("Delivering bytes %s - %s from native file, based on time range %s - %s", cast(Object[])[ range.getStart(RangeUnit.BYTES), range.getEnd(RangeUnit.BYTES), range.getStart(RangeUnit.SECONDS), range.getEnd(RangeUnit.SECONDS) ]));
+                            this.log.debug_(String_format("Delivering bytes %s - %s from native file, based on time range %s - %s", cast(Object[])[ range.getStart(RangeUnit.BYTES), range.getEnd(RangeUnit.BYTES), range.getStart(RangeUnit.SECONDS), range.getEnd(RangeUnit.SECONDS) ]));
                             responseContainer = buildDeliveryContainer(resourceRetrievalStrategy, resourceInfo, selectedVersion, quality, path, transferMode, client, range.getStartAsLong(RangeUnit.BYTES).longValue(), range.getEndAsLong(RangeUnit.BYTES).longValue() - range.getStartAsLong(RangeUnit.BYTES).longValue() + 1L, null, null, true, true, requestHttpVersion, requestRangeHeaders);
                         }
                     }

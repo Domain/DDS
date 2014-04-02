@@ -32,9 +32,9 @@ public abstract class PersistedEntity
         if (obj is null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        //if (getClass() != obj.getClass()) {
+        //    return false;
+        //}
         PersistedEntity other = cast(PersistedEntity)obj;
         if (this.id is null)
         {

@@ -93,7 +93,7 @@ public class CollectionUtils
         if ((map !is null) && (map.size() > 0))
         {
             first = true;
-            foreach (Map.Entry!(K, V) entry ; map.entrySet())
+            foreach (Entry!(K, V) entry ; map.entrySet())
             {
                 if (!first) {
                     sb.append(separator);

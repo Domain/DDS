@@ -93,7 +93,7 @@ public class Client
 
     override public String toString()
     {
-        return String.format("Identifier=%s, Profile=%s", cast(Object[])[ this.clientIdentifier, this.rendererProfile ]);
+        return String_format("Identifier=%s, Profile=%s", cast(Object[])[ this.clientIdentifier, this.rendererProfile ]);
     }
 }
 

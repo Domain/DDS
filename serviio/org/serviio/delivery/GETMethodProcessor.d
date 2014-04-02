@@ -44,7 +44,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
         }
         TreeMap!(Double, ProgressData) filesizeMap = jobListener.getFilesizeMap();
         Long startByte = convertSecondsToBytes(new Double(fixedRange.getStart(RangeUnit.SECONDS).doubleValue()), filesizeMap);
-        this.log.debug_(String.format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeUnit.SECONDS), fixedRange.getEnd(RangeUnit.SECONDS) ]));
+        this.log.debug_(String_format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeUnit.SECONDS), fixedRange.getEnd(RangeUnit.SECONDS) ]));
         return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, startByte.longValue(), fileSize.longValue(), true, true, requestHttpVersion);
     }
 
@@ -57,7 +57,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
             contentLengthToRead = Long.valueOf(-1L);
             this.log.debug_("Entity will be consumed till the end");
         }
-        this.log.debug_(String.format("Stream entity has length: %s", cast(Object[])[ contentLengthToRead ]));
+        this.log.debug_(String_format("Stream entity has length: %s", cast(Object[])[ contentLengthToRead ]));
         seekInInputStream(is_, skip);
         return new HttpDeliveryContainer(responseHeaders, is_, partialContent, requestHttpVersion, transferMode, transcoded, contentLengthToRead);
     }

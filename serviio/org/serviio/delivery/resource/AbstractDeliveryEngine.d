@@ -60,7 +60,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     public List!(RI) getMediaInfoForProfile(MI mediaItem, Profile rendererProfile)
     {
-        this.log.debug_(String.format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId(), rendererProfile.getName() ]));
+        this.log.debug_(String_format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId(), rendererProfile.getName() ]));
         Map!(QualityType, List!(RI)) infos = new LinkedHashMap();
         try
         {
@@ -78,19 +78,19 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     public DeliveryContainer deliver(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
     {
-        this.log.debug_(String.format("Delivering item '%s' for client '%s'", cast(Object[])[ mediaItem.getId(), client ]));
+        this.log.debug_(String_format("Delivering item '%s' for client '%s'", cast(Object[])[ mediaItem.getId(), client ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, client.getRendererProfile()))
         {
-            this.log.debug_(String.format("Delivering file '%s' using transcoding", cast(Object[])[ mediaItem.getFileName() ]));
+            this.log.debug_(String_format("Delivering file '%s' using transcoding", cast(Object[])[ mediaItem.getFileName() ]));
             return retrieveTranscodedResource(mediaItem, selectedVersion, selectedQuality, timeOffsetInSeconds, durationInSeconds, client);
         }
-        this.log.debug_(String.format("Delivering file '%s' in native format", cast(Object[])[ mediaItem.getFileName() ]));
+        this.log.debug_(String_format("Delivering file '%s' in native format", cast(Object[])[ mediaItem.getFileName() ]));
         return retrieveOriginalFileContainer(mediaItem, selectedVersion, client);
     }
 
     public RI getMediaInfoForMediaItem(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
-        this.log.debug_(String.format("Retrieving resource information for item %s, format %s and profile %s", cast(Object[])[ mediaItem.getId(), selectedVersion, rendererProfile.getName() ]));
+        this.log.debug_(String_format("Retrieving resource information for item %s, format %s and profile %s", cast(Object[])[ mediaItem.getId(), selectedVersion, rendererProfile.getName() ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, rendererProfile)) {
             return retrieveTranscodedMediaInfoForVersion(mediaItem, selectedVersion, selectedQuality, rendererProfile);
         }
@@ -195,7 +195,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         }
         catch (MalformedURLException e)
         {
-            throw new FileNotFoundException(String.format("Cannot retrieve online media item URL: %s", cast(Object[])[ e.getMessage() ]));
+            throw new FileNotFoundException(String_format("Cannot retrieve online media item URL: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 
@@ -206,7 +206,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
                 return mi;
             }
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("No media description available for required version: %s", cast(Object[])[ selectedVersion ]));
+        throw new UnsupportedDLNAMediaFileFormatException(String_format("No media description available for required version: %s", cast(Object[])[ selectedVersion ]));
     }
 
     protected void updateFeedUrl(MI mediaItem)
@@ -229,7 +229,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
             }
             catch (Throwable t)
             {
-                this.log.debug_(String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.getMessage() ]), t);
+                this.log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.getMessage() ]), t);
             }
         }
     }

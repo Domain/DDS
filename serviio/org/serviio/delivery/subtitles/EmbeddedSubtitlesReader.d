@@ -45,7 +45,7 @@ public class EmbeddedSubtitlesReader : SubtitlesReader
 
     private String createTargetSubtitlesFilename()
     {
-        return FileUtils.getProperFilePath(new File(AbstractTranscodingDeliveryEngine.getTranscodingFolder(), String.format("subtitles_%s_%s", cast(Object[])[ this.video.getId(), this.embeddedSubtitles.getStreamId() ])));
+        return FileUtils.getProperFilePath(new File(AbstractTranscodingDeliveryEngine.getTranscodingFolder(), String_format("subtitles_%s_%s", cast(Object[])[ this.video.getId(), this.embeddedSubtitles.getStreamId() ])));
     }
 }
 

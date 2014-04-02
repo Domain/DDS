@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 //import java.lang.reflect.Package;
 import java.lang.reflect.Constructor;
+import java.io.InputStream;
 
 class Class {
     bool desiredAssertionStatus(){
@@ -119,10 +120,10 @@ class Class {
     //    implMissing(__FILE__, __LINE__ );
     //    return null;
     //}
-    //InputStream getResourceAsStream(String name){
-    //    implMissing(__FILE__, __LINE__ );
-    //    return null;
-    //}
+    static InputStream getResourceAsStream(String name){
+        implMissing(__FILE__, __LINE__ );
+        return null;
+    }
     //Object[] getSigners(){
     //    implMissing(__FILE__, __LINE__ );
     //    return null;

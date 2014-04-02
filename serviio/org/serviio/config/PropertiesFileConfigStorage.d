@@ -1,6 +1,7 @@
 module org.serviio.config.PropertiesFileConfigStorage;
 
 import java.lang.String;
+import java.lang.Class;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map:Entry;
@@ -16,15 +17,15 @@ public class PropertiesFileConfigStorage : ConfigStorage
         this.properties = new Properties();
         try
         {
-            this.properties.load(PropertiesFileConfigStorage.class_.getResourceAsStream("/configuration.properties"));
+            this.properties.load(/*PropertiesFileConfigStorage.class_*/Class.getResourceAsStream("/configuration.properties"));
         }
         catch (Exception e) {}
     }
 
     public Map!(String, String) readAllConfigurationValues()
     {
-        Map!(String, String) values = new HashMap();
-        foreach (Map.Entry!(Object, Object) value ; this.properties.entrySet()) {
+        Map!(String, String) values = new HashMap!(String, String)();
+        foreach (Entry!(Object, Object) value ; this.properties.entrySet()) {
             values.put(value.getKey().toString(), value.getValue().toString());
         }
         return values;
@@ -32,7 +33,7 @@ public class PropertiesFileConfigStorage : ConfigStorage
 
     public void storeValue(String name, String value)
     {
-        this.properties.put(name, value);
+        this.properties.put(cast(Object)name, cast(Object)value);
     }
 }
 

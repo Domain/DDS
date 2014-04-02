@@ -35,7 +35,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
         ThumbnailResolution resolution = client.getRendererProfile().getThumbnailsResolution();
 
         bool useHD = isHD(coverImage, resolution);
-        log.debug_(String.format("Retrieving Cover image (%s) with id %s", cast(Object[])[ useHD ? "HD" : "SD", coverImageId ]));
+        log.debug_(String_format("Retrieving Cover image (%s) with id %s", cast(Object[])[ useHD ? "HD" : "SD", coverImageId ]));
 
         ResourceInfo resourceInfo = retrieveResourceInfo(coverImage, selectedVersion, resolution);
         DeliveryContainer container = new StreamDeliveryContainer(new ByteArrayInputStream(useHD ? coverImage.getImageBytesHD() : coverImage.getImageBytes()), resourceInfo);
@@ -47,7 +47,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
         CoverImage coverImage = retrieveCoverImage(coverImageId);
         ThumbnailResolution resolution = client.getRendererProfile().getThumbnailsResolution();
 
-        log.debug_(String.format("Retrieving info of Cover image with id %s", cast(Object[])[ coverImageId ]));
+        log.debug_(String_format("Retrieving info of Cover image with id %s", cast(Object[])[ coverImageId ]));
         return retrieveResourceInfo(coverImage, selectedVersion, resolution);
     }
 
@@ -69,13 +69,13 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
         {
             CoverImage coverImage = MediaService.getCoverImage(resourceId);
             if (coverImage is null) {
-                throw new FileNotFoundException(String.format("Cover image %s cannot be found", cast(Object[])[ resourceId ]));
+                throw new FileNotFoundException(String_format("Cover image %s cannot be found", cast(Object[])[ resourceId ]));
             }
             return coverImage;
         }
         CoverImage coverImage = OnlineItemService.findThumbnail(resourceId);
         if (coverImage is null) {
-            throw new FileNotFoundException(String.format("Cover image for feed item %s cannot be found", cast(Object[])[ resourceId ]));
+            throw new FileNotFoundException(String_format("Cover image for feed item %s cannot be found", cast(Object[])[ resourceId ]));
         }
         return coverImage;
     }

@@ -87,7 +87,7 @@ public class LiveSegmentBasedTranscodingDeliveryStrategy : SegmentBasedTranscodi
                 {
                     bool deleted = FileUtils.deleteFileOrFolder(segmentFile);
                     if (deleted) {
-                        log.debug_(String.format("Removed segment file: %s", cast(Object[])[ segmentFile.getPath() ]));
+                        log.debug_(String_format("Removed segment file: %s", cast(Object[])[ segmentFile.getPath() ]));
                     }
                 }
             }
