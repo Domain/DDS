@@ -7,10 +7,10 @@ import org.serviio.ui.representation.RepositoryRepresentation;
 
 public abstract interface RepositoryResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract RepositoryRepresentation load();
   
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(RepositoryRepresentation paramRepositoryRepresentation);
 }
 

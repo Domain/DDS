@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
 
 public class RendererDAOImpl : RendererDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(RendererDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(RendererDAOImpl);
+    }
 
     public void create(Renderer newInstance)
     {

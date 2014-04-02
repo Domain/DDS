@@ -21,8 +21,14 @@ import org.slf4j.LoggerFactory;
 
 public class StreamBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryStrategy, TranscodingDeliveryStrategy!(OutputStream)
 {
-    private static immutable int PIPE_BUFFER_BYTES = ApplicationSettings.getIntegerProperty("live_stream_buffer").intValue();
-    private static Logger log = LoggerFactory.getLogger!(StreamBasedTranscodingDeliveryStrategy);
+    private static immutable int PIPE_BUFFER_BYTES;
+    private static Logger log;
+
+    static this()
+    {
+        PIPE_BUFFER_BYTES = ApplicationSettings.getIntegerProperty("live_stream_buffer").intValue();
+        log = LoggerFactory.getLogger!(StreamBasedTranscodingDeliveryStrategy);
+    }
 
     public StreamDescriptor createInputStream(TranscodingJobListener jobListener, Long resourceId, TranscodingDefinition trDef, Client client, DeliveryListener deliveryListener)
     {

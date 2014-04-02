@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
 
 public class ProfilesDefinitionParser
 {
-    private static Logger log = LoggerFactory.getLogger!(ProfilesDefinitionParser);
+    private static Logger log;
     private static immutable String PROFILES_XSD = "Profiles.xsd";
     private static immutable String TAG_PROFILE = "Profile";
     private static immutable String TAG_CONTENT_DIRECTORY_MESSAGE_BUILDER = "ContentDirectoryMessageBuilder";
@@ -103,6 +103,7 @@ public class ProfilesDefinitionParser
 
     static this()
     {
+        log = LoggerFactory.getLogger!(ProfilesDefinitionParser);
         try
         {
             COMP_NAME = InetAddress.getLocalHost().getHostName();

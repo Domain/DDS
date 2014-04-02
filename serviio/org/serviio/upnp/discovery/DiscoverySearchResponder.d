@@ -16,12 +16,17 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoverySearchResponder : Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(DiscoverySearchResponder);
+    private static Logger log;
     private static immutable int MAX_MX = 120;
     private int advertisementDuration;
     private SocketAddress sourceAddress;
     private int timeToRespond;
     private String searchTarget;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DiscoverySearchResponder);
+    }
 
     public this(SocketAddress sourceAddress, int advertisementDuration, int timeToRespond, String searchTarget)
     {

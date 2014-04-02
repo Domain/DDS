@@ -14,15 +14,18 @@ import org.slf4j.LoggerFactory;
 
 public class BrowsingCategoriesMessages
 {
-    private static Logger log = LoggerFactory.getLogger!(BrowsingCategoriesMessages);
+    private static Logger log;
     private static ResourceBundle selectedRb;
     private static ResourceBundle defaultRb;
-    private static Locale defaultLocale = Locale.ENGLISH;
+    private static Locale defaultLocale;
     private static immutable String BUNDLE = "org.serviio.upnp.service.contentdirectory.definition.i18n.browsingCategories";
-    private static Control control = new GetLocalizationMessageBundleControl();
+    private static Control control;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(BrowsingCategoriesMessages);
+        defaultLocale = Locale.ENGLISH;
+        control = new GetLocalizationMessageBundleControl();
         defaultRb = ResourceBundle.getBundle("org.serviio.upnp.service.contentdirectory.definition.i18n.browsingCategories", defaultLocale, control);
         loadLocale(Language.getLocale(Configuration.getBrowseMenuPreferredLanguage()));
     }

@@ -23,8 +23,13 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistMaintainerThread : AbstractLibraryCheckerThread
 {
-    private static Logger log = LoggerFactory.getLogger!(PlaylistMaintainerThread);
+    private static Logger log;
     private static immutable int REFRESH_INTERVAL_IN_MINUTES = 5;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PlaylistMaintainerThread);
+    }
 
     override public void run()
     {

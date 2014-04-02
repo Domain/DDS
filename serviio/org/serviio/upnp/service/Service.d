@@ -20,8 +20,8 @@ public abstract class Service
     protected String scpdURL;
     protected String controlURL;
     protected String eventSubURL;
-    protected Set!(StateVariable) stateVariables = new HashSet();
-    protected Set!(Subscription) eventSubscriptions = new ConcurrentSkipListSet();
+    protected Set!(StateVariable) stateVariables;
+    protected Set!(Subscription) eventSubscriptions;
 
     public this()
     {
@@ -29,6 +29,8 @@ public abstract class Service
         this.scpdURL = resolveDescriptionURL();
         this.controlURL = resolveControlURL();
         this.eventSubURL = resolveEventingURL();
+        this.stateVariables = new HashSet!(StateVariable)();
+        this.eventSubscriptions = new ConcurrentSkipListSet!(Subscription)();
     }
 
     protected abstract void setupService();

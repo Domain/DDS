@@ -42,7 +42,7 @@ import java.util.all;
 import org.apache.commons.lang.StringUtils : isNotBlank;
 
 public class Request : HTTPResource {
-	private static Logger LOGGER = LoggerFactory.getLogger!Request();
+	private static Logger LOGGER;
 
 	private const static String CRLF = "\r\n";
 	private const static String HTTP_200_OK = "HTTP/1.1 200 OK";
@@ -52,7 +52,7 @@ public class Request : HTTPResource {
 	private const static String HTTP_206_OK_10 = "HTTP/1.0 206 Partial Content";
 	private const static String CONTENT_TYPE_UTF8 = "CONTENT-TYPE: text/xml; charset=\"utf-8\"";
 	private const static String CONTENT_TYPE = "Content-Type: text/xml; charset=\"utf-8\"";
-	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+	private static SimpleDateFormat sdf;
 	private String method;
 	private String argument;
 	private String soapaction;
@@ -71,6 +71,12 @@ public class Request : HTTPResource {
 	private double timeRangeEnd;
 	private long highRange;
 	private bool http10;
+
+    static this()
+    {
+	    LOGGER = LoggerFactory.getLogger!Request();
+	    sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+    }
 
 	public RendererConfiguration getMediaRenderer() {
 		return mediaRenderer;

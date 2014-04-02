@@ -7,10 +7,10 @@ import org.serviio.ui.representation.ConsoleSettingsRepresentation;
 
 public abstract interface ConsoleSettingsResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract ConsoleSettingsRepresentation load();
   
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(ConsoleSettingsRepresentation paramConsoleSettingsRepresentation);
 }
 

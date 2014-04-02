@@ -24,7 +24,12 @@ import org.slf4j.LoggerFactory;
 
 public class MediaFeedEntryParser : FeedEntryParser
 {
-    private static Logger log = LoggerFactory.getLogger!(MediaFeedEntryParser);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MediaFeedEntryParser);
+    }
 
     public void parseFeedEntry(SyndEntry entry, FeedItem item)
     {

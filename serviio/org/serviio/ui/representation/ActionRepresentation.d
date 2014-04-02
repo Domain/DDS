@@ -9,9 +9,14 @@ import java.util.List;
 public class ActionRepresentation
 {
     private String name;
-    @XStreamImplicit(itemFieldName="parameter")
-    @SerializedName("parameter")
-    private List!(String) parameters = new ArrayList();
+    //@XStreamImplicit(itemFieldName="parameter")
+    //@SerializedName("parameter")
+    private List!(String) parameters;
+
+    public this()
+    {
+        parameters = new ArrayList!(String)();
+    }
 
     public String getName()
     {

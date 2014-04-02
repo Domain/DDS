@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
 
 public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(MetadataExtractorConfigDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MetadataExtractorConfigDAOImpl);
+    }
 
     public long create(MetadataExtractorConfig newInstance)
     {

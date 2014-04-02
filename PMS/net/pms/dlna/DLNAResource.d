@@ -67,10 +67,15 @@ public abstract class DLNAResource : HTTPResource , Cloneable, Runnable {
 	private immutable Map/*<String, Integer>*/ requestIdToRefcount = new HashMap/*<String, Integer>*/();
 	private static const int STOP_PLAYING_DELAY = 4000;
 	private static Logger LOGGER = LoggerFactory.getLogger!DLNAResource();
-	private static immutable SimpleDateFormat SDF_DATE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+	private static immutable SimpleDateFormat SDF_DATE;
 
 	protected static const int MAX_ARCHIVE_ENTRY_SIZE = 10000000;
 	protected static const int MAX_ARCHIVE_SIZE_SEEK = 800000000;
+
+    static this()
+    {
+	    SDF_DATE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+    }
 
 	/**
 	 * @deprecated This field will be removed. Use {@link net.pms.configuration.PmsConfiguration#getTranscodeFolderName()} instead.

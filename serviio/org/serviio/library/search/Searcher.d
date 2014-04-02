@@ -33,13 +33,15 @@ import org.serviio.library.search.SearchResultsHolder;
 
 public class Searcher
 {
-    private static final Logger log = LoggerFactory.getLogger!(Searcher);
-    private static Map!(MediaFileType, List!(SearchCategory)) categoryMapping = new HashMap();
+    private static Logger log;
+    private static Map!(MediaFileType, List!(SearchCategory)) categoryMapping;
     private MultiReader ireader;
     private DirectoryReader[] subReaders;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(Searcher);
+        categoryMapping = new HashMap!(MediaFileType, List!(SearchCategory))();
         categoryMapping.put(MediaFileType.VIDEO, Arrays.asList(cast(SearchCategory[])[ SearchCategory.MOVIES, SearchCategory.SERIES, SearchCategory.EPISODES, SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));
         categoryMapping.put(MediaFileType.IMAGE, Arrays.asList(cast(SearchCategory[])[ SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));
         categoryMapping.put(MediaFileType.AUDIO, Arrays.asList(cast(SearchCategory[])[ SearchCategory.ALBUM_ARTISTS, SearchCategory.ALBUMS, SearchCategory.MUSIC_TRACKS, SearchCategory.FILES, SearchCategory.FOLDERS, SearchCategory.ONLINE_ITEMS, SearchCategory.ONLINE_CONTAINERS ]));

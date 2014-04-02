@@ -55,8 +55,8 @@ public class OnlineLibraryManager : AbstractLibraryManager
     private WebResourceParser webResourceParser;
     private FeedUpdaterThread feedUpdaterThread;
     private LibraryIndexingListener cdsListener;
-    private Map!(String, Date) feedExpiryMonitor = Collections.synchronizedMap(new HashMap());
-    private CountDownLatch pluginsCompiled = new CountDownLatch(1);
+    private Map!(String, Date) feedExpiryMonitor;
+    private CountDownLatch pluginsCompiled;
 
     static this()
     {
@@ -80,6 +80,8 @@ public class OnlineLibraryManager : AbstractLibraryManager
         this.webResourceParser = new WebResourceParser();
         this.singleURLParser = new SingleURLParser();
         this.cdsListener = new OnlineCDSLibraryIndexingListener();
+        this.pluginsCompiled = new CountDownLatch(1);
+        feedExpiryMonitor = Collections.synchronizedMap(new HashMap!(String, Date)());
     }
 
     public void startFeedUpdaterThread()

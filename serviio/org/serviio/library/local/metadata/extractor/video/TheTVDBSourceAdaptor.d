@@ -38,12 +38,20 @@ public class TheTVDBSourceAdaptor : SearchSourceAdaptor
     private static immutable String APIKEY = "235C8CA4529142E9";
     private static immutable String API_BASE_CONTEXT = "/api/";
     private static immutable String MAIN_SERVER_URL = "http://thetvdb.com";
-    private static List!(String) xmlMirrors = new ArrayList();
-    private static List!(String) bannerMirrors = new ArrayList();
-    private static final Logger log = LoggerFactory.getLogger!(TheTVDBSourceAdaptor);
-    private static final DateFormat firstAiredDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static List!(String) xmlMirrors;
+    private static List!(String) bannerMirrors;
+    private static Logger log;
+    private static DateFormat firstAiredDateFormat;
     private String seriesId;
     private String episodeXML;
+
+    static this()
+    {
+        xmlMirrors = new ArrayList!(String)();
+        bannerMirrors = new ArrayList!(String)();
+        log = LoggerFactory.getLogger!(TheTVDBSourceAdaptor);
+        firstAiredDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     public void retrieveMetadata(String episodeId, VideoMetadata videoMetadata)
     {

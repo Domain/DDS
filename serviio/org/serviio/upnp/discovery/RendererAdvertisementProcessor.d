@@ -7,13 +7,18 @@ import org.slf4j.LoggerFactory;
 
 public class RendererAdvertisementProcessor : Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(RendererAdvertisementProcessor);
+    private static Logger log;
     private String deviceIPAddress;
     private String nts;
     private int timeToKeep;
     private String deviceDescriptionURL;
     private String uuid;
     private String server;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(RendererAdvertisementProcessor);
+    }
 
     public this(String deviceIPAddress, String uuid, String nts, int timeToKeep, String deviceDescriptionURL, String server)
     {

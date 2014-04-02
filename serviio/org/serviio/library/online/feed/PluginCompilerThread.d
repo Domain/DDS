@@ -1,6 +1,6 @@
 module org.serviio.library.online.feed.PluginCompilerThread;
 
-import java.lang.Thread;
+import java.lang;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyCodeSource;
 import java.io.File;
@@ -25,19 +25,29 @@ import org.slf4j.LoggerFactory;
 
 public class PluginCompilerThread : Thread
 {
-    private static Logger log = LoggerFactory.getLogger!(PluginCompilerThread);
+    private static Logger log;
     private static immutable int PLUGIN_COMPILER_CHECK_INTERVAL = 10;
     private File pluginsFolder;
-    protected Map!(AbstractUrlExtractor, OnlineRepositoryType) urlExtractors = new HashMap();
-    private Map!(File, Date) seenFilesCache = new HashMap();
-    private GroovyClassLoader gcl = new GroovyClassLoader();
+    protected Map!(AbstractUrlExtractor, OnlineRepositoryType) urlExtractors;
+    private Map!(File, Date) seenFilesCache;
+    private GroovyClassLoader gcl;
     private bool workerRunning;
     private bool isSleeping = false;
-    private bool checkPeriodically = checkForPluginsPeriodically();
+    private bool checkPeriodically;
     private CountDownLatch pluginsCompiled;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PluginCompilerThread);
+    }
 
     public this(CountDownLatch pluginsCompiled)
     {
+        urlExtractors = new HashMap!(AbstractUrlExtractor, OnlineRepositoryType)();
+        seenFilesCache = new HashMap!(File, Date)();
+        gcl = new GroovyClassLoader();
+        checkPeriodically = checkForPluginsPeriodically();
+
         this.pluginsFolder = getPluginsDirectoryPath();
         this.pluginsCompiled = pluginsCompiled;
     }

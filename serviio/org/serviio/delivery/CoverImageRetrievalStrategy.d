@@ -22,7 +22,12 @@ import org.slf4j.LoggerFactory;
 
 public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
 {
-    private static Logger log = LoggerFactory.getLogger!(CoverImageRetrievalStrategy);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(CoverImageRetrievalStrategy);
+    }
 
     public DeliveryContainer retrieveResource(Long coverImageId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {

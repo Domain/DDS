@@ -7,7 +7,12 @@ import org.slf4j.LoggerFactory;
 
 public class SearchIndexCommitter : Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(SearchIndexCommitter);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(SearchIndexCommitter);
+    }
 
     public void run()
     {

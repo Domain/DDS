@@ -28,12 +28,13 @@ import org.w3c.dom.Node;
 
 public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
 {
-    private static Logger log = LoggerFactory.getLogger!(GenericDLNAMessageBuilder);
+    private static Logger log;
     private static DocumentBuilder xmlBuilder;
     private Set!(String) includedFields;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(GenericDLNAMessageBuilder);
         try
         {
             xmlBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

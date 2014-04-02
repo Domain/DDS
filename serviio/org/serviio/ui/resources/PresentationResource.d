@@ -7,10 +7,10 @@ import org.serviio.ui.representation.PresentationRepresentation;
 
 public abstract interface PresentationResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract PresentationRepresentation load();
   
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(PresentationRepresentation paramPresentationRepresentation);
 }
 

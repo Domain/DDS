@@ -28,10 +28,18 @@ import org.slf4j.LoggerFactory;
 
 public class RestletServer
 {
-    private static final Logger log = LoggerFactory.getLogger!(RestletServer);
-    private static Component apiComponent = new Component();
-    private static Component cdsComponent = new Component();
-    private static Component mbComponent = new Component();
+    private static Logger log;
+    private static Component apiComponent;
+    private static Component cdsComponent;
+    private static Component mbComponent;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(RestletServer);
+        apiComponent = new Component();
+        cdsComponent = new Component();
+        mbComponent = new Component();
+    }
 
     public static void runServer()
     {

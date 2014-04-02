@@ -18,8 +18,13 @@ import org.slf4j.LoggerFactory;
 
 public class DBSchemaUpdateExecutor
 {
-    private static Logger log = LoggerFactory.getLogger!(DBSchemaUpdateExecutor);
+    private static Logger log;
     private static immutable String[] scripts = [ "script-0.1.sql", "script-0.1.1.sql", "script-0.2.sql", "script-0.3.1.sql", "script-0.4.sql", "script-0.4.1.sql", "script-0.4.2.sql", "script-0.5.sql", "script-0.5.1.sql", "script-0.6.sql", "script-0.6.1.sql", "script-0.6.2.sql", "script-1.0.sql", "script-1.1.sql", "script-1.2.sql", "script-1.2.1.sql", "script-1.3.sql", "script-1.4.sql" ];
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DBSchemaUpdateExecutor);
+    }
 
     public static void updateDBSchema()
     {

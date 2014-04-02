@@ -10,7 +10,12 @@ import org.slf4j.LoggerFactory;
 public class ExternalIPRetriever
 {
     private static immutable String API_URL = "http://api.exip.org/?call=ip";
-    private static Logger log = LoggerFactory.getLogger!(ExternalIPRetriever);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ExternalIPRetriever);
+    }
 
     public static InetAddress getExternalIP()
     {

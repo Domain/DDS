@@ -20,17 +20,22 @@ import org.slf4j.LoggerFactory;
 
 public class VideoTranscodingMatch
 {
-    private static Logger log = LoggerFactory.getLogger!(VideoTranscodingMatch);
+    private static Logger log;
     private VideoContainer container;
     private VideoCodec videoCodec;
     private AudioCodec audioCodec;
     private H264Profile h264Profile;
     private Float h264LevelGT;
-    private List!(String) ftypNotIn = new ArrayList();
+    private List!(String) ftypNotIn = new ArrayList!(String)();
     private OnlineContentType onlineContentType = OnlineContentType.ANY;
     private Boolean squarePixels;
-    private List!(String) vFourCC = new ArrayList();
+    private List!(String) vFourCC = new ArrayList!(String)();
     private H264LevelCheckType h264LevelCheckType;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(VideoTranscodingMatch);
+    }
 
     public this(VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, H264Profile h264Profile, Float h264LevelGT, String ftypNotIn, OnlineContentType onlineContentType, Boolean squarePixels, String vFourCC, H264LevelCheckType h264LevelCheckType)
     {

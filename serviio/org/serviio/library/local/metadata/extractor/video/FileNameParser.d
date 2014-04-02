@@ -11,10 +11,18 @@ import org.serviio.library.local.metadata.extractor.video.VideoDescription;
 
 public class FileNameParser
 {
-    private static Pattern[] EPISODIC_PATTERNS = { Pattern.compile("[s]([\\d]+)[e]([\\d]+).*", 2), Pattern.compile("[s]([\\d]+)\\.[e]([\\d]+).*", 2), Pattern.compile("([\\d]+)[x]([\\d]+)", 2), Pattern.compile("[s]([\\d]+)_[e]([\\d]+).*", 2), Pattern.compile("^([\\d])[\\s]([\\d]{2,2})", 2), Pattern.compile("^([\\d]{1,2})[\\s]([\\d]{2,2})", 2), Pattern.compile("([\\d]{1,2})[\\s]{0,1}-[\\s]{0,1}([\\d]{1,2})[\\s]*-", 2), Pattern.compile("season\\s([\\d]+)\\sepisode\\s([\\d]+).*", 2) };
-    private static Pattern[] SPECIAL_PATTERNS = { Pattern.compile(".*trailer.*", 2), Pattern.compile(".*sample.*", 2) };
-    private static Pattern MOVIE_YEAR_PATTERN = Pattern.compile("(?<!^)(\\[|\\()?(\\b\\d{4}\\b)(\\]|\\)?)");
-    private static Pattern SERIES_YEAR_PATTERN = Pattern.compile("(\\[|\\()(\\d{4})(\\]|\\))");
+    private static Pattern[] EPISODIC_PATTERNS;
+    private static Pattern[] SPECIAL_PATTERNS;
+    private static Pattern MOVIE_YEAR_PATTERN;
+    private static Pattern SERIES_YEAR_PATTERN;
+
+    static this()
+    {
+        EPISODIC_PATTERNS = [ Pattern.compile("[s]([\\d]+)[e]([\\d]+).*", 2), Pattern.compile("[s]([\\d]+)\\.[e]([\\d]+).*", 2), Pattern.compile("([\\d]+)[x]([\\d]+)", 2), Pattern.compile("[s]([\\d]+)_[e]([\\d]+).*", 2), Pattern.compile("^([\\d])[\\s]([\\d]{2,2})", 2), Pattern.compile("^([\\d]{1,2})[\\s]([\\d]{2,2})", 2), Pattern.compile("([\\d]{1,2})[\\s]{0,1}-[\\s]{0,1}([\\d]{1,2})[\\s]*-", 2), Pattern.compile("season\\s([\\d]+)\\sepisode\\s([\\d]+).*", 2) ];
+        SPECIAL_PATTERNS = [ Pattern.compile(".*trailer.*", 2), Pattern.compile(".*sample.*", 2) ];
+        MOVIE_YEAR_PATTERN = Pattern.compile("(?<!^)(\\[|\\()?(\\b\\d{4}\\b)(\\]|\\)?)");
+        SERIES_YEAR_PATTERN = Pattern.compile("(\\[|\\()(\\d{4})(\\]|\\))");
+    }
 
     public static VideoDescription parse(File videoFile, Repository repository)
     {

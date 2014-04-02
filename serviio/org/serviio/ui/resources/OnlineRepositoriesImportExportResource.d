@@ -6,10 +6,10 @@ import org.serviio.ui.representation.OnlineRepositoriesBackupRepresentation;
 
 public abstract interface OnlineRepositoriesImportExportResource
 {
-  @Get("xml")
+  //@Get("xml")
   public abstract OnlineRepositoriesBackupRepresentation exportOnlineRepos();
   
-  @Put("xml")
+  //@Put("xml")
   public abstract void importOnlineRepos(OnlineRepositoriesBackupRepresentation paramOnlineRepositoriesBackupRepresentation);
 }
 

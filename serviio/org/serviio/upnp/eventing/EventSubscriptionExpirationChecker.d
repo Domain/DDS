@@ -14,9 +14,14 @@ import org.slf4j.LoggerFactory;
 
 public class EventSubscriptionExpirationChecker : Runnable
 {
-    private static Logger log = LoggerFactory.getLogger!(EventSubscriptionExpirationChecker);
+    private static Logger log;
     private static immutable int CHECK_FREQUENCY = 2000;
     private bool workerRunning = false;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(EventSubscriptionExpirationChecker);
+    }
 
     override public void run()
     {
@@ -55,7 +60,7 @@ public class EventSubscriptionExpirationChecker : Runnable
                     }
                 }
             }
-            ThreadUtils.currentThreadSleep(2000L);
+            ThreadUtils.currentThreadSleep(CHECK_FREQUENCY);
         }
         log.info("Leaving EventSubscriptionExpirationChecker, removing all event subscriptions");
 

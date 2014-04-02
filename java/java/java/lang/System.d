@@ -167,12 +167,9 @@ class System {
         } else {
             switch( key ){
                 case "os.name": 
-                    version(Windows)
-                        return "Windows";
-                    version(OSX)
-                        return "Mac";
-                    version(linux)
-                        return "Linux";
+                    version(Windows) return "Windows";
+                    version(OSX) return "Mac";
+                    version(linux) return "Linux";
                     return "Unknown";
 
                 case "user.name": return "";

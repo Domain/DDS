@@ -23,13 +23,20 @@ public enum HttpMethod
 
 public class ResourceDeliveryProcessor
 {
-    private static Logger log = LoggerFactory.getLogger!(ResourceDeliveryProcessor);
+    private static Logger log;
     private ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
-    private HEADMethodProcessor headMethodProcessor = new HEADMethodProcessor();
-    private GETMethodProcessor getMethodProcessor = new GETMethodProcessor();
+    private HEADMethodProcessor headMethodProcessor;
+    private GETMethodProcessor getMethodProcessor;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ResourceDeliveryProcessor);
+    }
 
     public this(ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory)
     {
+        headMethodProcessor = new HEADMethodProcessor();
+        getMethodProcessor = new GETMethodProcessor();
         this.resourceRetrievalStrategyFactory = resourceRetrievalStrategyFactory;
     }
 

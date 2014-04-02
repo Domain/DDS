@@ -21,8 +21,14 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
 {
     private static immutable String X_SERVIIO_DATE_HEADER = "X-Serviio-Date";
     private static immutable String AUTH_HEADER = "Authorization";
-    private static Pattern authHeaderPattern = Pattern.compile("Serviio\\s(.*)$", 2);
-    private static TokenCache storedTokens = new TokenCache("tokens");
+    private static Pattern authHeaderPattern;
+    private static TokenCache storedTokens;
+
+    static this()
+    {
+        authHeaderPattern = Pattern.compile("Serviio\\s(.*)$", 2);
+        storedTokens = new TokenCache("tokens");
+    }
 
     public static void shutdownTokenCache()
     {

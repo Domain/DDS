@@ -44,12 +44,13 @@ import org.w3c.dom.NodeList;
 
 public class ServiceInvoker
 {
-    private static Logger log = LoggerFactory.getLogger!(ServiceInvoker);
+    private static Logger log;
     private static MessageFactory messageFactory;
     private static immutable String QUERY_STATE_VARIABLE = "QueryStateVariable";
 
     static this()
     {
+        log = LoggerFactory.getLogger!(ServiceInvoker);
         try
         {
             messageFactory = MessageFactory.newInstance();
@@ -316,7 +317,7 @@ public class ServiceInvoker
     private static class SOAPOperationVO
     {
         private String operationName;
-        private Map!(String, String) parameters = new HashMap();
+        private Map!(String, String) parameters = new HashMap!(String, String)();
 
         public String getOperationName()
         {

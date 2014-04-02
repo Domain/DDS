@@ -5,7 +5,7 @@ import org.serviio.ui.representation.ReferenceDataRepresentation;
 
 public abstract interface ReferenceDataResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract ReferenceDataRepresentation load();
 }
 

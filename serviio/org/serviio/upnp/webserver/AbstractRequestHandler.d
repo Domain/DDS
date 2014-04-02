@@ -25,9 +25,14 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractRequestHandler : HttpRequestHandler
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
     private Map!(String, String) urlParameters;
     private ProtocolVersion httpVersion;
+
+    public this()
+    {
+        log = LoggerFactory.getLogger!AbstractRequestHandler();
+    }
 
     public void handle(HttpRequest request, HttpResponse response, HttpContext context)
     {
@@ -63,7 +68,7 @@ public abstract class AbstractRequestHandler : HttpRequestHandler
 
     private Map!(String, String) getQueryParameters(HttpRequest request)
     {
-        Map!(String, String) map = new HashMap();
+        Map!(String, String) map = new HashMap!(String, String)();
         try
         {
             String query = new URI(request.getRequestLine().getUri()).getQuery();

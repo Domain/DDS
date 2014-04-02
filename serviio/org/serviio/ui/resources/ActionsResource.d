@@ -6,7 +6,7 @@ import org.serviio.ui.representation.ActionRepresentation;
 
 public abstract interface ActionsResource
 {
-  @Post("xml|json")
+  //@Post("xml|json")
   public abstract ResultRepresentation execute(ActionRepresentation paramActionRepresentation);
 }
 

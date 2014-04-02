@@ -15,7 +15,12 @@ import org.slf4j.LoggerFactory;
 
 public class HttpMessageBuilder
 {
-    private static Logger log = LoggerFactory.getLogger!(HttpMessageBuilder);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(HttpMessageBuilder);
+    }
 
     public static String transformToString(HttpRequest request)
     {

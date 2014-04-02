@@ -16,12 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationInstanceManager {
-    private static Logger log = LoggerFactory.getLogger(cast(Class)ApplicationInstanceManager.class_);
+    private static Logger log;
     private static ApplicationInstanceListener subListener;
     public static immutable int SINGLE_INSTANCE_NETWORK_SOCKET = 44331;
     public static immutable String SINGLE_INSTANCE_SHARED_KEY = "$$NewInstance$$\n";
     public static immutable String CLOSE_INSTANCE_SHARED_KEY = "$$CloseInstance$$\n";
     private static ServerSocket socket;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!ApplicationInstanceManager();
+    }
 
     public static bool registerInstance(bool stopInstance) {
         bool returnValueOnError = true;

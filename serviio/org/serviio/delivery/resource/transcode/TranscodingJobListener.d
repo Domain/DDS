@@ -20,23 +20,29 @@ import org.slf4j.LoggerFactory;
 
 public class TranscodingJobListener : ProcessListener
 {
-    private static Logger log = LoggerFactory.getLogger!(TranscodingJobListener);
+    private static Logger log;
     private String transcodingIdentifier;
     private File transcodedFile;
     private PipedInputStream transcodedStream;
     private bool isSegmentedOutput;
+    private Set!(TranscodeInputStream) processingStreams;
+    private bool started = false;
+    private bool successful = true;
+    private TreeMap!(Double, ProgressData) timeFilesizeMap;
+    private /*volatile*/ bool shuttingDown = false;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(TranscodingJobListener);
+    }
 
     public this(String transcodingIdentifier, bool isSegmentedOutput)
     {
+        processingStreams = new HashSet!(TranscodeInputStream)();
+        timeFilesizeMap = new TreeMap!(Double, ProgressData)();
         this.transcodingIdentifier = transcodingIdentifier;
         this.isSegmentedOutput = isSegmentedOutput;
     }
-
-    private Set!(TranscodeInputStream) processingStreams = new HashSet();
-    private bool started = false;
-    private bool successful = true;
-    private TreeMap!(Double, ProgressData) timeFilesizeMap = new TreeMap();
-    private /*volatile*/ bool shuttingDown = false;
 
     override public void processEnded(bool success)
     {

@@ -23,8 +23,14 @@ import org.slf4j.LoggerFactory;
 
 public class JPEGExtractionStrategy : ImageExtractionStrategy
 {
-    private static DateFormat exifDF = new SimpleDateFormat("''yyyy:MM:dd HH:mm:ss''");
-    private static Logger log = LoggerFactory.getLogger!(JPEGExtractionStrategy);
+    private static DateFormat exifDF;
+    private static Logger log;
+
+    static this()
+    {
+        exifDF = new SimpleDateFormat("''yyyy:MM:dd HH:mm:ss''");
+        log = LoggerFactory.getLogger!(JPEGExtractionStrategy);
+    }
 
     override public void extractMetadata(ImageMetadata metadata, ByteSource f)
     {

@@ -5,7 +5,7 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LogoutResource
 {
-  @Post("xml|json")
+  //@Post("xml|json")
   public abstract ResultRepresentation logout();
 }
 

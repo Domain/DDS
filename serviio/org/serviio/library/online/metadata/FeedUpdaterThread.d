@@ -41,7 +41,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
     private static immutable int FEED_UPDATER_CHECK_INTERVAL = 1;
     private static immutable int FEER_PARSE_RETRY_COUNT = 2;
     private OnlineLibraryManager onlineManager;
-    private Map!(Long, Integer) retryCounter = new HashMap();
+    private Map!(Long, Integer) retryCounter;
 
     static this()
     {
@@ -50,6 +50,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
 
     public this(OnlineLibraryManager onlineManager)
     {
+        retryCounter = new HashMap!(Long, Integer)();
         this.onlineManager = onlineManager;
     }
 

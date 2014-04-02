@@ -14,7 +14,7 @@ public class ITunesRssModuleImpl : /*ModuleImpl, */ITunesRssModule
     private Date releaseDate;
     private String name;
     private String artist;
-    private List!(Image) images = new ArrayList();
+    private List!(Image) images = new ArrayList!(Image)();
     private Integer duration;
 
     public this()

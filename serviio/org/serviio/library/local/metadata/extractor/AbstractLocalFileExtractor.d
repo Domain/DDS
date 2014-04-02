@@ -18,7 +18,12 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractLocalFileExtractor : MetadataExtractor
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
+
+    public this()
+    {
+        log = LoggerFactory.getLogger!AbstractLocalFileExtractor();
+    }
 
     override public bool isMetadataUpdated(File mediaFile, MediaItem mediaItem, MetadataDescriptor metadataDescriptor)
     {

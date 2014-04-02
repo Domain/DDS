@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class Profile : Comparable!(Profile)
 {
-    private static Logger log = LoggerFactory.getLogger!(Profile);
+    private static Logger log;
     public static immutable String DETECTION_FIELD_SERVER = "Server";
     public static immutable String DETECTION_FIELD_MODEL_NAME = "ModelName";
     public static immutable String DETECTION_FIELD_FRIENDLY_NAME = "FriendlyName";
@@ -47,6 +47,11 @@ public class Profile : Comparable!(Profile)
     private H264LevelCheckType h264LevelCheck;
     private ThumbnailResolution thumbnailsResolution;
     private ImageResolutions allowedImageResolutions;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(Profile);
+    }
 
     public this(String id, String name, Class/*!(?)*/ contentDirectoryMessageBuilderClass, ResourceTransportProtocolHandler resourceTransportProtocolHandler, List!(DetectionDefinition) detectionDefinitions, Map!(MediaFormatProfile, ProtocolInfo) protocolInfo, String protocolInfoType, DeviceDescription deviceDescription, ContentDirectoryDefinitionFilter cdDefinitionFilter, TranscodingConfiguration transcodingConfiguration, TranscodingConfiguration onlineTranscodingConfiguration, TranscodingConfiguration hardSubsTranscodingConfiguration, bool automaticImageRotation, bool limitImageResolution, SubtitlesConfiguration subtitlesConfiguration, bool alwaysEnableTranscoding, bool selectable, List!(DeliveryQuality) deliveryQualities, H264LevelCheckType h264LevelCheck, ThumbnailResolution thumbnailsResolution, ImageResolutions allowedImageResolutions)
     {

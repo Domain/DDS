@@ -8,10 +8,11 @@ import org.serviio.i18n.Language;
 public class BrowsingCategoriesLanguages
 {
     public static immutable String DEFAULT_LANGUAGE_CODE = "en";
-    private static List!(Language) languages = new ArrayList();
+    private static List!(Language) languages;
 
     static this()
     {
+        languages = new ArrayList!(Language)();
         languages.add(new Language("ar", "العربية"));
         languages.add(new Language("bg", "български език"));
         languages.add(new Language("ca", "Català"));

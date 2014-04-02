@@ -68,15 +68,16 @@ public class ManifestTranscodeInputStreamModifier
         {
             INITIAL,  SEGMENT_SEARCH,  SEGMENT_FOUND
         }
+        
+        private ModifierState state = ModifierState.INITIAL;
+        private ModificationFactory factory;
+        private LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover;
 
         public this(LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover)
         {
+            factory = new ModificationFactory(0, 4096);
             this.segmentRemover = segmentRemover;
         }
-
-        private ModifierState state = ModifierState.INITIAL;
-        private ModificationFactory factory = new ModificationFactory(0, 4096);
-        private LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover;
 
         public AfterModification modify(StringBuilder characterBuffer, int firstModifiableCharacterInBuffer, bool endOfStreamHit)
         {

@@ -18,13 +18,17 @@ import org.slf4j.LoggerFactory;
 
 public class ITunesRssModuleParser : ModuleParser
 {
-    private static Logger log = LoggerFactory.getLogger!(ITunesRssModuleParser);
-    private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.UK);
-    private static Namespace NS = Namespace.getNamespace("http://itunes.apple.com/rss");
-    private static Namespace ATOM_NS = Namespace.getNamespace("http://www.w3.org/2005/Atom");
+    private static Logger log;
+    private static SimpleDateFormat DATE_FORMAT;
+    private static Namespace NS;
+    private static Namespace ATOM_NS;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(ITunesRssModuleParser);
+        DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.UK);
+        NS = Namespace.getNamespace("http://itunes.apple.com/rss");
+        ATOM_NS = Namespace.getNamespace("http://www.w3.org/2005/Atom");
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 

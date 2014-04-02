@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class LiveSegmentBasedTranscodingDeliveryStrategy : SegmentBasedTranscodingDeliveryStrategy
 {
-    public static Pattern segmentPattern = Pattern.compile("segment(\\d{5}).ts", 8);
+    public static Pattern segmentPattern;
+
+    static this()
+    {
+        segmentPattern = Pattern.compile("segment(\\d{5}).ts", 8);
+    }
 
     override protected TranscodeInputStream createStreamForTranscodedFile(File transcodedFile, TranscodingJobListener jobListener, Long resourceId, Client client, DeliveryListener deliveryListener, bool forceClosing)
     {
@@ -48,9 +53,14 @@ public class LiveSegmentBasedTranscodingDeliveryStrategy : SegmentBasedTranscodi
 
     private static class SegmentRemoverWorker : Runnable
     {
-        private static Logger log = LoggerFactory.getLogger!(SegmentRemoverWorker);
+        private static Logger log;
         private File segmentsFolder;
         private Integer firstUsedSegmentNumber;
+
+        static this()
+        {
+            log = LoggerFactory.getLogger!(SegmentRemoverWorker);
+        }
 
         public this(File segmentsFolder, Integer firstUsedSegmentNumber)
         {

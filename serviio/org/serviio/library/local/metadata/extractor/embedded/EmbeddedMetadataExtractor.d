@@ -44,11 +44,12 @@ import org.slf4j.LoggerFactory;
 public class EmbeddedMetadataExtractor : MetadataExtractor
 {
     private static Logger log;
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static DateFormat DATE_FORMAT;
 
     static this()
     {
         log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+        DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     override public ExtractorType getExtractorType()

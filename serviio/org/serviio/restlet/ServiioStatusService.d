@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class ServiioStatusService : StatusService
 {
-    private static Logger log = LoggerFactory.getLogger!(ServiioStatusService);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ServiioStatusService);
+    }
 
     public Representation getRepresentation(Status status, Request request, Response response)
     {

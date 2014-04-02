@@ -8,8 +8,8 @@ import java.util.List;
 public class ResultRepresentation
 {
     private Integer errorCode = Integer.valueOf(0);
-    @XStreamImplicit(itemFieldName="parameter")
-    @SerializedName("parameter")
+    //@XStreamImplicit(itemFieldName="parameter")
+    //@SerializedName("parameter")
     private List!(String) parameters;
 
     public this() {}

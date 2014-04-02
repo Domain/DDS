@@ -15,7 +15,12 @@ import org.slf4j.Logger;
 public class FlowPlayerKeyGeneratorServerResource : AbstractRestrictedCDSServerResource , FlowPlayerKeyGeneratorResource
 {
     private static immutable String PRIVATE_KEY = "8935e021454f50d9a18";
-    private static Pattern DOMAIN_MATCHER = Pattern.compile("^.*\\.(.+\\..+)$");
+    private static Pattern DOMAIN_MATCHER;
+
+    static this()
+    {
+        DOMAIN_MATCHER = Pattern.compile("^.*\\.(.+\\..+)$");
+    }
 
     public StringRepresentation generate()
     {

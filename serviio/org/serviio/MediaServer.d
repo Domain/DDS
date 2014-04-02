@@ -30,21 +30,30 @@ import org.serviio.upnp.service.contentdirectory.rest.resources.server.LoginServ
 import org.serviio.upnp.webserver.WebServer;
 import org.serviio.util.StringUtils;
 import org.serviio.UPnPServerStatus;
+import org.serviio.ApplicationSettings;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 public class MediaServer
 {
-    private static Logger log = LoggerFactory.getLogger!(MediaServer);
+    private static Logger log;
     private static DiscoveryManager discoveryManager;
     private static UPnPServerStatus status = UPnPServerStatus.STOPPED;
-    private static Map!(String, Object) arguments = new HashMap();
-    public static String VERSION = ApplicationSettings.getStringProperty("version");
-    public static immutable String CHANGESET = ApplicationSettings.getStringProperty("changeset");
+    private static Map!(String, Object) arguments;
+    public static String VERSION;
+    public static immutable String CHANGESET;
     private static immutable String ARGUMENT_STOP = "stop";
     private static Thread serverThread;
     private static bool serviceInitializationInProcess = true;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MediaServer);
+        arguments = new HashMap!(String, Object)();
+        VERSION = ApplicationSettings.getStringProperty("version");
+        CHANGESET = ApplicationSettings.getStringProperty("changeset");
+    }
 
     public static void main(String[] args)
     {

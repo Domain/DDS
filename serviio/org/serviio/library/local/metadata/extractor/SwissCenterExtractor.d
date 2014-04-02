@@ -29,7 +29,12 @@ import org.w3c.dom.NodeList;
 
 public class SwissCenterExtractor : AbstractLocalFileExtractor
 {
-    private static NamespaceContext namespaceContext = new SwissCenterNamespaceContext(null);
+    private static NamespaceContext namespaceContext;
+
+    static this()
+    {
+        namespaceContext = new SwissCenterNamespaceContext(null);
+    }
 
     override public ExtractorType getExtractorType()
     {

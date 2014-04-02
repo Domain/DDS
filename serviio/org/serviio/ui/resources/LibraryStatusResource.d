@@ -5,7 +5,7 @@ import org.serviio.ui.representation.LibraryStatusRepresentation;
 
 public abstract interface LibraryStatusResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract LibraryStatusRepresentation load();
 }
 

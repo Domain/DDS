@@ -20,7 +20,12 @@ public class ServiioSearchAnalyzer : StopwordAnalyzerBase
 {
     public static immutable int DEFAULT_MAX_TOKEN_LENGTH = 255;
     private int maxTokenLength = 255;
-    public static immutable CharArraySet STOP_WORDS_SET = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
+    public static immutable CharArraySet STOP_WORDS_SET;
+
+    static this()
+    {
+        STOP_WORDS_SET = StopAnalyzer.ENGLISH_STOP_WORDS_SET;
+    }
 
     public this(Version matchVersion, CharArraySet stopWords)
     {

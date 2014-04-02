@@ -26,7 +26,12 @@ import org.slf4j.LoggerFactory;
 
 public class LibraryAdditionsCheckerThread : AbstractLibraryCheckerThread
 {
-    private static Logger log = LoggerFactory.getLogger!(LibraryAdditionsCheckerThread);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(LibraryAdditionsCheckerThread);
+    }
 
     override public void run()
     {

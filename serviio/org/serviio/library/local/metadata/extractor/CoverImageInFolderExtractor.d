@@ -26,11 +26,16 @@ import org.slf4j.LoggerFactory;
 
 public class CoverImageInFolderExtractor : AbstractLocalFileExtractor
 {
-    private static Logger log = LoggerFactory.getLogger!(CoverImageInFolderExtractor);
-    private static immutable String[] AUDIO_FILES = { "folder.jpg", "cover.jpg", "front_cover.jpg", ".*\\[front\\].jpg", "albumart.jpg" };
-    private static immutable String[] VIDEO_FILES = { "dvdcover.jpg", "folder.jpg", "movie.jpg", ".*poster.*.jpg" };
+    private static Logger log;
+    private static immutable String[] AUDIO_FILES = [ "folder.jpg", "cover.jpg", "front_cover.jpg", ".*\\[front\\].jpg", "albumart.jpg" ];
+    private static immutable String[] VIDEO_FILES = [ "dvdcover.jpg", "folder.jpg", "movie.jpg", ".*poster.*.jpg" ];
     private Pattern[] audioPatterns;
     private Pattern[] videoPatterns;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(CoverImageInFolderExtractor);
+    }
 
     override public ExtractorType getExtractorType()
     {

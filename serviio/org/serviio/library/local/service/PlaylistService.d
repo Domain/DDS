@@ -19,7 +19,12 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistService : Service
 {
-    private static Logger log = LoggerFactory.getLogger!(PlaylistService);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PlaylistService);
+    }
 
     public static Playlist getPlaylist(Long playlistId)
     {

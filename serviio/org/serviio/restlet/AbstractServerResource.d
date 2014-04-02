@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractServerResource : ServerResource
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
+
+    public this()
+    {
+        log = LoggerFactory.getLogger!AbstractServerResource();
+    }
 
     protected ResultRepresentation responseOk()
     {

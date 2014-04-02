@@ -37,8 +37,18 @@ import org.slf4j.Logger;
 
 public class ResourceTransportRequestHandler : AbstractRequestHandler
 {
-    private static final ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
-    private ResourceTransportProtocolHandler dlnaProtocolHandler = new DLNAProtocolHandler();
+    private static ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
+    private ResourceTransportProtocolHandler dlnaProtocolHandler;
+
+    static this()
+    {
+        resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
+    }
+
+    public this()
+    {
+        dlnaProtocolHandler = new DLNAProtocolHandler();
+    }
 
     override protected void handleRequest(HttpRequest request, HttpResponse response, HttpContext context)
     {

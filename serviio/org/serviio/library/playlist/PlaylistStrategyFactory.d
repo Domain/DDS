@@ -5,7 +5,12 @@ import org.serviio.library.playlist.PlaylistParserStrategy;
 
 public class PlaylistStrategyFactory
 {
-    private static final PlaylistParserStrategy[] strategies = { new M3UParserStrategy(), new PlsParserStrategy(), new AsxParserStrategy(), new WplParserStrategy() };
+    private static PlaylistParserStrategy[] strategies;
+
+    static this()
+    {
+        strategies = [ new M3UParserStrategy(), new PlsParserStrategy(), new AsxParserStrategy(), new WplParserStrategy() ];
+    }
 
     public static PlaylistParserStrategy getStrategy(byte[] playlistBytes, String playlistLocation)
     {

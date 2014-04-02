@@ -21,13 +21,18 @@ import org.slf4j.LoggerFactory;
 public class Device
 {
     private static Device instance;
-    private static Logger log = LoggerFactory.getLogger!(Device);
+    private static Logger log;
     private String uuid;
     private String deviceType = "urn:schemas-upnp-org:device:MediaServer:1";
     private InetAddress bindAddress;
     private URL descriptionURL;
     private List!(Service) services;
     private InetSocketAddress multicastGroupAddress;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(Device);
+    }
 
     private this()
     {

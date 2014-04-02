@@ -33,11 +33,13 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
     private static immutable String APIKEY = "33a37a299fe4bef416e347c2fca2494c";
     private static immutable String API_BASE_CONTEXT = "http://api.themoviedb.org/3/";
     private static String IMAGE_URL_BASE;
-    private static Logger log = LoggerFactory.getLogger!(TheMovieDBSourceAdaptor);
-    private static DateFormat releaseDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static Logger log;
+    private static DateFormat releaseDateFormat;
 
     static this()
     {
+        log = LoggerFactory.getLogger!(TheMovieDBSourceAdaptor);
+        releaseDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         setupImageUrl();
     }
 

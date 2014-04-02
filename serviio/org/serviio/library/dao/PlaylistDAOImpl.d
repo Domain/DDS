@@ -24,7 +24,12 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(PlaylistDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PlaylistDAOImpl);
+    }
 
     public long create(Playlist newInstance)
     {

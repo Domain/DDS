@@ -21,10 +21,16 @@ import org.slf4j.LoggerFactory;
 
 public class LiveManifestTranscodeInputStream : ManifestTranscodeInputStream, ClosableStreamDelegator
 {
-    private static Logger log = LoggerFactory.getLogger!(LiveManifestTranscodeInputStream);
-    private static Map!(File, TimeoutStreamDelegator) delegators = Collections.synchronizedMap(new HashMap());
+    private static Logger log;
+    private static Map!(File, TimeoutStreamDelegator) delegators;
     private TimeoutStreamDelegator closingDelegator;
     private File manifestFile;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(LiveManifestTranscodeInputStream);
+        delegators = Collections.synchronizedMap(new HashMap!(File, TimeoutStreamDelegator)());
+    }
 
     public this(ProcessListener processListener, File file, Client client, ResourceURLGenerator urlGenerator, Long resourceId, DeliveryListener deliveryListener, bool forceClosing, LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemover segmentRemover)
     {

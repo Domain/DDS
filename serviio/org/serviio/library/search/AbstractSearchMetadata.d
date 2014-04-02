@@ -23,8 +23,8 @@ public abstract class AbstractSearchMetadata : SearchMetadata
     private SearchCategory category;
     private immutable String searchableValue;
     private Long thumbnailId;
-    private List!(String) context = new ArrayList();
-    private Map!(Class/*!(?)*/, Object) commands = new HashMap();
+    private List!(String) context = new ArrayList!(String)();
+    private Map!(Class/*!(?)*/, Object) commands = new HashMap!(Class/*!(?)*/, Object)();
 
     public this(Long mediaItemId, MediaFileType fileType, ObjectType objectType, SearchCategory category, String searchableValue, Long thumbnailId)
     {

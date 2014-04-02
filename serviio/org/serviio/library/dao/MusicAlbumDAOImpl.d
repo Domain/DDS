@@ -24,7 +24,12 @@ import org.slf4j.LoggerFactory;
 
 public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(MusicAlbumDAOImpl);
+    private static Logger log;
+    
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MusicAlbumDAOImpl);
+    }
 
     public long create(MusicAlbum newInstance)
     {

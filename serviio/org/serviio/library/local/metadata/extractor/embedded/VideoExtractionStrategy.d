@@ -17,75 +17,80 @@ import org.slf4j.LoggerFactory;
 
 public class VideoExtractionStrategy
 {
-  private static final Logger log = LoggerFactory.getLogger!(VideoExtractionStrategy);
-  
-  public void extractMetadata(VideoMetadata metadata, File f)
-  {
-    log.debug_(String.format("Extracting metadata of video file: %s", cast(Object[])[ f.getAbsolutePath() ]));
-    
+    private static Logger log;
 
-    FFmpegMetadataRetriever.retrieveMetadata(metadata, f.getPath(), DeliveryContext.local());
-    
+    static this()
+    {
+        log = LoggerFactory.getLogger!(VideoExtractionStrategy);
+    }
 
-    setupTimestampForMPEG2TS(metadata, f);
-    if (Configuration.isGenerateLocalThumbnailForVideos())
+    public void extractMetadata(VideoMetadata metadata, File f)
     {
-      byte[] thumbnailImage = FFMPEGWrapper.readVideoThumbnail(f, metadata.getDuration(), metadata.getVideoCodec(), metadata.getContainer());
-      if ((thumbnailImage !is null) && (thumbnailImage.length > 0))
-      {
-        ImageDescriptor imageDesc = new ImageDescriptor(thumbnailImage, "image/jpeg");
-        metadata.setCoverImage(imageDesc);
-      }
+        log.debug_(String.format("Extracting metadata of video file: %s", cast(Object[])[ f.getAbsolutePath() ]));
+
+
+        FFmpegMetadataRetriever.retrieveMetadata(metadata, f.getPath(), DeliveryContext.local());
+
+
+        setupTimestampForMPEG2TS(metadata, f);
+        if (Configuration.isGenerateLocalThumbnailForVideos())
+        {
+            byte[] thumbnailImage = FFMPEGWrapper.readVideoThumbnail(f, metadata.getDuration(), metadata.getVideoCodec(), metadata.getContainer());
+            if ((thumbnailImage !is null) && (thumbnailImage.length > 0))
+            {
+                ImageDescriptor imageDesc = new ImageDescriptor(thumbnailImage, "image/jpeg");
+                metadata.setCoverImage(imageDesc);
+            }
+        }
     }
-  }
-  
-  protected void setupTimestampForMPEG2TS(VideoMetadata metadata, File f)
-  {
-    TransportStreamTimestamp ts = null;
-    if (metadata.getContainer() == VideoContainer.MPEG2TS)
+
+    protected void setupTimestampForMPEG2TS(VideoMetadata metadata, File f)
     {
-      RandomAccessFile raf = null;
-      try
-      {
-        raf = new RandomAccessFile(f, "r");
-        byte[] packetBuffer = new byte['Å'];
-        raf.read(packetBuffer);
-        if (packetBuffer[0] == 71)
+        TransportStreamTimestamp ts = null;
+        if (metadata.getContainer() == VideoContainer.MPEG2TS)
         {
-          ts = TransportStreamTimestamp.NONE;
+            RandomAccessFile raf = null;
+            try
+            {
+                raf = new RandomAccessFile(f, "r");
+                byte[] packetBuffer = new byte['Å'];
+                raf.read(packetBuffer);
+                if (packetBuffer[0] == 71)
+                {
+                    ts = TransportStreamTimestamp.NONE;
+                }
+                else if ((packetBuffer[4] == 71) && (packetBuffer['Ä'] == 71))
+                {
+                    if ((packetBuffer[0] == 0) && (packetBuffer[1] == 0) && (packetBuffer[2] == 0) && (packetBuffer[3] == 0))
+                    {
+                        ts = TransportStreamTimestamp.ZERO;
+                        log.debug_("Found ZERO value timestamp in the transport stream");
+                    }
+                    else
+                    {
+                        ts = TransportStreamTimestamp.VALID;
+                        log.debug_("Found VALID value timestamp in the transport stream");
+                    }
+                }
+                else
+                {
+                    log.warn("Cannot find a valid timestamp in the transport stream packet, setting it to NONE");
+                    ts = TransportStreamTimestamp.NONE;
+                }
+            }
+            finally
+            {
+                if (raf !is null) {
+                    raf.close();
+                }
+            }
         }
-        else if ((packetBuffer[4] == 71) && (packetBuffer['Ä'] == 71))
-        {
-          if ((packetBuffer[0] == 0) && (packetBuffer[1] == 0) && (packetBuffer[2] == 0) && (packetBuffer[3] == 0))
-          {
-            ts = TransportStreamTimestamp.ZERO;
-            log.debug_("Found ZERO value timestamp in the transport stream");
-          }
-          else
-          {
-            ts = TransportStreamTimestamp.VALID;
-            log.debug_("Found VALID value timestamp in the transport stream");
-          }
-        }
-        else
-        {
-          log.warn("Cannot find a valid timestamp in the transport stream packet, setting it to NONE");
-          ts = TransportStreamTimestamp.NONE;
-        }
-      }
-      finally
-      {
-        if (raf !is null) {
-          raf.close();
-        }
-      }
+        metadata.setTimestampType(ts);
     }
-    metadata.setTimestampType(ts);
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.VideoExtractionStrategy
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.library.local.metadata.extractor.embedded.VideoExtractionStrategy
+* JD-Core Version:    0.7.0.1
+*/

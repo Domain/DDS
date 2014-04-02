@@ -13,14 +13,20 @@ import org.serviio.library.search.Searcher;
 public class SearchManager
 {
     private static SearchManager instance;
-    private static Logger log = LoggerFactory.getLogger!(SearchManager);
+    private static Logger log;
     private SearchIndexer _localIndexer;
     private SearchIndexer _onlineIndexer;
     private Searcher _searcher;
-    private ScheduledExecutorService commitExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledExecutorService commitExecutorService;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(SearchManager);
+    }
 
     private this()
     {
+        commitExecutorService = Executors.newSingleThreadScheduledExecutor();
         log.info("Starting up search engine");
         this._localIndexer = new SearchIndexer(false);
         this._onlineIndexer = new SearchIndexer(true);

@@ -11,13 +11,18 @@ import org.serviio.util.StringUtils;
 
 public class RequestedResourceDescriptor
 {
-    private static Pattern URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
+    private static Pattern URL_EXTENSION_REMOVAL_PATTERN;
     private Long resourceId;
     private ResourceType resourceType;
     private String targetProfileName;
     private Integer protocolInfoIndex;
     private QualityType quality;
     private String path;
+
+    static this()
+    {
+        URL_EXTENSION_REMOVAL_PATTERN = Pattern.compile("(\\.srt|\\.m3u8)");
+    }
 
     public this(String requestUri)
     {

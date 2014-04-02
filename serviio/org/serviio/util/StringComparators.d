@@ -6,18 +6,24 @@ import java.util.Comparator;
 
 public final class StringComparators
 {
-    private static final Comparator!(String) NATURAL_COMPARATOR_ASCII = new class() Comparator {
-        public int compare(String o1, String o2)
-        {
-            return StringComparators.compareNaturalAscii(o1, o2);
-        }
-    };
-    private static final Comparator!(String) IGNORE_CASE_NATURAL_COMPARATOR_ASCII = new class() Comparator {
-        public int compare(String o1, String o2)
-        {
-            return StringComparators.compareNaturalIgnoreCaseAscii(o1, o2);
-        }
-    };
+    private static Comparator!(String) NATURAL_COMPARATOR_ASCII;
+    private static Comparator!(String) IGNORE_CASE_NATURAL_COMPARATOR_ASCII;
+
+    static this()
+    {
+        NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
+            public int compare(String o1, String o2)
+            {
+                return StringComparators.compareNaturalAscii(o1, o2);
+            }
+        };
+        IGNORE_CASE_NATURAL_COMPARATOR_ASCII = new class() Comparator!(String) {
+            public int compare(String o1, String o2)
+            {
+                return StringComparators.compareNaturalIgnoreCaseAscii(o1, o2);
+            }
+        };
+    }
 
     public static Comparator!(String) getNaturalComparator()
     {

@@ -43,8 +43,13 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
     private static immutable int CACHE_SECONDS = 36000;
     public static immutable String RESOURCE_CONTEXT = "/resource";
     private static immutable String PARAM_CLIENT_ID = "clientId";
-    private static ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
+    private static ResourceRetrievalStrategyFactory resourceRetrievalStrategyFactory;
     private Profile profile;
+
+    static this()
+    {
+        resourceRetrievalStrategyFactory = new ResourceRetrievalStrategyFactory();
+    }
 
     public StreamRepresentation deliver()
     {

@@ -7,7 +7,7 @@ import org.serviio.ui.representation.BrowsingCategory;
 
 public class PresentationRepresentation
 {
-    private List!(BrowsingCategory) categories = new ArrayList();
+    private List!(BrowsingCategory) categories = new ArrayList!(BrowsingCategory)();
     private String language;
     private bool showParentCategoryTitle;
     private Integer numberOfFilesForDynamicCategories;

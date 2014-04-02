@@ -32,7 +32,12 @@ import org.slf4j.LoggerFactory;
 
 public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
 {
-    private static Logger log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(MediaResourceRetrievalStrategy);
+    }
 
     public static List!(Object/*? : ResourceInfo*/) getMediaInfoForAvailableProfiles(MediaItem mediaItem, Profile rendererProfile)
     {

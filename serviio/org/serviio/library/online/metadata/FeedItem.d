@@ -11,7 +11,7 @@ import org.serviio.library.online.metadata.Feed;
 public class FeedItem : OnlineContainerItem!(Feed), Serializable
 {
     private static immutable long serialVersionUID = -1114391919989682022L;
-    private Map!(String, URL) links = new HashMap();
+    private Map!(String, URL) links = new HashMap!(String, URL)();
 
     public this(Feed parentFeed, int feedOrder)
     {

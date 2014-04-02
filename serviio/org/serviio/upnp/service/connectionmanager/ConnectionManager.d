@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConnectionManager : Service
 {
-    private static Logger log = LoggerFactory.getLogger!(ConnectionManager);
+    private static Logger log;
     private static immutable int CONNECTION_ID = 0;
     private static immutable String VAR_A_ARG_TYPE_ProtocolInfo = "A_ARG_TYPE_ProtocolInfo";
     private static immutable String VAR_A_ARG_TYPE_ConnectionStatus = "A_ARG_TYPE_ConnectionStatus";
@@ -33,6 +33,11 @@ public class ConnectionManager : Service
     private static immutable String VAR_A_ARG_TYPE_RcsID = "A_ARG_TYPE_RcsID";
     private static immutable String VAR_A_ARG_TYPE_ConnectionManager = "A_ARG_TYPE_ConnectionManager";
     private static immutable String VAR_A_ARG_TYPE_Direction = "A_ARG_TYPE_Direction";
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ConnectionManager);
+    }
 
     override protected void setupService()
     {

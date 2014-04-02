@@ -14,7 +14,7 @@ public enum ResourceType
 
 public class Resource
 {
-    private static ResourceURLGenerator urlGenerator = new DefaultResourceURLGenerator();
+    private static ResourceURLGenerator urlGenerator;
     private Long resourceId;
     private ResourceType resourceType;
     private MediaFormatProfile ver;
@@ -29,12 +29,18 @@ public class Resource
     private String protocolInfo;
     private String protection;
 
-    private Integer protocolInfoIndex = Integer.valueOf(0);
+    private Integer protocolInfoIndex;
     private QualityType quality;
     private Boolean transcoded;
 
+    static this()
+    {
+        urlGenerator = new DefaultResourceURLGenerator();
+    }
+
     public this(ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality, Boolean transcoded)
     {
+        protocolInfoIndex = Integer.valueOf(0);
         this.resourceId = resourceId;
         this.resourceType = resourceType;
         this.ver = ver;

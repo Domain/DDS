@@ -9,8 +9,13 @@ public class WebResourceItem
 {
     private String title;
     private String cacheKey;
-    private Map!(String, String) additionalInfo = new HashMap();
-    private Date releaseDate = new Date();
+    private Map!(String, String) additionalInfo = new HashMap!(String, String)();
+    private Date releaseDate;
+
+    public this()
+    {
+        releaseDate = new Date();
+    }
 
     public String getTitle()
     {

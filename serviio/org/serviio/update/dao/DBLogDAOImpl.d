@@ -14,7 +14,12 @@ import org.slf4j.LoggerFactory;
 
 public class DBLogDAOImpl : DBLogDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(DBLogDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DBLogDAOImpl);
+    }
 
     public bool isScriptPresent(String fileScript)
     {

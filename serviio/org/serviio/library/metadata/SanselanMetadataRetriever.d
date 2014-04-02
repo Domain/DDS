@@ -22,7 +22,12 @@ import org.slf4j.LoggerFactory;
 
 public class SanselanMetadataRetriever
 {
-    private static Logger log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(EmbeddedMetadataExtractor);
+    }
 
     public static void retrieveImageMetadata(ImageMetadata md, String imageLocation, bool local)
     {

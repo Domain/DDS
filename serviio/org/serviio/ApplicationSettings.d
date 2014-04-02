@@ -20,7 +20,7 @@ public class ApplicationSettings {
     }
 
     public static String getStringProperty(String name) {
-        return cast(String)ApplicationSettings.getProperties().get(cast(Object)name);
+        return cast(String)ApplicationSettings.getProperties().get(name);
     }
 
     public static Integer getIntegerProperty(String name) {

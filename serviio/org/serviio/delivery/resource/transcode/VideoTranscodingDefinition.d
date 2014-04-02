@@ -21,11 +21,12 @@ public class VideoTranscodingDefinition : AbstractTranscodingDefinition
     private bool forceVTranscoding;
     private bool forceStereo;
     private DisplayAspectRatio dar;
-    private List!(VideoTranscodingMatch) matches = new ArrayList();
+    private List!(VideoTranscodingMatch) matches;
 
     public this(TranscodingConfiguration parentConfig, VideoContainer targetContainer, VideoCodec targetVideoCodec, AudioCodec targetAudioCodec, Integer maxVideoBitrate, Integer maxHeight, Integer audioBitrate, Integer audioSamplerate, bool forceVTranscoding, bool forceStereo, bool forceInheritance, DisplayAspectRatio dar)
     {
         super(parentConfig);
+        matches = new ArrayList!(VideoTranscodingMatch)();
         this.targetContainer = targetContainer;
         this.targetVideoCodec = targetVideoCodec;
         this.targetAudioCodec = targetAudioCodec;

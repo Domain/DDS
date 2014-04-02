@@ -35,9 +35,16 @@ import org.slf4j.LoggerFactory;
 public class SubtitlesService : Service
 {
     public static immutable String FONT_CONFIG_XML = "fonts.conf";
-    public static immutable String FONT_CONFIG_DIR = FileUtils.getFilePathOfClasspathResource("/fonts", SubtitlesService.class_);
-    private static Logger log = LoggerFactory.getLogger!(SubtitlesService);
-    private static immutable String subtitleFileExtensionsRegEx = "(" + CollectionUtils.listToCSV(SubtitleCodec.getAllSupportedExtensions(), "|", false) + ")";
+    public static immutable String FONT_CONFIG_DIR;
+    private static Logger log;
+    private static immutable String subtitleFileExtensionsRegEx;
+
+    static this()
+    {
+        FONT_CONFIG_DIR = FileUtils.getFilePathOfClasspathResource("/fonts", SubtitlesService.class_);
+        log = LoggerFactory.getLogger!(SubtitlesService);
+        subtitleFileExtensionsRegEx = "(" ~ CollectionUtils.listToCSV(SubtitleCodec.getAllSupportedExtensions(), "|", false) ~ ")";
+    }
 
     public static bool isSoftSubsAvailable(Video item, Profile rendererProfile)
     {

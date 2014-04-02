@@ -5,7 +5,7 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LoginResource
 {
-  @Post("xml|json")
+  //@Post("xml|json")
   public abstract ResultRepresentation login();
 }
 

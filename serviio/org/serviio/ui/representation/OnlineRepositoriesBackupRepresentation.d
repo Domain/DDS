@@ -6,7 +6,12 @@ import org.serviio.ui.representation.OnlineRepositoryBackup;
 
 public class OnlineRepositoriesBackupRepresentation
 {
-    private List!(OnlineRepositoryBackup) items = new ArrayList();
+    private List!(OnlineRepositoryBackup) items;
+
+    public this()
+    {
+        items = new ArrayList();
+    }
 
     public List!(OnlineRepositoryBackup) getItems()
     {

@@ -7,10 +7,10 @@ import org.serviio.ui.representation.RemoteAccessRepresentation;
 
 public abstract interface RemoteAccessResource
 {
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(RemoteAccessRepresentation paramRemoteAccessRepresentation);
   
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract RemoteAccessRepresentation load();
 }
 

@@ -28,11 +28,15 @@ import org.serviio.profile.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class VideoDeliveryEngine
-: AbstractTranscodingDeliveryEngine!(VideoMediaInfo, Video)
+public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMediaInfo, Video)
 {
     private static VideoDeliveryEngine instance;
-    private static final Logger log = LoggerFactory.getLogger!(VideoDeliveryEngine);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(VideoDeliveryEngine);
+    }
 
     public static VideoDeliveryEngine getInstance()
     {

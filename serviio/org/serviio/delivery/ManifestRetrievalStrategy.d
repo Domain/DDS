@@ -25,7 +25,12 @@ import org.slf4j.LoggerFactory;
 
 public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
 {
-    private static Logger log = LoggerFactory.getLogger!(ManifestRetrievalStrategy);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ManifestRetrievalStrategy);
+    }
 
     public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {

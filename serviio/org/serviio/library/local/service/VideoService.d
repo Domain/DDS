@@ -34,7 +34,12 @@ import org.slf4j.LoggerFactory;
 
 public class VideoService : Service
 {
-    private static Logger log = LoggerFactory.getLogger!(VideoService);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(VideoService);
+    }
 
     public static void addVideoToLibrary(VideoMetadata metadata, Repository repository)
     {
@@ -42,18 +47,13 @@ public class VideoService : Service
         {
             log.debug_(String.format("Adding video into database: %s", cast(Object[])[ metadata.getTitle() ]));
 
-
             Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy = FolderService.createOrReadFolder(repository, metadata.getFilePath());
-
 
             Long genreId = GenreService.findOrCreateGenre(metadata.getGenre());
 
-
             Series series = findOrCreateSeries(metadata.getSeriesName(), metadata.getSeriesCoverImage());
 
-
             Long coverImageId = CoverImageService.createCoverImage(metadata.getCoverImage(), null);
-
 
             Video video = new Video(metadata.getTitle(), metadata.getContainer(), new File(metadata.getFilePath()).getName(), metadata.getFilePath(), Long.valueOf(metadata.getFileSize()), cast(Long)folderHierarchy.getValueA(), repository.getId(), metadata.getDate());
 

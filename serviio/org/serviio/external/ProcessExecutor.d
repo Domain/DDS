@@ -39,7 +39,7 @@ public class ProcessExecutor : Thread
     private bool success = true;
     private bool unlimitedPipe = false;
     private bool useStdOutForTextOutput = false;
-    private Set!(ProcessListener) listeners = new HashSet!(ProcessListener)();
+    private Set!(ProcessListener) listeners;
 
     static this()
     {
@@ -68,6 +68,7 @@ public class ProcessExecutor : Thread
 
     public this(ProcessExecutorParameter[] commandArguments, bool checkForExitValue, Long failsafeTimeout, bool unlimitedPipe, bool useStdOutForTextOutput)
     {
+        listeners = new HashSet!(ProcessListener)();
         this.commandArguments = commandArguments;
         this.checkForExitValue = checkForExitValue;
         this.failsafeTimeout = failsafeTimeout;

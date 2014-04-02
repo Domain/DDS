@@ -13,7 +13,12 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractPlaylistParserStrategy : PlaylistParserStrategy
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
+    protected Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!AbstractPlaylistParserStrategy();
+    }
 
     protected String readPlaylistContent(byte[] playlistBytes)
     {

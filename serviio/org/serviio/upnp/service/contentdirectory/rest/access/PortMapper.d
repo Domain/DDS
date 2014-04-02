@@ -13,15 +13,21 @@ import org.slf4j.LoggerFactory;
 
 public class PortMapper
 {
-    private static Logger log = LoggerFactory.getLogger!(PortMapper);
+    private static Logger log;
     private static PortMapper instance;
     private static enum LEASE_DURATION = 1800;
     private ScheduledExecutorService leaseRenewalExecutor;
-    private Runnable renewer = new PortmappingLeaseRenewer(null);
+    private Runnable renewer;
     private WebGateway router;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PortMapper);
+    }
 
     private this()
     {
+        renewer = new PortmappingLeaseRenewer(null);
         if (isPortMappingEnabled()) {
             startLeaserRenewer();
         }
@@ -45,7 +51,7 @@ public class PortMapper
                     if (router !is null) {
                         try
                         {
-                            router.addPortMapping(23424, 23424, 1800);
+                            router.addPortMapping(23424, 23424, LEASE_DURATION);
                         }
                         catch (Exception e)
                         {
@@ -87,7 +93,7 @@ public class PortMapper
                         try
                         {
                             router.deletePortMapping(23424, 23424);
-                            router.addPortMapping(23424, 23424, 1800);
+                            router.addPortMapping(23424, 23424, LEASE_DURATION);
                         }
                         catch (Exception e)
                         {

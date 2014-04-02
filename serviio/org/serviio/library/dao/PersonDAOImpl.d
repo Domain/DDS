@@ -22,7 +22,12 @@ import org.slf4j.LoggerFactory;
 
 public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(PersonDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PersonDAOImpl);
+    }
 
     public Person findPersonByName(String name)
     {

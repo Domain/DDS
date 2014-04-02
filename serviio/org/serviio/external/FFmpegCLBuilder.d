@@ -9,12 +9,17 @@ import org.serviio.external.ProcessExecutorParameter;
 
 public class FFmpegCLBuilder : AbstractCLBuilder
 {
-    private List!(ProcessExecutorParameter) _globalOptions = new ArrayList();
-    private List!(ProcessExecutorParameter) _inFileOptions = new ArrayList();
-    private List!(ProcessExecutorParameter) _outFileOptions = new ArrayList();
-    static String executablePath = setupExecutablePath("ffmpeg.location", "ffmpeg_executable");
+    private List!(ProcessExecutorParameter) _globalOptions = new ArrayList!(ProcessExecutorParameter)();
+    private List!(ProcessExecutorParameter) _inFileOptions = new ArrayList!(ProcessExecutorParameter)();
+    private List!(ProcessExecutorParameter) _outFileOptions = new ArrayList!(ProcessExecutorParameter)();
+    static String executablePath;
     private ProcessExecutorParameter _inFile;
     private ProcessExecutorParameter _outFile;
+
+    static this()
+    {
+        executablePath = setupExecutablePath("ffmpeg.location", "ffmpeg_executable");
+    }
 
     override public ProcessExecutorParameter[] build()
     {

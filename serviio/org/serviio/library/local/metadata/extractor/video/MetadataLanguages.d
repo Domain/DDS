@@ -7,11 +7,12 @@ import org.serviio.i18n.Language;
 
 public class MetadataLanguages
 {
-    private static List!(Language) languages = new ArrayList();
+    private static List!(Language) languages;
     public static immutable String DEFAULT_LANGUAGE_CODE = "en";
 
     static this()
     {
+        languages = new ArrayList!(Language)();
         languages.add(new Language("cs", "Čeština"));
         languages.add(new Language("da", "Dansk"));
         languages.add(new Language("de", "Deutsch"));

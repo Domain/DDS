@@ -11,11 +11,12 @@ import org.serviio.library.online.metadata.WebResourceFeed;
 public class WebResourceFeedItem : OnlineContainerItem!(WebResourceFeed), Serializable
 {
     private static immutable long serialVersionUID = 6334150099157949087L;
-    private Map!(String, String) additionalInfo = new HashMap();
+    private Map!(String, String) additionalInfo;
     private String parsedItemCacheKey;
 
     public this(WebResourceFeed parent, int order)
     {
+        additionalInfo = new HashMap!(String, String)();
         this.parentContainer = parent;
         this.order = order;
     }

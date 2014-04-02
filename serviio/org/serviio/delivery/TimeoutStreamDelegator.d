@@ -18,21 +18,30 @@ import org.slf4j.LoggerFactory;
 
 public class TimeoutStreamDelegator
 {
-    private static Logger log = LoggerFactory.getLogger!(TimeoutStreamDelegator);
-    private static int CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC = ApplicationSettings.getIntegerProperty("transcoded_stream_after_read_inactivity_timeout").intValue();
-    private static int CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC = ApplicationSettings.getIntegerProperty("transcoded_stream_after_close_inactivity_timeout").intValue();
+    private static Logger log;
+    private static int CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC;
+    private static int CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC;
     private InputStream stream;
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService scheduler;
     private ScheduledFuture!(Object) scheduledFuture;
     private ProcessListener processListener;
-    private AtomicReference!(Date) lastBytesRead = new AtomicReference(new Date());
+    private AtomicReference!(Date) lastBytesRead;
     private Client client;
     private DeliveryListener deliveryListener;
     private bool forceClosing = false;
     private bool closed = false;
 
+    static this()
+    {
+        log = LoggerFactory.getLogger!(TimeoutStreamDelegator);
+        CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC = ApplicationSettings.getIntegerProperty("transcoded_stream_after_read_inactivity_timeout").intValue();
+        CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC = ApplicationSettings.getIntegerProperty("transcoded_stream_after_close_inactivity_timeout").intValue();
+    }
+
     public this(InputStream stream, ProcessListener processListener, Client client, DeliveryListener deliveryListener, bool forceClosing)
     {
+        scheduler = Executors.newScheduledThreadPool(1);
+        lastBytesRead = new AtomicReference(new Date());
         this.stream = stream;
         this.processListener = processListener;
         this.client = client;

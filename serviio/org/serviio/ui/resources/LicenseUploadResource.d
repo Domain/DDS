@@ -7,7 +7,7 @@ import org.serviio.restlet.ResultRepresentation;
 
 public abstract interface LicenseUploadResource
 {
-  @Put("txt:xml|txt:json")
+  //@Put("txt:xml|txt:json")
   public abstract ResultRepresentation save(InputRepresentation paramInputRepresentation);
 }
 

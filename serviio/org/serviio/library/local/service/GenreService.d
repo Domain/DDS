@@ -14,7 +14,12 @@ import org.slf4j.LoggerFactory;
 
 public class GenreService : Service
 {
-    private static Logger log = LoggerFactory.getLogger!(GenreService);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(GenreService);
+    }
 
     public static void removeGenre(Long genreId)
     {

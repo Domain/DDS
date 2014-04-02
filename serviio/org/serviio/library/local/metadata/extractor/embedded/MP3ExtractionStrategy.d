@@ -24,7 +24,12 @@ import org.serviio.library.local.metadata.extractor.embedded.AudioExtractionStra
 
 public class MP3ExtractionStrategy : AudioExtractionStrategy
 {
-    private static Pattern yearPattern = Pattern.compile("([0-9]{4})");
+    private static Pattern yearPattern;
+
+    static this()
+    {
+        yearPattern = Pattern.compile("([0-9]{4})");
+    }
 
     override public void extractMetadata(AudioMetadata metadata, AudioFile audioFile, AudioHeader header, Tag tag)
     {

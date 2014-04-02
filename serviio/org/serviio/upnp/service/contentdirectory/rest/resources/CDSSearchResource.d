@@ -5,7 +5,7 @@ import org.serviio.upnp.service.contentdirectory.rest.representation.SearchResul
 
 public abstract interface CDSSearchResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract SearchResultsRepresentation search();
 }
 

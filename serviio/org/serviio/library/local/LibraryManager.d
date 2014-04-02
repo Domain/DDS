@@ -27,12 +27,17 @@ import org.slf4j.LoggerFactory;
 
 public class LibraryManager : AbstractLibraryManager
 {
-    private static Logger log = LoggerFactory.getLogger!(LibraryManager);
+    private static Logger log;
     private static LibraryManager instance;
     private LibraryUpdatesCheckerThread libraryUpdatesCheckerThread;
     private LibraryAdditionsCheckerThread libraryAdditionsCheckerThread;
     private PlaylistMaintainerThread playlistMaintainerThread;
     private bool updatePaused = false;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(LibraryManager);
+    }
 
     public static LibraryManager getInstance()
     {

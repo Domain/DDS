@@ -20,9 +20,14 @@ import org.w3c.dom.NodeList;
 
 public class ContentDirectoryDefinitionParser
 {
-    private static Logger log = LoggerFactory.getLogger!(ContentDirectoryDefinitionParser);
+    private static Logger log;
     private static immutable String TAG_ACTION = "action";
     private static immutable String TAG_CONTAINER = "container";
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(ContentDirectoryDefinitionParser);
+    }
 
     public static Definition parseDefinition(InputStream definitionStream)
     {

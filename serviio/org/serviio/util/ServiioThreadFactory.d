@@ -10,11 +10,12 @@ public class ServiioThreadFactory : ThreadFactory
     private static immutable String THREAD_PREFIX = "ServioThread-";
     private static ServiioThreadFactory instance;
     private ThreadGroup group;
-    private AtomicInteger threadNumber = new AtomicInteger(1);
+    private AtomicInteger threadNumber;
 
     private this()
     {
         this.group = new ThreadGroup("ServioThreads");
+        threadNumber = new AtomicInteger(1);
     }
 
     public static ServiioThreadFactory getInstance()

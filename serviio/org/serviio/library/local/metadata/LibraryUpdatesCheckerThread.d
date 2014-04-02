@@ -29,8 +29,14 @@ import org.slf4j.LoggerFactory;
 public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
 {
     private static immutable int THREAD_SLEEP_PERIOD = 3600000;
-    private static List!(ExtractorType) automaticExtractors = Arrays.asList(cast(ExtractorType[])[ ExtractorType.EMBEDDED, ExtractorType.COVER_IMAGE_IN_FOLDER, ExtractorType.MYMOVIES, ExtractorType.SWISSCENTER, ExtractorType.XBMC ]);
-    private static Logger log = LoggerFactory.getLogger!(LibraryUpdatesCheckerThread);
+    private static List!(ExtractorType) automaticExtractors;
+    private static Logger log;
+
+    static this()
+    {
+        automaticExtractors = Arrays.asList(cast(ExtractorType[])[ ExtractorType.EMBEDDED, ExtractorType.COVER_IMAGE_IN_FOLDER, ExtractorType.MYMOVIES, ExtractorType.SWISSCENTER, ExtractorType.XBMC ]);
+        log = LoggerFactory.getLogger!(LibraryUpdatesCheckerThread);
+    }
 
     override public void run()
     {
@@ -78,7 +84,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
                     if (this.workerRunning)
                     {
                         this.isSleeping = true;
-                        Thread.sleep(3600000L);
+                        Thread.sleep(THREAD_SLEEP_PERIOD);
                         this.isSleeping = false;
                     }
                 }

@@ -35,7 +35,7 @@ import java.util.all;
  * for the specifications.
  */
 public class UPNPHelper {
-	private static Logger LOGGER = LoggerFactory.getLogger!UPNPHelper();
+	private static Logger LOGGER;
 	private const static String CRLF = "\r\n";
 	private const static String ALIVE = "ssdp:alive";
 	
@@ -60,7 +60,13 @@ public class UPNPHelper {
 	private const static String BYEBYE = "ssdp:byebye";
 	private static Thread listener;
 	private static Thread aliveThread;
-	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+	private static SimpleDateFormat sdf;
+
+    static this()
+    {
+	    LOGGER = LoggerFactory.getLogger!UPNPHelper();
+	    sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+    }
 
 	/**
 	 * Send UPnP discovery search message to discover devices of interest on

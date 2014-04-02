@@ -20,7 +20,12 @@ import org.slf4j.LoggerFactory;
 
 public class RepositoryService : Service
 {
-    private static Logger log = LoggerFactory.getLogger!(RepositoryService);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(RepositoryService);
+    }
 
     public static List!(Repository) getAllRepositories()
     {

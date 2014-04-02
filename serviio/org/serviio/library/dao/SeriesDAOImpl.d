@@ -23,7 +23,12 @@ import org.slf4j.LoggerFactory;
 
 public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(SeriesDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(SeriesDAOImpl);
+    }
 
     public long create(Series newInstance)
     {

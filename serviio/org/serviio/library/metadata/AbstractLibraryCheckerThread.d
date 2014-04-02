@@ -12,7 +12,12 @@ public abstract class AbstractLibraryCheckerThread : Thread
     protected bool searchingForFiles = false;
     protected bool isSleeping = false;
     protected bool dontSleep = false;
-    private Set!(LibraryIndexingListener) listeners = new HashSet();
+    private Set!(LibraryIndexingListener) listeners;
+
+    public this()
+    {
+        listeners = new HashSet!(LibraryIndexingListener)();
+    }
 
     public void stopWorker()
     {

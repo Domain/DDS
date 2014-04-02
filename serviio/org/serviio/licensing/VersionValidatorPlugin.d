@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public final class VersionValidatorPlugin// : ValidatorPlugin
 {
-    private static Logger log = LoggerFactory.getLogger!(VersionValidatorPlugin);
+    //private static Logger log = LoggerFactory.getLogger!(VersionValidatorPlugin);
     private static immutable String NAME = "Serviio Version Validator Plugin";
     private static immutable String DESCRIPTION = "Checks that the license has been released for the samemajor version as the current version.";
 

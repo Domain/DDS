@@ -9,7 +9,7 @@ public class WebResourceContainer
 {
     private String title;
     private String thumbnailUrl;
-    private List!(WebResourceItem) items = new ArrayList();
+    private List!(WebResourceItem) items = new ArrayList!(WebResourceItem)();
 
     public String getTitle()
     {

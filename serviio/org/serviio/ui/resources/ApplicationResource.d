@@ -5,7 +5,7 @@ import org.serviio.ui.representation.ApplicationRepresentation;
 
 public abstract interface ApplicationResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract ApplicationRepresentation load();
 }
 

@@ -5,7 +5,7 @@ import org.serviio.ui.representation.ServiceStatusRepresentation;
 
 public abstract interface ServiceStatusResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract ServiceStatusRepresentation load();
 }
 

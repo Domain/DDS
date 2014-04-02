@@ -36,11 +36,16 @@ public abstract class AbstractUrlExtractor
     protected static immutable int ITEM_LIST_TIMEOUT_SEC = 30;
     protected static immutable int URL_EXTRACTION_TIMEOUT_MS = 30000;
     protected static Logger logger;
-    private Client restletClient = new Client(Protocol.HTTP);
+    private Client restletClient;
 
     static this()
     {
         logger = LoggerFactory.getLogger!(FeedItemUrlExtractor);
+    }
+
+    public this()
+    {
+        restletClient = new Client(Protocol.HTTP);
     }
 
     public static ContentURLContainer extractItemUrl(AbstractUrlExtractor plugin, OnlineItem item)

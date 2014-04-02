@@ -14,9 +14,14 @@ import org.slf4j.LoggerFactory;
 
 public class PlaylistParser
 {
-    private static Logger log = LoggerFactory.getLogger!(PlaylistParser);
+    private static Logger log;
     private static immutable int ONLINE_MAX_BYTES_TO_READ = 102400;
     private static PlaylistParser instance;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(PlaylistParser);
+    }
 
     public static PlaylistParser getInstance()
     {
@@ -49,7 +54,7 @@ public class PlaylistParser
         {
             log.debug_("Reading playlist from URL");
             ins = HttpClient.getStreamFromURL(playlistLocation);
-            maxLengthToRead = 102400;
+            maxLengthToRead = ONLINE_MAX_BYTES_TO_READ;
         }
         else
         {

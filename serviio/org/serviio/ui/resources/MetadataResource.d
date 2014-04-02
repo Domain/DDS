@@ -7,10 +7,10 @@ import org.serviio.ui.representation.MetadataRepresentation;
 
 public abstract interface MetadataResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract MetadataRepresentation load();
   
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(MetadataRepresentation paramMetadataRepresentation);
 }
 

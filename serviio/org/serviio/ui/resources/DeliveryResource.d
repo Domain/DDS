@@ -7,10 +7,10 @@ import org.serviio.ui.representation.DeliveryRepresentation;
 
 public abstract interface DeliveryResource
 {
-  @Put("xml|json")
+  //@Put("xml|json")
   public abstract ResultRepresentation save(DeliveryRepresentation paramDeliveryRepresentation);
   
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract DeliveryRepresentation load();
 }
 

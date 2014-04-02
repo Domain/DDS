@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 public class DiscoveryManager : WakeUpListener
 {
-    private static Logger log = LoggerFactory.getLogger!(DiscoveryManager);
+    private static Logger log;
     private static DiscoveryManager _instance;
     private static immutable int MIN_SLEEP_CHECK_TIMEOUT_MS = 60000;
     private static immutable int SLEEP_CHECK_INTERVAL_MS = 10000;
@@ -32,14 +32,19 @@ public class DiscoveryManager : WakeUpListener
     private DiscoverySSDPMessageListener discoverySSDPMessageListener;
     private EventSubscriptionExpirationChecker subscriptionExpiryChecker;
     private EventDispatcher eventDispatcher;
-    private WakeUpMonitor wakeUpMonitor = new WakeUpMonitor(60000, this);
+    private WakeUpMonitor wakeUpMonitor;
     private Thread discoveryNotifierThread;
     private Thread discoverySearchListenerThread;
     private Thread subscriptionExpiryCheckerThread;
     private Thread eventDispatcherThread;
     private ScheduledFuture!(Object) wakeUpMonitorSchedule;
-    private ScheduledThreadPoolExecutor wakeUpMonitorExecutor = new ScheduledThreadPoolExecutor(1, ServiioThreadFactory.getInstance());
+    private ScheduledThreadPoolExecutor wakeUpMonitorExecutor;
     private int advertisementSendCount = 3;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(DiscoveryManager);
+    }
 
     public static DiscoveryManager instance()
     {
@@ -47,6 +52,12 @@ public class DiscoveryManager : WakeUpListener
             _instance = new DiscoveryManager();
         }
         return _instance;
+    }
+
+    static this()
+    {
+        wakeUpMonitor = new WakeUpMonitor(MIN_SLEEP_CHECK_TIMEOUT_MS, this);
+        wakeUpMonitorExecutor = new ScheduledThreadPoolExecutor(1, ServiioThreadFactory.getInstance());
     }
 
     public void onWakeUp()

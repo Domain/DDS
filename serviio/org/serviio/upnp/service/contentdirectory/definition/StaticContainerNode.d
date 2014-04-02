@@ -21,11 +21,16 @@ import org.serviio.upnp.service.contentdirectory.definition.DefinitionNode;
 
 public class StaticContainerNode : ContainerNode, StaticDefinitionNode
 {
-    private static Set!(ObjectClassType) supportedClasses = new HashSet(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
+    private static Set!(ObjectClassType) supportedClasses;
     private String id;
     private String titleKey;
     private bool browsable = true;
     private bool editable = false;
+
+    static this()
+    {
+        supportedClasses = new HashSet!(ObjectClassType)(Arrays.asList(cast(ObjectClassType[])[ ObjectClassType.CONTAINER, ObjectClassType.STORAGE_FOLDER ]));
+    }
 
     public this(String id, String titleKey, ObjectClassType objectClass, DefinitionNode parent, String cacheRegion)
     {

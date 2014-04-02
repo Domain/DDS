@@ -19,11 +19,11 @@ public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListen
     private static Logger log;
     private static immutable int UPDATE_THREAD_INTERVAL_SECONDS = 5;
     private int threadUpdateInterval = 5;
-    protected ContentDirectory cds = cast(ContentDirectory)Device.getInstance().getServiceById("urn:upnp-org:serviceId:ContentDirectory");
-    private AtomicBoolean libraryUpdated = new AtomicBoolean(false);
+    protected ContentDirectory cds;
+    private AtomicBoolean libraryUpdated;
     private String lastAddedFile;
     private int numberOfAddedFiles = 0;
-    private Map!(MediaFileType, String) fileTypeUpdateIds = new HashMap();
+    private Map!(MediaFileType, String) fileTypeUpdateIds;
 
     static this()
     {
@@ -32,6 +32,10 @@ public abstract class AbstractCDSLibraryIndexingListener : LibraryIndexingListen
 
     public this()
     {
+        cds = cast(ContentDirectory)Device.getInstance().getServiceById("urn:upnp-org:serviceId:ContentDirectory");
+        libraryUpdated = new AtomicBoolean(false);
+        fileTypeUpdateIds = new HashMap!(MediaFileType, String)();
+
         ServiioThreadFactory.getInstance().newThread(new CDSNotifierThread(null), "CDS library notifier", true).start();
 
         storeNewUpdateId(MediaFileType.IMAGE);

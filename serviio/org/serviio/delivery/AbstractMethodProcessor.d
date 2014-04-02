@@ -26,11 +26,24 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractMethodProcessor
 {
-    protected Logger log = LoggerFactory.getLogger(getClass());
-    private static immutable Long TRANSCODED_VIDEO_CONTENT_LENGTH = new Long(50000000000L);
-    private static immutable Long TRANSCODED_AUDIO_CONTENT_LENGTH = new Long(900000000L);
-    private static immutable Long TRANSCODED_IMAGE_CONTENT_LENGTH = new Long(9000000L);
-    private static immutable Long TRANSCODED_SUBTITLE_CONTENT_LENGTH = new Long(300000L);
+    protected Logger log;
+    private static immutable Long TRANSCODED_VIDEO_CONTENT_LENGTH;
+    private static immutable Long TRANSCODED_AUDIO_CONTENT_LENGTH;
+    private static immutable Long TRANSCODED_IMAGE_CONTENT_LENGTH;
+    private static immutable Long TRANSCODED_SUBTITLE_CONTENT_LENGTH;
+
+    static this()
+    {
+        TRANSCODED_VIDEO_CONTENT_LENGTH = new Long(50000000000L);
+        TRANSCODED_AUDIO_CONTENT_LENGTH = new Long(900000000L);
+        TRANSCODED_IMAGE_CONTENT_LENGTH = new Long(9000000L);
+        TRANSCODED_SUBTITLE_CONTENT_LENGTH = new Long(300000L);
+    }
+
+    public this()
+    {
+        log = LoggerFactory.getLogger!AbstractMethodProcessor();
+    }
 
     protected abstract HttpDeliveryContainer buildDeliveryContainer(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, long paramLong1, long paramLong2, Double paramDouble1, Double paramDouble2, bool paramBoolean1, bool paramBoolean2, ProtocolVersion paramProtocolVersion, RangeHeaders paramRangeHeaders);
 

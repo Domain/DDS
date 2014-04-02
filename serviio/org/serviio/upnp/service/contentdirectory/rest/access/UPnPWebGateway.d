@@ -13,9 +13,14 @@ import org.slf4j.LoggerFactory;
 
 public class UPnPWebGateway : WebGateway
 {
-    private static Logger log = LoggerFactory.getLogger!(UPnPWebGateway);
+    private static Logger log;
     private static immutable int DISCOVERY_TIMEOUT = 3000;
     private InternetGatewayDevice device;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(UPnPWebGateway);
+    }
 
     private this(InternetGatewayDevice device)
     {

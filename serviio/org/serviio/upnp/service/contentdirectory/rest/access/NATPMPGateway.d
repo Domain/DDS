@@ -9,8 +9,13 @@ import org.slf4j.LoggerFactory;
 
 public class NATPMPGateway : WebGateway
 {
-    private static Logger log = LoggerFactory.getLogger!(NATPMPGateway);
+    private static Logger log;
     private NatPmpDevice device;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(NATPMPGateway);
+    }
 
     private this(NatPmpDevice device)
     {

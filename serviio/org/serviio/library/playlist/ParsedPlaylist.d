@@ -9,11 +9,12 @@ import org.serviio.library.playlist.PlaylistItem;
 public class ParsedPlaylist
 {
     private String title;
-    private List!(PlaylistItem) items = new ArrayList();
+    private List!(PlaylistItem) items;
 
     public this(String title)
     {
         this.title = title;
+        items = new ArrayList!(PlaylistItem)();
     }
 
     public void addItem(String path)

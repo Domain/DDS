@@ -5,7 +5,7 @@ import org.serviio.upnp.service.contentdirectory.rest.representation.BrowseConte
 
 public abstract interface CDSBrowseResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract BrowseContentDirectoryRepresentation browse();
 }
 

@@ -22,7 +22,7 @@ import org.w3c.dom.Node;
 public class UpdateChecker
 {
     private static Logger log;
-    private static immutable String XML_URL = ApplicationSettings.getStringProperty("update_url");
+    private static immutable String XML_URL;
     private static immutable int VERSION_CHECKER_INTERVAL_HOURS = 24;
     private static String availableNewVersion = null;
     private static ScheduledExecutorService scheduler;
@@ -30,6 +30,7 @@ public class UpdateChecker
     static this()
     {
         log = LoggerFactory.getLogger!(UpdateChecker);
+        XML_URL = ApplicationSettings.getStringProperty("update_url");
         scheduler = Executors.newScheduledThreadPool(1);
     }
 
@@ -38,7 +39,7 @@ public class UpdateChecker
         Runnable checker = new class() Runnable {
             public void run() {}
         };
-        scheduler.scheduleAtFixedRate(checker, 0L, 24L, TimeUnit.HOURS);
+        scheduler.scheduleAtFixedRate(checker, 0L, VERSION_CHECKER_INTERVAL_HOURS, TimeUnit.HOURS);
     }
 
     public static String getNewAvailableVersion()

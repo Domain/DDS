@@ -6,7 +6,7 @@ import org.restlet.resource.Get;
 
 public abstract interface CDSRetrieveMediaResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract StreamRepresentation deliver();
 }
 

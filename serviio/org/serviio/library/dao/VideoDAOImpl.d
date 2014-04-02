@@ -41,7 +41,12 @@ import org.slf4j.LoggerFactory;
 
 public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(VideoDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(VideoDAOImpl);
+    }
 
     public long create(Video newInstance)
     {

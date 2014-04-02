@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
 
 public class WebServer
 {
-    private static Logger log = LoggerFactory.getLogger!(WebServer);
+    private static Logger log;
     private static RequestListenerThread webServerThread;
-    public static Integer WEBSERVER_PORT = ApplicationSettings.getIntegerProperty("webserver_port");
+    public static Integer WEBSERVER_PORT;
     public static immutable String CONTEXT_PARAM_REMOTE_IP = "remote_ip_address";
     public static immutable int DEFAULT_SOCKET_BUFFER = 65535;
     public static int socketBuffer;

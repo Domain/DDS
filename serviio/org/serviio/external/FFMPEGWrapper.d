@@ -52,20 +52,20 @@ import org.slf4j.LoggerFactory;
 public class FFMPEGWrapper : AbstractExecutableWrapper
 {
     public static immutable String THREADS_AUTO = "auto";
-    public static immutable String SEGMENT_PLAYLIST_FILE_NAME = ApplicationSettings.getStringProperty("hls_playlist_file_name");
-    private static Integer thumbnailSeekPosition = ApplicationSettings.getIntegerProperty("video_thumbnail_seek_position");
-    private static Integer defaultAudioBitrate = ApplicationSettings.getIntegerProperty("transcoding_default_audio_bitrate");
-    private static immutable String videoQualityFactor = ApplicationSettings.getStringProperty("transcoding_quality_factor");
-    private static immutable String x264VideoQualityFactor = ApplicationSettings.getStringProperty("x264_transcoding_quality_factor");
-    private static immutable String segmentSizeInSeconds = ApplicationSettings.getStringProperty("hls_segment_size");
-    private static immutable String segmentNumberForLiveStreams = ApplicationSettings.getStringProperty("hls_live_segment_number");
-    private static Logger log = LoggerFactory.getLogger!(FFMPEGWrapper);
+    public static immutable String SEGMENT_PLAYLIST_FILE_NAME;
+    private static Integer thumbnailSeekPosition;
+    private static Integer defaultAudioBitrate;
+    private static immutable String videoQualityFactor;
+    private static immutable String x264VideoQualityFactor;
+    private static immutable String segmentSizeInSeconds;
+    private static immutable String segmentNumberForLiveStreams;
+    private static Logger log;
     private static immutable int DEFAULT_AUDIO_FREQUENCY = 48000;
     private static immutable int MIN_AUDIO_FREQUENCY = 44100;
     private static immutable int RTMP_BUFFER_SIZE = 100000000;
-    private static immutable long LOCAL_FILE_TIMEOUT = new Long(30000L).longValue();
-    private static immutable long DEFAULT_ONLINE_FILE_TIMEOUT = new Long(60000L).longValue();
-    private static List!(Integer) validAudioBitrates = Arrays.asList(cast(Integer[])[ Integer.valueOf(32), Integer.valueOf(48), Integer.valueOf(56), Integer.valueOf(64), Integer.valueOf(80), Integer.valueOf(96), Integer.valueOf(112), Integer.valueOf(128), Integer.valueOf(160), Integer.valueOf(192), Integer.valueOf(224), Integer.valueOf(256), Integer.valueOf(320), Integer.valueOf(384), Integer.valueOf(448), Integer.valueOf(512), Integer.valueOf(576), Integer.valueOf(640) ]);
+    private static immutable long LOCAL_FILE_TIMEOUT = 30000L;
+    private static immutable long DEFAULT_ONLINE_FILE_TIMEOUT = 60000L;
+    private static List!(Integer) validAudioBitrates;
     private static String ffmpegUserAgent;
     private static Map!(AudioCodec, Integer) maxChannelNumber;
     private static Map!(String, String) stringEncoding;
@@ -73,6 +73,15 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     static this()
     {
+        SEGMENT_PLAYLIST_FILE_NAME = ApplicationSettings.getStringProperty("hls_playlist_file_name");
+        thumbnailSeekPosition = ApplicationSettings.getIntegerProperty("video_thumbnail_seek_position");
+        defaultAudioBitrate = ApplicationSettings.getIntegerProperty("transcoding_default_audio_bitrate");
+        videoQualityFactor = ApplicationSettings.getStringProperty("transcoding_quality_factor");
+        x264VideoQualityFactor = ApplicationSettings.getStringProperty("x264_transcoding_quality_factor");
+        segmentSizeInSeconds = ApplicationSettings.getStringProperty("hls_segment_size");
+        segmentNumberForLiveStreams = ApplicationSettings.getStringProperty("hls_live_segment_number");
+        log = LoggerFactory.getLogger!(FFMPEGWrapper);
+        validAudioBitrates = Arrays.asList(cast(Integer[])[ Integer.valueOf(32), Integer.valueOf(48), Integer.valueOf(56), Integer.valueOf(64), Integer.valueOf(80), Integer.valueOf(96), Integer.valueOf(112), Integer.valueOf(128), Integer.valueOf(160), Integer.valueOf(192), Integer.valueOf(224), Integer.valueOf(256), Integer.valueOf(320), Integer.valueOf(384), Integer.valueOf(448), Integer.valueOf(512), Integer.valueOf(576), Integer.valueOf(640) ]);
         setupMaxChannelsMap();
         setupStringEncodingMap();
     }

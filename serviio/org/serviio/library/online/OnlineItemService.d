@@ -28,8 +28,14 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineItemService
 {
-    private static OnlineLibraryManager onlineLibraryManager = OnlineLibraryManager.getInstance();
-    private static Logger log = LoggerFactory.getLogger!(OnlineItemService);
+    private static OnlineLibraryManager onlineLibraryManager;
+    private static Logger log;
+
+    static this()
+    {
+        onlineLibraryManager = OnlineLibraryManager.getInstance();
+        log = LoggerFactory.getLogger!(OnlineItemService);
+    }
 
     public static OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) findContainerResourceById(Long onlineRepositoryId)
     {

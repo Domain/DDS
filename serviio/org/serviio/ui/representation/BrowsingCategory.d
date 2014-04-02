@@ -10,7 +10,7 @@ public class BrowsingCategory
     private String id;
     private String title;
     private ContainerVisibilityType visibility;
-    private List!(BrowsingCategory) subCategories = new ArrayList();
+    private List!(BrowsingCategory) subCategories = new ArrayList!(BrowsingCategory)();
 
     public this() {}
 

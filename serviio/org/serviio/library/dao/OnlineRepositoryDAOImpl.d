@@ -24,7 +24,12 @@ import org.slf4j.LoggerFactory;
 
 public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDAO
 {
-    private static Logger log = LoggerFactory.getLogger!(OnlineRepositoryDAOImpl);
+    private static Logger log;
+
+    static this()
+    {
+        log = LoggerFactory.getLogger!(OnlineRepositoryDAOImpl);
+    }
 
     public long create(OnlineRepository newInstance)
     {

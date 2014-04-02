@@ -56,9 +56,9 @@ import org.slf4j.LoggerFactory;
  * This class handles all forms of incoming HTTP requests by constructing a proper HTTP response. 
  */
 public class RequestV2 : HTTPResource {
-	private static Logger LOGGER = LoggerFactory.getLogger!RequestV2();
+	private static Logger LOGGER;
 	private const static String CRLF = "\r\n";
-	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+	private static SimpleDateFormat sdf;
 	private static int BUFFER_SIZE = 8 * 1024;
 	private static const int[] MULTIPLIER = [ 1, 60, 3600, 24*3600];
 	private String method;
@@ -92,6 +92,12 @@ public class RequestV2 : HTTPResource {
 	 */
 	private long highRange;
 	private bool http10;
+
+    static this()
+    {
+	    LOGGER = LoggerFactory.getLogger!RequestV2();
+	    sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
+    }
 
 	public RendererConfiguration getMediaRenderer() {
 		return mediaRenderer;

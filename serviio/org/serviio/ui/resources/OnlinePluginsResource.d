@@ -5,7 +5,7 @@ import org.serviio.ui.representation.OnlinePluginsRepresentation;
 
 public abstract interface OnlinePluginsResource
 {
-  @Get("xml|json")
+  //@Get("xml|json")
   public abstract OnlinePluginsRepresentation load();
 }
 

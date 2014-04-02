@@ -41,181 +41,181 @@ import org.serviio.update.dao.DBLogDAOImpl;
 
 public final class DAOFactory
 {
-  private static RepositoryDAO repositoryDAO;
-  private static MusicAlbumDAO musicAlbumDAO;
-  private static MediaItemDAO mediaItemDAO;
-  private static MusicTrackDAO musicTrackDAO;
-  private static FolderDAO folderDAO;
-  private static GenreDAO genreDAO;
-  private static CoverImageDAO coverImageDAO;
-  private static PersonDAO personDAO;
-  private static MetadataExtractorConfigDAO metadataExtractorConfigDAO;
-  private static MetadataDescriptorDAO metadataDescriptorDAO;
-  private static ImageDAO imageDAO;
-  private static VideoDAO videoDAO;
-  private static SeriesDAO seriesDAO;
-  private static ConfigEntryDAO configEntryDAO;
-  private static DBLogDAO dbLogDAO;
-  private static RendererDAO rendererDAO;
-  private static OnlineRepositoryDAO onlineRepositoryDAO;
-  private static PlaylistDAO playlistDAO;
-  private static AccessGroupDAO accessGroupDAO;
-  
-  public static RepositoryDAO getRepositoryDAO()
-  {
-    if (repositoryDAO is null) {
-      repositoryDAO = new RepositoryDAOImpl();
+    private static RepositoryDAO repositoryDAO;
+    private static MusicAlbumDAO musicAlbumDAO;
+    private static MediaItemDAO mediaItemDAO;
+    private static MusicTrackDAO musicTrackDAO;
+    private static FolderDAO folderDAO;
+    private static GenreDAO genreDAO;
+    private static CoverImageDAO coverImageDAO;
+    private static PersonDAO personDAO;
+    private static MetadataExtractorConfigDAO metadataExtractorConfigDAO;
+    private static MetadataDescriptorDAO metadataDescriptorDAO;
+    private static ImageDAO imageDAO;
+    private static VideoDAO videoDAO;
+    private static SeriesDAO seriesDAO;
+    private static ConfigEntryDAO configEntryDAO;
+    private static DBLogDAO dbLogDAO;
+    private static RendererDAO rendererDAO;
+    private static OnlineRepositoryDAO onlineRepositoryDAO;
+    private static PlaylistDAO playlistDAO;
+    private static AccessGroupDAO accessGroupDAO;
+
+    public static RepositoryDAO getRepositoryDAO()
+    {
+        if (repositoryDAO is null) {
+            repositoryDAO = new RepositoryDAOImpl();
+        }
+        return repositoryDAO;
     }
-    return repositoryDAO;
-  }
-  
-  public static MusicAlbumDAO getMusicAlbumDAO()
-  {
-    if (musicAlbumDAO is null) {
-      musicAlbumDAO = new MusicAlbumDAOImpl();
+
+    public static MusicAlbumDAO getMusicAlbumDAO()
+    {
+        if (musicAlbumDAO is null) {
+            musicAlbumDAO = new MusicAlbumDAOImpl();
+        }
+        return musicAlbumDAO;
     }
-    return musicAlbumDAO;
-  }
-  
-  public static MediaItemDAO getMediaItemDAO()
-  {
-    if (mediaItemDAO is null) {
-      mediaItemDAO = new MediaItemDAOImpl();
+
+    public static MediaItemDAO getMediaItemDAO()
+    {
+        if (mediaItemDAO is null) {
+            mediaItemDAO = new MediaItemDAOImpl();
+        }
+        return mediaItemDAO;
     }
-    return mediaItemDAO;
-  }
-  
-  public static MusicTrackDAO getMusicTrackDAO()
-  {
-    if (musicTrackDAO is null) {
-      musicTrackDAO = new MusicTrackDAOImpl();
+
+    public static MusicTrackDAO getMusicTrackDAO()
+    {
+        if (musicTrackDAO is null) {
+            musicTrackDAO = new MusicTrackDAOImpl();
+        }
+        return musicTrackDAO;
     }
-    return musicTrackDAO;
-  }
-  
-  public static FolderDAO getFolderDAO()
-  {
-    if (folderDAO is null) {
-      folderDAO = new FolderDAOImpl();
+
+    public static FolderDAO getFolderDAO()
+    {
+        if (folderDAO is null) {
+            folderDAO = new FolderDAOImpl();
+        }
+        return folderDAO;
     }
-    return folderDAO;
-  }
-  
-  public static GenreDAO getGenreDAO()
-  {
-    if (genreDAO is null) {
-      genreDAO = new GenreDAOImpl();
+
+    public static GenreDAO getGenreDAO()
+    {
+        if (genreDAO is null) {
+            genreDAO = new GenreDAOImpl();
+        }
+        return genreDAO;
     }
-    return genreDAO;
-  }
-  
-  public static PersonDAO getPersonDAO()
-  {
-    if (personDAO is null) {
-      personDAO = new PersonDAOImpl();
+
+    public static PersonDAO getPersonDAO()
+    {
+        if (personDAO is null) {
+            personDAO = new PersonDAOImpl();
+        }
+        return personDAO;
     }
-    return personDAO;
-  }
-  
-  public static CoverImageDAO getCoverImageDAO()
-  {
-    if (coverImageDAO is null) {
-      coverImageDAO = new CoverImageDAOImpl();
+
+    public static CoverImageDAO getCoverImageDAO()
+    {
+        if (coverImageDAO is null) {
+            coverImageDAO = new CoverImageDAOImpl();
+        }
+        return coverImageDAO;
     }
-    return coverImageDAO;
-  }
-  
-  public static MetadataExtractorConfigDAO getMetadataExtractorConfigDAO()
-  {
-    if (metadataExtractorConfigDAO is null) {
-      metadataExtractorConfigDAO = new MetadataExtractorConfigDAOImpl();
+
+    public static MetadataExtractorConfigDAO getMetadataExtractorConfigDAO()
+    {
+        if (metadataExtractorConfigDAO is null) {
+            metadataExtractorConfigDAO = new MetadataExtractorConfigDAOImpl();
+        }
+        return metadataExtractorConfigDAO;
     }
-    return metadataExtractorConfigDAO;
-  }
-  
-  public static MetadataDescriptorDAO getMetadataDescriptorDAO()
-  {
-    if (metadataDescriptorDAO is null) {
-      metadataDescriptorDAO = new MetadataDescriptorDAOImpl();
+
+    public static MetadataDescriptorDAO getMetadataDescriptorDAO()
+    {
+        if (metadataDescriptorDAO is null) {
+            metadataDescriptorDAO = new MetadataDescriptorDAOImpl();
+        }
+        return metadataDescriptorDAO;
     }
-    return metadataDescriptorDAO;
-  }
-  
-  public static ImageDAO getImageDAO()
-  {
-    if (imageDAO is null) {
-      imageDAO = new ImageDAOImpl();
+
+    public static ImageDAO getImageDAO()
+    {
+        if (imageDAO is null) {
+            imageDAO = new ImageDAOImpl();
+        }
+        return imageDAO;
     }
-    return imageDAO;
-  }
-  
-  public static VideoDAO getVideoDAO()
-  {
-    if (videoDAO is null) {
-      videoDAO = new VideoDAOImpl();
+
+    public static VideoDAO getVideoDAO()
+    {
+        if (videoDAO is null) {
+            videoDAO = new VideoDAOImpl();
+        }
+        return videoDAO;
     }
-    return videoDAO;
-  }
-  
-  public static SeriesDAO getSeriesDAO()
-  {
-    if (seriesDAO is null) {
-      seriesDAO = new SeriesDAOImpl();
+
+    public static SeriesDAO getSeriesDAO()
+    {
+        if (seriesDAO is null) {
+            seriesDAO = new SeriesDAOImpl();
+        }
+        return seriesDAO;
     }
-    return seriesDAO;
-  }
-  
-  public static ConfigEntryDAO getConfigEntryDAO()
-  {
-    if (configEntryDAO is null) {
-      configEntryDAO = new ConfigEntryDAOImpl();
+
+    public static ConfigEntryDAO getConfigEntryDAO()
+    {
+        if (configEntryDAO is null) {
+            configEntryDAO = new ConfigEntryDAOImpl();
+        }
+        return configEntryDAO;
     }
-    return configEntryDAO;
-  }
-  
-  public static DBLogDAO getDBLogDAO()
-  {
-    if (dbLogDAO is null) {
-      dbLogDAO = new DBLogDAOImpl();
+
+    public static DBLogDAO getDBLogDAO()
+    {
+        if (dbLogDAO is null) {
+            dbLogDAO = new DBLogDAOImpl();
+        }
+        return dbLogDAO;
     }
-    return dbLogDAO;
-  }
-  
-  public static RendererDAO getRendererDAO()
-  {
-    if (rendererDAO is null) {
-      rendererDAO = new RendererDAOImpl();
+
+    public static RendererDAO getRendererDAO()
+    {
+        if (rendererDAO is null) {
+            rendererDAO = new RendererDAOImpl();
+        }
+        return rendererDAO;
     }
-    return rendererDAO;
-  }
-  
-  public static OnlineRepositoryDAO getOnlineRepositoryDAO()
-  {
-    if (onlineRepositoryDAO is null) {
-      onlineRepositoryDAO = new OnlineRepositoryDAOImpl();
+
+    public static OnlineRepositoryDAO getOnlineRepositoryDAO()
+    {
+        if (onlineRepositoryDAO is null) {
+            onlineRepositoryDAO = new OnlineRepositoryDAOImpl();
+        }
+        return onlineRepositoryDAO;
     }
-    return onlineRepositoryDAO;
-  }
-  
-  public static PlaylistDAO getPlaylistDAO()
-  {
-    if (playlistDAO is null) {
-      playlistDAO = new PlaylistDAOImpl();
+
+    public static PlaylistDAO getPlaylistDAO()
+    {
+        if (playlistDAO is null) {
+            playlistDAO = new PlaylistDAOImpl();
+        }
+        return playlistDAO;
     }
-    return playlistDAO;
-  }
-  
-  public static AccessGroupDAO getAccessGroupDAO()
-  {
-    if (accessGroupDAO is null) {
-      accessGroupDAO = new AccessGroupDAOImpl();
+
+    public static AccessGroupDAO getAccessGroupDAO()
+    {
+        if (accessGroupDAO is null) {
+            accessGroupDAO = new AccessGroupDAOImpl();
+        }
+        return accessGroupDAO;
     }
-    return accessGroupDAO;
-  }
 }
 
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
- * Qualified Name:     org.serviio.db.dao.DAOFactory
- * JD-Core Version:    0.7.0.1
- */
+* Qualified Name:     org.serviio.db.dao.DAOFactory
+* JD-Core Version:    0.7.0.1
+*/
