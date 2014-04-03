@@ -8,4 +8,10 @@ public class InetAddress
 	{
 		implMissing();
 	}
+
+    String getHostAddress()
+    {
+        implMissing();
+        return null;
+    }
 }

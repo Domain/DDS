@@ -3,10 +3,7 @@ module org.apache.commons.io.IOCase;
 
 import java.lang.exceptions;
 
-public class IOCase
+public enum IOCase
 {
-    public this()
-    {
-        implMissing();
-    }
+    INSENSITIVE,
 }

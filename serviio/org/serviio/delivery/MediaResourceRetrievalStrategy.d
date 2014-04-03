@@ -45,22 +45,22 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
         if (mediaItem.getFileType() == MediaFileType.IMAGE)
         {
             Image image = isLocalMedia ? ImageService.getImage(mediaItem.getId()) : cast(Image)mediaItem;
-            return ImageDeliveryEngine.getInstance().getMediaInfoForProfile(image, rendererProfile);
+            return cast(List!(Object))ImageDeliveryEngine.getInstance().getMediaInfoForProfile(image, rendererProfile);
         }
         if (mediaItem.getFileType() == MediaFileType.AUDIO)
         {
             MusicTrack track = isLocalMedia ? AudioService.getSong(mediaItem.getId()) : cast(MusicTrack)mediaItem;
-            return AudioDeliveryEngine.getInstance().getMediaInfoForProfile(track, rendererProfile);
+            return cast(List!(Object))AudioDeliveryEngine.getInstance().getMediaInfoForProfile(track, rendererProfile);
         }
         Video video = isLocalMedia ? VideoService.getVideo(mediaItem.getId()) : cast(Video)mediaItem;
-        return VideoDeliveryEngine.getInstance().getMediaInfoForProfile(video, rendererProfile);
+        return cast(List!(Object))VideoDeliveryEngine.getInstance().getMediaInfoForProfile(video, rendererProfile);
     }
 
     public static MediaItem loadMediaItem(Long mediaItemId)
     {
         MediaItem mediaItem = null;
         bool localMedia = MediaItem.isLocalMedia(mediaItemId);
-        log.debug_(String_format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId, localMedia ? "local" : "online" ]));
+        log.debug_(String_format("Getting information about media item %s (%s)", cast(Object[])[ mediaItemId.toString(), localMedia ? "local" : "online" ]));
         if (localMedia)
         {
             mediaItem = MediaService.readMediaItemById(mediaItemId);
@@ -87,9 +87,9 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
 
     public DeliveryContainer retrieveResource(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Double timeOffsetInSeconds, Double durationInSeconds, Client client, bool markAsRead)
     {
-        if (selectedVersion is null) {
-            throw new FileNotFoundException("The request did not provide required version of the resource");
-        }
+        //if (selectedVersion is null) {
+        //    throw new FileNotFoundException("The request did not provide required version of the resource");
+        //}
         MediaItem mediaItem = loadMediaItem(mediaItemId);
         bool isLocalMedia = mediaItem.isLocalMedia();
         DeliveryContainer deliveryContainer = null;
@@ -112,9 +112,9 @@ public class MediaResourceRetrievalStrategy : ResourceRetrievalStrategy
 
     public ResourceInfo retrieveResourceInfo(Long mediaItemId, MediaFormatProfile selectedVersion, QualityType selectedQuality, String path, Client client)
     {
-        if (selectedVersion is null) {
-            throw new FileNotFoundException("The request did not provide required version of the resource");
-        }
+        //if (selectedVersion is null) {
+        //    throw new FileNotFoundException("The request did not provide required version of the resource");
+        //}
         MediaItem mediaItem = loadMediaItem(mediaItemId);
         Profile rendererProfile = client.getRendererProfile();
         if (mediaItem.getFileType() == MediaFileType.IMAGE) {

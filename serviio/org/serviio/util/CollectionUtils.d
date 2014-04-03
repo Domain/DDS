@@ -86,6 +86,26 @@ public class CollectionUtils
         return sb.toString();
     }
 
+    public static String listToCSV(T)(T[] list, String separator, bool trim)
+    {
+        StringBuffer sb = new StringBuffer();
+        if ((list !is null) && (list.length > 0))
+        {
+            auto len = list.length;
+            auto i = 0;
+            while (i < len)
+            {
+                String value = list[i].toString();
+                sb.append(trim ? value.trim() : value);
+                if (i < len - 1) {
+                    sb.append(separator);
+                }
+                i++;
+            }
+        }
+        return sb.toString();
+    }
+
     public static String mapToCSV(K, V)(Map!(K, V) map, String separator, bool trim)
     {
         StringBuffer sb = new StringBuffer();

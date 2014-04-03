@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Hashtable;
 import java.lang.exceptions;
 
-public class Properties : Hashtable!(Object, Object)
+public class Properties : Hashtable!(String, String)
 {
     public this()
     {
@@ -18,7 +18,7 @@ public class Properties : Hashtable!(Object, Object)
         implMissing();
     }*/
 
-    public String get(String name)
+    override public String get(String name)
     {
         implMissing();
         return "";

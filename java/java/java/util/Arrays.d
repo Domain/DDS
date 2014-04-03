@@ -4,9 +4,11 @@ import java.lang;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 version(Tango){
     static import tango.core.Array;
 } else { // Phobos
+    static import std.algorithm;
 }
 
 class Arrays {
@@ -52,7 +54,7 @@ class Arrays {
     static void sort( T )( T[] a ){
         tango.core.Array.sort( a );
     }
-    static void sort( T )( T[] a, Comparator c ){
+    static void sort( T )( T[] a, Comparator!T c ){
         static if( is( T : char[] )){
             bool isLess( String o1, String o2 ){
                 return c.compare( stringcast(o1), stringcast(o2) ) < 0;
@@ -60,10 +62,13 @@ class Arrays {
         }
         else{
             bool isLess( T o1, T o2 ){
-                return c.compare( cast(Object)o1, cast(Object)o2 ) < 0;
+                return c.compare( o1, o2 ) < 0;
             }
         }
-        tango.core.Array.sort( a, &isLess );
+        version(Tango)
+            tango.core.Array.sort( a, &isLess );
+        else
+            std.algorithm.sort!isLess(a);
     }
     static List!T    asList(T)(T[] a...) {
         //static if( is(T==String)){

@@ -3,10 +3,11 @@ module org.restlet.data.Method;
 
 import java.lang.exceptions;
 
-public class Method
+public enum Method
 {
-    public this()
-    {
-        implMissing();
-    }
+    GET,
+    POST,
+    PUT,
+    DELETE,
+    HEAD,
 }

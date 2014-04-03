@@ -21,6 +21,7 @@ import org.restlet.representation.Representation;
 import org.serviio.util.FileUtils;
 import org.serviio.util.HttpClient;
 import org.serviio.util.HttpUtils;
+import org.serviio.delivery.RangeNotSupportedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +141,7 @@ public class OnlineInputStream : InputStream
         }
         catch (Exception e)
         {
-            log.warn("Exception during HTTP client closing: " + e.getMessage());
+            log.warn("Exception during HTTP client closing: " ~ e.getMessage());
         }
     }
 

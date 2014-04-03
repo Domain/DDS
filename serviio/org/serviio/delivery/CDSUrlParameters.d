@@ -1,6 +1,7 @@
 module org.serviio.delivery.CDSUrlParameters;
 
 import java.lang.String;
+import java.lang.StringBuffer;
 import org.serviio.util.StringUtils;
 import org.serviio.delivery.URLParameters;
 

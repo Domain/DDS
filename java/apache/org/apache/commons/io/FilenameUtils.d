@@ -11,8 +11,13 @@ public class FilenameUtils
 		return buildNormalizedPath(path);
 	}
 
-    public static String gatName(String fullName) 
+    public static String getName(String fullName) 
     {
         return baseName(fullName);
+    }
+
+    public static String getBaseName(String fullName) 
+    {
+        return fullName.baseName().stripExtension();
     }
 }

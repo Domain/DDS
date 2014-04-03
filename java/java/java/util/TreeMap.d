@@ -82,6 +82,31 @@ class TreeMap(K, V) : Map!(K, V), SortedMap!(K, V) {
             return null;
         }
     }
+
+    public Entry!(K, V) firstEntry()
+    {
+        implMissing();
+        return null;
+    }
+
+    public Entry!(K, V) lastEntry()
+    {
+        implMissing();
+        return null;
+    }
+
+    public Entry!(K, V) ceilingEntry(K key)
+    {
+        implMissing();
+        return null;
+    }
+
+    public Entry!(K, V) floorEntry(K key)
+    {
+        implMissing();
+        return null;
+    }
+
     public override equals_t opEquals(Object o){
         version(Tango){
             if( auto other = cast(TreeMap) o ){

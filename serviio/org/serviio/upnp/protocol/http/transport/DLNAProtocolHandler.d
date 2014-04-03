@@ -38,7 +38,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
         return false;
     }
 
-    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+    public void handleResponse(Map!(String, String) requestHeaders, Map!(String, String) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo resourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
     {
         String contentFeaturesHeader = cast(String)requestHeaders.get("getcontentFeatures.dlna.org");
 

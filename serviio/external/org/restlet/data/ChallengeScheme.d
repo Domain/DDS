@@ -3,10 +3,7 @@ module org.restlet.data.ChallengeScheme;
 
 import java.lang.exceptions;
 
-public class ChallengeScheme
+public enum ChallengeScheme
 {
-    public this()
-    {
-        implMissing();
-    }
+    HTTP_BASIC,
 }

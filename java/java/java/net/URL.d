@@ -6,5 +6,10 @@ class URL {
     this(String){
         implMissing(__FILE__,__LINE__);
     }
+
+    this(String, String, int, String)
+    {
+        implMissing();
+    }
 }
 

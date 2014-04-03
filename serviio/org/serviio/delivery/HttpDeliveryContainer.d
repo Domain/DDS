@@ -8,7 +8,7 @@ import org.serviio.upnp.protocol.http.transport.TransferMode;
 
 public class HttpDeliveryContainer
 {
-    private Map!(String, Object) responseHeaders;
+    private Map!(String, String) responseHeaders;
     private InputStream contentStream;
     private bool partialContent;
     private ProtocolVersion requestHttpVersion;
@@ -16,12 +16,12 @@ public class HttpDeliveryContainer
     private TransferMode transferMode;
     private bool transcoded;
 
-    public this(Map!(String, Object) responseHeaders)
+    public this(Map!(String, String) responseHeaders)
     {
         this.responseHeaders = responseHeaders;
     }
 
-    public this(Map!(String, Object) responseHeaders, InputStream contentStream, bool partialContent, ProtocolVersion requestHttpVersion, TransferMode transferMode, bool transcoded, Long fileSize)
+    public this(Map!(String, String) responseHeaders, InputStream contentStream, bool partialContent, ProtocolVersion requestHttpVersion, TransferMode transferMode, bool transcoded, Long fileSize)
     {
         this.responseHeaders = responseHeaders;
         this.contentStream = contentStream;
@@ -32,7 +32,7 @@ public class HttpDeliveryContainer
         this.transferMode = transferMode;
     }
 
-    public Map!(String, Object) getResponseHeaders()
+    public Map!(String, String) getResponseHeaders()
     {
         return this.responseHeaders;
     }

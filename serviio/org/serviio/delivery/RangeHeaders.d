@@ -29,7 +29,7 @@ public class RangeHeaders
     {
         if ((ObjectValidator.isNotEmpty(bytesRangeHeaderValue)) || (ObjectValidator.isNotEmpty(timeRangeHeaderValue)))
         {
-            Map!(RangeUnit, RangeTupple) headers = new HashMap();
+            Map!(RangeUnit, RangeTupple) headers = new HashMap!(RangeUnit, RangeTupple)();
             if (ObjectValidator.isNotEmpty(bytesRangeHeaderValue)) {
                 headers.put(RangeUnit.BYTES, parseHttpBytesRange(bytesRangeHeaderValue));
             }
@@ -47,7 +47,7 @@ public class RangeHeaders
 
     public static RangeHeaders create(RangeUnit unit, long from, long to, long total)
     {
-        Map!(RangeUnit, RangeTupple) headers = new HashMap();
+        Map!(RangeUnit, RangeTupple) headers = new HashMap!(RangeUnit, RangeTupple)();
         headers.put(unit, new RangeTupple(from, to, total));
         return new RangeHeaders(headers);
     }

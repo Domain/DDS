@@ -582,6 +582,12 @@ public String[] split(String content, String delim)
     return splitter(content, delim);
 }
 
+public byte[] getBytes(String, String)
+{
+    implMissing();
+    return null;
+}
+
 /++
 + String in java is implementing the interface CharSequence
 +/

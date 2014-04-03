@@ -21,16 +21,19 @@ import org.serviio.delivery.Client;
 import org.serviio.delivery.RangeHeaders;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.ResourceRetrievalStrategy;
+import org.serviio.delivery.ImageMediaInfo;
+import org.serviio.delivery.AudioMediaInfo;
+import org.serviio.delivery.VideoMediaInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractMethodProcessor
 {
     protected Logger log;
-    private static immutable Long TRANSCODED_VIDEO_CONTENT_LENGTH;
-    private static immutable Long TRANSCODED_AUDIO_CONTENT_LENGTH;
-    private static immutable Long TRANSCODED_IMAGE_CONTENT_LENGTH;
-    private static immutable Long TRANSCODED_SUBTITLE_CONTENT_LENGTH;
+    private static Long TRANSCODED_VIDEO_CONTENT_LENGTH;
+    private static Long TRANSCODED_AUDIO_CONTENT_LENGTH;
+    private static Long TRANSCODED_IMAGE_CONTENT_LENGTH;
+    private static Long TRANSCODED_SUBTITLE_CONTENT_LENGTH;
 
     static this()
     {
@@ -49,7 +52,7 @@ public abstract class AbstractMethodProcessor
 
     protected abstract HttpDeliveryContainer buildDeliveryContainerForTimeSeek(ResourceRetrievalStrategy paramResourceRetrievalStrategy, ResourceInfo paramResourceInfo, MediaFormatProfile paramMediaFormatProfile, QualityType paramQualityType, String paramString, TransferMode paramTransferMode, Client paramClient, ProtocolVersion paramProtocolVersion, Long paramLong, RangeHeaders paramRangeHeaders);
 
-    protected abstract HttpDeliveryContainer prepareContainer(Map!(String, Object) paramMap, DeliveryContainer paramDeliveryContainer, TransferMode paramTransferMode, Long paramLong1, Long paramLong2, bool paramBoolean1, ProtocolVersion paramProtocolVersion, bool paramBoolean2, bool paramBoolean3, bool paramBoolean4);
+    protected abstract HttpDeliveryContainer prepareContainer(Map!(String, String) paramMap, DeliveryContainer paramDeliveryContainer, TransferMode paramTransferMode, Long paramLong1, Long paramLong2, bool paramBoolean1, ProtocolVersion paramProtocolVersion, bool paramBoolean2, bool paramBoolean3, bool paramBoolean4);
 
     protected abstract HttpMethod getMethod();
 
@@ -115,7 +118,7 @@ public abstract class AbstractMethodProcessor
     {
         String requestedTransferMode = cast(String)headers.get("transferMode.dlna.org");
         if ((requestedTransferMode !is null) && (ObjectValidator.isNotEmpty(requestedTransferMode))) {
-            return TransferMode.getValueByHttpHeaderValue(requestedTransferMode);
+            return /*TransferMode.*/getValueByHttpHeaderValue(requestedTransferMode);
         }
         if ((( cast(ImageMediaInfo)resourceInfo !is null )) || (( cast(SubtitlesInfo)resourceInfo !is null ))) {
             return TransferMode.INTERACTIVE;
@@ -145,7 +148,7 @@ public abstract class AbstractMethodProcessor
 
     protected HttpDeliveryContainer retrieveResource(DeliveryContainer deliveryContainer, ResourceInfo resourceInfo, TransferMode transferMode, Client client, long skipBytes, long streamSize, bool partialContent, bool deliverStream, ProtocolVersion requestHttpVersion)
     {
-        Map!(String, Object) responseHeaders = new LinkedHashMap();
+        Map!(String, String) responseHeaders = new LinkedHashMap!(String, String)();
         responseHeaders.put("Content-Type", resourceInfo.getMimeType());
         if (resourceInfo.isLive()) {
             responseHeaders.put("Accept-Ranges", "none");
@@ -160,14 +163,14 @@ public abstract class AbstractMethodProcessor
         }
         if (seconds.doubleValue() <= (cast(Double)filesizeMap.lastKey()).doubleValue())
         {
-            Map.Entry!(Double, ProgressData) upperBoundary = filesizeMap.ceilingEntry(seconds);
-            Map.Entry!(Double, ProgressData) lowerBoundary = filesizeMap.floorEntry(seconds);
+            Entry!(Double, ProgressData) upperBoundary = filesizeMap.ceilingEntry(seconds);
+            Entry!(Double, ProgressData) lowerBoundary = filesizeMap.floorEntry(seconds);
             if (lowerBoundary is null) {
                 return convertSecondsToBytes((cast(ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), Long.valueOf(0L), Double.valueOf(0.0), seconds);
             }
             return convertSecondsToBytes((cast(ProgressData)upperBoundary.getValue()).getFileSize(), cast(Double)upperBoundary.getKey(), (cast(ProgressData)lowerBoundary.getValue()).getFileSize(), cast(Double)lowerBoundary.getKey(), seconds);
         }
-        Map.Entry!(Double, ProgressData) lastEntry = filesizeMap.lastEntry();
+        Entry!(Double, ProgressData) lastEntry = filesizeMap.lastEntry();
         Double secondsFromLast = Double.valueOf(seconds.doubleValue() - (cast(Double)lastEntry.getKey()).doubleValue());
         Double approxFileSizeSinceLastEntry = Double.valueOf((cast(ProgressData)lastEntry.getValue()).getBitrate().floatValue() * secondsFromLast.doubleValue() / 8.0 * 1024.0);
         return Long.valueOf((cast(ProgressData)lastEntry.getValue()).getFileSize().longValue() + approxFileSizeSinceLastEntry.longValue());
@@ -175,7 +178,7 @@ public abstract class AbstractMethodProcessor
 
     private Long convertSecondsToBytes(Long upperFileSize, Double upperTime, Long lowerFilesize, Double lowerTime, Double seconds)
     {
-        if (upperTime.equals(lowerTime)) {
+        if (upperTime == lowerTime) {
             return Long.valueOf(upperFileSize.longValue() * 1024L);
         }
         Long segmentFilesize = Long.valueOf(upperFileSize.longValue() - lowerFilesize.longValue());

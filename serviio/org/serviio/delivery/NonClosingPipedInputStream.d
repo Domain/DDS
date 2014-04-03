@@ -36,19 +36,19 @@ public class NonClosingPipedInputStream : PipedInputStream, ClosableStreamDelega
         this.closingDelegator = new TimeoutStreamDelegator(this, processListener, client, deliveryListener, forceClosing);
     }
 
-    public synchronized int read()
+    override public /*synchronized*/ int read()
     {
         this.closingDelegator.onRead();
         return super.read();
     }
 
-    public synchronized int read(byte[] b, int off, int len)
+    override public /*synchronized*/ int read(byte[] b, int off, int len)
     {
         this.closingDelegator.onRead();
         return super.read(b, off, len);
     }
 
-    public synchronized void close()
+    override public /*synchronized*/ void close()
     {
         this.closingDelegator.close();
     }

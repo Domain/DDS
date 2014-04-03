@@ -69,7 +69,7 @@ public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMedia
                 QualityType qualityType = cast(QualityType)trDefEntry.getKey();
                 VideoTranscodingDefinition trDef = cast(VideoTranscodingDefinition)trDefEntry.getValue();
 
-                AudioCodec targetAudioCodec = /*(mediaItem.getAudioCodec() !is null) &&*/ (trDef.getTargetAudioCodec() !is null) ? trDef.getTargetAudioCodec() : mediaItem.getAudioCodec();
+                AudioCodec targetAudioCodec = trDef.getTargetAudioCodec();/*(mediaItem.getAudioCodec() !is null) && (trDef.getTargetAudioCodec() !is null) ? trDef.getTargetAudioCodec() : mediaItem.getAudioCodec();*/
                 VideoCodec targetVideoCodec = FFMPEGWrapper.getTargetVideoCodec(mediaItem, trDef);
                 Integer targetBitrate = trDef.getMaxVideoBitrate() !is null ? trDef.getMaxVideoBitrate() : mediaItem.getBitrate();
                 ResizeDefinition targetDimensions = FFMPEGWrapper.getTargetVideoDimensions(mediaItem, trDef.getMaxHeight(), trDef.getDar(), trDef.getTargetContainer());
@@ -79,7 +79,7 @@ public class VideoDeliveryEngine : AbstractTranscodingDeliveryEngine!(VideoMedia
                     List!(MediaFormatProfile) transcodedProfiles = MediaFormatProfileResolver.resolveVideoFormat(mediaItem.getFileName(), trDef.getTargetContainer(), targetVideoCodec, targetAudioCodec, Integer.valueOf(targetDimensions.width), Integer.valueOf(targetDimensions.height), targetBitrate, trDef.getTargetContainer() == VideoContainer.M2TS ? TransportStreamTimestamp.VALID : TransportStreamTimestamp.NONE);
                     foreach (MediaFormatProfile transcodedProfile ; transcodedProfiles)
                     {
-                        log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile ]));
+                        log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile.toString() ]));
 
                         mediaInfos.add(new VideoMediaInfo(mediaItem.getId(), transcodedProfile, fileSize, Integer.valueOf(targetDimensions.width), Integer.valueOf(targetDimensions.height), targetBitrate, true, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(transcodedProfile), qualityType));
                     }

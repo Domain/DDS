@@ -3,10 +3,7 @@ module org.restlet.data.Protocol;
 
 import java.lang.exceptions;
 
-public class Protocol
+public enum Protocol
 {
-    public this()
-    {
-        implMissing();
-    }
+    HTTP,
 }

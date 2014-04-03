@@ -53,8 +53,8 @@ public class Client
     {
         int prime = 31;
         int result = 1;
-        result = 31 * result + (this.clientIdentifier is null ? 0 : this.clientIdentifier.hashCode());
-        result = 31 * result + (this.rendererProfile is null ? 0 : this.rendererProfile.hashCode());
+        result = 31 * result + (this.clientIdentifier is null ? 0 : this.clientIdentifier.toHash());
+        result = 31 * result + (this.rendererProfile is null ? 0 : this.rendererProfile.toHash());
         return result;
     }
 
@@ -66,7 +66,7 @@ public class Client
         if (obj is null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (typeid(this) != typeid(obj)) {
             return false;
         }
         Client other = cast(Client)obj;
@@ -85,7 +85,7 @@ public class Client
                 return false;
             }
         }
-        else if (!this.rendererProfile.equals(other.rendererProfile)) {
+        else if (this.rendererProfile != other.rendererProfile) {
             return false;
         }
         return true;
@@ -93,7 +93,7 @@ public class Client
 
     override public String toString()
     {
-        return String_format("Identifier=%s, Profile=%s", cast(Object[])[ this.clientIdentifier, this.rendererProfile ]);
+        return String_format("Identifier=%s, Profile=%s", cast(Object[])[ this.clientIdentifier, this.rendererProfile.toString() ]);
     }
 }
 

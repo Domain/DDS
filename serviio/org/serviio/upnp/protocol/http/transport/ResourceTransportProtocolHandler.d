@@ -15,7 +15,7 @@ import org.serviio.upnp.protocol.http.transport.RequestedResourceDescriptor;
 
 public abstract interface ResourceTransportProtocolHandler
 {
-    public abstract void handleResponse(Map!(String, String) paramMap, Map!(String, Object) paramMap1, HttpMethod paramHttpMethod, ProtocolVersion paramProtocolVersion, ResourceInfo paramResourceInfo, Integer paramInteger, TransferMode paramTransferMode, Client paramClient, Long paramLong, RangeHeaders paramRangeHeaders);
+    public abstract void handleResponse(Map!(String, String) paramMap, Map!(String, String) paramMap1, HttpMethod paramHttpMethod, ProtocolVersion paramProtocolVersion, ResourceInfo paramResourceInfo, Integer paramInteger, TransferMode paramTransferMode, Client paramClient, Long paramLong, RangeHeaders paramRangeHeaders);
 
     public abstract RangeHeaders handleByteRange(RangeHeaders paramRangeHeaders, ProtocolVersion paramProtocolVersion, ResourceInfo paramResourceInfo, Long paramLong);
 

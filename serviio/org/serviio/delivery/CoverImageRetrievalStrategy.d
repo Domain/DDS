@@ -17,6 +17,8 @@ import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.delivery.StreamDeliveryContainer;
+import org.serviio.delivery.ImageMediaInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class CoverImageRetrievalStrategy : ResourceRetrievalStrategy
         ThumbnailResolution resolution = client.getRendererProfile().getThumbnailsResolution();
 
         bool useHD = isHD(coverImage, resolution);
-        log.debug_(String_format("Retrieving Cover image (%s) with id %s", cast(Object[])[ useHD ? "HD" : "SD", coverImageId ]));
+        log.debug_(String_format("Retrieving Cover image (%s) with id %s", cast(Object[])[ useHD ? "HD" : "SD", coverImageId.toString() ]));
 
         ResourceInfo resourceInfo = retrieveResourceInfo(coverImage, selectedVersion, resolution);
         DeliveryContainer container = new StreamDeliveryContainer(new ByteArrayInputStream(useHD ? coverImage.getImageBytesHD() : coverImage.getImageBytes()), resourceInfo);

@@ -20,6 +20,9 @@ import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.delivery.StreamDeliveryContainer;
+import org.serviio.delivery.ManifestInfo;
+import org.serviio.delivery.MediaResourceRetrievalStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +70,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
                         StringBuffer sb = new StringBuffer();
                         try
                         {
-                            return "#EXTM3U" + "\n" + "#EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1600000" + "\n" + resource.clone(ResourceType.MEDIA_ITEM, selectedQuality).getGeneratedURL(client.getHostInfo());
+                            return "#EXTM3U" ~ "\n" ~ "#EXT-X-STREAM-INF:PROGRAM-ID=1, BANDWIDTH=1600000" ~ "\n" ~ resource.clone(ResourceType.MEDIA_ITEM, selectedQuality).getGeneratedURL(client.getHostInfo());
                         }
                         catch (InvalidResourceException e)
                         {
@@ -75,7 +78,7 @@ public class ManifestRetrievalStrategy : ResourceRetrievalStrategy
                         }
                     }
                 }
-                throw new FileNotFoundException("No suitable manifest resource found for item " + mediaItemId);
+                throw new FileNotFoundException("No suitable manifest resource found for item " ~ mediaItemId.toString());
             }
             throw new RuntimeException("Only video files are supported for manifest files.");
         }

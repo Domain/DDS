@@ -44,11 +44,11 @@ public class GETMethodProcessor : AbstractMethodProcessor
         }
         TreeMap!(Double, ProgressData) filesizeMap = jobListener.getFilesizeMap();
         Long startByte = convertSecondsToBytes(new Double(fixedRange.getStart(RangeUnit.SECONDS).doubleValue()), filesizeMap);
-        this.log.debug_(String_format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte, fileSize, fixedRange.getStart(RangeUnit.SECONDS), fixedRange.getEnd(RangeUnit.SECONDS) ]));
-        return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, startByte.longValue(), fileSize.longValue(), true, true, requestHttpVersion);
+        this.log.debug_(String_format("Delivering bytes %s - %s from transcoded file, based on time range %s - %s", cast(Object[])[ startByte.toString(), fileSize.toString(), fixedRange.getStart(RangeUnit.SECONDS).toString(), fixedRange.getEnd(RangeUnit.SECONDS).toString() ]));
+        return super.retrieveResource(deliveryContainer, resourceInfo, transferMode, client, startByte.longValue(), fileSize.longValue(), true, true, requestHttpVersion);
     }
 
-    override protected HttpDeliveryContainer prepareContainer(Map!(String, Object) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
+    override protected HttpDeliveryContainer prepareContainer(Map!(String, String) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
     {
         InputStream is_ = deliverStream ? (cast(StreamDeliveryContainer)container).getFileStream() : new ByteArrayInputStream(new byte[0]);
         Long contentLengthToRead = Long.valueOf(deliverStream ? new Long(fileSize.longValue()).longValue() : 0L);
@@ -82,7 +82,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
         DeliveryContainer deliveryContainer = resourceRetrievalStrategy.retrieveResource(resourceInfo.getResourceId(), selectedVersion, quality, path, timeOffsetInSeconds, requestedDurationInSeconds, client, markAsRead);
         Long deliveredSize = deliveryContainer.getResourceInfo().getFileSize();
         Long realStreamSize = Long.valueOf((!partialContent) && (deliveredSize !is null) ? deliveredSize.longValue() : streamSize);
-        return retrieveResource(deliveryContainer, resourceInfo, transferMode, client, skipBytes, realStreamSize.longValue(), partialContent, deliverStream, requestHttpVersion);
+        return super.retrieveResource(deliveryContainer, resourceInfo, transferMode, client, skipBytes, realStreamSize.longValue(), partialContent, deliverStream, requestHttpVersion);
     }
 
     private void seekInInputStream(InputStream is_, Long skip)
@@ -94,7 +94,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
         catch (IOException e)
         {
             this.log.error("Cannot set starting index for the transport");
-            throw new RuntimeException("Cannot skip file stream to requested byte: " + e.getMessage());
+            throw new RuntimeException("Cannot skip file stream to requested byte: " ~ e.getMessage());
         }
     }
 }

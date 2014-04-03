@@ -25,7 +25,7 @@ public class PropertiesFileConfigStorage : ConfigStorage
     public Map!(String, String) readAllConfigurationValues()
     {
         Map!(String, String) values = new HashMap!(String, String)();
-        foreach (Entry!(Object, Object) value ; this.properties.entrySet()) {
+        foreach (Entry!(String, String) value ; this.properties.entrySet()) {
             values.put(value.getKey().toString(), value.getValue().toString());
         }
         return values;
@@ -33,7 +33,7 @@ public class PropertiesFileConfigStorage : ConfigStorage
 
     public void storeValue(String name, String value)
     {
-        this.properties.put(cast(Object)name, cast(Object)value);
+        this.properties.put(name, value);
     }
 }
 

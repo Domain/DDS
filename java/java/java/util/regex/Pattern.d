@@ -37,5 +37,11 @@ class Pattern {
         implMissing( __FILE__, __LINE__ );
         return null;
     }
+
+    public static String quote(String)
+    {
+        implMissing();
+        return null;
+    }
 }
 

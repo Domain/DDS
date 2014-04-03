@@ -1,11 +1,11 @@
 /// Generate by tools
-module org.restlet.data.Range;
+module org.restlet.data.ChallengeScheme;
 
 import java.lang.exceptions;
 
-public class Range
+public class ChallengeScheme
 {
-    public this(long, long)
+    public this()
     {
         implMissing();
     }

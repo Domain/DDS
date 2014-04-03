@@ -34,7 +34,7 @@ import org.slf4j.Logger;
 
 public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
 {
-    override public void handleResponse(Map!(String, String) requestHeaders, Map!(String, Object) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
+    override public void handleResponse(Map!(String, String) requestHeaders, Map!(String, String) responseHeaders, HttpMethod httpMethod, ProtocolVersion requestHttpVersion, ResourceInfo mediaFileResourceInfo, Integer protocolInfoIndex, TransferMode transferMode, Client client, Long streamSize, RangeHeaders range)
     {
         super.handleResponse(requestHeaders, responseHeaders, httpMethod, requestHttpVersion, mediaFileResourceInfo, protocolInfoIndex, transferMode, client, streamSize, range);
         if (httpMethod == HttpMethod.HEAD)

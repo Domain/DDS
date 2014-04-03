@@ -27,7 +27,7 @@ public class HEADMethodProcessor : AbstractMethodProcessor
         return retrieveResource(null, resourceInfo, transferMode, client, 0L, fileSize.longValue(), true, true, requestHttpVersion);
     }
 
-    override protected HttpDeliveryContainer prepareContainer(Map!(String, Object) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
+    override protected HttpDeliveryContainer prepareContainer(Map!(String, String) responseHeaders, DeliveryContainer container, TransferMode transferMode, Long skip, Long fileSize, bool partialContent, ProtocolVersion requestHttpVersion, bool transcoded, bool alwaysCloseConnection, bool deliverStream)
     {
         return new HttpDeliveryContainer(responseHeaders, null, partialContent, requestHttpVersion, transferMode, transcoded, fileSize);
     }

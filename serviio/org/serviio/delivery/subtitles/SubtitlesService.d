@@ -29,6 +29,8 @@ import org.serviio.util.CollectionUtils;
 import org.serviio.util.FileUtils;
 import org.serviio.util.StringUtils;
 import org.serviio.delivery.subtitles.SubtitlesReader;
+import org.serviio.delivery.subtitles.ExternalFileSubtitlesReader;
+import org.serviio.delivery.subtitles.EmbeddedSubtitlesReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,9 @@ public class SubtitlesService : Service
 
     static this()
     {
-        FONT_CONFIG_DIR = FileUtils.getFilePathOfClasspathResource("/fonts", SubtitlesService.class_);
+        FONT_CONFIG_DIR = FileUtils.getFilePathOfClasspathResource("/fonts", null/*SubtitlesService.class_*/);
         log = LoggerFactory.getLogger!(SubtitlesService);
-        subtitleFileExtensionsRegEx = "(" ~ CollectionUtils.listToCSV(SubtitleCodec.getAllSupportedExtensions(), "|", false) ~ ")";
+        subtitleFileExtensionsRegEx = "(" ~ CollectionUtils.listToCSV(/*SubtitleCodec.*/getAllSupportedExtensions(), "|", false) ~ ")";
     }
 
     public static bool isSoftSubsAvailable(Video item, Profile rendererProfile)
@@ -55,10 +57,10 @@ public class SubtitlesService : Service
             if ((extSubs !is null) || (embSubs !is null))
             {
                 if (extSubs !is null) {
-                    log.debug_("Found external subtitles file: " + extSubs.getName());
+                    log.debug_("Found external subtitles file: " ~ extSubs.getName());
                 }
                 if (embSubs !is null) {
-                    log.debug_("Found embedded subtitles track: " + embSubs.getLanguageCode());
+                    log.debug_("Found embedded subtitles track: " ~ embSubs.getLanguageCode());
                 }
                 return true;
             }
@@ -99,7 +101,7 @@ public class SubtitlesService : Service
         EmbeddedSubtitles es = findEmbeddedSubtitles(item);
         if (es !is null)
         {
-            log.debug_(String_format("Found embedded subtitle track: %s (%s)", cast(Object[])[ es.getStreamId(), es.getLanguageCode() ]));
+            log.debug_(String_format("Found embedded subtitle track: %s (%s)", cast(Object[])[ es.getStreamId().toString(), es.getLanguageCode() ]));
             return new EmbeddedSubtitlesReader(item, es);
         }
         return null;
@@ -108,7 +110,7 @@ public class SubtitlesService : Service
     private static EmbeddedSubtitles findEmbeddedSubtitles(Video item)
     {
         List!(String) preferredLanguages = Configuration.getSubtitlesPreferredLanguages();
-        TreeMap!(Integer, EmbeddedSubtitles) suitableSubs = new TreeMap();
+        TreeMap!(Integer, EmbeddedSubtitles) suitableSubs = new TreeMap!(Integer, EmbeddedSubtitles)();
         if ((Configuration.isEmbeddedSubtitlesExtracted()) && (preferredLanguages.size() > 0))
         {
             foreach (EmbeddedSubtitles es ; item.getEmbeddedSubtitles())
@@ -156,9 +158,9 @@ public class SubtitlesService : Service
     protected static String generateSubtitleSearchRegEx(File mediaFile, List!(String) preferredLanguages)
     {
         if (preferredLanguages.isEmpty()) {
-            return "^" + Pattern.quote(FileUtils.getFileNameWithoutExtension(mediaFile)) + "\\." + subtitleFileExtensionsRegEx + "$";
+            return "^" ~ Pattern.quote(FileUtils.getFileNameWithoutExtension(mediaFile)) ~ "\\." ~ subtitleFileExtensionsRegEx ~ "$";
         }
-        return "^" + Pattern.quote(FileUtils.getFileNameWithoutExtension(mediaFile)) + "([-_(\\.](" + CollectionUtils.listToCSV(preferredLanguages, "|", true) + ")(\\))?)?\\." + subtitleFileExtensionsRegEx + "$";
+        return "^" ~ Pattern.quote(FileUtils.getFileNameWithoutExtension(mediaFile)) ~ "([-_(\\.](" ~ CollectionUtils.listToCSV(preferredLanguages, "|", true) ~ ")(\\))?)?\\." ~ subtitleFileExtensionsRegEx ~ "$";
     }
 
     protected static File selectBestSubtitleFile(String mediaFileName, File[] subtitleFiles, List!(String) preferredLanguages)
@@ -168,7 +170,7 @@ public class SubtitlesService : Service
         }
         if (preferredLanguages.isEmpty())
         {
-            List!(File) subtitleFilesWithmatchingName = new ArrayList();
+            List!(File) subtitleFilesWithmatchingName = new ArrayList!(File)();
             foreach (File subtitleFile ; subtitleFiles) {
                 if (FileUtils.getFileNameWithoutExtension(subtitleFile).equals(FilenameUtils.getBaseName(mediaFileName))) {
                     subtitleFilesWithmatchingName.add(subtitleFile);
@@ -184,8 +186,7 @@ public class SubtitlesService : Service
         return subtitleFiles[0];
     }
 
-    private static class SubtitleFilesComparator
-        : Comparator!(File)
+    private static class SubtitleFilesComparator : Comparator!(File)
     {
         private List!(String) preferredLanguages;
 
@@ -196,7 +197,7 @@ public class SubtitlesService : Service
 
         public int compare(File o1, File o2)
         {
-            if (o1.equals(o2)) {
+            if (o1 == o2) {
                 return 0;
             }
             String fileName1 = o1.getName();
@@ -206,7 +207,7 @@ public class SubtitlesService : Service
             String fileName2Language = null;
             if ((this.preferredLanguages !is null) && (this.preferredLanguages.size() > 0))
             {
-                Pattern filenameWithLanguage = Pattern.compile(".*[-_(\\.](" + CollectionUtils.listToCSV(this.preferredLanguages, "|", true) + ")(\\))?\\." + SubtitlesService.subtitleFileExtensionsRegEx, 2);
+                Pattern filenameWithLanguage = Pattern.compile(".*[-_(\\.](" ~ CollectionUtils.listToCSV(this.preferredLanguages, "|", true) ~ ")(\\))?\\." ~ SubtitlesService.subtitleFileExtensionsRegEx, 2);
 
 
                 Matcher fileName1Matcher = filenameWithLanguage.matcher(fileName1);
@@ -238,7 +239,7 @@ public class SubtitlesService : Service
 
         private int prioritizeSrt(String filename)
         {
-            return StringUtils.localeSafeToLowercase(filename).endsWith("." + cast(String)SubtitleCodec.SRT.getFileExtensions().get(0)) ? -1 : 1;
+            return StringUtils.localeSafeToLowercase(filename).endsWith("." ~ cast(String)SubtitleCodec.SRT.getFileExtensions()[0]) ? -1 : 1;
         }
     }
 }

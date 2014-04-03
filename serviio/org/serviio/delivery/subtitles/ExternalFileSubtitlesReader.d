@@ -25,7 +25,7 @@ public class ExternalFileSubtitlesReader : SubtitlesReader
 
     public SubtitleCodec getSubtitleCodec()
     {
-        return SubtitleCodec.getByFileName(this.subtitlesFile.getName());
+        return /*SubtitleCodec.*/getByFileName(this.subtitlesFile.getName());
     }
 
     public byte[] getSubtitlesAsSRT()

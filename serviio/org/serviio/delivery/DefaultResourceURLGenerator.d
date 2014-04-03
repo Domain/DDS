@@ -31,7 +31,7 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
         }
         if (ResourceType.SUBTITLE == resourceType) {
             file.append(".srt");
-        } else if ((ResourceType.MANIFEST == resourceType) || ((ver !is null) && (ver.isManifestFormat()))) {
+        } else if ((ResourceType.MANIFEST == resourceType) || (/*(ver !is null) &&*/ (ver.isManifestFormat()))) {
             file.append(".m3u8");
         }
         return generateUrl(hostInfo, generatePath(hostInfo, file.toString()));
@@ -39,7 +39,7 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
 
     public String getGeneratedURL(HostInfo hostInfo, ResourceType resourceType, Long resourceId, String path)
     {
-        validate(resourceType, resourceId, null, null, null);
+        validate(resourceType, resourceId, MediaFormatProfile.MP3, null, QualityType.ORIGINAL);
         StringBuffer file = new StringBuffer();
         file.append(resourceId.toString());
         file.append("/").append(resourceType.toString());
@@ -84,7 +84,7 @@ public class DefaultResourceURLGenerator : ResourceURLGenerator
 
     private void validate(ResourceType resourceType, Long resourceId, MediaFormatProfile ver, Integer protocolInfoIndex, QualityType quality)
     {
-        if ((resourceId is null) || (resourceType is null) || ((resourceType == ResourceType.MEDIA_ITEM) && ((ver is null) || (quality is null) || (protocolInfoIndex is null)))) {
+        if ((resourceId is null) || /*(resourceType is null) ||*/ ((resourceType == ResourceType.MEDIA_ITEM) && (/*(ver is null) || (quality is null) ||*/ (protocolInfoIndex is null)))) {
             throw new InvalidResourceException("Resource is not valid.");
         }
     }

@@ -11,6 +11,8 @@ import org.serviio.library.local.EmbeddedSubtitles;
 import org.serviio.util.FileUtils;
 import org.serviio.delivery.subtitles.SubtitlesReader;
 import org.serviio.delivery.subtitles.HardSubs;
+import org.serviio.delivery.MediaFormatProfileResource;
+import org.serviio.library.entities.MediaItem;
 
 public class EmbeddedSubtitlesReader : SubtitlesReader
 {
@@ -45,7 +47,7 @@ public class EmbeddedSubtitlesReader : SubtitlesReader
 
     private String createTargetSubtitlesFilename()
     {
-        return FileUtils.getProperFilePath(new File(AbstractTranscodingDeliveryEngine.getTranscodingFolder(), String_format("subtitles_%s_%s", cast(Object[])[ this.video.getId(), this.embeddedSubtitles.getStreamId() ])));
+        return FileUtils.getProperFilePath(new File(AbstractTranscodingDeliveryEngine!(MediaFormatProfileResource, MediaItem).getTranscodingFolder(), String_format("subtitles_%s_%s", cast(Object[])[ this.video.getId().toString(), this.embeddedSubtitles.getStreamId().toString() ])));
     }
 }
 
