@@ -49,13 +49,13 @@ public class TimeoutStreamDelegator
         this.forceClosing = forceClosing;
     }
 
-    public synchronized void onRead()
+    public /*synchronized*/ void onRead()
     {
         this.lastBytesRead.set(new Date());
         resetReadTimeoutScheduler(CLOSE_STREAM_AFTER_READ_INACTIVITY_SEC);
     }
 
-    public synchronized void close()
+    public /*synchronized*/ void close()
     {
         if (!this.closed) {
             if ((this.forceClosing) && (!this.processListener.isFinished()))
@@ -75,7 +75,7 @@ public class TimeoutStreamDelegator
         }
     }
 
-    private synchronized void reallyClose()
+    private /*synchronized*/ void reallyClose()
     {
         log.debug_("Closing piped input stream and closing related feeder process");
         try
@@ -104,7 +104,7 @@ public class TimeoutStreamDelegator
         return cast(Date)this.lastBytesRead.get();
     }
 
-    private synchronized void resetReadTimeoutScheduler(int timeout)
+    private /*synchronized*/ void resetReadTimeoutScheduler(int timeout)
     {
         try
         {

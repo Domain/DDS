@@ -48,7 +48,7 @@ class Collections {
     //}
 
     private static Set!Object EMPTY_SET_;
-    public static Set!T EMPTY_SET(T)(){
+    public static Set!T emptySet(T)(){
         if( EMPTY_SET_ is null ){
             synchronized(Collections.classinfo ){
                 if( EMPTY_SET_ is null ){

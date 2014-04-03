@@ -15,16 +15,16 @@ public class TranscodingConfiguration
 
     public List!(TranscodingDefinition) getDefinitions(MediaFileType fileType)
     {
-        List!(TranscodingDefinition) result = cast(List)this.config.get(fileType);
+        List!(TranscodingDefinition) result = cast(List!(TranscodingDefinition))this.config.get(fileType);
         if (result !is null) {
-            return Collections.unmodifiableList(cast(List)this.config.get(fileType));
+            return Collections.unmodifiableList(cast(List!(TranscodingDefinition))this.config.get(fileType));
         }
-        return Collections.emptyList();
+        return Collections.emptyList!(TranscodingDefinition)();
     }
 
     public List!(TranscodingDefinition) getDefinitions()
     {
-        List!(TranscodingDefinition) result = new ArrayList();
+        List!(TranscodingDefinition) result = new ArrayList!(TranscodingDefinition)();
         foreach (List!(TranscodingDefinition) configs ; this.config.values()) {
             result.addAll(configs);
         }
@@ -34,9 +34,9 @@ public class TranscodingConfiguration
     public void addDefinition(MediaFileType fileType, TranscodingDefinition definition)
     {
         if (!this.config.containsKey(fileType)) {
-            this.config.put(fileType, new ArrayList());
+            this.config.put(fileType, new ArrayList!(TranscodingDefinition)());
         }
-        List!(TranscodingDefinition) defs = cast(List)this.config.get(fileType);
+        List!(TranscodingDefinition) defs = cast(List!(TranscodingDefinition))this.config.get(fileType);
         defs.add(definition);
     }
 

@@ -16,6 +16,9 @@ import org.serviio.delivery.resource.transcode.StreamDescriptor;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
+import org.serviio.delivery.resource.transcode.TranscodedMediaInputStream;
+import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine;
+import org.serviio.delivery.MediaFormatProfileResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +66,7 @@ public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryS
         TranscodingJobListener jobListener = new TranscodingJobListener(transcodingIdentifier, isSegmentedOutput());
         jobListener.setTranscodedFile(transcodedFile);
 
-        invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, jobListener.getTranscodedFile(), trDef, jobListener);
+        super.invokeTranscoder(mediaItem, timeOffsetInSeconds, durationInSeconds, jobListener.getTranscodedFile(), trDef, jobListener);
 
         int retries = 0;
         int maxRetries = mediaItem.isLocalMedia() ? 20 : 50;
@@ -118,7 +121,7 @@ public class FileBasedTranscodingDeliveryStrategy : AbstractTranscodingDeliveryS
 
     private File prepareTranscodingFolder()
     {
-        File transcodingFolder = AbstractTranscodingDeliveryEngine.getTranscodingFolder();
+        File transcodingFolder = AbstractTranscodingDeliveryEngine!(MediaFormatProfileResource, MediaItem).getTranscodingFolder();
         return createFolder(transcodingFolder);
     }
 }

@@ -33,7 +33,7 @@ abstract class AbstractList(T) : AbstractCollection!T, List!T {
     override public bool contains(T o){ return super.contains(o); }
     //override public bool contains(String str){ return contains(stringcast(str)); }
     override public bool     containsAll(Collection!T c){ return super.containsAll(c); }
-    override public abstract equals_t opEquals(T o);
+    override public abstract equals_t opEquals(Object o);
 
     override public abstract T get(int index);
 

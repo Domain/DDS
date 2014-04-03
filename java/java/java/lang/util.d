@@ -21,6 +21,7 @@ version(Tango){
     static import std.typetuple;
     static import std.traits;
     static import std.exception;
+    static import std.algorithm;
     alias std.c.stdlib.exit exit;
 }
 
@@ -606,4 +607,9 @@ struct ImportData{
 
 template getImportData(String name) {
     const ImportData getImportData = ImportData( cast(TryImmutable!(void)[]) import(name), name );
+}
+
+bool contains(T)(T[] container, T value)
+{
+    return std.algorithm.canFind(container, value);
 }

@@ -14,6 +14,7 @@ import org.serviio.util.ServiioThreadFactory;
 import org.serviio.delivery.resource.transcode.SegmentBasedTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
+import org.serviio.delivery.resource.transcode.LiveManifestTranscodeInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class LiveSegmentBasedTranscodingDeliveryStrategy : SegmentBasedTranscodi
             this.segmentsFolder = segmentsFolder;
         }
 
-        public synchronized void removeSegments(Integer firstUsedSegmentNumber)
+        public /*synchronized*/ void removeSegments(Integer firstUsedSegmentNumber)
         {
             ServiioThreadFactory.getInstance().newThread(new LiveSegmentBasedTranscodingDeliveryStrategy.SegmentRemoverWorker(this.segmentsFolder, firstUsedSegmentNumber)).start();
         }

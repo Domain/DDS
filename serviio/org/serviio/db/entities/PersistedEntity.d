@@ -42,7 +42,7 @@ public abstract class PersistedEntity
                 return false;
             }
         }
-        else if (!this.id.equals(other.id)) {
+        else if (this.id != other.id) {
             return false;
         }
         return true;

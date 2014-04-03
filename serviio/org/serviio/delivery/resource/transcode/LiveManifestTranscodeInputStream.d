@@ -39,19 +39,19 @@ public class LiveManifestTranscodeInputStream : ManifestTranscodeInputStream, Cl
         this.closingDelegator = getClosingDelegator(this, processListener, file, client, deliveryListener, forceClosing);
     }
 
-    public synchronized int read()
+    override public /*synchronized*/ int read()
     {
         this.closingDelegator.onRead();
         return super.read();
     }
 
-    public synchronized int read(byte[] b, int off, int len)
+    override public /*synchronized*/ int read(byte[] b, int off, int len)
     {
         this.closingDelegator.onRead();
         return super.read(b, off, len);
     }
 
-    public synchronized void close()
+    override public /*synchronized*/ void close()
     {
         this.closingDelegator.close();
     }
@@ -62,7 +62,7 @@ public class LiveManifestTranscodeInputStream : ManifestTranscodeInputStream, Cl
         delegators.remove(this.manifestFile);
     }
 
-    private static synchronized TimeoutStreamDelegator getClosingDelegator(InputStream is_, ProcessListener processListener, File manifestFile, Client client, DeliveryListener deliveryListener, bool forceClosing)
+    private static /*synchronized*/ TimeoutStreamDelegator getClosingDelegator(InputStream is_, ProcessListener processListener, File manifestFile, Client client, DeliveryListener deliveryListener, bool forceClosing)
     {
         if (delegators.containsKey(manifestFile))
         {

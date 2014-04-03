@@ -10,6 +10,7 @@ import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceURLGenerator;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.serviio.delivery.resource.transcode.LiveSegmentBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.ManifestTranscodeInputStreamModifier;
 
 public class ManifestTranscodeInputStream : ReaderInputStream, TranscodeInputStream
 {

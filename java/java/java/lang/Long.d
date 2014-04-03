@@ -99,6 +99,11 @@ class Long : Number {
     {
         return cast(int)(this.value ^ this.value >>> 32);
     }
+
+    public bool equals(Long rhs)
+    {
+        return value == rhs.value;
+    }
 }
 alias Long ValueWrapperLong;
 

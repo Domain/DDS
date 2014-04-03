@@ -41,6 +41,7 @@ import org.serviio.profile.DeliveryQuality;
 import org.serviio.profile.DeliveryQuality:QualityType;
 import org.serviio.profile.Profile;
 import org.serviio.delivery.resource.DeliveryEngine;
+import org.serviio.delivery.resource.VideoDeliveryEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 {
     protected Logger log;
 
-    static this()
+    public this()
     {
         log = LoggerFactory.getLogger!(AbstractDeliveryEngine);
     }
@@ -60,8 +61,8 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     public List!(RI) getMediaInfoForProfile(MI mediaItem, Profile rendererProfile)
     {
-        this.log.debug_(String_format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId(), rendererProfile.getName() ]));
-        Map!(QualityType, List!(RI)) infos = new LinkedHashMap();
+        this.log.debug_(String_format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId().toString(), rendererProfile.getName() ]));
+        Map!(QualityType, List!(RI)) infos = new LinkedHashMap!(QualityType, List!(RI))();
         try
         {
             LinkedHashMap!(QualityType, List!(RI)) originalMediaInfos = retrieveOriginalMediaInfo(mediaItem, rendererProfile);
@@ -78,7 +79,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     public DeliveryContainer deliver(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
     {
-        this.log.debug_(String_format("Delivering item '%s' for client '%s'", cast(Object[])[ mediaItem.getId(), client ]));
+        this.log.debug_(String_format("Delivering item '%s' for client '%s'", cast(Object[])[ mediaItem.getId().toString(), client.toString() ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, client.getRendererProfile()))
         {
             this.log.debug_(String_format("Delivering file '%s' using transcoding", cast(Object[])[ mediaItem.getFileName() ]));
@@ -90,12 +91,12 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     public RI getMediaInfoForMediaItem(MI mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Profile rendererProfile)
     {
-        this.log.debug_(String_format("Retrieving resource information for item %s, format %s and profile %s", cast(Object[])[ mediaItem.getId(), selectedVersion, rendererProfile.getName() ]));
+        this.log.debug_(String_format("Retrieving resource information for item %s, format %s and profile %s", cast(Object[])[ mediaItem.getId().toString(), selectedVersion.toString(), rendererProfile.getName() ]));
         if (fileWillBeTranscoded(mediaItem, selectedVersion, selectedQuality, rendererProfile)) {
             return retrieveTranscodedMediaInfoForVersion(mediaItem, selectedVersion, selectedQuality, rendererProfile);
         }
         LinkedHashMap!(QualityType, List!(RI)) originalMediaInfos = retrieveOriginalMediaInfo(mediaItem, rendererProfile);
-        return findMediaInfoForFileProfile(cast(Collection)originalMediaInfos.get(QualityType.ORIGINAL), selectedVersion);
+        return findMediaInfoForFileProfile(cast(Collection!(RI))originalMediaInfos.get(QualityType.ORIGINAL), selectedVersion);
     }
 
     protected abstract bool fileCanBeTranscoded(MI paramMI, Profile paramProfile);
@@ -114,7 +115,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     protected Map!(QualityType, TranscodingDefinition) getMatchingTranscodingDefinitions(MI mediaItem, Profile rendererProfile, bool delivering)
     {
-        Map!(QualityType, TranscodingDefinition) defs = new LinkedHashMap();
+        Map!(QualityType, TranscodingDefinition) defs = new LinkedHashMap!(QualityType, TranscodingDefinition)();
         TranscodingDefinition defaultDefinition = getMatchingTranscodingDefinitionForQuality(rendererProfile.getDefaultDeliveryQuality(), mediaItem, rendererProfile, delivering);
         if (defaultDefinition !is null) {
             defs.put(QualityType.ORIGINAL, defaultDefinition);
@@ -183,7 +184,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
             fis = getOnlineInputStream(mediaItem);
         }
         Map!(QualityType, List!(RI)) mediaInfos = retrieveOriginalMediaInfo(mediaItem, client.getRendererProfile());
-        return new StreamDeliveryContainer(fis, findMediaInfoForFileProfile(cast(Collection)mediaInfos.get(QualityType.ORIGINAL), selectedVersion));
+        return new StreamDeliveryContainer(fis, findMediaInfoForFileProfile(cast(Collection!(RI))mediaInfos.get(QualityType.ORIGINAL), selectedVersion));
     }
 
     protected InputStream getOnlineInputStream(MI mediaItem)
@@ -229,7 +230,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
             }
             catch (Throwable t)
             {
-                this.log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.getMessage() ]), t);
+                this.log.debug_(String_format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ mediaItem.getOnlineResourcePlugin().getExtractorName(), mediaItem.getOnlineItem().getTitle(), t.toString() ]), t);
             }
         }
     }
@@ -242,9 +243,9 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
 
     private List!(RI) flattenMediaInfoMap(Map!(QualityType, List!(RI)) map)
     {
-        List!(RI) result = new ArrayList();
-        foreach (Map.Entry!(QualityType, List!(RI)) entry ; map.entrySet()) {
-            result.addAll(cast(Collection)entry.getValue());
+        List!(RI) result = new ArrayList!(RI)();
+        foreach (Entry!(QualityType, List!(RI)) entry ; map.entrySet()) {
+            result.addAll(cast(Collection!(RI))entry.getValue());
         }
         return result;
     }

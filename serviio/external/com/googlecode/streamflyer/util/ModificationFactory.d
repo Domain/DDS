@@ -5,7 +5,7 @@ import java.lang.exceptions;
 
 public class ModificationFactory
 {
-    public this()
+    public this(int, int)
     {
         implMissing();
     }

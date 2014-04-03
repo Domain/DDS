@@ -85,8 +85,8 @@ class ArrayList(T) : AbstractList!T, List!T {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
-    override equals_t opEquals(T o){
-        if( auto other = cast(ArrayList)o ){
+    override equals_t opEquals(Object o){
+        if( auto other = cast(ArrayList!T)o ){
             if( data.length !is other.data.length ){
                 return false;
             }

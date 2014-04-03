@@ -35,6 +35,9 @@ import org.serviio.delivery.resource.transcode.TranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
 import org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.SegmentBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.LiveSegmentBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamBasedTranscodingDeliveryStrategy;
+import org.serviio.delivery.resource.transcode.StreamDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +93,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         {
             String timeOffset = timeOffsetInSeconds !is null ? String_format("-%s-%s", cast(Object[])[ timeOffsetInSeconds, Double.valueOf(durationInSeconds !is null ? durationInSeconds.doubleValue() : 0.0) ]) : "";
             String subtitle = mediaItem.getDeliveryContext().getHardsubsSubtitlesFile() !is null ? String_format("-%s", cast(Object[])[ mediaItem.getDeliveryContext().getHardsubsSubtitlesFile().getIdentifier() ]) : "";
-            String transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s%s%s.%s", cast(Object[])[ mediaItem.getId(), client.getRendererProfile().getId(), selectedQuality.toString(), timeOffset, subtitle, "stf" ]);
+            String transcodingIdentifier = String_format("transcoding-temp-%s-%s-%s%s%s.%s", cast(Object[])[ mediaItem.getId().toString(), client.getRendererProfile().getId().toString(), selectedQuality.toString(), timeOffset, subtitle, "stf" ]);
 
             TranscodingJobListener jobListener = startTranscodeJob(mediaItem, transcodingIdentifier, timeOffsetInSeconds, durationInSeconds, client, trDef, selectedVersion);
             StreamDescriptor stream = null;
@@ -107,7 +110,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
                 throw e;
             }
             LinkedHashMap!(QualityType, List!(RI)) transcodedMediaInfos = retrieveTranscodedMediaInfo(mediaItem, client.getRendererProfile(), stream.getFileSize());
-            RI transcodedMediaInfo = findMediaInfoForFileProfile(cast(Collection)transcodedMediaInfos.get(selectedQuality), selectedVersion);
+            RI transcodedMediaInfo = findMediaInfoForFileProfile(cast(Collection!RI)transcodedMediaInfos.get(selectedQuality), selectedVersion);
             return new StreamDeliveryContainer(new BufferedInputStream(stream.getStream(), 65536), transcodedMediaInfo, jobListener);
         }
         throw new IOException(String_format("Cannot find transcoding definition for %s quality", cast(Object[])[ selectedQuality.toString() ]));
@@ -117,7 +120,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
     {
         log.debug_(String_format("Getting media info for transcoded version of file %s", cast(Object[])[ mediaItem.getFileName() ]));
         LinkedHashMap!(QualityType, List!(RI)) mediaInfos = retrieveTranscodedMediaInfo(mediaItem, rendererProfile, null);
-        return findMediaInfoForFileProfile(cast(Collection)mediaInfos.get(selectedQuality), selectedVersion);
+        return findMediaInfoForFileProfile(cast(Collection!RI)mediaInfos.get(selectedQuality), selectedVersion);
     }
 
     override protected bool fileCanBeTranscoded(MI mediaItem, Profile rendererProfile)
@@ -194,7 +197,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
         return c;
     }
 
-    private synchronized TranscodingJobListener startTranscodeJob(MI mediaItem, String transcodingIdentifier, Double timeOffsetInSeconds, Double durationInSeconds, Client client, TranscodingDefinition trDef, MediaFormatProfile selectedVersion)
+    private /*synchronized*/ TranscodingJobListener startTranscodeJob(MI mediaItem, String transcodingIdentifier, Double timeOffsetInSeconds, Double durationInSeconds, Client client, TranscodingDefinition trDef, MediaFormatProfile selectedVersion)
     {
         prepareClientStream(client, transcodingIdentifier, trDef);
 
@@ -237,7 +240,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
             if ((transcodeJobs.containsKey(client)) && (keepLiveStreamsOpen)) {
                 return Collections.singleton(transcodeJobs.get(client));
             }
-            return Collections.emptySet();
+            return Collections.emptySet!(TranscodingJobListener)();
         }
     }
 
@@ -251,7 +254,7 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
                 public bool accept(File dir, String name)
                 {
                     String extension = FileUtils.getFileExtension(StringUtils.localeSafeToLowercase(name));
-                    if ((extension.equals("stf")) || (SubtitleCodec.getAllSupportedExtensions().contains(extension))) {
+                    if ((extension.equals("stf")) || (/*SubtitleCodec.*/getAllSupportedExtensions().contains(extension))) {
                         return true;
                     }
                     return false;
@@ -268,9 +271,9 @@ public abstract class AbstractTranscodingDeliveryEngine(RI : MediaFormatProfileR
     private TranscodingDeliveryStrategy!(Object) getDeliveryStrategy(MI mediaItem, MediaFormatProfile formatProfile)
     {
         if (formatProfile.isManifestFormat()) {
-            return mediaItem.isLive() ? liveSegmentBasedStrategy : segmentBasedStrategy;
+            return cast(TranscodingDeliveryStrategy!(Object))(mediaItem.isLive() ? liveSegmentBasedStrategy : segmentBasedStrategy);
         }
-        return mediaItem.isLive() ? streamBasedStrategy : fileBasedStrategy;
+        return mediaItem.isLive() ? cast(TranscodingDeliveryStrategy!(Object))(streamBasedStrategy) : cast(TranscodingDeliveryStrategy!(Object))(fileBasedStrategy);
     }
 }
 

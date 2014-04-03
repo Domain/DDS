@@ -14,6 +14,7 @@ import org.serviio.util.FileUtils;
 import org.serviio.delivery.resource.transcode.FileBasedTranscodingDeliveryStrategy;
 import org.serviio.delivery.resource.transcode.TranscodeInputStream;
 import org.serviio.delivery.resource.transcode.TranscodingJobListener;
+import org.serviio.delivery.resource.transcode.ManifestTranscodeInputStream;
 
 public class SegmentBasedTranscodingDeliveryStrategy : FileBasedTranscodingDeliveryStrategy
 {

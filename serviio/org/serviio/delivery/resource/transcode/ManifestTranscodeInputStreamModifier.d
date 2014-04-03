@@ -26,7 +26,7 @@ public class ManifestTranscodeInputStreamModifier
             String segmentsFolder = buildSegmentResourcePath(manifestFile);
             String serverUrl = urlGenerator.getGeneratedURL(hostInfo, ResourceType.SEGMENT, resourceId, segmentsFolder);
             String[] serverUrlTemplate = buildTargetUrlTemplate(serverUrl);
-            Modifier segmentUrlModifier = new RegexModifier(".*?(\\\\|/)(segment\\d{5}.ts)", 0, serverUrlTemplate[0] + "/$2" + serverUrlTemplate[1]);
+            Modifier segmentUrlModifier = new RegexModifier(".*?(\\\\|/)(segment\\d{5}.ts)", 0, serverUrlTemplate[0] ~ "/$2" ~ serverUrlTemplate[1]);
 
             Reader modifyingReader = new ModifyingReader(originalReader, segmentUrlModifier);
             if (live) {
@@ -64,7 +64,7 @@ public class ManifestTranscodeInputStreamModifier
 
     private static class LiveStreamSegmentListener : Modifier
     {
-        private static enum ModifierState
+        private enum ModifierState
         {
             INITIAL,  SEGMENT_SEARCH,  SEGMENT_FOUND
         }
@@ -81,14 +81,14 @@ public class ManifestTranscodeInputStreamModifier
 
         public AfterModification modify(StringBuilder characterBuffer, int firstModifiableCharacterInBuffer, bool endOfStreamHit)
         {
-            switch (state)
+            final switch (state)
             {
-                case SEGMENT_FOUND: 
+                case ModifierState.SEGMENT_FOUND: 
                     return this.factory.skipEntireBuffer(characterBuffer, firstModifiableCharacterInBuffer, endOfStreamHit);
-                case INITIAL: 
+                case ModifierState.INITIAL: 
                     this.state = ModifierState.SEGMENT_SEARCH;
                     return this.factory.modifyAgainImmediately(4096, firstModifiableCharacterInBuffer);
-                case SEGMENT_SEARCH: 
+                case ModifierState.SEGMENT_SEARCH: 
                     Matcher matcher = LiveSegmentBasedTranscodingDeliveryStrategy.segmentPattern.matcher(characterBuffer.toString());
                     if ((matcher.find()) && (matcher.groupCount() == 1))
                     {
@@ -99,7 +99,7 @@ public class ManifestTranscodeInputStreamModifier
                     }
                     return this.factory.skipEntireBuffer(characterBuffer, firstModifiableCharacterInBuffer, endOfStreamHit);
             }
-            throw new IllegalStateException("state " ~ this.state ~ " not supported");
+            throw new IllegalStateException("state " ~ this.state.toString() ~ " not supported");
         }
     }
 }

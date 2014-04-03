@@ -13,13 +13,18 @@ public class Properties : Hashtable!(Object, Object)
         implMissing();
     }
 
+    /*public this() shared
+    {
+        implMissing();
+    }*/
+
     public String get(String name)
     {
         implMissing();
         return "";
     }
 
-    public synchronized void load(InputStream paramInputStream)
+    public /*synchronized*/ void load(InputStream paramInputStream)
     {
         implMissing();
     }

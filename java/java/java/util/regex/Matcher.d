@@ -36,6 +36,10 @@ class Matcher {
         implMissing( __FILE__, __LINE__ );
         return false;
     }
+    public int groupCount(){
+        implMissing( __FILE__, __LINE__ );
+        return 0;
+    }
 }
 
 

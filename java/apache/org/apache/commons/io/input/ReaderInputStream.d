@@ -2,10 +2,12 @@
 module org.apache.commons.io.input.ReaderInputStream;
 
 import java.lang.exceptions;
+import java.io.InputStream;
+import java.io.Reader;
 
-public class ReaderInputStream
+public class ReaderInputStream : InputStream
 {
-    public this()
+    public this(Reader reader)
     {
         implMissing();
     }

@@ -10,7 +10,7 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class DBConnectionPool
+/*synchronized*/ class DBConnectionPool
 {
     private static Logger log;
     private int checkedOut;
@@ -31,19 +31,19 @@ class DBConnectionPool
         this.maxConn = maxConn;
     }
 
-    public synchronized void freeConnection(Connection con)
+    public /*synchronized*/ void freeConnection(Connection con)
     {
         if (con !is null) {
             this.freeConnections.addElement(con);
         }
         this.checkedOut -= 1;
-        notifyAll();
+        //notifyAll();
         if (log.isTraceEnabled()) {
             log.trace(String_format("Releasing connection from pool %s", cast(Object[])[ this.name ]));
         }
     }
 
-    public synchronized Connection getConnection(bool autoCommit)
+    public /*synchronized*/ Connection getConnection(bool autoCommit)
     {
         Connection con = null;
         if (this.freeConnections.size() > 0)
@@ -58,7 +58,7 @@ class DBConnectionPool
                 if (con.isClosed())
                 {
                     if (log.isTraceEnabled()) {
-                        log.trace("Removed bad connection from " + this.name);
+                        log.trace("Removed bad connection from " ~ this.name);
                     }
                     con = getConnection(autoCommit);
                 }
@@ -66,7 +66,7 @@ class DBConnectionPool
             catch (SQLException e)
             {
                 if (log.isTraceEnabled()) {
-                    log.trace("Removed bad connection from " + this.name);
+                    log.trace("Removed bad connection from " ~ this.name);
                 }
                 con = getConnection(autoCommit);
             }
@@ -83,7 +83,7 @@ class DBConnectionPool
         return con;
     }
 
-    public synchronized Connection getConnection(long timeout, bool autoCommit)
+    public /*synchronized*/ Connection getConnection(long timeout, bool autoCommit)
     {
         long startTime = new Date().getTime();
         Connection con;
@@ -91,7 +91,7 @@ class DBConnectionPool
         {
             try
             {
-                wait(timeout);
+                //wait(timeout);
             }
             catch (InterruptedException e) {}
             if (new Date().getTime() - startTime >= timeout) {
@@ -101,7 +101,7 @@ class DBConnectionPool
         return con;
     }
 
-    public synchronized void release()
+    public /*synchronized*/ void release()
     {
         Enumeration!(Connection) allConnections = this.freeConnections.elements();
         while (allConnections.hasMoreElements())
@@ -110,11 +110,11 @@ class DBConnectionPool
             try
             {
                 con.close();
-                log.debug_("Closed connection for pool " + this.name);
+                log.debug_("Closed connection for pool " ~ this.name);
             }
             catch (SQLException e)
             {
-                log.debug_("Can't close connection for pool " + this.name, e);
+                log.debug_("Can't close connection for pool " ~ this.name, e);
             }
         }
         this.freeConnections.removeAllElements();
@@ -127,12 +127,12 @@ class DBConnectionPool
         {
             con = DriverManager.getConnection(this.URL);
             if (log.isTraceEnabled()) {
-                log.trace("Created a new connection in pool " + this.name);
+                log.trace("Created a new connection in pool " ~ this.name);
             }
         }
         catch (SQLException e)
         {
-            log.warn("Can't create a new connection for " + this.URL, e);
+            log.warn("Can't create a new connection for " ~ this.URL, e);
             return null;
         }
         return con;

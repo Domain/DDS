@@ -97,14 +97,14 @@ class StringIndexOutOfBoundsException : IndexOutOfBoundsException {
     }
 }
 
-class InterruptedException : Exception {
-    this( String e = null ){
-        super(e);
-    }
-    this( Exception e ){
-        super(e.toString);
-    }
-}
+//class InterruptedException : Exception {
+//    this( String e = null ){
+//        super(e);
+//    }
+//    this( Exception e ){
+//        super(e.toString);
+//    }
+//}
 
 class NullPointerException : Exception {
     this( String e = null ){

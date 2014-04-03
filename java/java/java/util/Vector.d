@@ -85,7 +85,7 @@ class Vector(T) : AbstractList!T, List!T {
    public  void   ensureCapacity(int minCapacity){
         implMissing( __FILE__, __LINE__ );
     }
-    override public equals_t opEquals(T o){
+    override public equals_t opEquals(Object o){
         implMissing( __FILE__, __LINE__ );
         return false;
     }

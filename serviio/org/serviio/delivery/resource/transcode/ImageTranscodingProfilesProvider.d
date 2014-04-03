@@ -26,13 +26,13 @@ public class ImageTranscodingProfilesProvider
 
     public static List!(MediaFormatProfile) getAvailableTranscodingProfiles(List!(MediaFormatProfile) profiles)
     {
-        Set!(MediaFormatProfile) availableProfiles = new HashSet();
+        Set!(MediaFormatProfile) availableProfiles = new HashSet!(MediaFormatProfile)();
         foreach (MediaFormatProfile profile ; profiles) {
             if (transcodingConfig.containsKey(profile)) {
-                availableProfiles.addAll(cast(Collection)transcodingConfig.get(profile));
+                availableProfiles.addAll(cast(Collection!(MediaFormatProfile))transcodingConfig.get(profile));
             }
         }
-        return new ArrayList(availableProfiles);
+        return new ArrayList!(MediaFormatProfile)(availableProfiles);
     }
 }
 

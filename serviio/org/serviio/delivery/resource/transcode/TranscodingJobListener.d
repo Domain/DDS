@@ -105,7 +105,7 @@ public class TranscodingJobListener : ProcessListener
         while (i.hasNext())
         {
             TranscodeInputStream tis = cast(TranscodeInputStream)i.next();
-            if (tis.getClient().equals(client))
+            if (tis.getClient() == client)
             {
                 try
                 {
@@ -117,7 +117,7 @@ public class TranscodingJobListener : ProcessListener
         }
     }
 
-    public synchronized void releaseResources()
+    override public /*synchronized*/ void releaseResources()
     {
         if (!this.shuttingDown)
         {
@@ -153,7 +153,7 @@ public class TranscodingJobListener : ProcessListener
 
     public TreeMap!(Double, ProgressData) getFilesizeMap()
     {
-        return new TreeMap(this.timeFilesizeMap);
+        return new TreeMap!(Double, ProgressData)(this.timeFilesizeMap);
     }
 
     public File getTranscodedFile()
