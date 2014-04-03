@@ -11,4 +11,14 @@ public class ReaderInputStream : InputStream
     {
         implMissing();
     }
+
+    override public int read()
+    {
+        implMissing();
+    }
+
+    override public int read(byte[], int, int)
+    {
+        implMissing();
+    }
 }

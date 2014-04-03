@@ -9,6 +9,8 @@ import std.array;
 import std.regex;
 import std.algorithm;
 
+import test.Test;
+
 void generateAllFile(string dir, string prefix)
 {
     enforce(dir.isDir());
@@ -247,79 +249,14 @@ class B
     }
 }
 
-enum ResourceType
-{
-    A, B
-}
 
-class Resource
-{
-    ResourceType type;
-    string name;
-}
-
-class ResourceContainer(T)
-{
-}
-
-class ResourceA : ResourceContainer!(ResourceType.A)
-{
-}
-
-class ResourceB : ResourceContainer!(ResourceType.B)
-{
-}
-
-class ResourceAParser
-{
-    ResourceA parser(string name)
-    {
-        ResourceA a;
-        return a;
-    }
-}
-
-class ResourceBParser
-{
-    ResourceB parser(string name)
-    {
-        ResourceB b;
-        return b;
-    }
-}
-
-ResourceContainer!(?) getResource(Resource res)
-{
-    switch (res.type)
-    {
-        case ResourceType.A:
-            ResourceAParser parser
-            break;
-    }
-}
-
-class temp(T)
-{
-}
-
-auto returnTemp(int a)
-{
-    if (a % 2 == 0)
-    {
-        temp!int i;
-        return i;
-    }
-    else
-    {
-        temp!double d;
-        return d;
-    }
-}
-
-void test()
+void testCod()
 {
     A a;
     B.bar(a, true);
+
+    Test t = new Test();
+    t.foo(0);
 }
 
 int main(string[] argv)
@@ -358,7 +295,7 @@ int main(string[] argv)
 
     if (testCode)
     {
-        test();
+        testCod();
         return 0;
     }
 

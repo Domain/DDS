@@ -1,6 +1,6 @@
 module org.serviio.delivery.resource.AudioDeliveryEngine;
 
-import java.lang.Long;
+import java.lang;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -13,6 +13,7 @@ import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine
 import org.serviio.delivery.resource.transcode.AudioTranscodingDefinition;
 import org.serviio.delivery.resource.transcode.AudioTranscodingMatch;
 import org.serviio.delivery.resource.transcode.TranscodingDefinition;
+import org.serviio.dlna.AudioCodec;
 import org.serviio.dlna.AudioContainer;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.MediaFormatProfileResolver;
@@ -45,8 +46,8 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
     override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveOriginalMediaInfo(MusicTrack mediaItem, Profile rendererProfile)
     {
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
-        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap();
-        List!(AudioMediaInfo) mediaInfos = new ArrayList();
+        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) result = new LinkedHashMap!(QualityType, List!(AudioMediaInfo))();
+        List!(AudioMediaInfo) mediaInfos = new ArrayList!(AudioMediaInfo)();
         foreach (MediaFormatProfile fileProfile ; fileProfiles) {
             mediaInfos.add(new AudioMediaInfo(mediaItem.getId(), fileProfile, mediaItem.getFileSize(), false, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(fileProfile), mediaItem.getChannels(), mediaItem.getSampleFrequency(), mediaItem.getBitrate(), QualityType.ORIGINAL));
         }
@@ -56,23 +57,23 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
 
     override protected LinkedHashMap!(QualityType, List!(AudioMediaInfo)) retrieveTranscodedMediaInfo(MusicTrack mediaItem, Profile rendererProfile, Long fileSize)
     {
-        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap();
+        LinkedHashMap!(QualityType, List!(AudioMediaInfo)) transcodedMI = new LinkedHashMap!(QualityType, List!(AudioMediaInfo))();
         Map!(QualityType, TranscodingDefinition) trDefs = getMatchingTranscodingDefinitions(mediaItem, rendererProfile, false);
         if (trDefs.size() > 0)
         {
-            foreach (Map.Entry!(QualityType, TranscodingDefinition) trDefEntry ; trDefs.entrySet())
+            foreach (Entry!(QualityType, TranscodingDefinition) trDefEntry ; trDefs.entrySet())
             {
                 QualityType qualityType = cast(QualityType)trDefEntry.getKey();
                 AudioTranscodingDefinition trDef = cast(AudioTranscodingDefinition)trDefEntry.getValue();
 
                 Integer targetSamplerate = FFMPEGWrapper.getAudioFrequency(trDef, mediaItem.getSampleFrequency(), trDef.getTargetContainer() == AudioContainer.LPCM);
                 Integer targetBitrate = FFMPEGWrapper.getAudioBitrate(mediaItem.getBitrate(), trDef);
-                Integer targetChannels = FFMPEGWrapper.getAudioChannelNumber(mediaItem.getChannels(), null, true, false);
+                Integer targetChannels = FFMPEGWrapper.getAudioChannelNumber(mediaItem.getChannels(), AudioCodec.MP3, true, false);
                 try
                 {
                     MediaFormatProfile transcodedProfile = MediaFormatProfileResolver.resolveAudioFormat(mediaItem.getFileName(), trDef.getTargetContainer(), targetBitrate, targetSamplerate, targetChannels);
 
-                    log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile ]));
+                    log.debug_(String_format("Found Format profile for transcoded file %s: %s", cast(Object[])[ mediaItem.getFileName(), transcodedProfile.toString() ]));
 
                     transcodedMI.put(qualityType, Collections.singletonList(new AudioMediaInfo(mediaItem.getId(), transcodedProfile, fileSize, true, mediaItem.isLive(), mediaItem.getDuration(), rendererProfile.getMimeType(transcodedProfile), targetChannels, targetSamplerate, targetBitrate, qualityType)));
                 }
@@ -84,15 +85,16 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
             return transcodedMI;
         }
         log.warn(String_format("Cannot find matching transcoding definition for file %s", cast(Object[])[ mediaItem.getFileName() ]));
-        return new LinkedHashMap();
+        return new LinkedHashMap!(QualityType, List!(AudioMediaInfo))();
     }
 
     override protected TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, MusicTrack mediaItem)
     {
-        Iterator i;
+        Iterator!(TranscodingDefinition) i;
         if ((tDefs !is null) && (tDefs.size() > 0)) {
             for (i = tDefs.iterator(); i.hasNext();)
             {
+                TranscodingDefinition tDef;
                 tDef = cast(TranscodingDefinition)i.next();
                 List!(AudioTranscodingMatch) matches = (cast(AudioTranscodingDefinition)tDef).getMatches();
                 foreach (AudioTranscodingMatch match ; matches) {
@@ -102,7 +104,6 @@ public class AudioDeliveryEngine : AbstractTranscodingDeliveryEngine!(AudioMedia
                 }
             }
         }
-        TranscodingDefinition tDef;
         return null;
     }
 }

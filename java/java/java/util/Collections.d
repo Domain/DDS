@@ -19,7 +19,7 @@ class Collections {
     }
 
     private static List!Object EMPTY_LIST_;
-    public static List!T EMPTY_LIST(T)(){
+    public static List!T emptyList(T)(){
         if( EMPTY_LIST_ is null ){
             synchronized(Collections.classinfo ){
                 if( EMPTY_LIST_ is null ){

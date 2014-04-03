@@ -62,7 +62,13 @@ public class VideoTranscodingMatch
 
     public bool matches(VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, H264Profile h264Profile, Map!(H264LevelType, String) h264Levels, String ftyp, OnlineContentType onlineContentType, bool squarePixels, String vFourCC)
     {
-        if (((container == this.container) || (this.container == VideoContainer.ANY)) && ((this.videoCodec is null) || (videoCodec == this.videoCodec)) && ((this.audioCodec is null) || (audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && ((this.onlineContentType == OnlineContentType.ANY) || (this.onlineContentType == onlineContentType)) && ((this.squarePixels is null) || (this.squarePixels.equals(Boolean.valueOf(squarePixels))))) {
+        if (((container == this.container) || (this.container == VideoContainer.ANY)) && 
+            (/*(this.videoCodec is null) ||*/ (videoCodec == this.videoCodec)) && 
+            (/*(this.audioCodec is null) ||*/ (audioCodec == this.audioCodec)) && (checkFtyp(ftyp)) && 
+            (checkVFourCC(vFourCC)) && (checkH264Profile(videoCodec, h264Profile, h264Levels)) && 
+            ((this.onlineContentType == OnlineContentType.ANY) || 
+             (this.onlineContentType == onlineContentType)) && 
+            ((this.squarePixels is null) || (this.squarePixels == (Boolean.valueOf(squarePixels))))) {
             return true;
         }
         return false;
@@ -88,16 +94,16 @@ public class VideoTranscodingMatch
     {
         if (videoCodec == VideoCodec.H264)
         {
-            if (this.h264Profile is null) {
-                return true;
-            }
+            //if (this.h264Profile is null) {
+            //    return true;
+            //}
             if (this.h264LevelGT is null) {
-                return (videoH264Profile !is null) && (this.h264Profile == videoH264Profile);
+                return /*(videoH264Profile !is null) &&*/ (this.h264Profile == videoH264Profile);
             }
             String videoH264Level = getLevelToMatch(videoH264Levels);
             try
             {
-                return (videoH264Profile !is null) && (videoH264Level !is null) && (this.h264Profile == videoH264Profile) && (new Float(videoH264Level).floatValue() > this.h264LevelGT.floatValue());
+                return /*(videoH264Profile !is null) &&*/ (videoH264Level !is null) && (this.h264Profile == videoH264Profile) && (new Float(videoH264Level).floatValue() > this.h264LevelGT.floatValue());
             }
             catch (NumberFormatException e)
             {

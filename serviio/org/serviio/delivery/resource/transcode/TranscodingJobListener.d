@@ -198,7 +198,7 @@ public class TranscodingJobListener : ProcessListener
     {
         int prime = 31;
         int result = 1;
-        result = 31 * result + (this.transcodingIdentifier is null ? 0 : this.transcodingIdentifier.hashCode());
+        result = 31 * result + (this.transcodingIdentifier is null ? 0 : this.transcodingIdentifier.toHash());
         return result;
     }
 
@@ -210,9 +210,9 @@ public class TranscodingJobListener : ProcessListener
         if (obj is null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        //if (getClass() != obj.getClass()) {
+        //    return false;
+        //}
         TranscodingJobListener other = cast(TranscodingJobListener)obj;
         if (this.transcodingIdentifier is null)
         {

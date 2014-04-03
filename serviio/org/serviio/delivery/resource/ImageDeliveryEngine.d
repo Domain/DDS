@@ -64,10 +64,10 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
     override protected LinkedHashMap!(QualityType, List!(ImageMediaInfo)) retrieveTranscodedMediaInfo(Image mediaItem, Profile rendererProfile, Long fileSize)
     {
         log.debug_(String_format("Getting media info for transcoded versions of file %s", cast(Object[])[ mediaItem.getFileName() ]));
-        LinkedHashMap!(QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap();
+        LinkedHashMap!(QualityType, List!(ImageMediaInfo)) resourceInfos = new LinkedHashMap!(QualityType, List!(ImageMediaInfo))();
         try
         {
-            originalWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, QualityType.ORIGINAL);
+            auto originalWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, QualityType.ORIGINAL);
             if (originalWillBeTransformed) {
                 try
                 {
@@ -111,7 +111,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
     override protected DeliveryContainer retrieveTranscodedResource(Image mediaItem, MediaFormatProfile selectedVersion, QualityType selectedQuality, Double timeOffsetInSeconds, Double durationInSeconds, Client client)
     {
-        log.debug_(String_format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion ]));
+        log.debug_(String_format("Retrieving transcoded version of file %s using format profile %s", cast(Object[])[ mediaItem.getFileName(), selectedVersion.toString() ]));
         byte[] transcodedImageBytes = null;
         synchronized (transcodingCache)
         {
@@ -141,7 +141,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
         List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(mediaItem);
 
         bool imageWillBeTransformed = imageWillBeTransformed(mediaItem, rendererProfile, selectedQuality);
-        if ((selectedVersion is null) || (fileProfiles.contains(selectedVersion)))
+        if (/*(selectedVersion is null) ||*/ (fileProfiles.contains(selectedVersion)))
         {
             if (!imageWillBeTransformed) {
                 return false;
@@ -163,7 +163,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
                 return null;
             }
             List!(MediaFormatProfile) fileProfiles = MediaFormatProfileResolver.resolve(image);
-            LinkedHashMap!(QualityType, List!(ImageMediaInfo)) result = new LinkedHashMap();
+            LinkedHashMap!(QualityType, List!(ImageMediaInfo)) result = new LinkedHashMap!(QualityType, List!(ImageMediaInfo))();
             foreach (MediaFormatProfile fileProfile ; fileProfiles) {
                 result.put(QualityType.ORIGINAL, Collections.singletonList(new ImageMediaInfo(image.getId(), fileProfile, image.getFileSize(), image.getWidth(), image.getHeight(), false, rendererProfile.getMimeType(fileProfile), QualityType.ORIGINAL)));
             }
@@ -174,10 +174,11 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
     override protected TranscodingDefinition getMatchingTranscodingDefinition(List!(TranscodingDefinition) tDefs, Image mediaItem)
     {
-        Iterator i;
+        Iterator!(TranscodingDefinition) i;
         if ((tDefs !is null) && (tDefs.size() > 0)) {
             for (i = tDefs.iterator(); i.hasNext();)
             {
+                TranscodingDefinition tDef;
                 tDef = cast(TranscodingDefinition)i.next();
                 List!(ImageTranscodingMatch) matches = (cast(ImageTranscodingDefinition)tDef).getMatches();
                 foreach (ImageTranscodingMatch match ; matches) {
@@ -187,7 +188,6 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
                 }
             }
         }
-        TranscodingDefinition tDef;
         return null;
     }
 
@@ -261,7 +261,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
             }
             catch (Throwable e)
             {
-                throw new IOException("Cannot transcode image: " + e.getMessage(), e);
+                throw new IOException("Cannot transcode image: " ~ e.toString(), e);
             }
         }
         throw new UnsupportedDLNAMediaFileFormatException("Only JPEG can be usedas a target container for image trancoding at the moment");
@@ -324,7 +324,7 @@ public class ImageDeliveryEngine : AbstractDeliveryEngine!(ImageMediaInfo, Image
 
     private bool imageWillRotate(Image image, Profile profile, bool willBeResized)
     {
-        if ((image.getRotation() !is null) && (!image.getRotation().equals(new Integer(0))) && ((profile.isAutomaticImageRotation()) || (willBeResized))) {
+        if ((image.getRotation() !is null) && (!(image.getRotation() == (new Integer(0)))) && ((profile.isAutomaticImageRotation()) || (willBeResized))) {
             return true;
         }
         return false;
