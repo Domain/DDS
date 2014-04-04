@@ -208,55 +208,15 @@ void printHelp()
 {
 }
 
-interface I
+void testObject(Object obj)
 {
-    void foo();
 }
-
-abstract class CA : I
-{
-    public void foo()
-    {
-    }
-}
-
-class A : CA
-{
-    override public void foo()
-    {
-    }
-}
-
-class C : CA
-{
-    override public void foo()
-    {
-    }
-}
-
-class B
-{
-    private static void bar(C a)
-    {
-    }
-
-    private static void bar(A a)
-    {
-    }
-
-    public static void bar(I i, bool b)
-    {
-    }
-}
-
 
 void testCod()
 {
-    A a;
-    B.bar(a, true);
-
-    Test t = new Test();
-    t.foo(0);
+    testObject("string");
+    //Test t = new Test();
+    //t.foo(0);
 }
 
 int main(string[] argv)

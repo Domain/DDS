@@ -54,7 +54,7 @@ public class RangeHeaders
 
     public static RangeHeaders create(RangeUnit unit, double from, double to, long total)
     {
-        Map!(RangeUnit, RangeTupple) headers = new HashMap();
+        Map!(RangeUnit, RangeTupple) headers = new HashMap!(RangeUnit, RangeTupple)();
         headers.put(unit, new RangeTupple(from, to, total));
         return new RangeHeaders(headers);
     }

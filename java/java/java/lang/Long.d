@@ -87,6 +87,10 @@ class Long : Number {
         return new Long(i);
     }
 
+    public static Long valueOf(String i) {
+        return parseLong(i);
+    }
+
     private static Class TYPE_;
     public static Class TYPE(){
         if( TYPE_ is null ){

@@ -83,6 +83,10 @@ class Double : Number {
         return new Double(i);
     }
 
+    public static Double valueOf(String i) {
+        return parseDouble(i);
+    }
+
     override public String toString() {
         return String_valueOf(value);
     }

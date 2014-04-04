@@ -42,11 +42,11 @@ public class ResourceDeliveryProcessor
 
     public HttpDeliveryContainer deliverContent(String requestUri, HttpMethod method, ProtocolVersion httpVersion, Map!(String, String) requestHeaders, RangeHeaders rangeHeaders, ResourceTransportProtocolHandler protocolHandler, Client client)
     {
-        log.debug_(String.format("Resource request accepted. Using client '%s'", cast(Object[])[ client ]));
+        log.debug_(java.lang.String.format("Resource request accepted. Using client '%s'", cast(Object[])[ client ]));
         try
         {
             RequestedResourceDescriptor resourceReq = protocolHandler.getRequestedResourceDescription(requestUri, client);
-            log.debug_(String.format("Request for resource %s and type '%s' received", cast(Object[])[ resourceReq.getResourceId() !is null ? resourceReq.getResourceId() : resourceReq.getPath(), resourceReq.getResourceType().toString() ]));
+            log.debug_(java.lang.String.format("Request for resource %s and type '%s' received", cast(Object[])[ resourceReq.getResourceId() !is null ? resourceReq.getResourceId() : resourceReq.getPath(), resourceReq.getResourceType().toString() ]));
 
 
             ResourceRetrievalStrategy resourceRetrievalStrategy = this.resourceRetrievalStrategyFactory.instantiateResourceRetrievalStrategy(resourceReq.getResourceType());
