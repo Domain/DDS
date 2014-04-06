@@ -67,7 +67,7 @@ public abstract class AbstractCDSServerResource : AbstractProEditionServerResour
     {
         String lowercaseHeaderName = StringUtils.localeSafeToLowercase(headerName);
         foreach (Map.Entry!(String, V) header ; headers.entrySet()) {
-            if (lowercaseHeaderName.equals(StringUtils.localeSafeToLowercase(cast(String)header.getKey()))) {
+            if (lowercaseHeaderName.opEquals(StringUtils.localeSafeToLowercase(cast(String)header.getKey()))) {
                 return header.getValue();
             }
         }

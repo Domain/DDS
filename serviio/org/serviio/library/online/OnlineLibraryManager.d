@@ -219,7 +219,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
             foreach (String feedUrl ; urls)
             {
                 OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(feedUrl);
-                if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().equals(plugin)))
+                if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().opEquals(plugin)))
                 {
                     log.debug_(String.format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));
                     removeOnlineContentFromCache(feedUrl, resource.getOnlineRepositoryId(), true);

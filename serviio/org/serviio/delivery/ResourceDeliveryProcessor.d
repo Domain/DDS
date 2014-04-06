@@ -46,7 +46,7 @@ public class ResourceDeliveryProcessor
         try
         {
             RequestedResourceDescriptor resourceReq = protocolHandler.getRequestedResourceDescription(requestUri, client);
-            log.debug_(java.lang.String.format("Request for resource %s and type '%s' received", cast(Object[])[ resourceReq.getResourceId() !is null ? resourceReq.getResourceId() : resourceReq.getPath(), resourceReq.getResourceType().toString() ]));
+            log.debug_(java.lang.String.format("Request for resource %s and type '%s' received", cast(Object[])[ resourceReq.getResourceId() !is null ? resourceReq.getResourceId().toString() : resourceReq.getPath(), resourceReq.getResourceType().toString() ]));
 
 
             ResourceRetrievalStrategy resourceRetrievalStrategy = this.resourceRetrievalStrategyFactory.instantiateResourceRetrievalStrategy(resourceReq.getResourceType());
@@ -65,7 +65,7 @@ public class ResourceDeliveryProcessor
         }
         catch (FileNotFoundException e)
         {
-            log.warn(String.format("Error while processing resource, sending back 404 error. Message: %s", cast(Object[])[ e.getMessage() ]));
+            log.warn(java.lang.String.format("Error while processing resource, sending back 404 error. Message: %s", cast(Object[])[ e.getMessage() ]));
             throw new HttpResponseCodeException(404);
         }
         catch (InvalidResourceRequestException e)
@@ -78,6 +78,7 @@ public class ResourceDeliveryProcessor
             log.warn("Invalid request, sending back 500 error", e);
             throw new HttpResponseCodeException(500);
         }
+        throw new HttpResponseCodeException(500);
     }
 
     private MediaFormatProfile getSelectedVersion(String profileName)
@@ -85,15 +86,15 @@ public class ResourceDeliveryProcessor
         if (ObjectValidator.isNotEmpty(profileName)) {
             try
             {
-                return MediaFormatProfile.valueOf(profileName);
+                return valueOf!MediaFormatProfile(profileName);
             }
             catch (IllegalArgumentException e)
             {
-                log.warn(String.format("Requested DLNA media format profile %s is not supported, using original profile of the media", cast(Object[])[ profileName ]));
-                return null;
+                log.warn(java.lang.String.format("Requested DLNA media format profile %s is not supported, using original profile of the media", cast(Object[])[ profileName ]));
+                return cast(MediaFormatProfile)-1;
             }
         }
-        return null;
+        return cast(MediaFormatProfile)-1;
     }
 }
 

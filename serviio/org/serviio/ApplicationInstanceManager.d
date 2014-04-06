@@ -46,10 +46,10 @@ public class ApplicationInstanceManager {
                                 Socket client = ApplicationInstanceManager.socket.accept();
                                 BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
                                 String message = input.readLine();
-                                if ("$$NewInstance$$\n".trim().equals(message.trim())) {
+                                if ("$$NewInstance$$\n".trim().opEquals(message.trim())) {
                                     ApplicationInstanceManager.log.debug_("Shared key matched - new application instance found");
                                     ApplicationInstanceManager.fireNewInstance(false);
-                                } else if ("$$CloseInstance$$\n".trim().equals(message.trim())) {
+                                } else if ("$$CloseInstance$$\n".trim().opEquals(message.trim())) {
                                     ApplicationInstanceManager.log.debug_("Close key matched - close request found");
                                     ApplicationInstanceManager.fireNewInstance(true);
                                 }

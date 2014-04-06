@@ -39,7 +39,7 @@ public class DeviceDescriptionRequestHandler : AbstractDescriptionRequestHandler
             RendererManager.getInstance().rendererAvailable(request.getAllHeaders(), clientIPAddress.getHostAddress());
         }
         Device device = Device.getInstance();
-        if ((deviceId !is null) && (deviceId.equals(device.getUuid())))
+        if ((deviceId !is null) && (deviceId.opEquals(device.getUuid())))
         {
             Profile profile = ProfileManager.getProfile(clientIPAddress);
 

@@ -77,7 +77,7 @@ public class SamsungWiseLinkProtocolHandler : DLNAProtocolHandler
     override public RequestedResourceDescriptor getRequestedResourceDescription(String requestUri, Client client)
     {
         RequestedResourceDescriptor originalDescriptor = super.getRequestedResourceDescription(requestUri, client);
-        if ((originalDescriptor.getResourceType() == ResourceType.MEDIA_ITEM) && (originalDescriptor.getTargetProfileName() !is null) && (originalDescriptor.getTargetProfileName().equals(MediaFormatProfile.JPEG_SM.toString())))
+        if ((originalDescriptor.getResourceType() == ResourceType.MEDIA_ITEM) && (originalDescriptor.getTargetProfileName() !is null) && (originalDescriptor.getTargetProfileName().opEquals(MediaFormatProfile.JPEG_SM.toString())))
         {
             Image image = getImageResource(originalDescriptor);
             if (image !is null) {

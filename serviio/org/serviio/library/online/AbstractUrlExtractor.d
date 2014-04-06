@@ -153,7 +153,7 @@ public abstract class AbstractUrlExtractor
             request.setClientInfo(info);
         }
         Response response = this.restletClient.handle(request);
-        if (Status.SUCCESS_OK.equals(response.getStatus())) {
+        if (Status.SUCCESS_OK.opEquals(response.getStatus())) {
             return readResponse(response);
         }
         if (response.getStatus().isRedirection()) {
@@ -195,7 +195,7 @@ public abstract class AbstractUrlExtractor
         if (obj is null) {
             return false;
         }
-        if (!getClass().getName().equals(obj.getClass().getName())) {
+        if (!getClass().getName().opEquals(obj.getClass().getName())) {
             return false;
         }
         AbstractUrlExtractor other = cast(AbstractUrlExtractor)obj;
@@ -205,7 +205,7 @@ public abstract class AbstractUrlExtractor
                 return false;
             }
         }
-        else if (!getExtractorName().equals(other.getExtractorName())) {
+        else if (!getExtractorName().opEquals(other.getExtractorName())) {
             return false;
         }
         return true;

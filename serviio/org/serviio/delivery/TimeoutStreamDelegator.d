@@ -13,6 +13,7 @@ import org.serviio.ApplicationSettings;
 import org.serviio.external.ProcessListener;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.DeliveryListener;
+import org.serviio.delivery.ClosableStreamDelegator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ public class TimeoutStreamDelegator
     public this(InputStream stream, ProcessListener processListener, Client client, DeliveryListener deliveryListener, bool forceClosing)
     {
         scheduler = Executors.newScheduledThreadPool(1);
-        lastBytesRead = new AtomicReference(new Date());
+        lastBytesRead = new AtomicReference!(Date)(new Date());
         this.stream = stream;
         this.processListener = processListener;
         this.client = client;

@@ -31,7 +31,7 @@ public class SearchResponseMessageBuilder : SSDPResponseMessageBuilder
             messages.add(generateRootDeviceMessage(duration, device));
         } else if (searchTarget.equals("uuid:" + device.getUuid())) {
             messages.add(generateDeviceByUUIDMessage(duration, device));
-        } else if (searchTarget.equals(device.getDeviceType())) {
+        } else if (searchTarget.opEquals(device.getDeviceType())) {
             messages.add(generateDeviceByTypeMessage(duration, device));
         } else if (isServiceSupported(searchTarget, device)) {
             messages.add(generateServiceMessage(duration, device, searchTarget));
@@ -104,7 +104,7 @@ public class SearchResponseMessageBuilder : SSDPResponseMessageBuilder
     private bool isServiceSupported(String serviceType, Device device)
     {
         foreach (Service service ; device.getServices()) {
-            if (service.getServiceType().equals(serviceType)) {
+            if (service.getServiceType().opEquals(serviceType)) {
                 return true;
             }
         }

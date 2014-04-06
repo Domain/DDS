@@ -151,7 +151,7 @@ public class FileNameParser
     protected static String getParentFolderBasedName(File videoFile, Repository repository)
     {
         File repositoryFolder = repository.getFolder();
-        if ((videoFile.getParentFile() !is null) && (!videoFile.getParentFile().equals(repositoryFolder)))
+        if ((videoFile.getParentFile() !is null) && (!videoFile.getParentFile().opEquals(repositoryFolder)))
         {
             File folder = getSuitableParentFolder(videoFile.getParentFile());
             String folderBasedMovieName = getVideoName(folder, null, MOVIE_YEAR_PATTERN.pattern(), false, true);

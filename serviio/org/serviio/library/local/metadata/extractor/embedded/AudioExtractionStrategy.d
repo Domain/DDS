@@ -150,7 +150,7 @@ public abstract class AudioExtractionStrategy
 
     protected bool isSupportedImageFormat(ImageFormat imageFormat)
     {
-        if ((imageFormat is null) || (imageFormat.equals(ImageFormat.IMAGE_FORMAT_UNKNOWN))) {
+        if ((imageFormat is null) || (imageFormat.opEquals(ImageFormat.IMAGE_FORMAT_UNKNOWN))) {
             return false;
         }
         return true;

@@ -141,7 +141,7 @@ public class OnlineRepository : PersistedEntity
         if (this.thumbnailUrl is null) {
             return true;
         }
-        return !this.thumbnailUrl.equals(urlToCompare);
+        return !this.thumbnailUrl.opEquals(urlToCompare);
     }
 }
 

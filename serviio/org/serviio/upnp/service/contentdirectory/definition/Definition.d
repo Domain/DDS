@@ -171,7 +171,7 @@ public class Definition
     {
         if (( cast(StaticContainerNode)node !is null ))
         {
-            if ((cast(StaticDefinitionNode)node).getId().equals(nodeId)) {
+            if ((cast(StaticDefinitionNode)node).getId().opEquals(nodeId)) {
                 return node;
             }
             foreach (DefinitionNode childNode ; node.getChildNodes()) {

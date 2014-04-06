@@ -67,7 +67,7 @@ public class ServiceInvoker
         String operationName = soapAction.substring(soapAction.indexOf("#") + 1, soapAction.length() - 1);
         SOAPMessage message = parseSOAPMessage(soapMessage);
         SOAPOperationVO operation = extractOperationValues(message);
-        if (operation.getOperationName().equals(operationName))
+        if (operation.getOperationName().opEquals(operationName))
         {
             OperationResult result = invokeOperation(serviceName, operation, renderer);
             return createSOAPResponse(result, serviceName, operationName);
@@ -200,7 +200,7 @@ public class ServiceInvoker
             Method methodToExecute = null;
             bool methodIsRendererSensitive = false;
             foreach (Method method ; methods) {
-                if (method.getName().equals(operation.getOperationName()))
+                if (method.getName().opEquals(operation.getOperationName()))
                 {
                     operationNameFound = true;
                     if (method.getParameterTypes().length == operation.getParameters().size())

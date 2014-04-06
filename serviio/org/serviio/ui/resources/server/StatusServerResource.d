@@ -87,7 +87,7 @@ public class StatusServerResource : AbstractServerResource, StatusResource
         bool addressUpdated = false;
         String originalNICName = Configuration.getBoundNICName();
         String newNICName = rep.getBoundNICName();
-        if (((originalNICName is null) && (newNICName !is null)) || ((originalNICName !is null) && (!originalNICName.equals(newNICName)))) {
+        if (((originalNICName is null) && (newNICName !is null)) || ((originalNICName !is null) && (!originalNICName.opEquals(newNICName)))) {
             addressUpdated = true;
         }
         this.log.debug_("Storing bound NIC: " + newNICName);

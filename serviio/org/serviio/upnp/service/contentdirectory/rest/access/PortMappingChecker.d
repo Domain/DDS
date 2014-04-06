@@ -44,7 +44,7 @@ public class PortMappingChecker
             Request r = new Request(Method.POST, "http://www.yougetsignal.com/tools/open-ports/php/check-port.php");
             r.setEntity(webForm.getWebRepresentation());
             Response res = c.handle(r);
-            if (res.getStatus().equals(Status.SUCCESS_OK))
+            if (res.getStatus().opEquals(Status.SUCCESS_OK))
             {
                 String html = res.getEntityAsText();
                 if (html !is null)

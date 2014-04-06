@@ -229,7 +229,7 @@ public class MediaServer
 
     private static void checkForRunningInstances()
     {
-        bool stopRequested = (arguments.containsKey("stop")) && (arguments.get("stop").equals(Boolean.TRUE));
+        bool stopRequested = (arguments.containsKey("stop")) && (arguments.get("stop").opEquals(Boolean.TRUE));
         if ((!ApplicationInstanceManager.registerInstance(stopRequested)) || (stopRequested)) {
             exit();
         }

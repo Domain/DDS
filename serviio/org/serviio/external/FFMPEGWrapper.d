@@ -515,7 +515,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static bool isVideoStreamChanged(Video mediaItem, VideoTranscodingDefinition tDef, HardSubs hardSubs)
     {
-        bool codecCopy = (!tDef.isForceVTranscoding()) && ((tDef.getTargetVideoCodec() is null) || (tDef.getTargetVideoCodec().equals(mediaItem.getVideoCodec())));
+        bool codecCopy = (!tDef.isForceVTranscoding()) && ((tDef.getTargetVideoCodec() is null) || (tDef.getTargetVideoCodec().opEquals(mediaItem.getVideoCodec())));
 
         return (!codecCopy) || (hardSubs !is null) || (tDef.getMaxVideoBitrate() !is null) || (isVideoResolutionChangeRequired(mediaItem.getWidth(), mediaItem.getHeight(), tDef.getMaxHeight(), tDef.getDar(), tDef.getTargetContainer(), mediaItem.getSar()));
     }
@@ -586,7 +586,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
             return;
         }
         builder.outFileOptions(cast(String[])[ "-c:a" ]);
-        if ((tDef.getTargetAudioCodec() is null) || ((tDef.getTargetAudioCodec().equals(mediaItem.getAudioCodec())) && ((tDef.getAudioSamplerate() is null) || (tDef.getAudioSamplerate().equals(mediaItem.getFrequency())))))
+        if ((tDef.getTargetAudioCodec() is null) || ((tDef.getTargetAudioCodec().opEquals(mediaItem.getAudioCodec())) && ((tDef.getAudioSamplerate() is null) || (tDef.getAudioSamplerate().opEquals(mediaItem.getFrequency())))))
         {
             builder.outFileOptions(cast(String[])[ "copy" ]);
         }

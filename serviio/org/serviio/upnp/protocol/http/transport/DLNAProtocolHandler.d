@@ -77,7 +77,7 @@ public class DLNAProtocolHandler : AbstractProtocolHandler
             }
             Long startByte = rangeHeaders.getStartAsLong(RangeUnit.BYTES);
             Long endByte = rangeHeaders.getEndAsLong(RangeUnit.BYTES);
-            if ((new Long(0L).equals(startByte)) && (endByte is null)) {
+            if ((new Long(0L).opEquals(startByte)) && (endByte is null)) {
                 return true;
             }
             return false;

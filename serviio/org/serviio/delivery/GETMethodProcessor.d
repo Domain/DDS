@@ -69,7 +69,7 @@ public class GETMethodProcessor : AbstractMethodProcessor
         {
             Long start = rangeHeaders.hasHeaders(RangeUnit.BYTES) ? rangeHeaders.getStartAsLong(RangeUnit.BYTES) : null;
             start = (start is null) && (rangeHeaders.hasHeaders(RangeUnit.SECONDS)) ? rangeHeaders.getStartAsLong(RangeUnit.SECONDS) : null;
-            offsetRequested = (start !is null) && (!start.equals(new Long(0L)));
+            offsetRequested = (start !is null) && (!start.opEquals(new Long(0L)));
         }
         if (!offsetRequested) {
             return true;

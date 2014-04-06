@@ -146,7 +146,7 @@ public class EventDispatcher : Runnable
     {
         Set!(EventContainer) filteredEvents = new HashSet();
         foreach (EventContainer event ; events) {
-            if ((event.getSubscription() is null) || (event.getSubscription().equals(subscription))) {
+            if ((event.getSubscription() is null) || (event.getSubscription().opEquals(subscription))) {
                 filteredEvents.add(event);
             }
         }

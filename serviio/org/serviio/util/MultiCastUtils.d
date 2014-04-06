@@ -153,7 +153,7 @@ public class MultiCastUtils
             NetworkInterface iface = cast(NetworkInterface)ifaces.nextElement();
             List!(NicIP) ifaceIps = findIPAddresses(iface);
             foreach (NicIP nicIp ; ifaceIps) {
-                if (ipAddress.equals(nicIp.getIp())) {
+                if (ipAddress.opEquals(nicIp.getIp())) {
                     return nicIp;
                 }
             }
@@ -213,7 +213,7 @@ public class MultiCastUtils
                     NetworkInterface iface = cast(NetworkInterface)ifaces.nextElement();
                     List!(NicIP) ifaceIps = findIPAddresses(iface);
                     foreach (NicIP ifaceIp ; ifaceIps) {
-                        if ((ifaceIp.getNicName() !is null) && (ifaceIp.getNicName().equals(nicName)) && (ifaceIp.getIpIndex() == ipIndex)) {
+                        if ((ifaceIp.getNicName() !is null) && (ifaceIp.getNicName().opEquals(nicName)) && (ifaceIp.getIpIndex() == ipIndex)) {
                             return ifaceIp.getIp();
                         }
                     }

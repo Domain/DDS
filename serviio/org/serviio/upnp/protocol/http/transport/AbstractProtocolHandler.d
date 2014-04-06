@@ -65,7 +65,7 @@ public abstract class AbstractProtocolHandler : ResourceTransportProtocolHandler
             {
                 Double averageBitrate = Double.valueOf(resourceInfo.getFileSize().longValue() / resourceInfo.getDuration().intValue());
                 Long startByte = Long.valueOf(new Double(averageBitrate.doubleValue() * startSecond.doubleValue()).longValue());
-                Long endByte = Long.valueOf(endSecond.equals(new Long(duration.intValue())) ? resourceInfo.getFileSize().longValue() : new Double(averageBitrate.doubleValue() * endSecond.doubleValue()).longValue());
+                Long endByte = Long.valueOf(endSecond.opEquals(new Long(duration.intValue())) ? resourceInfo.getFileSize().longValue() : new Double(averageBitrate.doubleValue() * endSecond.doubleValue()).longValue());
                 range.add(RangeUnit.BYTES, startByte.longValue(), endByte.longValue(), resourceInfo.getFileSize().longValue());
             }
             return range;

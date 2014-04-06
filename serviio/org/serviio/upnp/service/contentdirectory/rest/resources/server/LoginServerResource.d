@@ -57,7 +57,7 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
         }
         if (storedTokens.retrieveToken(token) !is null) {
             storeToken(token);
-        } else if (!CDSUrlParameters.getSharedSecurityToken().equals(token)) {
+        } else if (!CDSUrlParameters.getSharedSecurityToken().opEquals(token)) {
             throw new AuthenticationException("The provided authentication token is invalid or expired.", 553);
         }
     }
@@ -83,7 +83,7 @@ public class LoginServerResource : AbstractCDSServerResource, LoginResource
             throw new AuthenticationException("Cannot retrieve Date header from authentication request.", 550);
         }
         String expectedSignature = generateExpectedKey(dateHeader, webPassword);
-        if (expectedSignature.equals(signature))
+        if (expectedSignature.opEquals(signature))
         {
             this.log.debug_("Successful login, generating security token");
             String token = StringUtils.generateRandomToken();

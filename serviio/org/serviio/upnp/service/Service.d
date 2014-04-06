@@ -48,7 +48,7 @@ public abstract class Service
     public Subscription getEventSubscription(String subscriptionId)
     {
         foreach (Subscription sub ; this.eventSubscriptions) {
-            if (sub.getUuid().equals(subscriptionId)) {
+            if (sub.getUuid().opEquals(subscriptionId)) {
                 return sub;
             }
         }
@@ -58,7 +58,7 @@ public abstract class Service
     public Subscription getEventSubscription(URL deliveryURL)
     {
         foreach (Subscription sub ; this.eventSubscriptions) {
-            if (sub.getDeliveryURL().equals(deliveryURL)) {
+            if (sub.getDeliveryURL().opEquals(deliveryURL)) {
                 return sub;
             }
         }
@@ -68,7 +68,7 @@ public abstract class Service
     public StateVariable getStateVariable(String name)
     {
         foreach (StateVariable variable ; this.stateVariables) {
-            if (variable.getName().equals(name)) {
+            if (variable.getName().opEquals(name)) {
                 return variable;
             }
         }
@@ -170,7 +170,7 @@ public abstract class Service
 
     public override equals_t opEquals(Object obj)
     {
-        if ((( cast(Service)obj !is null )) && ((cast(Service)obj).getServiceId().equals(this.serviceId))) {
+        if ((( cast(Service)obj !is null )) && ((cast(Service)obj).getServiceId().opEquals(this.serviceId))) {
             return true;
         }
         return false;

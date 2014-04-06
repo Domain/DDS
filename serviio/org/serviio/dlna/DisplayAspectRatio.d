@@ -19,7 +19,7 @@ public float getRatio(int width, int height) {
 
 public bool isEqualTo(DisplayAspectRatio displayAspectRatio, int width, int height) {
     auto df = new DecimalFormat("##.##");
-    return df.format(getRatio(displayAspectRatio)).equals(df.format(getRatio(width, height)));
+    return df.format(getRatio(displayAspectRatio)).opEquals(df.format(getRatio(width, height)));
 }
 
 public DisplayAspectRatio fromString(String dar) {
@@ -55,7 +55,7 @@ public DisplayAspectRatio fromString(String dar) {
 //  
 //  public bool isEqualTo(int width, int height, float sar)
 //  {
-//    return df.format(getRatio()).equals(df.format(getRatio(width, height, sar)));
+//    return df.format(getRatio()).opEquals(df.format(getRatio(width, height, sar)));
 //  }
 //  
 //  public static DisplayAspectRatio fromString(String dar)

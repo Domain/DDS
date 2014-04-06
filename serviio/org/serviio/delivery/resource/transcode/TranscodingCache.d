@@ -27,7 +27,7 @@ public class TranscodingCache
 
     public bool isInCache(Long mediaItemId, MediaFormatProfile transcodedProfile)
     {
-        if ((this.mediaItemId !is null) && (this.mediaItemId.equals(mediaItemId)) && (this.transcodedProfile == transcodedProfile)) {
+        if ((this.mediaItemId !is null) && (this.mediaItemId.opEquals(mediaItemId)) && (this.transcodedProfile == transcodedProfile)) {
             return true;
         }
         return false;

@@ -113,7 +113,7 @@ public class OnlineRepositoriesImportExportServerResource : AbstractServerResour
     private OnlineRepository findRepositoryByUri(List!(OnlineRepository) currentRepositories, ServiioUri serviioUri)
     {
         foreach (OnlineRepository ol ; currentRepositories) {
-            if ((ol.getFileType().equals(serviioUri.getFileType())) && (ol.getRepositoryUrl().equalsIgnoreCase(serviioUri.getRepositoryUrl()))) {
+            if ((ol.getFileType().opEquals(serviioUri.getFileType())) && (ol.getRepositoryUrl().equalsIgnoreCase(serviioUri.getRepositoryUrl()))) {
                 return ol;
             }
         }

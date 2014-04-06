@@ -67,7 +67,7 @@ public class StateVariable
 
     public override equals_t opEquals(Object obj)
     {
-        if ((( cast(StateVariable)obj !is null )) && ((cast(StateVariable)obj).getName().equals(this.name))) {
+        if ((( cast(StateVariable)obj !is null )) && ((cast(StateVariable)obj).getName().opEquals(this.name))) {
             return true;
         }
         return false;

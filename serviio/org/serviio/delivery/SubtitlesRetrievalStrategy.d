@@ -17,6 +17,7 @@ import org.serviio.delivery.ResourceRetrievalStrategy;
 import org.serviio.delivery.DeliveryContainer;
 import org.serviio.delivery.Client;
 import org.serviio.delivery.ResourceInfo;
+import org.serviio.delivery.StreamDeliveryContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public class SubtitlesRetrievalStrategy : ResourceRetrievalStrategy
     {
         SubtitlesReader subtitleReader = findSoftSubs(mediaItemId, client);
 
-        log.debug_(String.format("Retrieving Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
+        log.debug_(java.lang.String.format("Retrieving Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
 
         ResourceInfo resourceInfo = retrieveResourceInfo(mediaItemId, subtitleReader, client);
         byte[] subtitlesBytes = subtitleReader.getSubtitlesAsSRT();
@@ -45,16 +46,16 @@ public class SubtitlesRetrievalStrategy : ResourceRetrievalStrategy
     {
         SubtitlesReader subtitleReader = findSoftSubs(mediaItemId, client);
 
-        log.debug_(String.format("Retrieving info of Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
+        log.debug_(java.lang.String.format("Retrieving info of Subtitles for media item with id %s", cast(Object[])[ mediaItemId ]));
         return retrieveResourceInfo(mediaItemId, subtitleReader, client);
     }
 
     private ResourceInfo retrieveResourceInfo(Long mediaItemId, SubtitlesReader subtitleReader, Client client)
     {
         SubtitleCodec codec = subtitleReader.getSubtitleCodec();
-        if (codec is null) {
-            throw new FileNotFoundException("Unknown subtitles format");
-        }
+        //if (codec is null) {
+        //    throw new FileNotFoundException("Unknown subtitles format");
+        //}
         bool transcoded = (subtitleReader.getSubtitleCodec() != SubtitleCodec.SRT) || (subtitleReader.getExpectedSubtitlesSize() is null);
         return new SubtitlesInfo(mediaItemId, subtitleReader.getExpectedSubtitlesSize(), transcoded, client.getRendererProfile().getSubtitlesConfiguration().getSoftSubsMimeType());
     }
@@ -63,7 +64,7 @@ public class SubtitlesRetrievalStrategy : ResourceRetrievalStrategy
     {
         SubtitlesReader subtitleReader = SubtitlesService.getSoftSubs(mediaItemId, client.getRendererProfile());
         if (subtitleReader is null) {
-            throw new FileNotFoundException(String.format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
+            throw new FileNotFoundException(java.lang.String.format("Subtitle file for media item %s cannot be found", cast(Object[])[ mediaItemId ]));
         }
         return subtitleReader;
     }

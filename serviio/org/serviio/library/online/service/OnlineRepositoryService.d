@@ -85,7 +85,7 @@ public class OnlineRepositoryService : Service
     private static void updateRepository(OnlineRepository repository)
     {
         OnlineRepository existingRepository = getRepository(repository.getId());
-        if ((repository.getFileType() != existingRepository.getFileType()) || (repository.getRepoType() != existingRepository.getRepoType()) || (!repository.getRepositoryUrl().equals(existingRepository.getRepositoryUrl())) || (repository.thumbnailChanged(repository.getThumbnailUrl()))) {
+        if ((repository.getFileType() != existingRepository.getFileType()) || (repository.getRepoType() != existingRepository.getRepoType()) || (!repository.getRepositoryUrl().opEquals(existingRepository.getRepositoryUrl())) || (repository.thumbnailChanged(repository.getThumbnailUrl()))) {
             OnlineItemService.removeOnlineContentFromCache(existingRepository.getRepositoryUrl(), repository.getId());
         }
         DAOFactory.getOnlineRepositoryDAO().update(repository);

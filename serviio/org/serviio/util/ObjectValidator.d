@@ -39,7 +39,7 @@ public class ObjectValidator
             return false;
         }
         if (( cast(String)obj !is null )) {
-            return !"".equals(obj);
+            return !"".opEquals(obj);
         }
         return true;
     }

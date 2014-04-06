@@ -294,7 +294,7 @@ public class RendererManager
 
     private bool updateRendererWithANewIPAddress(Renderer renderer, String ipAddress)
     {
-        if (!ipAddress.equals(renderer.getIpAddress()))
+        if (!ipAddress.opEquals(renderer.getIpAddress()))
         {
             removeRendererWithIPAddress(ipAddress);
             renderer.setIpAddress(ipAddress);

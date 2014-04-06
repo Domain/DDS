@@ -6,7 +6,10 @@ public class RangeNotSupportedException : Exception
 {
     private static enum serialVersionUID = -1350679542734185819L;
 
-    public this() {}
+    public this() 
+    {
+        super("");
+    }
 
     public this(String message, Throwable cause)
     {
@@ -20,7 +23,7 @@ public class RangeNotSupportedException : Exception
 
     public this(Throwable cause)
     {
-        super(cause);
+        super(cause.toString());
     }
 }
 

@@ -79,7 +79,7 @@ public class ConnectionManager : Service
     public OperationResult GetCurrentConnectionInfo(/*@SOAPParameter("ConnectionID")*/ Integer connectionId)
     {
         OperationResult result = new OperationResult();
-        if ((connectionId is null) || (!connectionId.equals(getStateVariable("A_ARG_TYPE_ConnectionID").getValue())))
+        if ((connectionId is null) || (!connectionId.opEquals(getStateVariable("A_ARG_TYPE_ConnectionID").getValue())))
         {
             result.setError(InvocationError.CON_MAN_INVALID_CONNECTION_REFERENCE);
         }

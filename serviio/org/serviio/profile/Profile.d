@@ -262,7 +262,7 @@ public class Profile : Comparable!(Profile)
                 return false;
             }
         }
-        else if (!this.id.equals(other.id)) {
+        else if (!this.id.opEquals(other.id)) {
             return false;
         }
         return true;
@@ -277,7 +277,7 @@ public class Profile : Comparable!(Profile)
     {
         if (o !is null)
         {
-            if (getId().equals(o.getId())) {
+            if (getId().opEquals(o.getId())) {
                 return 0;
             }
             if (o.getId().equals("1")) {

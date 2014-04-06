@@ -118,7 +118,7 @@ public class ProfileManager
     public static Profile getProfileById(String id)
     {
         foreach (Profile profile ; profiles) {
-            if (profile.getId().equals(id)) {
+            if (profile.getId().opEquals(id)) {
                 return profile;
             }
         }

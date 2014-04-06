@@ -37,7 +37,7 @@ public class PresentationServerResource : AbstractServerResource, PresentationRe
     public ResultRepresentation save(PresentationRepresentation rep)
     {
         bool cdsUpdateNeeded = updateCategories(rep);
-        if (!Configuration.getBrowseMenuPreferredLanguage().equals(rep.getLanguage()))
+        if (!Configuration.getBrowseMenuPreferredLanguage().opEquals(rep.getLanguage()))
         {
             Configuration.setBrowseMenuPreferredLanguage(rep.getLanguage());
             BrowsingCategoriesMessages.loadLocale(Language.getLocale(Configuration.getBrowseMenuPreferredLanguage()));

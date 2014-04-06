@@ -26,7 +26,7 @@ public class RemoteAccessServerResource : AbstractProEditionServerResource, Remo
         if (ObjectValidator.isEmpty(representation.getRemoteUserPassword())) {
             throw new ValidationException(504);
         }
-        if ((Configuration.getWebPassword() is null) || (!Configuration.getWebPassword().equals(representation.getRemoteUserPassword())))
+        if ((Configuration.getWebPassword() is null) || (!Configuration.getWebPassword().opEquals(representation.getRemoteUserPassword())))
         {
             this.log.debug_("Remote access password updated");
             Configuration.setWebPassword(StringUtils.trim(representation.getRemoteUserPassword()));

@@ -22,6 +22,7 @@ version(Tango){
     static import std.traits;
     static import std.exception;
     static import std.algorithm;
+    static import std.conv;
     alias std.c.stdlib.exit exit;
 }
 
@@ -609,7 +610,12 @@ template getImportData(String name) {
     const ImportData getImportData = ImportData( cast(TryImmutable!(void)[]) import(name), name );
 }
 
-bool contains(T)(T[] container, T value)
+public bool contains(T)(T[] container, T value)
 {
     return std.algorithm.canFind(container, value);
+}
+
+public T valueOf(T)(String value)
+{
+    return std.conv.to!T(value);
 }

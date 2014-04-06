@@ -269,7 +269,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                 {
                     Map!(String, Object) crewEntry = cast(Map)crew.get(i);
                     String crewEntryJob = getJsonFieldValue("job", crewEntry);
-                    if (job.equals(crewEntryJob)) {
+                    if (job.opEquals(crewEntryJob)) {
                         result.add(getJsonFieldValue("name", cast(Map)crew.get(i)));
                     }
                 }

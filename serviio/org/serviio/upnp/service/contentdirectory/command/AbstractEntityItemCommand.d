@@ -37,7 +37,7 @@ public abstract class AbstractEntityItemCommand(E : PersistedEntity) : AbstractC
         Long markedItemId = findMarkedItemId(false);
         foreach (E entity ; entities)
         {
-            bool itemMarked = (markedItemId !is null) && (markedItemId.equals(entity.getId()));
+            bool itemMarked = (markedItemId !is null) && (markedItemId.opEquals(entity.getId()));
             Map!(ClassProperties, Object) values = generateValuesForEntity(entity, generateRuntimeObjectId(entity.getId()), getDisplayedContainerId(this.objectId), getItemTitle(entity, itemMarked));
             List!(Resource) res = generateResourcesForEntity(entity);
             items.add(cast(Item)DirectoryObjectBuilder.createInstance(this.itemClassType, values, res, entity.getId(), this.disablePresentationSettings));
@@ -51,7 +51,7 @@ public abstract class AbstractEntityItemCommand(E : PersistedEntity) : AbstractC
         if (entity !is null)
         {
             Long markedItemId = findMarkedItemId(true);
-            bool itemMarked = (markedItemId !is null) && (markedItemId.equals(entity.getId()));
+            bool itemMarked = (markedItemId !is null) && (markedItemId.opEquals(entity.getId()));
             Map!(ClassProperties, Object) values = generateValuesForEntity(entity, this.objectId, Definition.instance().getParentNodeId(this.objectId, this.disablePresentationSettings), getItemTitle(entity, itemMarked));
             List!(Resource) res = generateResourcesForEntity(entity);
             return cast(Item)DirectoryObjectBuilder.createInstance(this.itemClassType, values, res, entity.getId(), this.disablePresentationSettings);

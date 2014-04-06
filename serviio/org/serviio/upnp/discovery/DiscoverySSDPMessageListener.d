@@ -97,7 +97,7 @@ public class DiscoverySSDPMessageListener : AbstractSSDPMessageListener, Runnabl
         try
         {
             HttpRequest request = HttpMessageParser.parseHttpRequest(MultiCastUtils.getPacketData(receivedPacket));
-            if (request.getProtocolVersion().equals(HttpVersion.HTTP_1_1))
+            if (request.getProtocolVersion().opEquals(HttpVersion.HTTP_1_1))
             {
                 if ((request.getRequestLine().getMethod().equals("M-SEARCH")) && (request.getRequestLine().getUri().equals("*"))) {
                     processSearchMessage(request, receivedPacket);

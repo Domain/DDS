@@ -696,7 +696,7 @@ public class ProfilesDefinitionParser
             if (parentProfile !is null) {
                 foreach (Map.Entry!(MediaFormatProfile, ProtocolInfo) parentPI ; parentProfile.getProtocolInfo().entrySet()) {
                     if (!protocolInfos.containsKey(parentPI.getKey())) {
-                        if (parentProfile.getProtocolInfoType().equals(protocolInfoType))
+                        if (parentProfile.getProtocolInfoType().opEquals(protocolInfoType))
                         {
                             protocolInfos.put(parentPI.getKey(), parentPI.getValue());
                         }
@@ -739,7 +739,7 @@ public class ProfilesDefinitionParser
     private static Profile getProfileById(List!(Profile) profiles, String profileId)
     {
         foreach (Profile profile ; profiles) {
-            if (profile.getId().equals(profileId)) {
+            if (profile.getId().opEquals(profileId)) {
                 return profile;
             }
         }

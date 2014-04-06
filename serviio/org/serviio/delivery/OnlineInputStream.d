@@ -174,13 +174,13 @@ public class OnlineInputStream : InputStream
             request.setRanges(ranges);
         }
         Response response = this.restletClient.handle(request);
-        if ((Status.SUCCESS_OK.equals(response.getStatus())) || (new Status(-1).equals(response.getStatus())))
+        if ((Status.SUCCESS_OK == response.getStatus()) || (cast(Status)(-1) == response.getStatus()))
         {
             log.debug_(String_format("Byte range not supported for %s, returning the whole stream", cast(Object[])[ this.contentURL.toString() ]));
             this.wholeStream = getResponseStream(response);
             throw new RangeNotSupportedException();
         }
-        if (Status.SUCCESS_PARTIAL_CONTENT.equals(response.getStatus()))
+        if (Status.SUCCESS_PARTIAL_CONTENT == response.getStatus())
         {
             InputStream content = getResponseStream(response);
             byte[] bytes = FileUtils.readFileBytes(content);
@@ -193,13 +193,13 @@ public class OnlineInputStream : InputStream
             log.debug_(String_format("302 returned, redirecting to %s", cast(Object[])[ this.contentURL ]));
             return readFileChunk(startByte, byteCount);
         }
-        if (response.getStatus().equals(Status.CLIENT_ERROR_REQUESTED_RANGE_NOT_SATISFIABLE))
+        if (response.getStatus() == Status.CLIENT_ERROR_REQUESTED_RANGE_NOT_SATISFIABLE)
         {
             this.wholeStream = getResponseStream(response);
             log.debug_(String_format("Byte range not satisfiable for %s, returning the whole stream", cast(Object[])[ this.contentURL.toString() ]));
             throw new RangeNotSupportedException();
         }
-        throw new IOException(String_format("Status '%s' received from '%s', cancelling transfer", cast(Object[])[ response.getStatus(), this.contentURL.toString() ]));
+        throw new IOException(String_format("Status '%s' received from '%s', cancelling transfer", cast(Object[])[ response.getStatus().toString(), this.contentURL.toString() ]));
     }
 
     private InputStream getResponseStream(Response response)

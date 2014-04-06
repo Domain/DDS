@@ -158,7 +158,7 @@ public class SearchResult
                 return false;
             }
         }
-        else if (!this.cdsObjectId.equals(other.cdsObjectId)) {
+        else if (!this.cdsObjectId.opEquals(other.cdsObjectId)) {
             return false;
         }
         return true;

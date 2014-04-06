@@ -90,7 +90,7 @@ public class Subscription : Comparable!(Subscription)
                 return false;
             }
         }
-        else if (!this.uuid.equals(other.uuid)) {
+        else if (!this.uuid.opEquals(other.uuid)) {
             return false;
         }
         return true;

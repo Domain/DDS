@@ -98,7 +98,7 @@ public class WebResourceParser : AbstractOnlineItemParser
             while (it.hasNext())
             {
                 CachedItem cItem = cast(CachedItem)it.next();
-                if (cItem.cacheKey.equals(item.getParsedItemCacheKey()))
+                if (cItem.cacheKey.opEquals(item.getParsedItemCacheKey()))
                 {
                     this.log.debug_(String.format("Removing item with key '%s' from parsedItemsCache cache for resource: %s", cast(Object[])[ item.getCacheKey(), resourceUrl.toString() ]));
                     it.remove();
@@ -201,7 +201,7 @@ public class WebResourceParser : AbstractOnlineItemParser
             Set!(CachedItem) feedItems = cast(Set)parsedItemsCache.get(resourceUrl.toString());
             if (feedItems !is null) {
                 foreach (CachedItem cItem ; feedItems) {
-                    if (cItem.cacheKey.equals(cacheKey)) {
+                    if (cItem.cacheKey.opEquals(cacheKey)) {
                         return cItem.item;
                     }
                 }
@@ -256,7 +256,7 @@ public class WebResourceParser : AbstractOnlineItemParser
                     return false;
                 }
             }
-            else if (!this.cacheKey.equals(other.cacheKey)) {
+            else if (!this.cacheKey.opEquals(other.cacheKey)) {
                 return false;
             }
             return true;

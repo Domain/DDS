@@ -64,7 +64,7 @@ public class Device
     public Service getServiceById(String serviceId)
     {
         foreach (Service service ; this.services) {
-            if (service.getServiceId().equals(serviceId)) {
+            if (service.getServiceId().opEquals(serviceId)) {
                 return service;
             }
         }
@@ -74,7 +74,7 @@ public class Device
     public Service getServiceByType(String serviceType)
     {
         foreach (Service service ; this.services) {
-            if (service.getServiceType().equals(serviceType)) {
+            if (service.getServiceType().opEquals(serviceType)) {
                 return service;
             }
         }

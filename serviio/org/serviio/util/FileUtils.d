@@ -159,7 +159,7 @@ public class FileUtils
         String parentDir = rootDir.getPath();
         File file = new File(filePath);
         String fileDir = file.getParent();
-        if (((Platform.isWindows()) && (parentDir.equalsIgnoreCase(fileDir))) || ((!Platform.isWindows()) && (parentDir.equals(fileDir)))) {
+        if (((Platform.isWindows()) && (parentDir.equalsIgnoreCase(fileDir))) || ((!Platform.isWindows()) && (parentDir.opEquals(fileDir)))) {
             return null;
         }
         if (((Platform.isWindows()) && (StringUtils.localeSafeToLowercase(fileDir).indexOf(StringUtils.localeSafeToLowercase(parentDir)) == 0)) || ((!Platform.isWindows()) && (fileDir.indexOf(parentDir) == 0)))

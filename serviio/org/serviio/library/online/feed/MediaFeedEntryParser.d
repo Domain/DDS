@@ -142,7 +142,7 @@ public class MediaFeedEntryParser : FeedEntryParser
         if ((con !is null) && (con.getReference() !is null) && (( cast(UrlReference)con.getReference() !is null )))
         {
             String contentUrl = (cast(UrlReference)con.getReference()).getUrl().toString();
-            if ((item.getContentUrl() is null) || (item.getContentUrl().equals(contentUrl)))
+            if ((item.getContentUrl() is null) || (item.getContentUrl().opEquals(contentUrl)))
             {
                 if (item.getType() is null) {
                     item.setMediaType(con.getType(), contentUrl);

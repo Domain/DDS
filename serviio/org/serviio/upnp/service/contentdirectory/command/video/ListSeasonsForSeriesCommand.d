@@ -75,7 +75,7 @@ public class ListSeasonsForSeriesCommand : AbstractCommand!(Container)
 
     private String getContainerTitle(Integer seasonNumber, Integer lastViewedSeason)
     {
-        String containerTitle = String.format("%s %02d%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.equals(seasonNumber)) ? " **" : "" ]);
+        String containerTitle = String.format("%s %02d%s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), seasonNumber, (lastViewedSeason !is null) && (lastViewedSeason.opEquals(seasonNumber)) ? " **" : "" ]);
         return containerTitle;
     }
 

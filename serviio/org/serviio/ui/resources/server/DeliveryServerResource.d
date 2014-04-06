@@ -103,7 +103,7 @@ public class DeliveryServerResource : AbstractServerResource, DeliveryResource
             if (!validateFolderLocation(representation.getTranscodingFolderLocation())) {
                 throw new ValidationException(501);
             }
-            transcodingLocationChanged = !representation.getTranscodingFolderLocation().equals(Configuration.getTranscodingFolder());
+            transcodingLocationChanged = !representation.getTranscodingFolderLocation().opEquals(Configuration.getTranscodingFolder());
 
             Configuration.setTranscodingDownmixToStereo(representation.isAudioDownmixing());
             Configuration.setTranscodingThreads(representation.getThreadsNumber());

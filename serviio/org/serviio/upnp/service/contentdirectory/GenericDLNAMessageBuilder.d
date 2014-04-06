@@ -311,7 +311,7 @@ public class GenericDLNAMessageBuilder : ContentDirectoryMessageBuilder
     private Method findGetter(Class/*!(?)*/ objectClass, String methodName)
     {
         foreach (Method m ; objectClass.getMethods()) {
-            if (m.getName().equals(methodName)) {
+            if (m.getName().opEquals(methodName)) {
                 return m;
             }
         }

@@ -26,7 +26,7 @@ public class AnnexBNALUnitReader : NALUnitReader
             if (this.src.remaining() >= 4L)
             {
                 this.src.read(marker);
-                if (Arrays.equals(cast(byte[])[ 0, 0, 0, 1 ], marker))
+                if (Arrays.opEquals(cast(byte[])[ 0, 0, 0, 1 ], marker))
                 {
                     if (start == -1L)
                     {
