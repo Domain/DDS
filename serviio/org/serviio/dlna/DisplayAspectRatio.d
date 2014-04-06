@@ -24,7 +24,7 @@ public bool isEqualTo(DisplayAspectRatio displayAspectRatio, int width, int heig
 
 public DisplayAspectRatio fromString(String dar) {
     if (dar.equals("16:9")) {
-        return DAR_16_9;
+        return DisplayAspectRatio.DAR_16_9;
     }
     throw new IllegalArgumentException("DAR " ~ dar ~ "is not supported");
 }

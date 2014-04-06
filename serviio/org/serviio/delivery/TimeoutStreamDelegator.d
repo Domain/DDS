@@ -65,7 +65,7 @@ public class TimeoutStreamDelegator
             }
             else if (!this.processListener.isFinished())
             {
-                log.debug_(String.format("Scheduling stream stop to happen in %s seconds if there is no traffic", cast(Object[])[ Integer.valueOf(CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC) ]));
+                log.debug_(java.lang.String.format("Scheduling stream stop to happen in %s seconds if there is no traffic", cast(Object[])[ Integer.valueOf(CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC) ]));
                 resetReadTimeoutScheduler(CLOSE_STREAM_AFTER_CLOSE_INACTIVITY_SEC);
             }
             else

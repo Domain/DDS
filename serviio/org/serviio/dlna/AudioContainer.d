@@ -1,57 +1,64 @@
 module org.serviio.dlna.AudioContainer;
 
 import java.lang.String;
+import java.lang.RuntimeException;
 
 public enum AudioContainer
 {
-    ANY,  MP3,  MP2,  ASF,  LPCM,  MP4,  FLAC,  OGG,  FLV,  RTP,  RTSP,  ADTS,  WAVPACK,  MUSEPACK,  APE
+    ANY,  MP3,  MP2,  ASF,  LPCM,  MP4,  FLAC,  OGG,  FLV,  RTP,  RTSP,  ADTS,  WAVPACK,  MUSEPACK,  APE, INVALID
 }
 
 public String getFFmpegContainerEncoderName(AudioContainer audioContainer)
 {
-    switch (audioContainer)
+    final switch (audioContainer)
     {
-        case ANY:
+        case AudioContainer.ANY:
             throw new RuntimeException("Cannot transcode audio into any"); 
 
-        case MP3:
+        case AudioContainer.MP3:
             return "mp3"; 
 
-        case ASF:
+        case AudioContainer.MP2:
+            return "mp2"; 
+
+        case AudioContainer.ASF:
             throw new RuntimeException("Cannot transcode audio into asf"); 
 
-        case LPCM:
+        case AudioContainer.LPCM:
             return "s16be"; 
 
-        case MP4:
+        case AudioContainer.MP4:
             throw new RuntimeException("Cannot transcode audio into mp4"); 
 
-        case FLAC:
+        case AudioContainer.FLAC:
             throw new RuntimeException("Cannot transcode audio into flac"); 
 
-        case OGG:
+        case AudioContainer.OGG:
             throw new RuntimeException("Cannot transcode audio into ogg"); 
 
-        case FLV:
+        case AudioContainer.FLV:
             throw new RuntimeException("Cannot transcode audio into flv"); 
 
-        case RTP:
+        case AudioContainer.RTP:
             throw new RuntimeException("Cannot transcode audio into rtp"); 
 
-        case RTSP:
+        case AudioContainer.RTSP:
             throw new RuntimeException("Cannot transcode audio into rtsp"); 
 
-        case ADTS:
+        case AudioContainer.ADTS:
             throw new RuntimeException("Cannot transcode audio into adts");
 
-        case WAVPACK:
+        case AudioContainer.WAVPACK:
             throw new RuntimeException("Cannot transcode audio into wavpack");
 
-        case MUSEPACK:
+        case AudioContainer.MUSEPACK:
             throw new RuntimeException("Cannot transcode audio into musepack");
 
-        case APE:
+        case AudioContainer.APE:
             throw new RuntimeException("Cannot transcode audio into ape");
+
+        case AudioContainer.INVALID:
+            throw new RuntimeException("Cannot transcode audio into invalid");
     }
     return "";
 }
@@ -60,52 +67,52 @@ public AudioContainer getByName(String name)
 {
     if (name !is null) {
         if (name.equals("*")) {
-            return ANY;
+            return AudioContainer.ANY;
         }
         if (name.equals("mp3")) {
-            return MP3;
+            return AudioContainer.MP3;
         }
         if (name.equals("mp2")) {
-            return MP2;
+            return AudioContainer.MP2;
         }
         if (name.equals("lpcm")) {
-            return LPCM;
+            return AudioContainer.LPCM;
         }
         if ((name.equals("asf")) || (name.equals("wmav1")) || (name.equals("wmav2"))) {
-            return ASF;
+            return AudioContainer.ASF;
         }
         if ((name.equals("mov")) || (name.equals("mp4")) || (name.equals("aac"))) {
-            return MP4;
+            return AudioContainer.MP4;
         }
         if (name.equals("flac")) {
-            return FLAC;
+            return AudioContainer.FLAC;
         }
         if (name.equals("ogg")) {
-            return OGG;
+            return AudioContainer.OGG;
         }
         if (name.equals("flv")) {
-            return FLV;
+            return AudioContainer.FLV;
         }
         if (name.equals("rtp")) {
-            return RTP;
+            return AudioContainer.RTP;
         }
         if (name.equals("rtsp")) {
-            return RTSP;
+            return AudioContainer.RTSP;
         }
         if (name.equals("adts")) {
-            return ADTS;
+            return AudioContainer.ADTS;
         }
         if (name.equals("wavpack")) {
-            return WAVPACK;
+            return AudioContainer.WAVPACK;
         }
         if (name.equals("ape")) {
-            return APE;
+            return AudioContainer.APE;
         }
         if ((name.startsWith("musepack")) || (name.equals("mpc"))) {
-            return MUSEPACK;
+            return AudioContainer.MUSEPACK;
         }
     }
-    return null;
+    return AudioContainer.INVALID;
 }
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar

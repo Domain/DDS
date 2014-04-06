@@ -1,6 +1,7 @@
 /// Generate by tools
 module java.util.concurrent.atomic.AtomicReference;
 
+import java.lang.util;
 import java.lang.exceptions;
 
 public class AtomicReference(T)
@@ -12,12 +13,17 @@ public class AtomicReference(T)
         implMissing();
     }
 
+    public this(T value)
+    {
+        set(value);
+    }
+
     public void set(T value)
     {
         val = value;
     }
 
-    public T get() const
+    public const(T) get() const
     {
         return val;
     }

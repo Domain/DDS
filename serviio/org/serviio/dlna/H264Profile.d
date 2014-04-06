@@ -1,5 +1,7 @@
 module org.serviio.dlna.H264Profile;
 
+import std.traits;
+
 enum H264Profile
 {
     C_BASELINE  = 66, 
@@ -19,7 +21,7 @@ public int getCode(H264Profile h264Profile)
 
 public bool isConstrained(H264Profile h264Profile)
 {
-    if (h264Profile == C_BASELINE)
+    if (h264Profile == H264Profile.C_BASELINE)
         return true;
     return false;
 }
@@ -33,7 +35,7 @@ public H264Profile getByCode(int code, bool constrained)
             return p;
         }
     }
-    return MAIN;
+    return H264Profile.MAIN;
 }
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
