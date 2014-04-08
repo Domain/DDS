@@ -9,4 +9,9 @@ public class PipedOutputStream : OutputStream
 	{
 		implMissing();
 	}
+
+    override public void write(int b)
+    {
+        implMissing();
+    }
 }

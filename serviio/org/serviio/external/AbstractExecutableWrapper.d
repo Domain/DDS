@@ -1,5 +1,6 @@
 module org.serviio.external.AbstractExecutableWrapper;
 
+import java.lang.InterruptedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.serviio.external.ProcessExecutor;

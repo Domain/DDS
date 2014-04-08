@@ -6,7 +6,10 @@ public class UnsupportedDLNAMediaFileFormatException : Exception
 {
     private static immutable serialVersionUID = -896277702729810672L;
 
-    public this() {}
+    public this() 
+    {
+        super("");
+    }
 
     public this(String message, Throwable cause)
     {
@@ -20,7 +23,7 @@ public class UnsupportedDLNAMediaFileFormatException : Exception
 
     public this(Throwable cause)
     {
-        super(cause);
+        super(cause.toString());
     }
 }
 

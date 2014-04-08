@@ -20,12 +20,12 @@ public class DCRawCLBuilder : AbstractCLBuilder
 
     override public ProcessExecutorParameter[] build()
     {
-        List!(ProcessExecutorParameter) args = new ArrayList();
+        List!(ProcessExecutorParameter) args = new ArrayList!(ProcessExecutorParameter)();
         args.add(new ProcessExecutorParameter(executablePath));
-        if (this.inFile !is null)
+        if (this.file !is null)
         {
-            args.addAll(this.inFileOptions);
-            args.add(this.inFile);
+            args.addAll(this.fileOptions);
+            args.add(this.file);
         }
         ProcessExecutorParameter[] dcrawArgs = new ProcessExecutorParameter[args.size()];
         return cast(ProcessExecutorParameter[])args.toArray(dcrawArgs);
@@ -37,9 +37,9 @@ public class DCRawCLBuilder : AbstractCLBuilder
         return this;
     }
 
-    public DCRawCLBuilder inFile(String inFile)
+    public DCRawCLBuilder inFile(String fileName)
     {
-        this.file = new ProcessExecutorParameter(inFile);
+        this.file = new ProcessExecutorParameter(fileName);
         return this;
     }
 }

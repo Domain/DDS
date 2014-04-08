@@ -23,7 +23,7 @@ public class FFmpegCLBuilder : AbstractCLBuilder
 
     override public ProcessExecutorParameter[] build()
     {
-        List!(ProcessExecutorParameter) args = new ArrayList();
+        List!(ProcessExecutorParameter) args = new ArrayList!(ProcessExecutorParameter)();
         args.add(new ProcessExecutorParameter(executablePath));
         args.addAll(this._globalOptions);
         if (this._inFile !is null)

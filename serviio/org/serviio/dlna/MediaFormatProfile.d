@@ -119,221 +119,223 @@ public enum MediaFormatProfile// : MediaFileType
 
 public MediaFileType getFileType(MediaFormatProfile profile)
 {
-    switch (profile)
+    final switch (profile)
     {
-        case MP3: 
+        case MediaFormatProfile.MP3: 
             return MediaFileType.AUDIO;
-        case MP2_MPS: 
+        case MediaFormatProfile.MP2_MPS: 
             return MediaFileType.AUDIO;
-        case WMA_BASE: 
+        case MediaFormatProfile.WMA_BASE: 
             return MediaFileType.AUDIO;
-        case WMA_FULL: 
+        case MediaFormatProfile.WMA_FULL: 
             return MediaFileType.AUDIO;
-        case LPCM16_44_MONO: 
+        case MediaFormatProfile.LPCM16_44_MONO: 
             return MediaFileType.AUDIO;
-        case LPCM16_44_STEREO: 
+        case MediaFormatProfile.LPCM16_44_STEREO: 
             return MediaFileType.AUDIO;
-        case LPCM16_48_MONO: 
+        case MediaFormatProfile.LPCM16_48_MONO: 
             return MediaFileType.AUDIO;
-        case LPCM16_48_STEREO: 
+        case MediaFormatProfile.LPCM16_48_STEREO: 
             return MediaFileType.AUDIO;
-        case AAC_ISO: 
+        case MediaFormatProfile.AAC_ISO: 
             return MediaFileType.AUDIO;
-        case AAC_ISO_320: 
+        case MediaFormatProfile.AAC_ISO_320: 
             return MediaFileType.AUDIO;
-        case AAC_ADTS: 
+        case MediaFormatProfile.AAC_ADTS: 
             return MediaFileType.AUDIO;
-        case AAC_ADTS_320: 
+        case MediaFormatProfile.AAC_ADTS_320: 
             return MediaFileType.AUDIO;
-        case FLAC: 
+        case MediaFormatProfile.FLAC: 
             return MediaFileType.AUDIO;
-        case OGG: 
+        case MediaFormatProfile.OGG: 
             return MediaFileType.AUDIO;
 
-        case JPEG_SM: 
+        case MediaFormatProfile.JPEG_SM: 
             return MediaFileType.IMAGE;
-        case JPEG_MED: 
+        case MediaFormatProfile.JPEG_MED: 
             return MediaFileType.IMAGE;
-        case JPEG_LRG: 
+        case MediaFormatProfile.JPEG_LRG: 
             return MediaFileType.IMAGE;
-        case JPEG_TN: 
+        case MediaFormatProfile.JPEG_TN: 
             return MediaFileType.IMAGE;
-        case PNG_LRG: 
+        case MediaFormatProfile.PNG_LRG: 
             return MediaFileType.IMAGE;
-        case PNG_TN: 
+        case MediaFormatProfile.PNG_TN: 
             return MediaFileType.IMAGE;
-        case GIF_LRG: 
+        case MediaFormatProfile.GIF_LRG: 
             return MediaFileType.IMAGE;
-        case RAW: 
+        case MediaFormatProfile.RAW: 
             return MediaFileType.IMAGE;
 
-        case MPEG1: 
+        case MediaFormatProfile.MPEG1: 
             return MediaFileType.VIDEO;
-        case MPEG_PS_PAL: 
+        case MediaFormatProfile.MPEG_PS_PAL: 
             return MediaFileType.VIDEO;
-        case MPEG_PS_NTSC: 
+        case MediaFormatProfile.MPEG_PS_NTSC: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_EU: 
+        case MediaFormatProfile.MPEG_TS_SD_EU: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_EU_ISO: 
+        case MediaFormatProfile.MPEG_TS_SD_EU_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_EU_T: 
+        case MediaFormatProfile.MPEG_TS_SD_EU_T: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_NA: 
+        case MediaFormatProfile.MPEG_TS_SD_NA: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_NA_ISO: 
+        case MediaFormatProfile.MPEG_TS_SD_NA_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_NA_T: 
+        case MediaFormatProfile.MPEG_TS_SD_NA_T: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_KO: 
+        case MediaFormatProfile.MPEG_TS_SD_KO: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_KO_ISO: 
+        case MediaFormatProfile.MPEG_TS_SD_KO_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_SD_KO_T: 
+        case MediaFormatProfile.MPEG_TS_SD_KO_T: 
             return MediaFileType.VIDEO;
-        case MPEG_TS_JP_T: 
+        case MediaFormatProfile.MPEG_TS_JP_T: 
             return MediaFileType.VIDEO;
-        case AVI: 
+        case MediaFormatProfile.AVI: 
             return MediaFileType.VIDEO;
-        case HLS:
+        case MediaFormatProfile.MATROSKA: 
             return MediaFileType.VIDEO;
-        case FLV: 
+        case MediaFormatProfile.HLS:
             return MediaFileType.VIDEO;
-        case DVR_MS: 
+        case MediaFormatProfile.FLV: 
             return MediaFileType.VIDEO;
-        case WTV: 
+        case MediaFormatProfile.DVR_MS: 
             return MediaFileType.VIDEO;
-        case OGV: 
+        case MediaFormatProfile.WTV: 
             return MediaFileType.VIDEO;
-        case REAL_VIDEO: 
+        case MediaFormatProfile.OGV: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_MP_SD_AAC_MULT5: 
+        case MediaFormatProfile.REAL_VIDEO: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_MP_SD_MPEG1_L3: 
+        case MediaFormatProfile.AVC_MP4_MP_SD_AAC_MULT5: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_MP_SD_AC3: 
+        case MediaFormatProfile.AVC_MP4_MP_SD_MPEG1_L3: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_MP_HD_720p_AAC: 
+        case MediaFormatProfile.AVC_MP4_MP_SD_AC3: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_MP_HD_1080i_AAC: 
+        case MediaFormatProfile.AVC_MP4_MP_HD_720p_AAC: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_HP_HD_AAC: 
+        case MediaFormatProfile.AVC_MP4_MP_HD_1080i_AAC: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AAC_MULT5: 
+        case MediaFormatProfile.AVC_MP4_HP_HD_AAC: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AAC_MULT5_T: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AAC_MULT5: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AAC_MULT5_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AAC_MULT5_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_MPEG1_L3: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AAC_MULT5_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_MPEG1_L3_T: 
+        case MediaFormatProfile.AVC_TS_MP_HD_MPEG1_L3: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_MPEG1_L3_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_HD_MPEG1_L3_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AC3: 
+        case MediaFormatProfile.AVC_TS_MP_HD_MPEG1_L3_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AC3_T: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AC3: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_HD_AC3_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AC3_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HP_HD_MPEG1_L2_T: 
+        case MediaFormatProfile.AVC_TS_MP_HD_AC3_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HP_HD_MPEG1_L2_ISO: 
+        case MediaFormatProfile.AVC_TS_HP_HD_MPEG1_L2_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AAC_MULT5: 
+        case MediaFormatProfile.AVC_TS_HP_HD_MPEG1_L2_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AAC_MULT5_T: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AAC_MULT5: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AAC_MULT5_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AAC_MULT5_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_MPEG1_L3: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AAC_MULT5_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_MPEG1_L3_T: 
+        case MediaFormatProfile.AVC_TS_MP_SD_MPEG1_L3: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_MPEG1_L3_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_SD_MPEG1_L3_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HP_SD_MPEG1_L2_T: 
+        case MediaFormatProfile.AVC_TS_MP_SD_MPEG1_L3_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HP_SD_MPEG1_L2_ISO: 
+        case MediaFormatProfile.AVC_TS_HP_SD_MPEG1_L2_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AC3: 
+        case MediaFormatProfile.AVC_TS_HP_SD_MPEG1_L2_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AC3_T: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AC3: 
             return MediaFileType.VIDEO;
-        case AVC_TS_MP_SD_AC3_ISO: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AC3_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HD_DTS_T: 
+        case MediaFormatProfile.AVC_TS_MP_SD_AC3_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HD_DTS_ISO: 
+        case MediaFormatProfile.AVC_TS_HD_DTS_T: 
             return MediaFileType.VIDEO;
-        case WMVMED_BASE: 
+        case MediaFormatProfile.AVC_TS_HD_DTS_ISO: 
             return MediaFileType.VIDEO;
-        case WMVMED_FULL: 
+        case MediaFormatProfile.WMVMED_BASE: 
             return MediaFileType.VIDEO;
-        case WMVMED_PRO: 
+        case MediaFormatProfile.WMVMED_FULL: 
             return MediaFileType.VIDEO;
-        case WMVHIGH_FULL: 
+        case MediaFormatProfile.WMVMED_PRO: 
             return MediaFileType.VIDEO;
-        case WMVHIGH_PRO: 
+        case MediaFormatProfile.WMVHIGH_FULL: 
             return MediaFileType.VIDEO;
-        case VC1_ASF_AP_L1_WMA: 
+        case MediaFormatProfile.WMVHIGH_PRO: 
             return MediaFileType.VIDEO;
-        case VC1_ASF_AP_L2_WMA: 
+        case MediaFormatProfile.VC1_ASF_AP_L1_WMA: 
             return MediaFileType.VIDEO;
-        case VC1_ASF_AP_L3_WMA: 
+        case MediaFormatProfile.VC1_ASF_AP_L2_WMA: 
             return MediaFileType.VIDEO;
-        case VC1_TS_AP_L1_AC3_ISO: 
+        case MediaFormatProfile.VC1_ASF_AP_L3_WMA: 
             return MediaFileType.VIDEO;
-        case VC1_TS_AP_L2_AC3_ISO: 
+        case MediaFormatProfile.VC1_TS_AP_L1_AC3_ISO: 
             return MediaFileType.VIDEO;
-        case VC1_TS_HD_DTS_ISO: 
+        case MediaFormatProfile.VC1_TS_AP_L2_AC3_ISO: 
             return MediaFileType.VIDEO;
-        case VC1_TS_HD_DTS_T: 
+        case MediaFormatProfile.VC1_TS_HD_DTS_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_MP4_ASP_AAC: 
+        case MediaFormatProfile.VC1_TS_HD_DTS_T: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_MP4_SP_L6_AAC: 
+        case MediaFormatProfile.MPEG4_P2_MP4_ASP_AAC: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_MP4_NDSD: 
+        case MediaFormatProfile.MPEG4_P2_MP4_SP_L6_AAC: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AAC: 
+        case MediaFormatProfile.MPEG4_P2_MP4_NDSD: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AAC_T: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AAC: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AAC_ISO: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AAC_T: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG1_L3: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AAC_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG1_L3_T: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG1_L3: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG1_L3_ISO: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG1_L3_T: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG2_L2: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG1_L3_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG2_L2_T: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG2_L2: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_MPEG2_L2_ISO: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG2_L2_T: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AC3: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_MPEG2_L2_ISO: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AC3_T: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AC3: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_TS_ASP_AC3_ISO: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AC3_T: 
             return MediaFileType.VIDEO;
-        case AVC_TS_HD_50_LPCM_T: 
+        case MediaFormatProfile.MPEG4_P2_TS_ASP_AC3_ISO: 
             return MediaFileType.VIDEO;
-        case AVC_MP4_LPCM: 
+        case MediaFormatProfile.AVC_TS_HD_50_LPCM_T: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_3GPP_SP_L0B_AAC: 
+        case MediaFormatProfile.AVC_MP4_LPCM: 
             return MediaFileType.VIDEO;
-        case MPEG4_P2_3GPP_SP_L0B_AMR: 
+        case MediaFormatProfile.MPEG4_P2_3GPP_SP_L0B_AAC: 
             return MediaFileType.VIDEO;
-        case AVC_3GPP_BL_QCIF15_AAC: 
+        case MediaFormatProfile.MPEG4_P2_3GPP_SP_L0B_AMR: 
             return MediaFileType.VIDEO;
-        case MPEG4_H263_3GPP_P0_L10_AMR: 
+        case MediaFormatProfile.AVC_3GPP_BL_QCIF15_AAC: 
             return MediaFileType.VIDEO;
-        case MPEG4_H263_MP4_P0_L10_AAC:
+        case MediaFormatProfile.MPEG4_H263_3GPP_P0_L10_AMR: 
+            return MediaFileType.VIDEO;
+        case MediaFormatProfile.MPEG4_H263_MP4_P0_L10_AAC:
             return MediaFileType.VIDEO;
     }
     
@@ -342,7 +344,7 @@ public MediaFileType getFileType(MediaFormatProfile profile)
 
 public bool isManifestFormat(MediaFormatProfile profile)
 {
-    if (profile == HLS)
+    if (profile == MediaFormatProfile.HLS)
         return true;
 
     return false;

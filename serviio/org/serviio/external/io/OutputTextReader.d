@@ -56,16 +56,16 @@ public class OutputTextReader : OutputReader
         }
         catch (IOException e)
         {
-            log.warn(String.format("Error reading output of an external command:" + e.getMessage(), new Object[0]));
+            log.warn(java.lang.String.format("Error reading output of an external command:" ~ e.getMessage(), new Object[0]));
         }
         finally
         {
             if (br !is null) {
-                try
+                //try
                 {
                     br.close();
                 }
-                catch (Exception e) {}
+                //catch (Exception e) {}
             }
         }
     }
@@ -77,7 +77,7 @@ public class OutputTextReader : OutputReader
 
     override public List!(String) getResults()
     {
-        List!(String) clonedResults = new ArrayList();
+        List!(String) clonedResults = new ArrayList!(String)();
         synchronized (this.linesLock)
         {
             clonedResults.addAll(this.lines);
@@ -91,7 +91,7 @@ public class OutputTextReader : OutputReader
         if ((all is null) || (all.size() == 0)) {
             return null;
         }
-        int start = Math.max(0, all.size() - 5);
+        int start = std.algorithm.max(0, all.size() - 5);
         return CollectionUtils.listToCSV(all.subList(start, all.size()), StringUtils.LINE_SEPARATOR, true);
     }
 

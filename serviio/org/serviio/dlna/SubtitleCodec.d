@@ -19,27 +19,27 @@ public enum SubtitleCodec
 
 public String[] getFileExtensions(SubtitleCodec codec)
 {
-    switch (codec)
+    final switch (codec)
     {
-        case SRT:
+        case SubtitleCodec.SRT:
             return ["srt"];
 
-        case ASS:
+        case SubtitleCodec.ASS:
             return ["ass", "ssa"];
 
-        case sub:
+        case SubtitleCodec.SUB:
             return ["sub"];
 
-        case SMI:
+        case SubtitleCodec.SMI:
             return ["smi"];
 
-        case VTT:
+        case SubtitleCodec.VTT:
             return ["vtt"];
 
-        case MOV_TEXT:
+        case SubtitleCodec.MOV_TEXT:
             return [];
 
-        case UNKNOWN:
+        case SubtitleCodec.UNKNOWN:
             return ["txt"];
     }
 }
@@ -67,7 +67,7 @@ public SubtitleCodec getByFileName(String subtitleFileName)
             }
         }
     }
-    return UNKNOWN;
+    return SubtitleCodec.UNKNOWN;
 }
 
 public SubtitleCodec getByFFmpegValue(String ffmpegName)
@@ -75,25 +75,25 @@ public SubtitleCodec getByFFmpegValue(String ffmpegName)
     if (ffmpegName !is null)
     {
         if ((ffmpegName.equals("srt")) || (ffmpegName.equals("subrip"))) {
-            return SRT;
+            return SubtitleCodec.SRT;
         }
         if (ffmpegName.equals("microdvd")) {
-            return SUB;
+            return SubtitleCodec.SUB;
         }
         if ((ffmpegName.equals("ass")) || (ffmpegName.equals("ssa"))) {
-            return ASS;
+            return SubtitleCodec.ASS;
         }
         if (ffmpegName.equals("sami")) {
-            return SMI;
+            return SubtitleCodec.SMI;
         }
         if (ffmpegName.equals("webvtt")) {
-            return VTT;
+            return SubtitleCodec.VTT;
         }
         if (ffmpegName.equals("mov_text")) {
-            return MOV_TEXT;
+            return SubtitleCodec.MOV_TEXT;
         }
     }
-    return null;
+    return SubtitleCodec.UNKNOWN;
 }
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar

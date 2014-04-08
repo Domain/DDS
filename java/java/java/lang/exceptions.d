@@ -175,3 +175,8 @@ void PrintStackTrace( int deepth = 100, String prefix = "trc" ){
         }
     }
 }
+
+void printStackTrace(Exception e)
+{
+    PrintStackTrace();
+}

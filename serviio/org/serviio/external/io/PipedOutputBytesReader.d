@@ -38,13 +38,13 @@ public class PipedOutputBytesReader : OutputReader
                 }
                 catch (IOException e)
                 {
-                    log.trace(String.format("Error writing bytes to piped output stream: %s", cast(Object[])[ e.getMessage() ]));
+                    log.trace(java.lang.String.format("Error writing bytes to piped output stream: %s", cast(Object[])[ e.getMessage() ]));
                 }
             }
         }
         catch (IOException e)
         {
-            log.warn(String.format("Error reading bytes stream from external process: %s", cast(Object[])[ e.getMessage() ]));
+            log.warn(java.lang.String.format("Error reading bytes stream from external process: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 

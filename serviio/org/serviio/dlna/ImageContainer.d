@@ -4,7 +4,7 @@ import java.lang.String;
 
 public enum ImageContainer
 {
-    JPEG,  PNG,  GIF,  RAW
+    JPEG,  PNG,  GIF,  RAW,  INVALID
 }
 
 public ImageContainer getByName(String name)
@@ -12,19 +12,19 @@ public ImageContainer getByName(String name)
     if (name !is null)
     {
         if (name.equals("jpeg")) {
-            return JPEG;
+            return ImageContainer.JPEG;
         }
         if (name.equals("gif")) {
-            return GIF;
+            return ImageContainer.GIF;
         }
         if (name.equals("png")) {
-            return PNG;
+            return ImageContainer.PNG;
         }
         if (name.equals("raw")) {
-            return RAW;
+            return ImageContainer.RAW;
         }
     }
-    return null;
+    return ImageContainer.INVALID;
 }
 
 

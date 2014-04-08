@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import org.serviio.delivery.resource.transcode.AbstractTranscodingDeliveryEngine;
+import org.serviio.delivery.MediaFormatProfileResource;
+import org.serviio.library.entities.MediaItem;
 import org.serviio.dlna.MediaFormatProfile;
 import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 import org.serviio.profile.DeliveryQuality:QualityType;
@@ -57,7 +59,7 @@ public class SegmentRetrievalStrategy : ResourceRetrievalStrategy
 
     private File findSegmentFile(String path)
     {
-        File segmentFile = new File(AbstractTranscodingDeliveryEngine.getTranscodingFolder(), getFilePathFromUrl(path));
+        File segmentFile = new File(AbstractTranscodingDeliveryEngine!(MediaFormatProfileResource, MediaItem).getTranscodingFolder(), getFilePathFromUrl(path));
         if ((segmentFile.exists()) && (segmentFile.isFile()) && (segmentFile.canRead())) {
             return segmentFile;
         }

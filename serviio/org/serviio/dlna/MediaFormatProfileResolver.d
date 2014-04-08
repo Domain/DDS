@@ -15,6 +15,7 @@ import org.serviio.dlna.AudioContainer;
 import org.serviio.dlna.VideoContainer;
 import org.serviio.dlna.VideoCodec;
 import org.serviio.dlna.AudioCodec;
+import org.serviio.dlna.UnsupportedDLNAMediaFileFormatException;
 
 public class MediaFormatProfileResolver
 {
@@ -48,7 +49,7 @@ public class MediaFormatProfileResolver
         if (container == ImageContainer.RAW) {
             return resolveImageRAWFormat(fileName, width, height);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("Image %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("Image %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     public static MediaFormatProfile resolveAudioFormat(String fileName, AudioContainer container, Integer bitrate, Integer frequency, Integer channels)
@@ -77,7 +78,7 @@ public class MediaFormatProfileResolver
         if (container == AudioContainer.OGG) {
             return resolveAudioOGGFormat(fileName, bitrate, frequency, channels);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("Music track %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("Music track %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     public static List!(MediaFormatProfile) resolveVideoFormat(String fileName, VideoContainer container, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate, TransportStreamTimestamp timestampType)
@@ -118,7 +119,7 @@ public class MediaFormatProfileResolver
         if (container == VideoContainer.APPLE_HTTP) {
             return resolveVideoHLSFormat(fileName, videoCodec, audioCodec, width, height, bitrate);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("Video %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("Video %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     protected static MediaFormatProfile resolveAudioASFFormat(String fileName, Integer bitrate, Integer frequency, Integer channels)
@@ -145,7 +146,7 @@ public class MediaFormatProfileResolver
             if ((frequency.intValue() == 48000) && (channels.intValue() == 2)) {
                 return MediaFormatProfile.LPCM16_48_STEREO;
             }
-            throw new UnsupportedDLNAMediaFileFormatException(String.format("Unsupported LPCM format of file %s. Only 44100 / 48000 Hz and Mono / Stereo files are allowed.", cast(Object[])[ fileName ]));
+            throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("Unsupported LPCM format of file %s. Only 44100 / 48000 Hz and Mono / Stereo files are allowed.", cast(Object[])[ fileName ]));
         }
         return MediaFormatProfile.LPCM16_48_STEREO;
     }
@@ -229,7 +230,7 @@ public class MediaFormatProfileResolver
         }
         if (videoCodec == VideoCodec.MPEG2)
         {
-            List!(MediaFormatProfile) profiles = Arrays.asList(cast(MediaFormatProfile[])[ MediaFormatProfile.valueOf("MPEG_TS_SD_EU" + suffix), MediaFormatProfile.valueOf("MPEG_TS_SD_NA" + suffix), MediaFormatProfile.valueOf("MPEG_TS_SD_KO" + suffix) ]);
+            List!(MediaFormatProfile) profiles = Arrays.asList(cast(MediaFormatProfile[])[ valueOf!MediaFormatProfile("MPEG_TS_SD_EU" ~ suffix), valueOf!MediaFormatProfile("MPEG_TS_SD_NA" ~ suffix), valueOf!MediaFormatProfile("MPEG_TS_SD_KO" ~ suffix) ]);
             if ((timestampType == TransportStreamTimestamp.VALID) && (audioCodec == AudioCodec.AAC)) {
                 profiles.add(MediaFormatProfile.MPEG_TS_JP_T);
             }
@@ -250,23 +251,23 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.MP2)
             {
                 if (isNoTimestamp(timestampType)) {
-                    return Collections.singletonList(MediaFormatProfile.valueOf(String.format("AVC_TS_HP_%sD_MPEG1_L2_ISO", cast(Object[])[ resolution ])));
+                    return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_HP_%sD_MPEG1_L2_ISO", cast(Object[])[ resolution ])));
                 }
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("AVC_TS_HP_%sD_MPEG1_L2_T", cast(Object[])[ resolution ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_HP_%sD_MPEG1_L2_T", cast(Object[])[ resolution ])));
             }
             if (audioCodec == AudioCodec.AAC) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("AVC_TS_MP_%sD_AAC_MULT5%s", cast(Object[])[ resolution, suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_MP_%sD_AAC_MULT5%s", cast(Object[])[ resolution, suffix ])));
             }
             if (audioCodec == AudioCodec.MP3) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("AVC_TS_MP_%sD_MPEG1_L3%s", cast(Object[])[ resolution, suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_MP_%sD_MPEG1_L3%s", cast(Object[])[ resolution, suffix ])));
             }
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AC3)) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("AVC_TS_MP_%sD_AC3%s", cast(Object[])[ resolution, suffix ])));
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_MP_%sD_AC3%s", cast(Object[])[ resolution, suffix ])));
             }
         }
         else if (videoCodec == VideoCodec.VC1)
         {
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AC3))
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3))
             {
                 if ((width.intValue() > 720) || (height.intValue() > 576)) {
                     return Collections.singletonList(MediaFormatProfile.VC1_TS_AP_L2_AC3_ISO);
@@ -276,25 +277,25 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.DTS)
             {
                 suffix = suffix.equals("_ISO") ? suffix : "_T";
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("VC1_TS_HD_DTS%s", cast(Object[])[ suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("VC1_TS_HD_DTS%s", cast(Object[])[ suffix ])));
             }
         }
         else if ((videoCodec == VideoCodec.MPEG4) || (videoCodec == VideoCodec.MSMPEG4))
         {
             if (audioCodec == AudioCodec.AAC) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("MPEG4_P2_TS_ASP_AAC%s", cast(Object[])[ suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_AAC%s", cast(Object[])[ suffix ])));
             }
             if (audioCodec == AudioCodec.MP3) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("MPEG4_P2_TS_ASP_MPEG1_L3%s", cast(Object[])[ suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_MPEG1_L3%s", cast(Object[])[ suffix ])));
             }
             if (audioCodec == AudioCodec.MP2) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("MPEG4_P2_TS_ASP_MPEG2_L2%s", cast(Object[])[ suffix ])));
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_MPEG2_L2%s", cast(Object[])[ suffix ])));
             }
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AC3)) {
-                return Collections.singletonList(MediaFormatProfile.valueOf(String.format("MPEG4_P2_TS_ASP_AC3%s", cast(Object[])[ suffix ])));
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
+                return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_AC3%s", cast(Object[])[ suffix ])));
             }
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("MPEG2TS video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("MPEG2TS video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     protected static List!(MediaFormatProfile) resolveVideoMP4Format(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
@@ -304,7 +305,7 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.LPCM) {
                 return Collections.singletonList(MediaFormatProfile.AVC_MP4_LPCM);
             }
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AC3)) {
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
                 return Collections.singletonList(MediaFormatProfile.AVC_MP4_MP_SD_AC3);
             }
             if (audioCodec == AudioCodec.MP3) {
@@ -332,14 +333,14 @@ public class MediaFormatProfileResolver
         {
             if ((width.intValue() <= 720) && (height.intValue() <= 576))
             {
-                if ((audioCodec is null) || (audioCodec == AudioCodec.AAC)) {
+                if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
                     return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_ASP_AAC);
                 }
                 if ((audioCodec == AudioCodec.AC3) || (audioCodec == AudioCodec.MP3)) {
                     return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_NDSD);
                 }
             }
-            else if ((audioCodec is null) || (audioCodec == AudioCodec.AAC))
+            else if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC))
             {
                 return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_SP_L6_AAC);
             }
@@ -348,7 +349,7 @@ public class MediaFormatProfileResolver
         {
             return Collections.singletonList(MediaFormatProfile.MPEG4_H263_MP4_P0_L10_AAC);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("MP4 video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("MP4 video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     protected static List!(MediaFormatProfile) resolveVideoMatroskaFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
@@ -373,23 +374,23 @@ public class MediaFormatProfileResolver
 
     protected static List!(MediaFormatProfile) resolveVideoHLSFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
     {
-        if ((videoCodec == VideoCodec.H264) && ((audioCodec is null) || (audioCodec == AudioCodec.AAC))) {
+        if ((videoCodec == VideoCodec.H264) && ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC))) {
             return Collections.singletonList(MediaFormatProfile.HLS);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("AppleHttp video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("AppleHttp video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     protected static List!(MediaFormatProfile) resolveVideo3GPFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
     {
         if (videoCodec == VideoCodec.H264)
         {
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AAC)) {
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
                 return Collections.singletonList(MediaFormatProfile.AVC_3GPP_BL_QCIF15_AAC);
             }
         }
         else if ((videoCodec == VideoCodec.MPEG4) || (videoCodec == VideoCodec.MSMPEG4))
         {
-            if ((audioCodec is null) || (audioCodec == AudioCodec.AAC)) {
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
                 return Collections.singletonList(MediaFormatProfile.MPEG4_P2_3GPP_SP_L0B_AAC);
             }
             if (audioCodec == AudioCodec.AMR) {
@@ -400,7 +401,7 @@ public class MediaFormatProfileResolver
         {
             return Collections.singletonList(MediaFormatProfile.MPEG4_H263_3GPP_P0_L10_AMR);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("3GP video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("3GP video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     protected static List!(MediaFormatProfile) resolveVideoOGGFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
@@ -415,16 +416,16 @@ public class MediaFormatProfileResolver
 
     protected static List!(MediaFormatProfile) resolveVideoASFFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
     {
-        if ((videoCodec == VideoCodec.WMV) && ((audioCodec is null) || (audioCodec == AudioCodec.WMA) || (audioCodec == AudioCodec.WMA_PRO)))
+        if ((videoCodec == VideoCodec.WMV) && ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA) || (audioCodec == AudioCodec.WMA_PRO)))
         {
             if ((width.intValue() <= 720) && (height.intValue() <= 576))
             {
-                if ((audioCodec is null) || (audioCodec == AudioCodec.WMA)) {
+                if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA)) {
                     return Collections.singletonList(MediaFormatProfile.WMVMED_FULL);
                 }
                 return Collections.singletonList(MediaFormatProfile.WMVMED_PRO);
             }
-            if ((audioCodec is null) || (audioCodec == AudioCodec.WMA)) {
+            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA)) {
                 return Collections.singletonList(MediaFormatProfile.WMVHIGH_FULL);
             }
             return Collections.singletonList(MediaFormatProfile.WMVHIGH_PRO);
@@ -445,7 +446,7 @@ public class MediaFormatProfileResolver
         {
             return Collections.singletonList(MediaFormatProfile.DVR_MS);
         }
-        throw new UnsupportedDLNAMediaFileFormatException(String.format("ASF video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
+        throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("ASF video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
     }
 
     private static bool isNoTimestamp(TransportStreamTimestamp timestampType)

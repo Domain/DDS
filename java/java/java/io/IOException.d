@@ -10,6 +10,7 @@ version(Tango){
 }
 else {
     static import core.exception;
+    public import java.lang.exceptions;
 
     class IOException : Exception {
         this( String e = null, Throwable t = null ){

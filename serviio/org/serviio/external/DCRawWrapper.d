@@ -2,6 +2,7 @@ module org.serviio.external.DCRawWrapper;
 
 import java.lang.Boolean;
 import java.lang.String;
+import java.lang.Long;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DCRawWrapper : AbstractExecutableWrapper
         {
             DCRawCLBuilder builder = new DCRawCLBuilder();
 
-            log.debug_(String.format("Invoking DCRAW to check if it exists of path %s", cast(Object[])[ DCRawCLBuilder.executablePath ]));
+            log.debug_(java.lang.String.format("Invoking DCRAW to check if it exists of path %s", cast(Object[])[ DCRawCLBuilder.executablePath ]));
             ProcessExecutor executor = processExecutorForTextOutput(builder);
             executeSynchronously(executor);
             present.set(Boolean.valueOf((executor.isSuccess()) && (executor.getResults().size() > 5)));
@@ -45,7 +46,7 @@ public class DCRawWrapper : AbstractExecutableWrapper
         builder.inFileOptions(cast(String[])[ "-c" ]);
         builder.inFileOptions(cast(String[])[ "-e" ]);
 
-        log.debug_(String.format("Invoking DCRAW to retrieve thumbnail from file: %s", cast(Object[])[ filePath ]));
+        log.debug_(java.lang.String.format("Invoking DCRAW to retrieve thumbnail from file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(10000L));
         executeSynchronously(executor);
         ByteArrayOutputStream output = cast(ByteArrayOutputStream)executor.getOutputStream();

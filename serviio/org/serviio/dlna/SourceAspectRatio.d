@@ -21,7 +21,7 @@ public class SourceAspectRatio : Serializable
 
     public bool isSquarePixels()
     {
-        return Math.abs(1.0F - getSar().floatValue()) < 0.01;
+        return std.math.abs(1.0F - getSar().floatValue()) < 0.01;
     }
 
     public Float getSar()

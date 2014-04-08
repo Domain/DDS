@@ -1,58 +1,78 @@
 module org.serviio.dlna.VideoContainer;
 
 import java.lang.String;
+import java.lang.RuntimeException;
 import org.serviio.util.StringUtils;
 
 public enum VideoContainer
 {
-    ANY,  AVI,  MATROSKA,  ASF,  MP4,  MPEG2PS,  MPEG2TS,  M2TS,  MPEG1,  FLV,  WTV,  OGG,  THREE_GP,  RTP,  RTSP,  APPLE_HTTP,  REAL_MEDIA,
+    ANY,  
+    AVI,  
+    MATROSKA,  
+    ASF,  
+    MP4,  
+    MPEG2PS,  
+    MPEG2TS,  
+    M2TS,  
+    MPEG1,  
+    FLV,  
+    WTV,  
+    OGG,  
+    THREE_GP,  
+    RTP,  
+    RTSP,  
+    APPLE_HTTP,  
+    REAL_MEDIA,
+    UNKNOWN,
 }
 
 public String getFFmpegValue(VideoContainer container)
 {
-    switch (container)
+    final switch (container)
     {
-        case ANY: 
+        case VideoContainer.ANY: 
             throw new RuntimeException("Cannot transcode audio into any");
-        case AVI: 
+        case VideoContainer.AVI: 
             return "avi";
-        case MATROSKA: 
+        case VideoContainer.MATROSKA: 
             return "matroska";
-        case ASF: 
+        case VideoContainer.ASF: 
             return "asf";
-        case MP4: 
+        case VideoContainer.MP4: 
             return "mp4";
-        case MPEG2PS: 
+        case VideoContainer.MPEG2PS: 
             return "vob";
-        case MPEG2TS: 
+        case VideoContainer.MPEG2TS: 
             return "mpegts";
-        case M2TS: 
+        case VideoContainer.M2TS: 
             return "mpegts";
-        case MPEG1: 
+        case VideoContainer.MPEG1: 
             return "mpegvideo";
-        case FLV: 
+        case VideoContainer.FLV: 
             return "flv";
-        case WTV: 
+        case VideoContainer.WTV: 
             return "wtv";
-        case OGG: 
+        case VideoContainer.OGG: 
             return "ogg";
-        case THREE_GP: 
+        case VideoContainer.THREE_GP: 
             return "3gp";
-        case RTP: 
+        case VideoContainer.RTP: 
             return "rtp";
-        case RTSP: 
+        case VideoContainer.RTSP: 
             return "rtsp";
-        case APPLE_HTTP:
+        case VideoContainer.APPLE_HTTP:
             return "segment";
-        case REAL_MEDIA: 
+        case VideoContainer.REAL_MEDIA: 
             return "rm";
+        case VideoContainer.UNKNOWN: 
+            throw new RuntimeException("Cannot transcode audio into unknown");
     }
     throw new RuntimeException("Unknown video container");
 }
 
 public bool isSegmentBased(VideoContainer container)
 {
-    if (container == APPLE_HTTP)
+    if (container == VideoContainer.APPLE_HTTP)
         return true;
     return false;
 }
@@ -62,62 +82,62 @@ public VideoContainer getByFFmpegValue(String ffmpegName, String filePath)
     if (ffmpegName !is null)
     {
         if (ffmpegName.equals("*")) {
-            return ANY;
+            return VideoContainer.ANY;
         }
         if (ffmpegName.equals("asf")) {
-            return ASF;
+            return VideoContainer.ASF;
         }
         if (ffmpegName.equals("mpegvideo")) {
-            return MPEG1;
+            return VideoContainer.MPEG1;
         }
         if ((ffmpegName.equals("mpeg")) || (ffmpegName.equals("vob"))) {
-            return MPEG2PS;
+            return VideoContainer.MPEG2PS;
         }
         if (ffmpegName.equals("mpegts")) {
-            return MPEG2TS;
+            return VideoContainer.MPEG2TS;
         }
         if (ffmpegName.equals("m2ts")) {
-            return M2TS;
+            return VideoContainer.M2TS;
         }
         if (ffmpegName.equals("matroska")) {
-            return MATROSKA;
+            return VideoContainer.MATROSKA;
         }
         if (ffmpegName.equals("avi")) {
-            return AVI;
+            return VideoContainer.AVI;
         }
         if ((ffmpegName.equals("mov")) || (ffmpegName.equals("mp4")))
         {
             if ((filePath !is null) && (StringUtils.localeSafeToLowercase(filePath).endsWith(".3gp"))) {
-                return THREE_GP;
+                return VideoContainer.THREE_GP;
             }
-            return MP4;
+            return VideoContainer.MP4;
         }
         if (ffmpegName.equals("flv")) {
-            return FLV;
+            return VideoContainer.FLV;
         }
         if (ffmpegName.equals("wtv")) {
-            return WTV;
+            return VideoContainer.WTV;
         }
         if (ffmpegName.equals("ogg")) {
-            return OGG;
+            return VideoContainer.OGG;
         }
         if (ffmpegName.equals("3gp")) {
-            return THREE_GP;
+            return VideoContainer.THREE_GP;
         }
         if (ffmpegName.equals("rtp")) {
-            return RTP;
+            return VideoContainer.RTP;
         }
         if (ffmpegName.equals("rtsp")) {
-            return RTSP;
+            return VideoContainer.RTSP;
         }
         if ((ffmpegName.equals("applehttp")) || (ffmpegName.equals("hls"))) {
-            return APPLE_HTTP;
+            return VideoContainer.APPLE_HTTP;
         }
         if (ffmpegName.equals("rm")) {
-            return REAL_MEDIA;
+            return VideoContainer.REAL_MEDIA;
         }
     }
-    return null;
+    return VideoContainer.UNKNOWN;
 }
 
 

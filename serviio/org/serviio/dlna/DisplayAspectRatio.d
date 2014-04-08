@@ -1,6 +1,7 @@
 module org.serviio.dlna.DisplayAspectRatio;
 
 import java.lang.String;
+import java.lang.IllegalArgumentException;
 import java.text.DecimalFormat;
 
 enum DisplayAspectRatio : int[]
