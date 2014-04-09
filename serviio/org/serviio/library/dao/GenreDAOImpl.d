@@ -64,7 +64,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM genre WHERE id = ?");
                     ps.setLong(1, id.longValue());

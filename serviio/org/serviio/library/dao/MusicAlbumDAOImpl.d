@@ -99,7 +99,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM music_album WHERE id = ?");
                     ps.setLong(1, id.longValue());

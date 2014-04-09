@@ -214,7 +214,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM playlist_item WHERE media_item_id = ?");
                     ps.setLong(1, mediaItemId.longValue());
@@ -259,7 +259,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM playlist_item WHERE playlist_id = ?");
                     ps.setLong(1, playlistId.longValue());
@@ -396,7 +396,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM playlist WHERE id = ?");
                     ps.setLong(1, playlistId.longValue());

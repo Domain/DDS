@@ -65,7 +65,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM series WHERE id = ?");
                     ps.setLong(1, id.longValue());

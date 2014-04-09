@@ -233,6 +233,11 @@ public int lastIndexOf(in char[] str, in char[] sub, int fromIndex){
     }
 }
 
+public bool contains(String str, String sub)
+{
+    return indexOf(str, sub) >= 0;
+}
+
 unittest {
     sizediff_t i;
 

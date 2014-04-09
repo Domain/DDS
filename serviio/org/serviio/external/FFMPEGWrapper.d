@@ -780,7 +780,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static bool isVideoDARChanged(Integer width, Integer height, DisplayAspectRatio dar, SourceAspectRatio sourceSar)
     {
-        return (dar !is null) && (width !is null) && (height !is null) && (!dar.isEqualTo(width.intValue(), height.intValue(), sourceSar.getSar().floatValue()));
+        return (dar != DisplayAspectRatio.UNKNOWN) && (width !is null) && (height !is null) && (!dar.isEqualTo(width.intValue(), height.intValue(), sourceSar.getSar().floatValue()));
     }
 
     protected static String findNearestValidFFmpegFrameRate(String frameRate)

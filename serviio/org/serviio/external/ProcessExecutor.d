@@ -107,7 +107,7 @@ public class ProcessExecutor : Thread
             this.stderrReader.start();
             this.stdoutReader.start();
             if (this.failsafeTimeout !is null) {
-                faisafeThread = makeFailSafe(cast(immutable)this.failsafeTimeout);
+                faisafeThread = makeFailSafe(this.failsafeTimeout);
             }
             try
             {
@@ -353,14 +353,14 @@ public class ProcessExecutor : Thread
         return newEnv;
     }
 
-    private Thread makeFailSafe(const Long timeout)
+    private Thread makeFailSafe(Long timeout)
     {
         Runnable r = new class() Runnable {
             public void run()
             {
                 try
                 {
-                    Thread.sleep(timeout.longValue());
+                    Thread.sleep(cast(int)timeout.longValue());
                 }
                 catch (InterruptedException e) {}
                 this.outer.stopProcess(false);

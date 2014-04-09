@@ -7,6 +7,7 @@ import java.text.DecimalFormat;
 enum DisplayAspectRatio : int[2]
 {
     DAR_16_9 = [16, 9],
+    UNKNOWN = [1, 1],
 }
 
 public float getRatio(DisplayAspectRatio displayAspectRatio) {
@@ -14,13 +15,13 @@ public float getRatio(DisplayAspectRatio displayAspectRatio) {
     return displayAspectRatio[0] / displayAspectRatio[1];
 }
 
-public float getRatio(int width, int height) {
-    return width / height;
+public float getRatio(int width, int height, float sar) {
+    return sar * width / height;
 }
 
-public bool isEqualTo(DisplayAspectRatio displayAspectRatio, int width, int height) {
+public bool isEqualTo(DisplayAspectRatio displayAspectRatio, int width, int height, float sar) {
     auto df = new DecimalFormat("##.##");
-    return df.format(getRatio(displayAspectRatio)).opEquals(df.format(getRatio(width, height)));
+    return df.format(getRatio(displayAspectRatio)).opEquals(df.format(getRatio(width, height, sar)));
 }
 
 public DisplayAspectRatio fromString(String dar) {

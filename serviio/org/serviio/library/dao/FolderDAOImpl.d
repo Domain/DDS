@@ -56,13 +56,13 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
     }
 
-    public void delete_(final Long id)
+    public void delete_(Long id)
     {
         log.debug_(java.lang.String.format("Deleting a Folder (id = %s)", cast(Object[])[ id ]));
         try
         {
             new class() JdbcExecutor {
-                protected PreparedStatement processStatement(Connection con)
+                override protected PreparedStatement processStatement(Connection con)
                 {
                     PreparedStatement ps = con.prepareStatement("DELETE FROM folder WHERE id = ?");
                     ps.setLong(1, id.longValue());
@@ -94,6 +94,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public void update(Folder transientObject)
@@ -106,7 +107,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         log.debug_(java.lang.String.format("Reading a Folder hierarchy (id = %s)", cast(Object[])[ folderId ]));
         Connection con = null;
         PreparedStatement ps = null;
-        List!(Tupple!(Long, String)) pathHierarchy = new ArrayList();
+        List!(Tupple!(Long, String)) pathHierarchy = new ArrayList!(Tupple!(Long, String))();
         try
         {
             con = DatabaseManager.getConnection();
@@ -117,12 +118,12 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             {
                 folder = readFolder(fId, con);
                 if (!folder.getName().equals("!(virtual)")) {
-                    pathHierarchy.add(new Tupple(folder.getId(), folder.getName()));
+                    pathHierarchy.add(new Tupple!(Long, String)(folder.getId(), folder.getName()));
                 }
                 fId = folder.getParentFolderId();
             } while (fId !is null);
             Collections.reverse(pathHierarchy);
-            return new Tupple(folderId, pathHierarchy);
+            return new Tupple!(Long, List!(Tupple!(Long, String)))(folderId, pathHierarchy);
         }
         catch (SQLException e)
         {
@@ -133,6 +134,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public Tupple!(Long, List!(Tupple!(Long, String))) getOrCreateFolder(File folderPath, Long repositoryId)
@@ -147,7 +149,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         else
         {
             log.debug_(java.lang.String.format("Looking for folder hierarchy %s", cast(Object[])[ folderPath.getPath() ]));
-            if (folderPath.getPath().endsWith(":" + File.separator)) {
+            if (folderPath.getPath().endsWith(":" ~ File.separator)) {
                 filePathElements = cast(String[])[ folderPath.getPath() ];
             } else {
                 filePathElements = folderPath.getPath().split(Pattern.quote(File.separator));
@@ -155,7 +157,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         Connection con = null;
         PreparedStatement ps = null;
-        List!(Tupple!(Long, String)) pathHierarchy = new ArrayList();
+        List!(Tupple!(Long, String)) pathHierarchy = new ArrayList!(Tupple!(Long, String))();
         try
         {
             con = DatabaseManager.getConnection();
@@ -169,7 +171,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
                 {
                     lastFolderId = Long.valueOf(create(con, new Folder(filePathElements[i], repositoryId, parentFolderId)));
                     if (!onlyVirtual) {
-                        pathHierarchy.add(new Tupple(lastFolderId, filePathElements[i]));
+                        pathHierarchy.add(new Tupple!(Long, String)(lastFolderId, filePathElements[i]));
                     }
                 }
                 else
@@ -181,12 +183,12 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
                         createNecessary = true;
                     }
                     if (!onlyVirtual) {
-                        pathHierarchy.add(new Tupple(lastFolderId, filePathElements[i]));
+                        pathHierarchy.add(new Tupple!(Long, String)(lastFolderId, filePathElements[i]));
                     }
                 }
                 parentFolderId = new Long(lastFolderId.longValue());
             }
-            return new Tupple(lastFolderId, pathHierarchy);
+            return new Tupple!(Long, List!(Tupple!(Long, String)))(lastFolderId, pathHierarchy);
         }
         catch (SQLException e)
         {
@@ -197,6 +199,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getNumberOfMediaItems(Long folderId)
@@ -229,23 +232,24 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public int getNumberOfSubFolders(Long folderId, Long repositoryId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Getting number of sub-Folders in folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
+        log.debug_(java.lang.String.format("Getting number of sub-Folders in folder %s [%s]", cast(Object[])[ folderId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            String sql = "SELECT count(folder.id) as subfolders from folder " + accessGroupTable(accessGroup) + "WHERE folder.name <> ?";
+            String sql = "SELECT count(folder.id) as subfolders from folder " ~ accessGroupTable(accessGroup) ~ "WHERE folder.name <> ?";
             if (folderId is null) {
-                sql = sql + " and folder.parent_folder_id is null and folder.repository_id = " + repositoryId.toString();
+                sql = sql ~ " and folder.parent_folder_id is null and folder.repository_id = " ~ repositoryId.toString();
             } else {
-                sql = sql + " and folder.parent_folder_id = " + folderId.toString();
+                sql = sql ~ " and folder.parent_folder_id = " ~ folderId.toString();
             }
-            sql = sql + accessGroupConditionForFolder(accessGroup);
+            sql = sql ~ accessGroupConditionForFolder(accessGroup);
             ps = con.prepareStatement(sql);
             ps.setString(1, "!(virtual)");
 
@@ -267,11 +271,12 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public int getNumberOfFoldersAndMediaItems(MediaFileType fileType, ObjectType objectType, AccessGroup accessGroup, Long folderId, Long repositoryId)
     {
-        log.debug_(java.lang.String.format("Getting number of %s sub-folders and media items in folder %s (filter: %s) [%s]", cast(Object[])[ fileType, folderId is null ? "'root'" : folderId, objectType, accessGroup ]));
+        log.debug_(java.lang.String.format("Getting number of %s sub-folders and media items in folder %s (filter: %s) [%s]", cast(Object[])[ fileType.toString(), folderId is null ? "'root'" : folderId.toString(), objectType.toString(), accessGroup.toString() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -280,21 +285,21 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             con = DatabaseManager.getConnection();
 
 
-            String sql = "SELECT count(folder.id) FROM folder" + accessGroupTable(accessGroup) + "WHERE folder.name <> ?";
+            String sql = "SELECT count(folder.id) FROM folder" ~ accessGroupTable(accessGroup) ~ "WHERE folder.name <> ?";
             if (folderId is null) {
-                sql = sql + " and folder.parent_folder_id is null and folder.repository_id = " + repositoryId.toString();
+                sql = sql ~ " and folder.parent_folder_id is null and folder.repository_id = " ~ repositoryId.toString();
             } else {
-                sql = sql + " and folder.parent_folder_id = " + folderId.toString();
+                sql = sql ~ " and folder.parent_folder_id = " ~ folderId.toString();
             }
-            sql = sql + accessGroupConditionForFolder(accessGroup);
-            sql = sql + " UNION ALL ";
-            sql = sql + "SELECT count(media_item.id) FROM media_item" + accessGroupTable(accessGroup) + " WHERE media_item.file_type = ? ";
+            sql = sql ~ accessGroupConditionForFolder(accessGroup);
+            sql = sql ~ " UNION ALL ";
+            sql = sql ~ "SELECT count(media_item.id) FROM media_item" ~ accessGroupTable(accessGroup) ~ " WHERE media_item.file_type = ? ";
             if (folderId is null) {
-                sql = sql + "AND media_item.folder_id = (SELECT id FROM folder where name = '" + "!(virtual)" + "' " + "AND repository_id = " + repositoryId.toString() + " AND parent_folder_id IS NULL)";
+                sql = sql ~ "AND media_item.folder_id = (SELECT id FROM folder where name = '" ~ "!(virtual)" ~ "' " ~ "AND repository_id = " ~ repositoryId.toString() ~ " AND parent_folder_id IS NULL)";
             } else {
-                sql = sql + "AND media_item.folder_id = " + folderId.toString();
+                sql = sql ~ "AND media_item.folder_id = " ~ folderId.toString();
             }
-            sql = sql + accessGroupConditionForMediaItem(accessGroup);
+            sql = sql ~ accessGroupConditionForMediaItem(accessGroup);
             ps = con.prepareStatement(sql);
             ps.setString(1, "!(virtual)");
             ps.setString(2, fileType.toString());
@@ -311,13 +316,14 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot get number of %s media items in folder: %s ", cast(Object[])[ fileType, folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of %s media items in folder: %s ", cast(Object[])[ fileType.toString(), folderId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public Long retrieveVirtualFolderId(Long repositoryId)
@@ -336,6 +342,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Folder) retrieveFoldersWithMedia(MediaFileType fileType, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -346,11 +353,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(folder.id) as id, folder.name as name, parent_folder_id, folder.repository_id as repository_id FROM folder, media_item m" + accessGroupTable(accessGroup) + "WHERE folder.id = m.folder_id AND m.file_type = ?" + accessGroupConditionForFolder(accessGroup) + "ORDER BY lower(folder.name), id " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
-
-
+            ps = con.prepareStatement("SELECT DISTINCT(folder.id) as id, folder.name as name, parent_folder_id, folder.repository_id as repository_id FROM folder, media_item m" ~ accessGroupTable(accessGroup) ~ "WHERE folder.id = m.folder_id AND m.file_type = ?" ~ accessGroupConditionForFolder(accessGroup) ~ "ORDER BY lower(folder.name), id " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, fileType.toString());
             ResultSet rs = ps.executeQuery();
@@ -365,6 +368,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getFoldersWithMediaCount(MediaFileType fileType, AccessGroup accessGroup)
@@ -375,8 +379,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT(folder.id)) as c FROM folder, media_item m" + accessGroupTable(accessGroup) + "WHERE folder.id = m.folder_id AND m.file_type = ?" + accessGroupConditionForFolder(accessGroup));
-
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT(folder.id)) as c FROM folder, media_item m" ~ accessGroupTable(accessGroup) ~ "WHERE folder.id = m.folder_id AND m.file_type = ?" ~ accessGroupConditionForFolder(accessGroup));
 
             ps.setString(1, fileType.toString());
             ResultSet rs = ps.executeQuery();
@@ -397,24 +400,25 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Folder) retrieveSubFolders(Long folderId, Long repositoryId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Getting list of sub-Folders in folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Getting list of sub-Folders in folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            String sql = "SELECT folder.id as id, name, parent_folder_id, folder.repository_id as repository_id FROM folder " + accessGroupTable(accessGroup) + "WHERE folder.repository_id = ? AND folder.name <> ?";
+            String sql = "SELECT folder.id as id, name, parent_folder_id, folder.repository_id as repository_id FROM folder " ~ accessGroupTable(accessGroup) ~ "WHERE folder.repository_id = ? AND folder.name <> ?";
             if (folderId is null) {
-                sql = sql + " and folder.parent_folder_id is null";
+                sql = sql ~ " and folder.parent_folder_id is null";
             } else {
-                sql = sql + " and folder.parent_folder_id = " + folderId.toString();
+                sql = sql ~ " and folder.parent_folder_id = " ~ folderId.toString();
             }
-            sql = sql + accessGroupConditionForFolder(accessGroup);
-            sql = sql + " ORDER BY name " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY";
+            sql = sql ~ accessGroupConditionForFolder(accessGroup);
+            sql = sql ~ " ORDER BY name " ~ "OFFSET " ~ startingIndex ~ " ROWS FETCH FIRST " ~ requestedCount ~ " ROWS ONLY";
 
             ps = con.prepareStatement(sql);
             ps.setLong(1, repositoryId.longValue());
@@ -432,6 +436,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Folder) getFoldersInRepository(Long repositoryId)
@@ -443,7 +448,6 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("SELECT id, name, parent_folder_id, repository_id FROM folder WHERE repository_id = ?");
-
 
             ps.setLong(1, repositoryId.longValue());
             ResultSet rs = ps.executeQuery();
@@ -458,6 +462,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     protected Folder mapSingleResult(ResultSet rs)
@@ -525,6 +530,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             JdbcUtils.closeStatement(ps);
         }
+        return null;
     }
 
     private long create(Connection con, Folder newInstance)
@@ -548,6 +554,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             JdbcUtils.closeStatement(ps);
         }
+        return 0L;
     }
 
     private Folder readFolder(Long id, Connection con)
@@ -568,6 +575,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         {
             JdbcUtils.closeStatement(ps);
         }
+        return null;
     }
 }
 

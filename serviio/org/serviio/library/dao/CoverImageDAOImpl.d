@@ -58,6 +58,7 @@ public class CoverImageDAOImpl : CoverImageDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public void delete_(Long id)
@@ -171,6 +172,7 @@ public class CoverImageDAOImpl : CoverImageDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public Long getCoverImageForPerson(Long personId)
@@ -191,7 +193,7 @@ public class CoverImageDAOImpl : CoverImageDAO
                 miId = JdbcUtils.getLongFromResultSet(rs1, "media_item_id");
                 Long albId = JdbcUtils.getLongFromResultSet(rs1, "music_album_id");
                 String whereClause = miId !is null ? " id = ?" : "album_id = ?";
-                ps2 = con.prepareStatement("SELECT cover_image_id as ciid from media_item WHERE " + whereClause + " AND cover_image_id is not null");
+                ps2 = con.prepareStatement("SELECT cover_image_id as ciid from media_item WHERE " ~ whereClause ~ " AND cover_image_id is not null");
 
                 ps2.setLong(1, (miId !is null ? miId : albId).longValue());
                 ResultSet rs2 = ps2.executeQuery();
