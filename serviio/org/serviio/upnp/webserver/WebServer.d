@@ -46,7 +46,7 @@ public class WebServer
         } else {
             socketBuffer = 65535;
         }
-        log.info(String.format("Socket buffer set to %s bytes", cast(Object[])[ Integer.valueOf(socketBuffer) ]));
+        log.info(java.lang.String.format("Socket buffer set to %s bytes", cast(Object[])[ Integer.valueOf(socketBuffer) ]));
     }
 
     public static void start(int port)
@@ -131,7 +131,7 @@ public class WebServer
                     }
                     catch (IOException e)
                     {
-                        WebServer.log.error(String.format("I/O error initialising connection thread: %s", cast(Object[])[ e.getMessage() ]), e);
+                        WebServer.log.error(java.lang.String.format("I/O error initialising connection thread: %s", cast(Object[])[ e.getMessage() ]), e);
                     }
                 }
             }

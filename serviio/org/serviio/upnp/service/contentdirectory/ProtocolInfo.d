@@ -26,7 +26,7 @@ public class ProtocolInfo//(T : ProtocolAdditionalInfo)
         foreach (ProtocolAdditionalInfo additionalInfo ; this.additionalInfos)
         {
             String additionalInfoField = additionalInfo.buildMediaProtocolInfo(transcoded, live, fileType, durationAvailable);
-            result.add(String.format("%s:%s:%s:%s", cast(Object[])[ this.protocol, this.context, this.mimeType, additionalInfoField ]));
+            result.add(java.lang.String.format("%s:%s:%s:%s", cast(Object[])[ this.protocol, this.context, this.mimeType, additionalInfoField ]));
         }
         return result;
     }
@@ -37,7 +37,7 @@ public class ProtocolInfo//(T : ProtocolAdditionalInfo)
         foreach (ProtocolAdditionalInfo additionalInfo ; this.additionalInfos)
         {
             String additionalInfoField = additionalInfo.buildProfileProtocolInfo(fileType);
-            result.add(String.format("%s:%s:%s:%s", cast(Object[])[ this.protocol, this.context, this.mimeType, additionalInfoField ]));
+            result.add(java.lang.String.format("%s:%s:%s:%s", cast(Object[])[ this.protocol, this.context, this.mimeType, additionalInfoField ]));
         }
         return result;
     }

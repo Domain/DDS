@@ -31,7 +31,7 @@ public class DCRawMetadataRetriever
         }
         else
         {
-            throw new InvalidMediaFormatException(String.format("Cannot read raw image file %s using dcraw", cast(Object[])[ imageLocation ]));
+            throw new InvalidMediaFormatException(java.lang.String.format("Cannot read raw image file %s using dcraw", cast(Object[])[ imageLocation ]));
         }
     }
 }

@@ -88,7 +88,7 @@ public class FileUtils
         if (length > 2147483647L)
         {
             input.close();
-            throw new IOException(String.format("File %s input too long", cast(Object[])[ f.getAbsolutePath() ]));
+            throw new IOException(java.lang.String.format("File %s input too long", cast(Object[])[ f.getAbsolutePath() ]));
         }
         return readFileBytes(input, 0, cast(int)length);
     }
@@ -172,7 +172,7 @@ public class FileUtils
             }
             return new File(relativeDir);
         }
-        throw new RuntimeException(String.format("The provided file path %s doesn't belong to root %s", cast(Object[])[ filePath, rootDir ]));
+        throw new RuntimeException(java.lang.String.format("The provided file path %s doesn't belong to root %s", cast(Object[])[ filePath, rootDir ]));
     }
 
     public static void closeQuietly(InputStream input)
@@ -201,7 +201,7 @@ public class FileUtils
     {
         InputStream input = clazz.getResourceAsStream(filePath);
         if (input is null) {
-            throw new FileNotFoundException(String.format("File %s doesn't exist on the classpath", cast(Object[])[ filePath ]));
+            throw new FileNotFoundException(java.lang.String.format("File %s doesn't exist on the classpath", cast(Object[])[ filePath ]));
         }
         return input;
     }

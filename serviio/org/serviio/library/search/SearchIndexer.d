@@ -78,7 +78,7 @@ public class SearchIndexer
 
     public void metadataAdded(SearchMetadata searchMetadata)
     {
-        log.debug_(String.format("Adding term '%s' to search index", cast(Object[])[ searchMetadata.getSearchableValue() ]));
+        log.debug_(java.lang.String.format("Adding term '%s' to search index", cast(Object[])[ searchMetadata.getSearchableValue() ]));
         Definition definition = Definition.instance();
         List!(ActionNode) nodes = definition.findNodesForSearchCategory(searchMetadata.getCategory());
         foreach (ActionNode node ; nodes) {
@@ -88,7 +88,7 @@ public class SearchIndexer
             }
             catch (IOException e)
             {
-                log.warn(String.format("Could not add entry '%s' to search index: %s", cast(Object[])[ searchMetadata.getSearchableValue(), e.getMessage() ]));
+                log.warn(java.lang.String.format("Could not add entry '%s' to search index: %s", cast(Object[])[ searchMetadata.getSearchableValue(), e.getMessage() ]));
             }
         }
     }
@@ -101,14 +101,14 @@ public class SearchIndexer
 
     public void metadataRemoved(String field, String value)
     {
-        log.debug_(String.format("Removing documents with '%s' of '%s' from search index", cast(Object[])[ field, value ]));
+        log.debug_(java.lang.String.format("Removing documents with '%s' of '%s' from search index", cast(Object[])[ field, value ]));
         try
         {
             this.writer.deleteDocuments(new Term(field, value));
         }
         catch (IOException e)
         {
-            log.warn(String.format("Could not remove entry with %s '%s' from search index: %s", cast(Object[])[ field, value, e.getMessage() ]));
+            log.warn(java.lang.String.format("Could not remove entry with %s '%s' from search index: %s", cast(Object[])[ field, value, e.getMessage() ]));
         }
     }
 

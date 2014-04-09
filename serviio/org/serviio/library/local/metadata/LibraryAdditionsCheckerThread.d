@@ -87,7 +87,7 @@ public class LibraryAdditionsCheckerThread : AbstractLibraryCheckerThread
         if (this.workerRunning) {
             if ((folder.isDirectory()) && (folder.canRead()))
             {
-                log.debug_(String.format("Looking for files to share in folder: %s", cast(Object[])[ folder.getAbsolutePath() ]));
+                log.debug_(java.lang.String.format("Looking for files to share in folder: %s", cast(Object[])[ folder.getAbsolutePath() ]));
                 File[] files = folder.listFiles();
                 int i = 0;
                 while ((this.workerRunning) && (files !is null) && (i < files.length))
@@ -117,29 +117,29 @@ public class LibraryAdditionsCheckerThread : AbstractLibraryCheckerThread
                         }
                         catch (InvalidMetadataException ime)
                         {
-                            log.warn(String.format("Cannot add file %s because of invalid metadata. Message: %s", cast(Object[])[ file.getName(), ime.getMessage() ]));
+                            log.warn(java.lang.String.format("Cannot add file %s because of invalid metadata. Message: %s", cast(Object[])[ file.getName(), ime.getMessage() ]));
                         }
                         catch (CannotParsePlaylistException cppe)
                         {
-                            log.warn(String.format("Cannot add playlist file %s. Message: %s", cast(Object[])[ file.getName(), cppe.getMessage() ]), cppe);
+                            log.warn(java.lang.String.format("Cannot add playlist file %s. Message: %s", cast(Object[])[ file.getName(), cppe.getMessage() ]), cppe);
                         }
                         catch (Exception e)
                         {
-                            log.warn(String.format("Cannot add file %s because of an unexpected error. Message: %s", cast(Object[])[ file.getName(), e.getMessage() ]), e);
+                            log.warn(java.lang.String.format("Cannot add file %s because of an unexpected error. Message: %s", cast(Object[])[ file.getName(), e.getMessage() ]), e);
                         }
                     }
                 }
             }
             else
             {
-                log.warn(String.format("Folder '%s' is either not an existing directory or cannot be read due to access rights", cast(Object[])[ folder.getAbsolutePath() ]));
+                log.warn(java.lang.String.format("Folder '%s' is either not an existing directory or cannot be read due to access rights", cast(Object[])[ folder.getAbsolutePath() ]));
             }
         }
     }
 
     private void addNewMediaFile(Repository repository, File file, MediaFileType fileType)
     {
-        log.debug_(String.format("Found file '%s', checking if it's already in the Library", cast(Object[])[ file.getName() ]));
+        log.debug_(java.lang.String.format("Found file '%s', checking if it's already in the Library", cast(Object[])[ file.getName() ]));
 
         bool mediaPresent = MediaService.isMediaPresentInLibrary(file);
         if ((!mediaPresent) && (file.exists()) && (this.workerRunning)) {
@@ -169,25 +169,25 @@ public class LibraryAdditionsCheckerThread : AbstractLibraryCheckerThread
                     }
                     else
                     {
-                        log.error(String.format("Error during metadata extraction for file %s. Metadata mismatch.", new Object[0]), file.getName());
+                        log.error(java.lang.String.format("Error during metadata extraction for file %s. Metadata mismatch.", new Object[0]), file.getName());
                     }
                     if (newAdded)
                     {
-                        log.info(String.format("Added file '%s' (title: %s) to Library", cast(Object[])[ file.getName(), mergedMetadata.getTitle() ]));
+                        log.info(java.lang.String.format("Added file '%s' (title: %s) to Library", cast(Object[])[ file.getName(), mergedMetadata.getTitle() ]));
                         notifyListenersAdd(fileType, file.getName());
                     }
                 }
             }
             else
             {
-                log.warn(String.format("File '%s' cannot be read, probably due to access rights", cast(Object[])[ file.getAbsolutePath() ]));
+                log.warn(java.lang.String.format("File '%s' cannot be read, probably due to access rights", cast(Object[])[ file.getAbsolutePath() ]));
             }
         }
     }
 
     private void addNewPlaylistFile(Repository repository, File file)
     {
-        log.debug_(String.format("Found playlist file '%s', checking if it's already in the Library", cast(Object[])[ file.getName() ]));
+        log.debug_(java.lang.String.format("Found playlist file '%s', checking if it's already in the Library", cast(Object[])[ file.getName() ]));
         bool playlistPresent = PlaylistService.isPlaylistInLibrary(file);
         if ((!playlistPresent) && (file.exists()) && (this.workerRunning)) {
             if (file.canRead())
@@ -199,13 +199,13 @@ public class LibraryAdditionsCheckerThread : AbstractLibraryCheckerThread
                 if (playlist !is null)
                 {
                     PlaylistService.addPlaylistToLibrary(playlist, repository, playlistFilePath, null);
-                    log.info(String.format("Added playlist '%s' (title: %s) to Library", cast(Object[])[ file.getName(), playlist.getTitle() ]));
+                    log.info(java.lang.String.format("Added playlist '%s' (title: %s) to Library", cast(Object[])[ file.getName(), playlist.getTitle() ]));
                     notifyListenersAdd(null, file.getName());
                 }
             }
             else
             {
-                log.warn(String.format("Playlist file '%s' cannot be read, probably due to access rights", cast(Object[])[ file.getAbsolutePath() ]));
+                log.warn(java.lang.String.format("Playlist file '%s' cannot be read, probably due to access rights", cast(Object[])[ file.getAbsolutePath() ]));
             }
         }
     }

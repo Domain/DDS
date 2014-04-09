@@ -59,7 +59,7 @@ public abstract class AbstractServerResource : ServerResource
             }
             catch (MalformedURLException e)
             {
-                this.log.debug_(String.format("Invalid URL: %s", cast(Object[])[ urlString ]));
+                this.log.debug_(java.lang.String.format("Invalid URL: %s", cast(Object[])[ urlString ]));
                 throw new ValidationException(503, Collections.singletonList(urlString));
             }
         }

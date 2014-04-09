@@ -33,15 +33,15 @@ public class PlaylistParser
 
     public ParsedPlaylist parse(String playlistLocation)
     {
-        log.debug_(String.format("Parsing playlist '%s'", cast(Object[])[ playlistLocation ]));
+        log.debug_(java.lang.String.format("Parsing playlist '%s'", cast(Object[])[ playlistLocation ]));
         byte[] playlistBytes = getPlaylistBytes(playlistLocation);
         PlaylistParserStrategy strategy = PlaylistStrategyFactory.getStrategy(playlistBytes, playlistLocation);
         if (strategy !is null)
         {
-            log.debug_(String.format("Found a suitable playlist parser strategy: %s", cast(Object[])[ strategy.getClass().getSimpleName() ]));
+            log.debug_(java.lang.String.format("Found a suitable playlist parser strategy: %s", cast(Object[])[ strategy.getClass().getSimpleName() ]));
             return strategy.parsePlaylist(playlistBytes, playlistLocation);
         }
-        log.warn(String.format("Could not find a suitable playlist parser for file '%s', it is either not supported or the file is corrupted.", cast(Object[])[ playlistLocation ]));
+        log.warn(java.lang.String.format("Could not find a suitable playlist parser for file '%s', it is either not supported or the file is corrupted.", cast(Object[])[ playlistLocation ]));
 
         return null;
     }

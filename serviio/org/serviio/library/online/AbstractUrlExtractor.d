@@ -84,7 +84,7 @@ public abstract class AbstractUrlExtractor
 
     protected final void log(String message)
     {
-        logger.debug_(String.format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
+        logger.debug_(java.lang.String.format("%s: %s", cast(Object[])[ getExtractorName(), message ]));
     }
 
     protected final Integer getOnlineFeedExpiryInterval()
@@ -100,7 +100,7 @@ public abstract class AbstractUrlExtractor
         }
         catch (Exception e)
         {
-            throw new RuntimeException(String.format("Error generating MAC: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(java.lang.String.format("Error generating MAC: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractUrlExtractor
         }
         catch (Exception e)
         {
-            throw new RuntimeException(String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(java.lang.String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -129,7 +129,7 @@ public abstract class AbstractUrlExtractor
         }
         catch (Exception e)
         {
-            throw new RuntimeException(String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(java.lang.String.format("Error decrypting: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 

@@ -25,7 +25,7 @@ public class ImageUtils
 
     public static ImageDescriptor resizeImageAsJPG(byte[] pImageData, int pMaxWidth, int pMaxHeight)
     {
-        log.debug_(String.format("Starting image resize, size = %s bytes", cast(Object[])[ Integer.valueOf(pImageData.length) ]));
+        log.debug_(java.lang.String.format("Starting image resize, size = %s bytes", cast(Object[])[ Integer.valueOf(pImageData.length) ]));
         ByteArrayInputStream input = new ByteArrayInputStream(pImageData);
         BufferedImage img = null;
         BufferedImage bufferedResizedImage = null;
@@ -57,18 +57,18 @@ public class ImageUtils
             {
                 byte[] resizedImageByteArray = encoderOutputStream.toByteArray();
                 ImageDescriptor container = new ImageDescriptor(Integer.valueOf(width), Integer.valueOf(height), resizedImageByteArray);
-                log.debug_(String.format("Returning resized image, size = %s bytes", cast(Object[])[ Integer.valueOf(resizedImageByteArray.length) ]));
+                log.debug_(java.lang.String.format("Returning resized image, size = %s bytes", cast(Object[])[ Integer.valueOf(resizedImageByteArray.length) ]));
                 return container;
             }
             throw new RuntimeException("Error writing JPEG image");
         }
         catch (IllegalArgumentException e)
         {
-            throw new RuntimeException(String.format("Error reading image for resizing. Message: %s", cast(Object[])[ e.getMessage() ]));
+            throw new RuntimeException(java.lang.String.format("Error reading image for resizing. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         catch (IOException e)
         {
-            throw new RuntimeException(String.format("Error reading image for resizing. Message: %s", cast(Object[])[ e.getMessage() ]));
+            throw new RuntimeException(java.lang.String.format("Error reading image for resizing. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         finally
         {
@@ -173,18 +173,18 @@ public class ImageUtils
             {
                 byte[] rotatedImageByteArray = encoderOutputStream.toByteArray();
                 ImageDescriptor container = new ImageDescriptor(Integer.valueOf(rotatedWidth), Integer.valueOf(rotatedHeight), rotatedImageByteArray);
-                log.debug_(String.format("Returning rotated image, size = %s bytes", cast(Object[])[ Integer.valueOf(rotatedImageByteArray.length) ]));
+                log.debug_(java.lang.String.format("Returning rotated image, size = %s bytes", cast(Object[])[ Integer.valueOf(rotatedImageByteArray.length) ]));
                 return container;
             }
             throw new RuntimeException("Error writing JPEG image");
         }
         catch (IllegalArgumentException e)
         {
-            throw new RuntimeException(String.format("Error rotating image. Message: %s", cast(Object[])[ e.getMessage() ]));
+            throw new RuntimeException(java.lang.String.format("Error rotating image. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         catch (IOException e)
         {
-            throw new RuntimeException(String.format("Error reading image for rotating. Message: %s", cast(Object[])[ e.getMessage() ]));
+            throw new RuntimeException(java.lang.String.format("Error reading image for rotating. Message: %s", cast(Object[])[ e.getMessage() ]));
         }
         finally
         {

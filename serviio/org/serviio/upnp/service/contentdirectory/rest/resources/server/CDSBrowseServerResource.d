@@ -68,7 +68,7 @@ public class CDSBrowseServerResource : AbstractRestrictedCDSServerResource, CDSB
         Profile rendererProfile = ProfileManager.getProfileById(this.profileId);
         if (rendererProfile is null)
         {
-            this.log.warn(String.format("Profile with id %s doesn't exist", cast(Object[])[ this.profileId ]));
+            this.log.warn(java.lang.String.format("Profile with id %s doesn't exist", cast(Object[])[ this.profileId ]));
             throw new HttpCodeException(400);
         }
         try
@@ -80,7 +80,7 @@ public class CDSBrowseServerResource : AbstractRestrictedCDSServerResource, CDSB
         }
         catch (ObjectNotFoundException e)
         {
-            this.log.warn(String.format("Object with id %s doesn't exist", cast(Object[])[ this.objectId ]));
+            this.log.warn(java.lang.String.format("Object with id %s doesn't exist", cast(Object[])[ this.objectId ]));
             throw new HttpCodeException(404);
         }
         catch (InvalidBrowseFlagException e)
@@ -90,7 +90,7 @@ public class CDSBrowseServerResource : AbstractRestrictedCDSServerResource, CDSB
         }
         catch (Exception e)
         {
-            this.log.warn(String.format("Browse for object id %s failed with exception: %s", cast(Object[])[ this.objectId, e.getMessage() ]), e);
+            this.log.warn(java.lang.String.format("Browse for object id %s failed with exception: %s", cast(Object[])[ this.objectId, e.getMessage() ]), e);
             throw new RuntimeException(e);
         }
     }

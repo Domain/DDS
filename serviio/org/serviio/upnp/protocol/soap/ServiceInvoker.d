@@ -236,24 +236,24 @@ public class ServiceInvoker
             }
             catch (IllegalArgumentException e)
             {
-                log.error(String.format("Illegal parameters passed to operation %s", cast(Object[])[ operation.getOperationName() ]), e);
+                log.error(java.lang.String.format("Illegal parameters passed to operation %s", cast(Object[])[ operation.getOperationName() ]), e);
 
                 return new OperationResult(InvocationError.INVALID_ARGS);
             }
             catch (IllegalAccessException e)
             {
-                log.error(String.format("Operation %s is inaccessible", cast(Object[])[ operation.getOperationName() ]), e);
+                log.error(java.lang.String.format("Operation %s is inaccessible", cast(Object[])[ operation.getOperationName() ]), e);
 
                 return new OperationResult(InvocationError.INVALID_ACTION);
             }
             catch (InvocationTargetException e)
             {
-                log.error(String.format("Operation %s threw an exception", cast(Object[])[ operation.getOperationName() ]), e.getTargetException());
+                log.error(java.lang.String.format("Operation %s threw an exception", cast(Object[])[ operation.getOperationName() ]), e.getTargetException());
 
                 return new OperationResult(InvocationError.ACTION_FAILED);
             }
         }
-        throw new ServiceInvocationException(String.format("Service %s is not registered", cast(Object[])[ serviceName ]));
+        throw new ServiceInvocationException(java.lang.String.format("Service %s is not registered", cast(Object[])[ serviceName ]));
     }
 
     private static Object[] castMethodParameters(Map!(String, String) stringParameters, Method method)
@@ -301,7 +301,7 @@ public class ServiceInvoker
                     }
                 }
                 if ((paramAnnotation is null) && (groupAnnotation is null)) {
-                    throw new RuntimeException(String.format("Parameters of method %s are not properly annotated", cast(Object[])[ method.getName() ]));
+                    throw new RuntimeException(java.lang.String.format("Parameters of method %s are not properly annotated", cast(Object[])[ method.getName() ]));
                 }
                 Object castValue = paramValue;
                 if ((paramValue !is null) && (

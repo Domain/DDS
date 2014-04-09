@@ -45,11 +45,11 @@ public class ResourceValuesBuilder
         if (!hardSubsDelivered) {
             if (SubtitlesService.isSoftSubsAvailable(item, rendererProfile))
             {
-                log.debug_(String.format("Softsubs for media item %s found, will be served as a resource", cast(Object[])[ item.getId() ]));
+                log.debug_(java.lang.String.format("Softsubs for media item %s found, will be served as a resource", cast(Object[])[ item.getId() ]));
                 try
                 {
                     Resource subtitle = new Resource(ResourceType.SUBTITLE, item.getId(), null, null, null, null);
-                    subtitle.setProtocolInfo(String.format("http-get:*:%s:*", cast(Object[])[ rendererProfile.getSubtitlesConfiguration().getSoftSubsMimeType() ]));
+                    subtitle.setProtocolInfo(java.lang.String.format("http-get:*:%s:*", cast(Object[])[ rendererProfile.getSubtitlesConfiguration().getSoftSubsMimeType() ]));
                     return subtitle;
                 }
                 catch (Exception e)
@@ -86,7 +86,7 @@ public class ResourceValuesBuilder
                         res.setProtocolInfo(protocolInfo);
                         res.setColorDepth(image.getColorDepth());
                         if ((imageMediaInfo.getWidth() !is null) && (imageMediaInfo.getHeight() !is null)) {
-                            res.setResolution(String.format("%sx%s", cast(Object[])[ imageMediaInfo.getWidth(), imageMediaInfo.getHeight() ]));
+                            res.setResolution(java.lang.String.format("%sx%s", cast(Object[])[ imageMediaInfo.getWidth(), imageMediaInfo.getHeight() ]));
                         }
                         resources.add(res);
                     }
@@ -154,7 +154,7 @@ public class ResourceValuesBuilder
                     res.setProtocolInfo(protocolInfo);
                     res.setBitrate(MediaUtils.convertBitrateFromKbpsToByPS(videoMediaInfo.getBitrate()));
                     if ((videoMediaInfo.getWidth() !is null) && (videoMediaInfo.getHeight() !is null)) {
-                        res.setResolution(String.format("%sx%s", cast(Object[])[ videoMediaInfo.getWidth(), videoMediaInfo.getHeight() ]));
+                        res.setResolution(java.lang.String.format("%sx%s", cast(Object[])[ videoMediaInfo.getWidth(), videoMediaInfo.getHeight() ]));
                     }
                     resources.add(res);
                 }
@@ -185,9 +185,9 @@ public class ResourceValuesBuilder
                     CoverImage thumbnail = MediaService.getCoverImage(thumbnailId);
                     thRes = new Resource(ResourceType.COVER_IMAGE, thumbnail.getId(), null, null, null, null);
                     if ((rendererProfile !is null) && (rendererProfile.getThumbnailsResolution() == ThumbnailResolution.HD)) {
-                        thRes.setResolution(String.format("%sx%s", cast(Object[])[ Integer.valueOf(thumbnail.getWidthHD()), Integer.valueOf(thumbnail.getHeightHD()) ]));
+                        thRes.setResolution(java.lang.String.format("%sx%s", cast(Object[])[ Integer.valueOf(thumbnail.getWidthHD()), Integer.valueOf(thumbnail.getHeightHD()) ]));
                     } else {
-                        thRes.setResolution(String.format("%sx%s", cast(Object[])[ Integer.valueOf(thumbnail.getWidth()), Integer.valueOf(thumbnail.getHeight()) ]));
+                        thRes.setResolution(java.lang.String.format("%sx%s", cast(Object[])[ Integer.valueOf(thumbnail.getWidth()), Integer.valueOf(thumbnail.getHeight()) ]));
                     }
                 }
                 else

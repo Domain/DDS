@@ -32,7 +32,7 @@ public class RendererDAOImpl : RendererDAO
         if ((newInstance is null) || (ObjectValidator.isEmpty(newInstance.getUuid()))) {
             throw new InvalidArgumentException("Cannot create Renderer. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new Renderer (uuid = %s)", cast(Object[])[ newInstance.getUuid() ]));
+        log.debug_(java.lang.String.format("Creating a new Renderer (uuid = %s)", cast(Object[])[ newInstance.getUuid() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -51,7 +51,7 @@ public class RendererDAOImpl : RendererDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create Renderer with uuid %s", cast(Object[])[ newInstance.getUuid() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create Renderer with uuid %s", cast(Object[])[ newInstance.getUuid() ]), e);
         }
         finally
         {
@@ -62,7 +62,7 @@ public class RendererDAOImpl : RendererDAO
 
     public void delete_(String uuid)
     {
-        log.debug_(String.format("Deleting a Renderer (uuid = %s)", cast(Object[])[ uuid ]));
+        log.debug_(java.lang.String.format("Deleting a Renderer (uuid = %s)", cast(Object[])[ uuid ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -74,7 +74,7 @@ public class RendererDAOImpl : RendererDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
         }
         finally
         {
@@ -97,7 +97,7 @@ public class RendererDAOImpl : RendererDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Renderer with uuid = %s", cast(Object[])[ uuid ]), e);
         }
         finally
         {
@@ -111,7 +111,7 @@ public class RendererDAOImpl : RendererDAO
         if ((transientObject is null) || (transientObject.getUuid() is null) || (transientObject.getIpAddress() is null)) {
             throw new InvalidArgumentException("Cannot update Renderer. Required data is missing.");
         }
-        log.debug_(String.format("Updating Renderer (uuid = %s, ipAddress = %s)", cast(Object[])[ transientObject.getUuid(), transientObject.getIpAddress() ]));
+        log.debug_(java.lang.String.format("Updating Renderer (uuid = %s, ipAddress = %s)", cast(Object[])[ transientObject.getUuid(), transientObject.getIpAddress() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -131,7 +131,7 @@ public class RendererDAOImpl : RendererDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot update Renderer with uuid %s", cast(Object[])[ transientObject.getUuid() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot update Renderer with uuid %s", cast(Object[])[ transientObject.getUuid() ]), e);
         }
         finally
         {
@@ -142,7 +142,7 @@ public class RendererDAOImpl : RendererDAO
 
     public List!(Renderer) findByIPAddress(String ipAddress)
     {
-        log.debug_(String.format("Reading a Renderer with ip address %s", cast(Object[])[ ipAddress ]));
+        log.debug_(java.lang.String.format("Reading a Renderer with ip address %s", cast(Object[])[ ipAddress ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -155,7 +155,7 @@ public class RendererDAOImpl : RendererDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Renderer with ip address %s", cast(Object[])[ ipAddress ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Renderer with ip address %s", cast(Object[])[ ipAddress ]), e);
         }
         finally
         {

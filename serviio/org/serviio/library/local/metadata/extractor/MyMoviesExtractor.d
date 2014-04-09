@@ -92,7 +92,7 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
         }
         catch (XPathExpressionException e)
         {
-            throw new InvalidMediaFormatException(String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
+            throw new InvalidMediaFormatException(java.lang.String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
         }
         finally
         {
@@ -102,7 +102,7 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
 
     private bool validateMyMoviesFile(File xmlFile)
     {
-        this.log.debug_(String.format("Checking if file '%s' is a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+        this.log.debug_(java.lang.String.format("Checking if file '%s' is a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
         InputStream xmlStream = null;
         try
         {
@@ -113,17 +113,17 @@ public class MyMoviesExtractor : AbstractLocalFileExtractor
                 titleNode = XPathUtil.getNode(rootNode, "Title");
                 if (titleNode !is null)
                 {
-                    this.log.debug_(String.format("File '%s' is a valid MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+                    this.log.debug_(java.lang.String.format("File '%s' is a valid MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
                     return true;
                 }
             }
-            this.log.debug_(String.format("File '%s' is not a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
+            this.log.debug_(java.lang.String.format("File '%s' is not a MyMovies XML file", cast(Object[])[ xmlFile.getName() ]));
             return 0;
         }
         catch (XPathExpressionException e)
         {
             Node titleNode;
-            this.log.error(String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
+            this.log.error(java.lang.String.format("File '%s' couldn't be parsed: %s", cast(Object[])[ xmlFile.getPath(), e.getMessage() ]));
             return 0;
         }
         finally

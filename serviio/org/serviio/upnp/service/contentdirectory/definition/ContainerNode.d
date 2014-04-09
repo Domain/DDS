@@ -145,11 +145,11 @@ public abstract class ContainerNode : DefinitionNode
                 Constructor!(T) c = clazz.getConstructor(cast(Class[])[ String.class_, ObjectType.class_, SearchCriteria.class_, ObjectClassType.class_, ObjectClassType.class_, Profile.class_, AccessGroup.class_, String.class_, Integer.TYPE, Integer.TYPE, Boolean.TYPE ]);
                 return cast(Command)c.newInstance(cast(Object[])[ containerId, objectType, searchCriteria, containerClassType, itemClassType, rendererProfile, userProfile, idPrefix, Integer.valueOf(startIndex), Integer.valueOf(count), Boolean.valueOf(disablePresentationSettings) ]);
             }
-            log.error(String.format("Cannot instantiate Command %s because it doesn't implement Command interface", cast(Object[])[ commandClass ]));
+            log.error(java.lang.String.format("Cannot instantiate Command %s because it doesn't implement Command interface", cast(Object[])[ commandClass ]));
         }
         catch (Exception e)
         {
-            log.error(String.format("Cannot instantiate Command %s: %s", cast(Object[])[ commandClass, e.getMessage() ]));
+            log.error(java.lang.String.format("Cannot instantiate Command %s: %s", cast(Object[])[ commandClass, e.getMessage() ]));
         }
         return null;
     }
@@ -163,7 +163,7 @@ public abstract class ContainerNode : DefinitionNode
         }
         catch (CommandExecutionException e)
         {
-            log.error(String.format("Cannot retrieve results of action count command: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(java.lang.String.format("Cannot retrieve results of action count command: %s", cast(Object[])[ e.getMessage() ]), e);
         }
         return 0;
     }
@@ -181,7 +181,7 @@ public abstract class ContainerNode : DefinitionNode
         }
         catch (CommandExecutionException e)
         {
-            log.error(String.format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(java.lang.String.format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
             throw new RuntimeException(e);
         }
     }

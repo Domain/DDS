@@ -30,7 +30,7 @@ public abstract class Multicaster
         }
         catch (IOException e)
         {
-            this.log.warn(String.format("Cannot acquire NIC for current bound IP address %s, will re-acquire new IP", cast(Object[])[ Device.getInstance().getBindAddress().getHostAddress() ]));
+            this.log.warn(java.lang.String.format("Cannot acquire NIC for current bound IP address %s, will re-acquire new IP", cast(Object[])[ Device.getInstance().getBindAddress().getHostAddress() ]));
             DiscoveryManager.instance().restartDiscoveryEngine();
         }
         return MultiCastUtils.findNicIP(Device.getInstance().getBindAddress());

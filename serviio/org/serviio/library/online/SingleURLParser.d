@@ -35,7 +35,7 @@ public class SingleURLParser : AbstractOnlineItemParser
         }
         catch (InvalidMetadataException e)
         {
-            this.log.debug_(String.format("Cannot parse online item %s because of invalid metadata. Message: %s", cast(Object[])[ item.getContentUrl(), e.getMessage() ]));
+            this.log.debug_(java.lang.String.format("Cannot parse online item %s because of invalid metadata. Message: %s", cast(Object[])[ item.getContentUrl(), e.getMessage() ]));
 
             return null;
         }

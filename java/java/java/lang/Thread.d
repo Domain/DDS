@@ -129,6 +129,11 @@ class Thread {
         thread.join();
     }
 
+    public void join(long){
+        implMissing();
+        thread.join();
+    }
+
     public void setDaemon(bool on) {
         thread.isDaemon(on);
     }

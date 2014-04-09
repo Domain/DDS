@@ -36,7 +36,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         if ((newInstance is null) || (ObjectValidator.isEmpty(newInstance.getTitle()))) {
             throw new InvalidArgumentException("Cannot create MusicAlbum. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new MusicAlbum (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
+        log.debug_(java.lang.String.format("Creating a new MusicAlbum (title = %s)", cast(Object[])[ newInstance.getTitle() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -50,7 +50,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create MusicAlbum with title %s", cast(Object[])[ newInstance.getTitle() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create MusicAlbum with title %s", cast(Object[])[ newInstance.getTitle() ]), e);
         }
         finally
         {
@@ -67,7 +67,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         if (ObjectValidator.isEmpty(artist)) {
             throw new InvalidArgumentException("Cannot find MusicAlbum. Required data (artist) is missing.");
         }
-        log.debug_(String.format("Finding a MusicAlbum (title = %s, artist=%s)", cast(Object[])[ title, artist ]));
+        log.debug_(java.lang.String.format("Finding a MusicAlbum (title = %s, artist=%s)", cast(Object[])[ title, artist ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -84,7 +84,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot find MusicAlbum (title = %s, artist=%s)", cast(Object[])[ title, artist ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot find MusicAlbum (title = %s, artist=%s)", cast(Object[])[ title, artist ]), e);
         }
         finally
         {
@@ -95,7 +95,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public void delete_(final Long id)
     {
-        log.debug_(String.format("Deleting a MusicAlbum (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting a MusicAlbum (id = %s)", cast(Object[])[ id ]));
         try
         {
             new class() JdbcExecutor {
@@ -110,13 +110,13 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete MusicAlbum with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete MusicAlbum with id = %s", cast(Object[])[ id ]), e);
         }
     }
 
     public MusicAlbum read(Long id)
     {
-        log.debug_(String.format("Reading a MusicAlbum (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a MusicAlbum (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -129,7 +129,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read MusicAlbum with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read MusicAlbum with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -145,7 +145,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public int getNumberOfTracks(Long albumId)
     {
-        log.debug_(String.format("Getting number of tracks for album %s", cast(Object[])[ albumId ]));
+        log.debug_(java.lang.String.format("Getting number of tracks for album %s", cast(Object[])[ albumId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -166,7 +166,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of tracks for album: %s ", cast(Object[])[ albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of tracks for album: %s ", cast(Object[])[ albumId ]), e);
         }
         finally
         {
@@ -177,7 +177,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(Long personId, RoleType personRole, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of music albums for person %s and role %s (from=%s, count=%s)", cast(Object[])[ personId, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of music albums for person %s and role %s (from=%s, count=%s)", cast(Object[])[ personId, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -194,7 +194,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of music albums for person %s and role %s", cast(Object[])[ personId, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of music albums for person %s and role %s", cast(Object[])[ personId, personRole ]), e);
         }
         finally
         {
@@ -205,7 +205,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public int retrieveMusicAlbumsForTrackRoleCount(Long artistId, RoleType personRole)
     {
-        log.debug_(String.format("Getting number of albums for person %s and role %s", cast(Object[])[ artistId, personRole ]));
+        log.debug_(java.lang.String.format("Getting number of albums for person %s and role %s", cast(Object[])[ artistId, personRole ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -227,7 +227,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of albums for person %s and role %s ", cast(Object[])[ artistId, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person %s and role %s ", cast(Object[])[ artistId, personRole ]), e);
         }
         finally
         {
@@ -238,7 +238,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String personName, RoleType personRole, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of music albums for person '%s' and role %s (from=%s, count=%s)", cast(Object[])[ personName, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of music albums for person '%s' and role %s (from=%s, count=%s)", cast(Object[])[ personName, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -255,7 +255,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of music albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of music albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]), e);
         }
         finally
         {
@@ -266,7 +266,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public int retrieveMusicAlbumsForTrackRoleCount(String personName, RoleType personRole)
     {
-        log.debug_(String.format("Getting number of albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]));
+        log.debug_(java.lang.String.format("Getting number of albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -288,7 +288,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of albums for person '%s' and role %s ", cast(Object[])[ personName, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person '%s' and role %s ", cast(Object[])[ personName, personRole ]), e);
         }
         finally
         {
@@ -299,7 +299,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveMusicAlbumsForAlbumArtist(Long artistId, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of music albums for album artist %s (from=%s, count=%s)", cast(Object[])[ artistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of music albums for album artist %s (from=%s, count=%s)", cast(Object[])[ artistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -316,7 +316,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of music albums for album artist %s", cast(Object[])[ artistId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of music albums for album artist %s", cast(Object[])[ artistId ]), e);
         }
         finally
         {
@@ -327,7 +327,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public int retrieveMusicAlbumsForAlbumArtistCount(Long artistId)
     {
-        log.debug_(String.format("Getting number of albums for album artist %s", cast(Object[])[ artistId ]));
+        log.debug_(java.lang.String.format("Getting number of albums for album artist %s", cast(Object[])[ artistId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -349,7 +349,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of albums for album artist: %s ", cast(Object[])[ artistId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for album artist: %s ", cast(Object[])[ artistId ]), e);
         }
         finally
         {
@@ -360,7 +360,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveAllMusicAlbums(int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of all music albums (from=%s, count=%s)", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of all music albums (from=%s, count=%s)", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -415,7 +415,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveRandomAlbums(int max, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of random music albums (start = %s, count=%s)", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of random music albums (start = %s, count=%s)", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -476,7 +476,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public List!(MusicAlbum) retrieveLastViewedMusicAlbums(int max, int startingIndex, int requestedCount, AccessGroup accessGroup)
     {
-        log.debug_(String.format("Retrieving list of last viewed music albums (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of last viewed music albums (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -512,7 +512,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     public int retrieveLastViewedMusicAlbumsCount(int max, AccessGroup accessGroup)
     {
-        log.debug_(String.format("Retrieving number of last viewed music albums [%s]", cast(Object[])[ accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of last viewed music albums [%s]", cast(Object[])[ accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try

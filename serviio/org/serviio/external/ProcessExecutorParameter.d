@@ -18,7 +18,7 @@ public class ProcessExecutorParameter
 
     public static List!(String) stringParameters(List!(ProcessExecutorParameter) params)
     {
-        List!(String) result = new ArrayList();
+        List!(String) result = new ArrayList!(String)();
         foreach (ProcessExecutorParameter p ; params) {
             result.add(p.getValue());
         }
@@ -27,7 +27,7 @@ public class ProcessExecutorParameter
 
     public static ProcessExecutorParameter[] parameters(String[] params)
     {
-        List!(ProcessExecutorParameter) result = new ArrayList();
+        List!(ProcessExecutorParameter) result = new ArrayList!(ProcessExecutorParameter)();
         foreach (String p ; params) {
             result.add(new ProcessExecutorParameter(p));
         }

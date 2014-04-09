@@ -24,7 +24,7 @@ public class OnlineItemId
 
     public long value()
     {
-        return Long.parseLong(String.format("%s%03d%04d%03d", cast(Object[])[ FEED_ITEM_ID_PREFIX, Long.valueOf(this.repositoryId), Integer.valueOf(this.sequence), Integer.valueOf(this.salt) ]));
+        return Long.parseLong(java.lang.String.format("%s%03d%04d%03d", cast(Object[])[ FEED_ITEM_ID_PREFIX, Long.valueOf(this.repositoryId), Integer.valueOf(this.sequence), Integer.valueOf(this.salt) ]));
     }
 
     public static bool isOnlineItemId(Long id)

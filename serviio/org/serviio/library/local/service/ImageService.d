@@ -35,7 +35,7 @@ public class ImageService : Service
     {
         if (metadata !is null)
         {
-            log.debug_(String.format("Adding image into database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(java.lang.String.format("Adding image into database: %s", cast(Object[])[ metadata.getTitle() ]));
 
 
             Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy = FolderService.createOrReadFolder(repository, metadata.getFilePath());
@@ -76,7 +76,7 @@ public class ImageService : Service
         Image image = getImage(mediaItemId);
         if (image !is null)
         {
-            log.debug_(String.format("Removing image from database: %s", cast(Object[])[ image.getTitle() ]));
+            log.debug_(java.lang.String.format("Removing image from database: %s", cast(Object[])[ image.getTitle() ]));
 
 
             PlaylistService.removeMediaItemFromPlaylists(mediaItemId);
@@ -105,7 +105,7 @@ public class ImageService : Service
     {
         if (metadata !is null)
         {
-            log.debug_(String.format("Updating image in database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(java.lang.String.format("Updating image in database: %s", cast(Object[])[ metadata.getTitle() ]));
 
             Image image = getImage(mediaItemId);
 
@@ -242,7 +242,7 @@ public class ImageService : Service
             }
             catch (Throwable e)
             {
-                log.warn(String.format("Cannot convert image to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
+                log.warn(java.lang.String.format("Cannot convert image to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
                 return null;
             }
         }

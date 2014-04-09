@@ -127,18 +127,13 @@ String format(String fmt, Object[] args)
     return std.string.format(fmt, args);
 }
 
-String toString(S)(S str) if (is(S == string))
-{
-    return str;
-}
-
 int length( String str ){
     return str.length;
 }
 
-String toString(E)(E e) if (is(E == enum))
+String toString(T)(T value)
 {
-    return std.string.format("%s", e);
+    return std.conv.to!String(value);
 }
 
 /// Extension to String

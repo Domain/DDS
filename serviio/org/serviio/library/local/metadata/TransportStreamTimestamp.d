@@ -2,7 +2,7 @@ module org.serviio.library.local.metadata.TransportStreamTimestamp;
 
 public enum TransportStreamTimestamp
 {
-    NONE,  ZERO,  VALID
+    NONE,  ZERO,  VALID,  INVALID
 }
 
 

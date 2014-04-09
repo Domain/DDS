@@ -102,7 +102,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
                             }
                             catch (IOException e)
                             {
-                                log.warn(String.format("Failed to retrieve online item information for %s. It might not play.", cast(Object[])[ feedItem.getContentUrl().toString() ]), e);
+                                log.warn(java.lang.String.format("Failed to retrieve online item information for %s. It might not play.", cast(Object[])[ feedItem.getContentUrl().toString() ]), e);
                             }
                             catch (Exception e)
                             {
@@ -115,18 +115,18 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
                 }
                 catch (MissingPluginException e)
                 {
-                    log.warn(String.format("An error occured while trying to parse an online resouce requiring a plugin, provide the plugin or remove the resource: %s", cast(Object[])[ e.getMessage() ]));
+                    log.warn(java.lang.String.format("An error occured while trying to parse an online resouce requiring a plugin, provide the plugin or remove the resource: %s", cast(Object[])[ e.getMessage() ]));
                 }
                 catch (OnlineResourceParseException e)
                 {
                     bool retry = retryFeedParsing(repository.getId());
                     if (retry)
                     {
-                        log.warn(String.format("An error occured while parsing the online resource %s, will try again soon: %s", cast(Object[])[ repository.getRepositoryUrl().toString(), e.getMessage() ]), e);
+                        log.warn(java.lang.String.format("An error occured while parsing the online resource %s, will try again soon: %s", cast(Object[])[ repository.getRepositoryUrl().toString(), e.getMessage() ]), e);
                     }
                     else
                     {
-                        log.warn(String.format("An error occured while parsing the online resource %s, waiting for expiry time to try again: %s", cast(Object[])[ repository.getRepositoryUrl().toString(), e.getMessage() ]), e);
+                        log.warn(java.lang.String.format("An error occured while parsing the online resource %s, waiting for expiry time to try again: %s", cast(Object[])[ repository.getRepositoryUrl().toString(), e.getMessage() ]), e);
                         this.onlineManager.storeExpiryDateForFailedResource(repository.getRepositoryUrl(), repository.getId());
                     }
                 }
@@ -197,7 +197,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
                 if (onlineItem.getType() == MediaFileType.VIDEO)
                 {
                     VideoMetadata md = new VideoMetadata();
-                    log.debug_(String.format("Retrieving information about the video stream '%s'", cast(Object[])[ onlineItem.getTitle() ]));
+                    log.debug_(java.lang.String.format("Retrieving information about the video stream '%s'", cast(Object[])[ onlineItem.getTitle() ]));
                     retrieveMetadata(md, onlineItem);
                     onlineItem.getTechnicalMD().setAudioBitrate(md.getAudioBitrate());
                     onlineItem.getTechnicalMD().setAudioCodec(md.getAudioCodec());
@@ -253,7 +253,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
         }
         else if ((!onlineItem.isCompletelyLoaded()) && (!onlineItem.isValidEssence()))
         {
-            log.debug_(String.format("Skipping retrieving technical metadata for item %s, because its essence is invalid.", cast(Object[])[ onlineItem.getTitle() ]));
+            log.debug_(java.lang.String.format("Skipping retrieving technical metadata for item %s, because its essence is invalid.", cast(Object[])[ onlineItem.getTitle() ]));
         }
         return updated;
     }
@@ -288,7 +288,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
                     }
                     catch (Throwable t)
                     {
-                        log.debug_(String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ containerItem.getPlugin().getExtractorName(), containerItem.getTitle(), t.getMessage() ]), e);
+                        log.debug_(java.lang.String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ containerItem.getPlugin().getExtractorName(), containerItem.getTitle(), t.getMessage() ]), e);
 
                         markOnlineItemAsInvalidEssence(onlineItem);
                     }
@@ -304,7 +304,7 @@ public class FeedUpdaterThread : AbstractLibraryCheckerThread
 
     private void markOnlineItemAsInvalidEssence(OnlineItem onlineItem)
     {
-        log.debug_(String.format("Marking online item %s as 'invalid essence'", cast(Object[])[ onlineItem.getTitle() ]));
+        log.debug_(java.lang.String.format("Marking online item %s as 'invalid essence'", cast(Object[])[ onlineItem.getTitle() ]));
         onlineItem.setValidEssence(false);
     }
 

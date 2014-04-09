@@ -41,7 +41,7 @@ public class ServiceControlRequestHandler : AbstractRequestHandler
         String soapAction = request.getFirstHeader("SOAPACTION").getValue();
         InetAddress clientIPAddress = getCallerIPAddress(context);
 
-        this.log.debug_(String.format("ServiceControl request received for action '%s' from %s", cast(Object[])[ soapAction, clientIPAddress.getHostAddress() ]));
+        this.log.debug_(java.lang.String.format("ServiceControl request received for action '%s' from %s", cast(Object[])[ soapAction, clientIPAddress.getHostAddress() ]));
         if (( cast(HttpEntityEnclosingRequest)request !is null ))
         {
             Renderer renderer = RendererManager.getInstance().getStoredRendererByIPAddress(clientIPAddress);
@@ -78,7 +78,7 @@ public class ServiceControlRequestHandler : AbstractRequestHandler
             }
             catch (ServiceInvocationException e)
             {
-                this.log.error(String.format("Cannot process control request: %s", cast(Object[])[ e.getMessage() ]), e);
+                this.log.error(java.lang.String.format("Cannot process control request: %s", cast(Object[])[ e.getMessage() ]), e);
                 response.setStatusCode(500);
             }
         }

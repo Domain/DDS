@@ -30,13 +30,13 @@ public class ServiioStatusService : StatusService
     {
         if (status.getThrowable() !is null)
         {
-            log.warn(String.format("%s occured. Returning error code %s to the REST layer. Message: %s", cast(Object[])[ status.getThrowable().getClass().getSimpleName(), Integer.valueOf(status.getCode()), status.getThrowable().getMessage() ]));
+            log.warn(java.lang.String.format("%s occured. Returning error code %s to the REST layer. Message: %s", cast(Object[])[ status.getThrowable().getClass().getSimpleName(), Integer.valueOf(status.getCode()), status.getThrowable().getMessage() ]));
 
             log.debug_("Detailed exception: ", status.getThrowable());
         }
         else
         {
-            log.warn(String.format("Returning error code to the REST layer: %s", cast(Object[])[ status.toString() ]));
+            log.warn(java.lang.String.format("Returning error code to the REST layer: %s", cast(Object[])[ status.toString() ]));
         }
         response.setStatus(status);
         if ((status.getThrowable() !is null) && (( cast(AbstractRestfulException)status.getThrowable() !is null )))

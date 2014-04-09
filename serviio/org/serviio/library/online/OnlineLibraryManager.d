@@ -149,7 +149,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
             }
             if ((!onlyCached) && (isResourceRefreshNeeded(resourceUrl, resource)))
             {
-                log.debug_(String.format("Resource %s not in cache, cast(re)loading it", cast(Object[])[ resourceUrl.toString() ]));
+                log.debug_(java.lang.String.format("Resource %s not in cache, cast(re)loading it", cast(Object[])[ resourceUrl.toString() ]));
                 if (onlineRepository.getRepoType() == OnlineRepositoryType.FEED) {
                     resource = this.feedParser.parse(resourceUrl, onlineRepository.getId(), onlineRepository.getFileType());
                 } else {
@@ -167,7 +167,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
         }
         catch (MalformedURLException e)
         {
-            log.warn(String.format("Could not parse URL %s", cast(Object[])[ onlineRepository.getRepositoryUrl() ]), e);
+            log.warn(java.lang.String.format("Could not parse URL %s", cast(Object[])[ onlineRepository.getRepositoryUrl() ]), e);
         }
         return null;
     }
@@ -221,7 +221,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
                 OnlineResourceContainer!(OnlineContainerItem!(Object), AbstractUrlExtractor/*?, ?*/) resource = cast(OnlineResourceContainer)this.onlineCache.retrieve(feedUrl);
                 if ((resource !is null) && (resource.getUsedExtractor() !is null) && (resource.getUsedExtractor().opEquals(plugin)))
                 {
-                    log.debug_(String.format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));
+                    log.debug_(java.lang.String.format("Removing feed %s generated via %s from cache", cast(Object[])[ feedUrl, plugin.getExtractorName() ]));
                     removeOnlineContentFromCache(feedUrl, resource.getOnlineRepositoryId(), true);
                 }
             }
@@ -257,18 +257,18 @@ public class OnlineLibraryManager : AbstractLibraryManager
                 if (coverImage is null) {
                     try
                     {
-                        log.debug_(String.format("Thumbnail '%s' not in cache yet, loading it", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
+                        log.debug_(java.lang.String.format("Thumbnail '%s' not in cache yet, loading it", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
                         byte[] imageBytes = HttpClient.retrieveBinaryFileFromURL(thumbnail.getImageUrl().toString(), userAgent);
                         ImageDescriptor clonedImage = new ImageDescriptor(imageBytes, null);
                         coverImage = CoverImageService.prepareCoverImage(clonedImage, null);
                         if (coverImage is null) {
-                            throw new CannotRetrieveThumbnailException(String.format("An error accured when resizing thumbnail %s", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
+                            throw new CannotRetrieveThumbnailException(java.lang.String.format("An error accured when resizing thumbnail %s", cast(Object[])[ thumbnail.getImageUrl().toString() ]));
                         }
                         this.thumbnailCache.store(thumbnail.getImageUrl().toString(), coverImage);
                     }
                     catch (IOException e)
                     {
-                        throw new CannotRetrieveThumbnailException(String.format("Failed to download thumbnail %s.", cast(Object[])[ thumbnail.getImageUrl().toString() ]), e);
+                        throw new CannotRetrieveThumbnailException(java.lang.String.format("Failed to download thumbnail %s.", cast(Object[])[ thumbnail.getImageUrl().toString() ]), e);
                     }
                 }
                 return coverImage;
@@ -279,9 +279,9 @@ public class OnlineLibraryManager : AbstractLibraryManager
 
     public void storeExpiryDateForFailedResource(String feedUrl, Long onlineRepositoryId)
     {
-        log.debug_(String.format("Resetting expiry date for feed %s", cast(Object[])[ feedUrl ]));
+        log.debug_(java.lang.String.format("Resetting expiry date for feed %s", cast(Object[])[ feedUrl ]));
         storeResourceExpiryDate(feedUrl, null);
-        log.debug_(String.format("Removing feed %s from online cache", cast(Object[])[ feedUrl ]));
+        log.debug_(java.lang.String.format("Removing feed %s from online cache", cast(Object[])[ feedUrl ]));
         removeOnlineContentFromCache(feedUrl, onlineRepositoryId, false);
     }
 
@@ -308,7 +308,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
                     }
                 }
                 if (resourceExpired) {
-                    log.debug_(String.format("Online resource %s expired, will reload it", cast(Object[])[ resourceUrl.toString() ]));
+                    log.debug_(java.lang.String.format("Online resource %s expired, will reload it", cast(Object[])[ resourceUrl.toString() ]));
                 }
                 return resourceExpired;
             }
@@ -365,7 +365,7 @@ public class OnlineLibraryManager : AbstractLibraryManager
             if (resource !is null)
             {
                 Date itemExpiryDate = getEarliestItemExpiryDate(resource);
-                log.debug_(String.format("Resource %s will expire in the cache on %s", cast(Object[])[ feedUrl, (itemExpiryDate !is null) && (itemExpiryDate.before(newExpiryDate)) ? itemExpiryDate : newExpiryDate ]));
+                log.debug_(java.lang.String.format("Resource %s will expire in the cache on %s", cast(Object[])[ feedUrl, (itemExpiryDate !is null) && (itemExpiryDate.before(newExpiryDate)) ? itemExpiryDate : newExpiryDate ]));
             }
         }
     }

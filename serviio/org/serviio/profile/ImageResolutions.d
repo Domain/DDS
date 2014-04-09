@@ -45,7 +45,7 @@ public class ImageResolutions
         if ((m.matches()) && (m.groupCount() == 2)) {
             return new Tupple(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2)));
         }
-        throw new IllegalArgumentException(String.format("Cannot parse image resolution '%s'", cast(Object[])[ value ]));
+        throw new IllegalArgumentException(java.lang.String.format("Cannot parse image resolution '%s'", cast(Object[])[ value ]));
     }
 }
 

@@ -99,7 +99,7 @@ public class ActionNode : ContainerNode
         }
         catch (CommandExecutionException e)
         {
-            log.error(String.format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(java.lang.String.format("Cannot retrieve results of action command: %s", cast(Object[])[ e.getMessage() ]), e);
         }
         return null;
     }

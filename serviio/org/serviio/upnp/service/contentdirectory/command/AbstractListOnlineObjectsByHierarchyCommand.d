@@ -99,7 +99,7 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
                 List!(Resource) res = ResourceValuesBuilder.buildResources(mediaItem, this.rendererProfile);
                 return DirectoryObjectBuilder.createInstance(this.itemClassType, values, res, itemId, this.disablePresentationSettings);
             }
-            throw new ObjectNotFoundException(String.format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
+            throw new ObjectNotFoundException(java.lang.String.format("OnlineItem with id %s not found in CDS", cast(Object[])[ itemId ]));
         }
         Long folderId = getFolderId();
         if (folderId !is null)
@@ -113,9 +113,9 @@ public abstract class AbstractListOnlineObjectsByHierarchyCommand : AbstractComm
 
                 return DirectoryObjectBuilder.createInstance(this.containerClassType, values, null, folderId, this.disablePresentationSettings);
             }
-            throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
+            throw new ObjectNotFoundException(java.lang.String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
         }
-        throw new ObjectNotFoundException(String.format("Error retrieving object %s from CDS", cast(Object[])[ this.objectId ]));
+        throw new ObjectNotFoundException(java.lang.String.format("Error retrieving object %s from CDS", cast(Object[])[ this.objectId ]));
     }
 
     public int retrieveItemCount()

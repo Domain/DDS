@@ -78,7 +78,7 @@ public class DiscoveryManager : WakeUpListener
 
     public void deviceAvailable()
     {
-        log.debug_(String.format("UPNP device %s (%s) is available", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
+        log.debug_(java.lang.String.format("UPNP device %s (%s) is available", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
 
 
         this.discoverySearchListenerThread = ServiioThreadFactory.getInstance().newThread(this.discoverySSDPMessageListener, "DiscoverySSDPMessageListener", true);
@@ -101,7 +101,7 @@ public class DiscoveryManager : WakeUpListener
 
     public void deviceUnavailable(bool multicast)
     {
-        log.debug_(String.format("UPNP device %s (%s) is unavailable", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
+        log.debug_(java.lang.String.format("UPNP device %s (%s) is unavailable", cast(Object[])[ Device.getInstance().getUuid(), Device.getInstance().getBindAddress().getHostAddress() ]));
         try
         {
             if (this.wakeUpMonitorSchedule !is null)

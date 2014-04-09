@@ -12,7 +12,7 @@ public class RendererSearchMessageBuilder : SSDPRequestMessageBuilder
     public List!(String) generateSSDPMessages(Integer duration, String searchTarget)
     {
         if ((duration is null) || (duration.intValue() < 0)) {
-            throw new InsufficientInformationException(String.format("Message wait time includes invalid value: %s", cast(Object[])[ duration ]));
+            throw new InsufficientInformationException(java.lang.String.format("Message wait time includes invalid value: %s", cast(Object[])[ duration ]));
         }
         List!(String) messages = new ArrayList();
         messages.add(HttpMessageBuilder.transformToString(generateMessage("M-SEARCH", duration, searchTarget)));

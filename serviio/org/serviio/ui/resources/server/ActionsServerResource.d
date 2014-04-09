@@ -39,7 +39,7 @@ public class ActionsServerResource
     }
     else
     {
-      this.log.debug_(String.format("Action with name '%s' was requested", cast(Object[])[ representation.getName() ]));
+      this.log.debug_(java.lang.String.format("Action with name '%s' was requested", cast(Object[])[ representation.getName() ]));
       if (representation.getName().equals("forceVideoFilesMetadataUpdate")) {
         return forceOnlineVideoFilesUpdate(representation);
       }
@@ -67,7 +67,7 @@ public class ActionsServerResource
       if (representation.getName().equals("checkPortMapping")) {
         return checkPortMapping(representation);
       }
-      this.log.error(String.format("Action with name '%s' is not implemented, returning 400", cast(Object[])[ representation.getName() ]));
+      this.log.error(java.lang.String.format("Action with name '%s' is not implemented, returning 400", cast(Object[])[ representation.getName() ]));
       setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
     }
     return null;

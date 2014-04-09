@@ -139,7 +139,7 @@ public class MetadataServerResource : AbstractServerResource, MetadataResource
             }
             catch (Exception e)
             {
-                this.log.warn(String.format("Unrecognised extractor type '%s', using NONE", cast(Object[])[ descriptiveMDExtractor ]));
+                this.log.warn(java.lang.String.format("Unrecognised extractor type '%s', using NONE", cast(Object[])[ descriptiveMDExtractor ]));
             }
         }
         return configs;

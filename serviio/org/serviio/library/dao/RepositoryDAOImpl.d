@@ -35,7 +35,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         if ((newInstance is null) || (newInstance.getFolder() is null) || (newInstance.getAccessGroupIds() is null) || (newInstance.getAccessGroupIds().size() == 0)) {
             throw new InvalidArgumentException("Cannot create Repository. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new Repository (folder = %s)", cast(Object[])[ newInstance.getFolder() ]));
+        log.debug_(java.lang.String.format("Creating a new Repository (folder = %s)", cast(Object[])[ newInstance.getFolder() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -57,7 +57,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create Repository for folder %s", cast(Object[])[ newInstance.getFolder() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create Repository for folder %s", cast(Object[])[ newInstance.getFolder() ]), e);
         }
         finally
         {
@@ -68,7 +68,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     public void delete_(Long id)
     {
-        log.debug_(String.format("Deleting a Repository (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting a Repository (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -84,7 +84,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete Repository with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete Repository with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -95,7 +95,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     public Repository read(Long id)
     {
-        log.debug_(String.format("Reading a Repository (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a Repository (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -108,7 +108,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Repository with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Repository with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -122,7 +122,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         if ((transientObject is null) || (transientObject.getId() is null) || (transientObject.getFolder() is null) || (transientObject.getAccessGroupIds() is null) || (transientObject.getAccessGroupIds().size() == 0)) {
             throw new InvalidArgumentException("Cannot update Repository. Required data is missing.");
         }
-        log.debug_(String.format("Updating Repository (id = %s)", cast(Object[])[ transientObject.getId() ]));
+        log.debug_(java.lang.String.format("Updating Repository (id = %s)", cast(Object[])[ transientObject.getId() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -145,7 +145,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot update Repository with id %s", cast(Object[])[ transientObject.getId() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot update Repository with id %s", cast(Object[])[ transientObject.getId() ]), e);
         }
         finally
         {
@@ -159,7 +159,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         if (repoId is null) {
             throw new InvalidArgumentException("Cannot mark Repository as scanned. Required id is missing.");
         }
-        log.debug_(String.format("Marking Repository %s as scanned with current timestamp", cast(Object[])[ repoId ]));
+        log.debug_(java.lang.String.format("Marking Repository %s as scanned with current timestamp", cast(Object[])[ repoId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -173,7 +173,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot mark Repository with id %s as scanned", cast(Object[])[ repoId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot mark Repository with id %s as scanned", cast(Object[])[ repoId ]), e);
         }
         finally
         {
@@ -207,7 +207,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     public List!(Repository) getRepositories(MediaFileType fileType, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of Repositories for %s (from=%s, count=%s) [%s]", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of Repositories for %s (from=%s, count=%s) [%s]", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -225,7 +225,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of Repositories for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of Repositories for %s", cast(Object[])[ fileType ]), e);
         }
         finally
         {
@@ -236,7 +236,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     public int getRepositoriesCount(MediaFileType fileType, AccessGroup accessGroup)
     {
-        log.debug_(String.format("Retrieving number of repositories for %s [%s]", cast(Object[])[ fileType, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of repositories for %s [%s]", cast(Object[])[ fileType, accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -257,7 +257,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read number of repositories for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of repositories for %s", cast(Object[])[ fileType ]), e);
         }
         finally
         {

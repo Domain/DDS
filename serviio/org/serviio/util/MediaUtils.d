@@ -50,7 +50,7 @@ public class MediaUtils
             }
             catch (NumberFormatException nfe)
             {
-                log.debug_(String.format("Cannot get valid FPS of video file: %s", cast(Object[])[ fps ]));
+                log.debug_(java.lang.String.format("Cannot get valid FPS of video file: %s", cast(Object[])[ fps ]));
             }
         }
         return validFrameRate;

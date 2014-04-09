@@ -51,7 +51,7 @@ public class DiscoveryAdvertisementNotifier : Multicaster, Runnable
 
                     long delay = this.aliveSentCounter < 3 ? 10000L : NumberUtils.getRandomInInterval(this.advertisementDuration * 1000 / 10, this.advertisementDuration * 1000 / 7);
                     delay -= sendDuration;
-                    this.log.debug_(String.format("Will advertise again in %s (advertisement duration is %s sec.)", cast(Object[])[ DateUtils.timeToHHMMSS(delay), Integer.valueOf(this.advertisementDuration) ]));
+                    this.log.debug_(java.lang.String.format("Will advertise again in %s (advertisement duration is %s sec.)", cast(Object[])[ DateUtils.timeToHHMMSS(delay), Integer.valueOf(this.advertisementDuration) ]));
 
                     ThreadUtils.currentThreadSleep(Math.max(0L, delay));
                 }
@@ -125,11 +125,11 @@ public class DiscoveryAdvertisementNotifier : Multicaster, Runnable
                 socket = MultiCastUtils.startMultiCastSocketForSending(multicastInterface.getNic(), address, 32);
                 if ((socket !is null) && (socket.isBound()))
                 {
-                    this.log.debug_(String.format("Multicasting SSDP alive using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
+                    this.log.debug_(java.lang.String.format("Multicasting SSDP alive using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
 
                     List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.ALIVE).generateSSDPMessages(Integer.valueOf(this.advertisementDuration), null);
 
-                    this.log.debug_(String.format("Sending %s 'alive' messages describing device %s", cast(Object[])[ Integer.valueOf(messages.size()), device.getUuid() ]));
+                    this.log.debug_(java.lang.String.format("Sending %s 'alive' messages describing device %s", cast(Object[])[ Integer.valueOf(messages.size()), device.getUuid() ]));
                     foreach (String message ; messages) {
                         for (int i = 0; i < this.advertisementSendCount; i++)
                         {
@@ -161,7 +161,7 @@ public class DiscoveryAdvertisementNotifier : Multicaster, Runnable
                 socket = MultiCastUtils.startMultiCastSocketForSending(multicastInterface.getNic(), address, 32);
                 if ((socket !is null) && (socket.isBound()))
                 {
-                    this.log.debug_(String.format("Multicasting SSDP byebye using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
+                    this.log.debug_(java.lang.String.format("Multicasting SSDP byebye using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
 
                     List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.BYEBYE).generateSSDPMessages(null, null);
                     foreach (String message ; messages) {

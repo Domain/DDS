@@ -41,7 +41,7 @@ public class ContentDirectoryEngine
     public BrowseItemsHolder!(DirectoryObject) browse(String objectID, ObjectType objectType, String browseFlag, String filter, int startingIndex, int requestedCount, String sortCriteria, Profile rendererProfile, AccessGroup accessGroup, bool disablePresentationSettings)
     {
         if ((!browseFlag.equals("BrowseMetadata")) && (!browseFlag.equals("BrowseDirectChildren"))) {
-            throw new InvalidBrowseFlagException(String.format("Unsupported browse flag: %s", cast(Object[])[ browseFlag ]));
+            throw new InvalidBrowseFlagException(java.lang.String.format("Unsupported browse flag: %s", cast(Object[])[ browseFlag ]));
         }
         if (rendererProfile.getContentDirectoryDefinitionFilter() !is null) {
             objectID = rendererProfile.getContentDirectoryDefinitionFilter().filterObjectId(objectID, false);

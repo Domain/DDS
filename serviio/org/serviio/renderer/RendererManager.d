@@ -84,7 +84,7 @@ public class RendererManager
                     }
                     catch (CannotResolveRendererProfileException e)
                     {
-                        log.warn(String.format("Error while retrieving renderer description: %s", cast(Object[])[ e.getMessage() ]));
+                        log.warn(java.lang.String.format("Error while retrieving renderer description: %s", cast(Object[])[ e.getMessage() ]));
                         return;
                     }
                 }
@@ -98,7 +98,7 @@ public class RendererManager
                 }
             }
             if (addRenderer) {
-                log.debug_(String.format("Adding renderer %s to list of active renderers", cast(Object[])[ renderer ]));
+                log.debug_(java.lang.String.format("Adding renderer %s to list of active renderers", cast(Object[])[ renderer ]));
             }
             activeRenderer = new ActiveRenderer(renderer, timeToKeep, new Date());
             this.activeRenderers.put(uuid, activeRenderer);
@@ -111,7 +111,7 @@ public class RendererManager
         {
             Renderer existingRenderer = getStoredRendererByIPAddress(Inet4Address.getByName(ipAddress));
 
-            log.debug_(String.format("Looking for a renderer profile for Http headers: %s", cast(Object[])[ HttpUtils.headersToString(httpHeaders) ]));
+            log.debug_(java.lang.String.format("Looking for a renderer profile for Http headers: %s", cast(Object[])[ HttpUtils.headersToString(httpHeaders) ]));
             Profile profileByDescription = ProfileManager.findProfileByHeader(httpHeaders);
 
             Renderer renderer = new Renderer(UUID.randomUUID().toString(), ipAddress, null, null, true, false, Configuration.isRendererEnabledByDefault(), Configuration.getRendererDefaultAccessGroupId());
@@ -131,7 +131,7 @@ public class RendererManager
             }
             else if ((profileByDescription !is null) && (!existingRenderer.isForcedProfile()) && (!existingRenderer.getProfileId().equalsIgnoreCase(renderer.getProfileId())))
             {
-                log.debug_(String.format("Updating renderer on IP %s (forced: %s, profile: %s) with profile %s", cast(Object[])[ ipAddress, Boolean.valueOf(existingRenderer.isForcedProfile()), existingRenderer.getProfileId(), renderer.getProfileId() ]));
+                log.debug_(java.lang.String.format("Updating renderer on IP %s (forced: %s, profile: %s) with profile %s", cast(Object[])[ ipAddress, Boolean.valueOf(existingRenderer.isForcedProfile()), existingRenderer.getProfileId(), renderer.getProfileId() ]));
 
                 removeRendererWithIPAddress(ipAddress);
 
@@ -150,7 +150,7 @@ public class RendererManager
         {
             if (this.activeRenderers.containsKey(uuid))
             {
-                log.debug_(String.format("Removing renderer %s from list of active renderers", cast(Object[])[ uuid ]));
+                log.debug_(java.lang.String.format("Removing renderer %s from list of active renderers", cast(Object[])[ uuid ]));
                 this.activeRenderers.remove(uuid);
             }
         }
@@ -164,7 +164,7 @@ public class RendererManager
         }
         catch (IOException e)
         {
-            log.warn(String.format("Exception during searching for active renderers: %s", cast(Object[])[ e.getMessage() ]));
+            log.warn(java.lang.String.format("Exception during searching for active renderers: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 
@@ -201,7 +201,7 @@ public class RendererManager
     {
         this.rendererDao.create(renderer);
 
-        log.info(String.format("Stored a new renderer: uuid='%s', name = '%s', ipAddress='%s', profile = '%s'", cast(Object[])[ renderer.getUuid(), renderer.getName(), renderer.getIpAddress(), renderer.getProfileId() ]));
+        log.info(java.lang.String.format("Stored a new renderer: uuid='%s', name = '%s', ipAddress='%s', profile = '%s'", cast(Object[])[ renderer.getUuid(), renderer.getName(), renderer.getIpAddress(), renderer.getProfileId() ]));
     }
 
     public Renderer getStoredRendererByUuid(String uuid)
@@ -239,7 +239,7 @@ public class RendererManager
 
     protected Renderer getProfileByRendererDescriptionFromURL(String uuid, String ipAddress, String serverName, String descriptionURL)
     {
-        log.debug_(String.format("Retrieve device description from %s", cast(Object[])[ descriptionURL ]));
+        log.debug_(java.lang.String.format("Retrieve device description from %s", cast(Object[])[ descriptionURL ]));
         try
         {
             String descriptionXML = HttpClient.retrieveTextFileFromURL(descriptionURL, "UTF-8");
@@ -252,7 +252,7 @@ public class RendererManager
         }
         catch (IOException e)
         {
-            throw new CannotResolveRendererProfileException(String.format("Cannot retrieve device description from %s", cast(Object[])[ descriptionURL ]), e);
+            throw new CannotResolveRendererProfileException(java.lang.String.format("Cannot retrieve device description from %s", cast(Object[])[ descriptionURL ]), e);
         }
     }
 
@@ -274,7 +274,7 @@ public class RendererManager
             String friendlyName = XPathUtil.getNodeValue(deviceNode, String.format("%sfriendlyName", cast(Object[])[ nameSpacePrefix ]), nsContext);
             String manufacturer = XPathUtil.getNodeValue(deviceNode, String.format("%smanufacturer", cast(Object[])[ nameSpacePrefix ]), nsContext);
 
-            log.debug_(String.format("Looking for a renderer profile for: friendly name = '%s', model name= '%s', model number = '%s', manufacturer = '%s', product code = '%s', server name = '%s'", cast(Object[])[ friendlyName, modelName, modelNumber, manufacturer, productCode, serverName ]));
+            log.debug_(java.lang.String.format("Looking for a renderer profile for: friendly name = '%s', model name= '%s', model number = '%s', manufacturer = '%s', product code = '%s', server name = '%s'", cast(Object[])[ friendlyName, modelName, modelNumber, manufacturer, productCode, serverName ]));
 
 
             Profile profileByDescription = ProfileManager.findProfileByDescription(friendlyName, modelName, modelNumber, productCode, serverName, manufacturer);

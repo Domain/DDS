@@ -59,12 +59,12 @@ public class OnlineItemService
         }
         catch (OnlineResourceParseException e)
         {
-            log.warn(String.format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
+            log.warn(java.lang.String.format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
             return null;
         }
         catch (MissingPluginException e)
         {
-            log.warn(String.format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
+            log.warn(java.lang.String.format("Unexpected error retrieving resource %s: %s", cast(Object[])[ onlineRepositoryId, e.getMessage() ]));
         }
         return null;
     }

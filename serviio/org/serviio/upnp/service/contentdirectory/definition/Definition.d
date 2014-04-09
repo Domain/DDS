@@ -41,7 +41,7 @@ public class Definition
             }
             catch (ContentDirectoryDefinitionException e)
             {
-                throw new RuntimeException(String.format("Cannot initialize ContentDirectory service: %s", cast(Object[])[ e.getMessage() ]), e);
+                throw new RuntimeException(java.lang.String.format("Cannot initialize ContentDirectory service: %s", cast(Object[])[ e.getMessage() ]), e);
             }
         }
         return _instance;

@@ -35,21 +35,21 @@ public class UPnPWebGateway : WebGateway
             if ((devices !is null) && (devices.length > 0))
             {
                 InternetGatewayDevice device = devices[0];
-                log.debug_(String.format("Found a UPnP router device '%s'", cast(Object[])[ device.getIGDRootDevice().getModelName() ]));
+                log.debug_(java.lang.String.format("Found a UPnP router device '%s'", cast(Object[])[ device.getIGDRootDevice().getModelName() ]));
                 return new UPnPWebGateway(devices[0]);
             }
             return null;
         }
         catch (IOException e)
         {
-            throw new Exception(String.format("Could not find UPnP router because of an exception: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new Exception(java.lang.String.format("Could not find UPnP router because of an exception: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
     public void addPortMapping(int externalPort, int internalPort, int leaseDuration)
     {
         String localAddress = Device.getInstance().getBindAddress().getHostAddress();
-        log.debug_(String.format("Adding/updating router port mapping (%s -> %s) for IP %s with lease of %s sec.", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort), localAddress, Integer.valueOf(leaseDuration) ]));
+        log.debug_(java.lang.String.format("Adding/updating router port mapping (%s -> %s) for IP %s with lease of %s sec.", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort), localAddress, Integer.valueOf(leaseDuration) ]));
         try
         {
             invokeAddPortMapping(externalPort, internalPort, localAddress, leaseDuration);
@@ -71,7 +71,7 @@ public class UPnPWebGateway : WebGateway
 
     public void deletePortMapping(int externalPort, int internalPort)
     {
-        log.debug_(String.format("Removing router port mapping (%s -> %s)", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort) ]));
+        log.debug_(java.lang.String.format("Removing router port mapping (%s -> %s)", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort) ]));
         this.device.deletePortMapping(null, externalPort, "TCP");
     }
 

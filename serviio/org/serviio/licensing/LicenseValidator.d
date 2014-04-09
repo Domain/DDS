@@ -52,7 +52,7 @@ public class LicenseValidator
     //{
     //    if (licenseBody !is null)
     //    {
-    //        log.debug_(String.format("Validating license file (%s bytes)", cast(Object[])[ Integer.valueOf(licenseBody.length()) ]));
+    //        log.debug_(java.lang.String.format("Validating license file (%s bytes)", cast(Object[])[ Integer.valueOf(licenseBody.length()) ]));
     //        License l = null;
     //        try
     //        {

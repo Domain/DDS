@@ -29,7 +29,7 @@ public class NATPMPGateway : WebGateway
 
     public void addPortMapping(int externalPort, int internalPort, int leaseDuration)
     {
-        log.debug_(String.format("Adding/updating router port mapping (%s -> %s) with lease of %s sec.", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort), Integer.valueOf(leaseDuration) ]));
+        log.debug_(java.lang.String.format("Adding/updating router port mapping (%s -> %s) with lease of %s sec.", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort), Integer.valueOf(leaseDuration) ]));
         MapRequestMessage map = new MapRequestMessage(true, internalPort, externalPort, leaseDuration, null);
         this.device.enqueueMessage(map);
         this.device.waitUntilQueueEmpty();
@@ -37,7 +37,7 @@ public class NATPMPGateway : WebGateway
 
     public void deletePortMapping(int externalPort, int internalPort)
     {
-        log.debug_(String.format("Removing router port mapping (%s -> %s)", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort) ]));
+        log.debug_(java.lang.String.format("Removing router port mapping (%s -> %s)", cast(Object[])[ Integer.valueOf(externalPort), Integer.valueOf(internalPort) ]));
         MapRequestMessage map = new MapRequestMessage(true, internalPort, externalPort, 0L, null);
         this.device.enqueueMessage(map);
         this.device.waitUntilQueueEmpty();

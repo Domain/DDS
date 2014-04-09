@@ -76,22 +76,22 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                             ImageInfo imageInfo = Imaging.getImageInfo(bannerBytes);
                             ImageDescriptor image = new ImageDescriptor(bannerBytes, imageInfo.getMimeType());
                             videoMetadata.setCoverImage(image);
-                            log.debug_(String.format("Retrieved poster: %s", cast(Object[])[ posterURL ]));
+                            log.debug_(java.lang.String.format("Retrieved poster: %s", cast(Object[])[ posterURL ]));
                         }
                         catch (FileNotFoundException e)
                         {
-                            log.warn(String.format("Poster '%s' doesn't exist, will try another one", cast(Object[])[ posterURL ]));
+                            log.warn(java.lang.String.format("Poster '%s' doesn't exist, will try another one", cast(Object[])[ posterURL ]));
                         }
                         catch (Exception e)
                         {
-                            log.warn(String.format("Cannot retrieve movie poster: %s", cast(Object[])[ e.getMessage() ]));
+                            log.warn(java.lang.String.format("Cannot retrieve movie poster: %s", cast(Object[])[ e.getMessage() ]));
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                throw new IOException(String.format("Metadata XML for movie id %s is corrupt. ", cast(Object[])[ movieId ]));
+                throw new IOException(java.lang.String.format("Metadata XML for movie id %s is corrupt. ", cast(Object[])[ movieId ]));
             }
         } else {
             throw new IOException("Metadata XML file is missing");
@@ -120,13 +120,13 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                 if (matchingMovieNode !is null)
                 {
                     String movieId = matchingMovieNode.get("id").toString();
-                    log.debug_(String.format("Found a suitable movie match, id = %s", cast(Object[])[ movieId ]));
+                    log.debug_(java.lang.String.format("Found a suitable movie match, id = %s", cast(Object[])[ movieId ]));
                     return movieId;
                 }
             }
             catch (Exception e)
             {
-                throw new IOException(String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
+                throw new IOException(java.lang.String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
             }
         } else {
             log.debug_("No movie with the name has been found");
@@ -141,7 +141,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
         foreach (String movieName ; movieNames) {
             if (ObjectValidator.isNotEmpty(movieName))
             {
-                log.debug_(String.format("Searching for movie '%s' %s (language: %s)", cast(Object[])[ movieName, year !is null ? year : "", languageCode ]));
+                log.debug_(java.lang.String.format("Searching for movie '%s' %s (language: %s)", cast(Object[])[ movieName, year !is null ? year : "", languageCode ]));
                 try
                 {
                     String moviesSearchPath = String.format("%ssearch/movie?query=%s&api_key=%s&language=%s&search_type=phrase&include_adult=true", cast(Object[])[ "http://api.themoviedb.org/3/", URLEncoder.encode(movieName, "UTF-8"), "33a37a299fe4bef416e347c2fca2494c", languageCode ]);
@@ -154,7 +154,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                         Map!(String, Object) json = JsonUtils.parseJson(searchResultJSON);
 
                         Integer numberReturned = Integer.valueOf(Integer.parseInt(json.get("total_results").toString()));
-                        log.debug_(String.format("Found %s matches", cast(Object[])[ numberReturned ]));
+                        log.debug_(java.lang.String.format("Found %s matches", cast(Object[])[ numberReturned ]));
                         if (numberReturned.intValue() > 0) {
                             allReturnedNodes.addAll(cast(List)json.get("results"));
                         }
@@ -170,7 +170,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
                 }
                 catch (Exception e)
                 {
-                    throw new IOException(String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
+                    throw new IOException(java.lang.String.format("Cannot retrieve movie search results: %s", cast(Object[])[ e.getMessage() ]));
                 }
             }
         }
@@ -192,7 +192,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
     private String getMovieDetails(String movieId)
     {
         String languageCode = Configuration.getMetadataPreferredLanguage();
-        log.debug_(String.format("Retrieving details of movie (movieId = %s, language = %s)", cast(Object[])[ movieId, languageCode ]));
+        log.debug_(java.lang.String.format("Retrieving details of movie (movieId = %s, language = %s)", cast(Object[])[ movieId, languageCode ]));
         try
         {
             String movieDetailsPath = String.format("%smovie/%s?api_key=%s&language=%s&append_to_response=casts,releases", cast(Object[])[ "http://api.themoviedb.org/3/", movieId, "33a37a299fe4bef416e347c2fca2494c", languageCode ]);
@@ -204,7 +204,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
         }
         catch (FileNotFoundException fnfe)
         {
-            throw new IOException(String.format("Cannot retrieve movie details (movieId = %s), file not found", cast(Object[])[ movieId ]));
+            throw new IOException(java.lang.String.format("Cannot retrieve movie details (movieId = %s), file not found", cast(Object[])[ movieId ]));
         }
         catch (MetadataSourceNotAccessibleException e)
         {
@@ -212,7 +212,7 @@ public class TheMovieDBSourceAdaptor : SearchSourceAdaptor
         }
         catch (Exception e)
         {
-            throw new IOException(String.format("Cannot retrieve movie details (movieId = %s): %s", cast(Object[])[ movieId, e.getMessage() ]));
+            throw new IOException(java.lang.String.format("Cannot retrieve movie details (movieId = %s): %s", cast(Object[])[ movieId, e.getMessage() ]));
         }
     }
 

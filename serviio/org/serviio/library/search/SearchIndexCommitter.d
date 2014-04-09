@@ -22,7 +22,7 @@ public class SearchIndexCommitter : Runnable
         }
         catch (IOException e)
         {
-            log.warn(String.format("Could not commit search index: %s", cast(Object[])[ e.getMessage() ]));
+            log.warn(java.lang.String.format("Could not commit search index: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 }

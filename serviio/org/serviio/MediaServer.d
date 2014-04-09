@@ -116,7 +116,7 @@ public class MediaServer
         }
         catch (RuntimeException e)
         {
-            log.error(String.format("An unexpected error occured. Ending the application. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            log.error(java.lang.String.format("An unexpected error occured. Ending the application. Message: %s", cast(Object[])[ e.getMessage() ]), e);
             exit();
         }
     }

@@ -79,13 +79,13 @@ public abstract class AbstractOnlineItemParser
                 {
                     if ((urlExtractorEntry.getValue() == type) && (urlExtractor.extractorMatches(feedUrl)))
                     {
-                        this.log.debug_(String.format("Found matching url extractor (%s) for resource %s", cast(Object[])[ urlExtractor.getExtractorName(), feedUrl ]));
+                        this.log.debug_(java.lang.String.format("Found matching url extractor (%s) for resource %s", cast(Object[])[ urlExtractor.getExtractorName(), feedUrl ]));
                         return urlExtractor;
                     }
                 }
                 catch (Exception e)
                 {
-                    this.log.debug_(String.format("Unexpected error during url extractor plugin matching (%s): %s", cast(Object[])[ urlExtractor.getExtractorName(), e.getMessage() ]));
+                    this.log.debug_(java.lang.String.format("Unexpected error during url extractor plugin matching (%s): %s", cast(Object[])[ urlExtractor.getExtractorName(), e.getMessage() ]));
                 }
             }
         }
@@ -116,7 +116,7 @@ public abstract class AbstractOnlineItemParser
                     URL url = new URL(urlString);
                     try
                     {
-                        return new URL(String.format("%s://%s:%s@%s%s", cast(Object[])[ url.getProtocol(), credentials[0], credentials[1], url.getHost(), url.getPath(), url.getQuery() ])).toString();
+                        return new URL(java.lang.String.format("%s://%s:%s@%s%s", cast(Object[])[ url.getProtocol(), credentials[0], credentials[1], url.getHost(), url.getPath(), url.getQuery() ])).toString();
                     }
                     catch (MalformedURLException e)
                     {

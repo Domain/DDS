@@ -132,7 +132,7 @@ public class MediaFeedEntryParser : FeedEntryParser
             }
             catch (MalformedURLException e)
             {
-                log.warn(String.format("Malformed url of a media feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ selectedThumbnail.getUrl().toString() ]));
+                log.warn(java.lang.String.format("Malformed url of a media feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ selectedThumbnail.getUrl().toString() ]));
             }
         }
     }

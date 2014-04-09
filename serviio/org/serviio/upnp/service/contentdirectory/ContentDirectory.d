@@ -89,9 +89,9 @@ public class ContentDirectory : Service
                                   Renderer renderer)
     {
         if (renderer !is null) {
-            log.debug_(String.format("Browse() called for renderer %s (profile %s) with parameters: objectID = %s, browseFlag = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ renderer.getName(), renderer.getProfileId(), objectID, browseFlag, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
+            log.debug_(java.lang.String.format("Browse() called for renderer %s (profile %s) with parameters: objectID = %s, browseFlag = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ renderer.getName(), renderer.getProfileId(), objectID, browseFlag, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
         } else {
-            log.debug_(String.format("Browse() called for unknown renderer with parameters: objectID = %s, browseFlag = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ objectID, browseFlag, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
+            log.debug_(java.lang.String.format("Browse() called for unknown renderer with parameters: objectID = %s, browseFlag = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ objectID, browseFlag, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
         }
         OperationResult result = new OperationResult();
 
@@ -104,7 +104,7 @@ public class ContentDirectory : Service
         }
         catch (ObjectNotFoundException e)
         {
-            log.warn(String.format("Object with id %s doesn't exist", cast(Object[])[ objectID ]));
+            log.warn(java.lang.String.format("Object with id %s doesn't exist", cast(Object[])[ objectID ]));
             result.setError(InvocationError.CON_MAN_NO_SUCH_OBJECT);
         }
         catch (InvalidBrowseFlagException e)
@@ -115,7 +115,7 @@ public class ContentDirectory : Service
         }
         catch (Exception e)
         {
-            log.warn(String.format("Browse for object id %s failed with exception: %s", cast(Object[])[ objectID, e.getMessage() ]), e);
+            log.warn(java.lang.String.format("Browse for object id %s failed with exception: %s", cast(Object[])[ objectID, e.getMessage() ]), e);
             result.setError(InvocationError.ACTION_FAILED);
         }
         return result;
@@ -129,7 +129,7 @@ public class ContentDirectory : Service
                                   /*@SOAPParameter("SortCriteria")*/ String sortCriteria, 
                                   Renderer renderer)
     {
-        log.debug_(String.format("Search() called for renderer %s with parameters: containerID = %s, searchCriteria = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ renderer !is null ? renderer.getName() : "Unknown", containerID, searchCriteria, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
+        log.debug_(java.lang.String.format("Search() called for renderer %s with parameters: containerID = %s, searchCriteria = %s, filter = %s, startIndex = %s, count = %s, sortCriteria = %s", cast(Object[])[ renderer !is null ? renderer.getName() : "Unknown", containerID, searchCriteria, filter, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), sortCriteria ]));
 
 
         OperationResult result = new OperationResult();
@@ -144,7 +144,7 @@ public class ContentDirectory : Service
             ContainerNode container = Definition.instance().getContainer(containerID);
             if (container is null)
             {
-                log.warn(String.format("Object with id %s doesn't exist", cast(Object[])[ containerID ]));
+                log.warn(java.lang.String.format("Object with id %s doesn't exist", cast(Object[])[ containerID ]));
                 result.setError(InvocationError.CON_MAN_NO_SUCH_OBJECT);
                 return result;
             }
@@ -153,12 +153,12 @@ public class ContentDirectory : Service
         }
         catch (ObjectNotFoundException e)
         {
-            log.warn(String.format("Container with id %s doesn't exist", cast(Object[])[ containerID ]));
+            log.warn(java.lang.String.format("Container with id %s doesn't exist", cast(Object[])[ containerID ]));
             result.setError(InvocationError.CON_MAN_NO_SUCH_OBJECT);
         }
         catch (Exception e)
         {
-            log.warn(String.format("Search in container %s failed with exception: %s", cast(Object[])[ containerID, e.getMessage() ]), e);
+            log.warn(java.lang.String.format("Search in container %s failed with exception: %s", cast(Object[])[ containerID, e.getMessage() ]), e);
             result.setError(InvocationError.ACTION_FAILED);
         }
         return result;
@@ -180,7 +180,7 @@ public class ContentDirectory : Service
             ContainerNode container = Definition.instance().getContainer(objectID);
             if (container is null)
             {
-                log.warn(String.format("Object with id %s doesn't exist", cast(Object[])[ objectID ]));
+                log.warn(java.lang.String.format("Object with id %s doesn't exist", cast(Object[])[ objectID ]));
                 result.setError(InvocationError.CON_MAN_NO_SUCH_OBJECT);
             }
             else
@@ -198,7 +198,7 @@ public class ContentDirectory : Service
                     }
                 }
                 else {
-                    log.warn(String.format("ObjectId %s is not recognized, will not bookmark the last viewed position", cast(Object[])[ objectID ]));
+                    log.warn(java.lang.String.format("ObjectId %s is not recognized, will not bookmark the last viewed position", cast(Object[])[ objectID ]));
                 }
             }
         }
@@ -268,7 +268,7 @@ public class ContentDirectory : Service
         }
         catch (Exception e)
         {
-            throw new RuntimeException(String.format("Cannot instantiate ContentDirectoryMessageBuilder. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new RuntimeException(java.lang.String.format("Cannot instantiate ContentDirectoryMessageBuilder. Message: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 }

@@ -52,7 +52,7 @@ public abstract class AbstractAccessibleDao : AbstractDao
         if (accessGroup == AccessGroup.ANY) {
             return " ";
         }
-        return " AND repository_access_group.repository_id = " + tableAndRepoIdName + " AND repository_access_group.access_group_id = " + accessGroup.getId() + " ";
+        return " AND repository_access_group.repository_id = " ~ tableAndRepoIdName ~ " AND repository_access_group.access_group_id = " ~ accessGroup.getId().toString() ~ " ";
     }
 
     private String generateOnlineAccessGroupCondition(AccessGroup accessGroup, String tableAndRepoIdName)
@@ -60,7 +60,7 @@ public abstract class AbstractAccessibleDao : AbstractDao
         if (accessGroup == AccessGroup.ANY) {
             return " ";
         }
-        return " AND online_repository_access_group.online_repository_id = " + tableAndRepoIdName + " AND online_repository_access_group.access_group_id = " + accessGroup.getId() + " ";
+        return " AND online_repository_access_group.online_repository_id = " ~ tableAndRepoIdName ~ " AND online_repository_access_group.access_group_id = " ~ accessGroup.getId().toString() ~ " ";
     }
 }
 

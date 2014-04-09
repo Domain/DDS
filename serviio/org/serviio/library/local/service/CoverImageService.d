@@ -43,7 +43,7 @@ public class CoverImageService : Service
             }
             catch (Throwable e)
             {
-                log.warn(String.format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
+                log.warn(java.lang.String.format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
                 return null;
             }
         }
@@ -82,17 +82,17 @@ public class CoverImageService : Service
         if ((imagedata !is null) && (imagedata.length > 0)) {
             try
             {
-                log.debug_(String.format("Resizing and storing cover art image for max resolution of %sx%s", cast(Object[])[ Integer.valueOf(maxWidth), Integer.valueOf(maxHeight) ]));
+                log.debug_(java.lang.String.format("Resizing and storing cover art image for max resolution of %sx%s", cast(Object[])[ Integer.valueOf(maxWidth), Integer.valueOf(maxHeight) ]));
                 ImageDescriptor resizedImage = ImageUtils.resizeImageAsJPG(imagedata, maxWidth, maxHeight);
                 log.debug_("Image successfully resized");
                 if ((requiredRotation !is null) && (!requiredRotation.opEquals(new Integer(0)))) {
-                    log.debug_(String.format("Rotating thumbnail image (%s)", cast(Object[])[ requiredRotation ]));
+                    log.debug_(java.lang.String.format("Rotating thumbnail image (%s)", cast(Object[])[ requiredRotation ]));
                 }
                 return ImageUtils.rotateImage(resizedImage.getImageData(), requiredRotation.intValue());
             }
             catch (Throwable e)
             {
-                log.warn(String.format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
+                log.warn(java.lang.String.format("Cannot convert/resize art to JPG. Message: %s", cast(Object[])[ e.getMessage() ]));
                 return null;
             }
         }

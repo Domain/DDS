@@ -26,7 +26,7 @@ public class VideoExtractionStrategy
 
     public void extractMetadata(VideoMetadata metadata, File f)
     {
-        log.debug_(String.format("Extracting metadata of video file: %s", cast(Object[])[ f.getAbsolutePath() ]));
+        log.debug_(java.lang.String.format("Extracting metadata of video file: %s", cast(Object[])[ f.getAbsolutePath() ]));
 
 
         FFmpegMetadataRetriever.retrieveMetadata(metadata, f.getPath(), DeliveryContext.local());

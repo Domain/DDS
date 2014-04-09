@@ -77,7 +77,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
             }
             getResponse().setStatus(container.isPartialContent() ? Status.SUCCESS_PARTIAL_CONTENT : Status.SUCCESS_OK);
             if (normalizedPath.indexOf(ResourceType.COVER_IMAGE.toString()) > -1) {
-                getResponse().setCacheDirectives(Arrays.asList(cast(CacheDirective[])[ new CacheDirective(String.format("private, max-age=%s", [ Integer.valueOf(36000) ])) ]));
+                getResponse().setCacheDirectives(Arrays.asList(cast(CacheDirective[])[ new CacheDirective(java.lang.String.format("private, max-age=%s", [ Integer.valueOf(36000) ])) ]));
                                                  }
                 return rep;
             }
@@ -110,7 +110,7 @@ public class CDSRetrieveMediaServerResource : AbstractRestrictedCDSServerResourc
             if (ObjectValidator.isEmpty(clientId)) {
                 clientId = getClientInfo().getAddress();
             }
-            this.log.debug_(String.format("Creating client with id '%s'", cast(Object[])[ clientId ]));
+            this.log.debug_(java.lang.String.format("Creating client with id '%s'", cast(Object[])[ clientId ]));
             Client c = new Client(clientId, this.profile, getHostInfo(true, true, this.profile.getId()));
             c.setExpectsClosedConnection(true);
             c.setSupportsRandomTimeSeek(true);

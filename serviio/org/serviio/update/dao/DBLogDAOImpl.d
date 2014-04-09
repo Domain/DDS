@@ -23,7 +23,7 @@ public class DBLogDAOImpl : DBLogDAO
 
     public bool isScriptPresent(String fileScript)
     {
-        log.debug_(String.format("Checking if script '%s' has been run", cast(Object[])[ fileScript ]));
+        log.debug_(java.lang.String.format("Checking if script '%s' has been run", cast(Object[])[ fileScript ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -42,7 +42,7 @@ public class DBLogDAOImpl : DBLogDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot check if script '%s' has been run", cast(Object[])[ fileScript ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot check if script '%s' has been run", cast(Object[])[ fileScript ]), e);
         }
         finally
         {

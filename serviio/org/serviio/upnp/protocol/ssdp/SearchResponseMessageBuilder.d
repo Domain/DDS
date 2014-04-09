@@ -18,10 +18,10 @@ public class SearchResponseMessageBuilder : SSDPResponseMessageBuilder
     public List!(String) generateSSDPMessages(Integer duration, String searchTarget)
     {
         if ((duration is null) || (duration.intValue() < 0)) {
-            throw new InsufficientInformationException(String.format("Message duration includes invalid value: %s", cast(Object[])[ duration ]));
+            throw new InsufficientInformationException(java.lang.String.format("Message duration includes invalid value: %s", cast(Object[])[ duration ]));
         }
         if (ObjectValidator.isEmpty(searchTarget)) {
-            throw new InsufficientInformationException(String.format("Message searchTarget includes invalid value: %s", cast(Object[])[ searchTarget ]));
+            throw new InsufficientInformationException(java.lang.String.format("Message searchTarget includes invalid value: %s", cast(Object[])[ searchTarget ]));
         }
         List!(String) messages = new ArrayList();
         Device device = Device.getInstance();

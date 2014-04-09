@@ -60,7 +60,7 @@ public class Searcher
 
     public List!(SearchResultsHolder) search(String term, MediaFileType fileType, int offset, int count)
     {
-        log.debug_(String.format("Performing search for term '%s'", cast(Object[])[ term ]));
+        log.debug_(java.lang.String.format("Performing search for term '%s'", cast(Object[])[ term ]));
         openReader();
         IndexSearcher isearcher = new IndexSearcher(this.ireader);
         List!(SearchResultsHolder) results = new ArrayList();

@@ -49,7 +49,7 @@ public class DiscoverySSDPMessageListener : AbstractSSDPMessageListener, Runnabl
                 NicIP iface = getBoundNIC();
                 this.socket = MultiCastUtils.startMultiCastSocketForListening(Device.getInstance().getMulticastGroupAddress(), iface.getNic(), 4);
 
-                log.info(String.format("Starting DiscoverySSDPMessageListener using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(iface.getNic()), iface.getIp().getHostAddress(), Integer.valueOf(this.socket.getSoTimeout()) ]));
+                log.info(java.lang.String.format("Starting DiscoverySSDPMessageListener using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(iface.getNic()), iface.getIp().getHostAddress(), Integer.valueOf(this.socket.getSoTimeout()) ]));
 
                 this.workerRunning = true;
             }
@@ -126,13 +126,13 @@ public class DiscoverySSDPMessageListener : AbstractSSDPMessageListener, Runnabl
                 int timeToRespond = Integer.valueOf(headerMX.getValue()).intValue();
                 String searchTarget = headerST !is null ? headerST.getValue() : null;
                 if (log.isDebugEnabled()) {
-                    log.debug_(String.format("Received a valid M-SEARCH message for search target %s from address %ss", cast(Object[])[ searchTarget, receivedPacket.getSocketAddress().toString() ]));
+                    log.debug_(java.lang.String.format("Received a valid M-SEARCH message for search target %s from address %ss", cast(Object[])[ searchTarget, receivedPacket.getSocketAddress().toString() ]));
                 }
                 ThreadExecutor.execute(new DiscoverySearchResponder(receivedPacket.getSocketAddress(), this.advertisementDuration, timeToRespond, searchTarget));
             }
             catch (NumberFormatException e)
             {
-                log.warn(String.format("Provided MX value is invalid: %s. Will not respond to the request.", cast(Object[])[ headerMX.getValue() ]));
+                log.warn(java.lang.String.format("Provided MX value is invalid: %s. Will not respond to the request.", cast(Object[])[ headerMX.getValue() ]));
             }
         } else {
             log.debug_("The message is not a valid M-SEARCH request");
@@ -160,18 +160,18 @@ public class DiscoverySSDPMessageListener : AbstractSSDPMessageListener, Runnabl
 
                     String deviceIP = getDeviceIPAddress(descriptionURL, receivedPacket.getSocketAddress());
                     if (log.isDebugEnabled()) {
-                        log.debug_(String.format("Received a valid NOTIFY (%s) message from Renderer %s from address %s", cast(Object[])[ nts, deviceUuid, deviceIP ]));
+                        log.debug_(java.lang.String.format("Received a valid NOTIFY (%s) message from Renderer %s from address %s", cast(Object[])[ nts, deviceUuid, deviceIP ]));
                     }
                     ThreadExecutor.execute(new RendererAdvertisementProcessor(deviceIP, deviceUuid, nts, timeToKeep, descriptionURL, server));
                 }
                 else
                 {
-                    log.warn(String.format("Provided USN value is invalid: %s. Will not respond to the request.", cast(Object[])[ headerUSN.getValue() ]));
+                    log.warn(java.lang.String.format("Provided USN value is invalid: %s. Will not respond to the request.", cast(Object[])[ headerUSN.getValue() ]));
                 }
             }
             catch (NumberFormatException e)
             {
-                log.warn(String.format("Invalid header value: %s. Will not respond to the request.", cast(Object[])[ e.getMessage() ]));
+                log.warn(java.lang.String.format("Invalid header value: %s. Will not respond to the request.", cast(Object[])[ e.getMessage() ]));
             }
         }
     }

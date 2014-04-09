@@ -626,7 +626,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         int nearest = -1;
         int bestDistanceFoundYet = 2147483647;
-        for (Iterator i = validAudioBitrates.iterator(); i.hasNext();)
+        for (auto i = validAudioBitrates.iterator(); i.hasNext();)
         {
             int validRate = (cast(Integer)i.next()).intValue();
             int d = Math.abs(itemBitrate.intValue() - validRate);
@@ -684,7 +684,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static Integer getMaxNumberOfChannels(AudioCodec codec)
     {
-        if (codec !is null) {
+        if (codec != AudioCodec.UNKNOWN) {
             return cast(Integer)maxChannelNumber.get(codec);
         }
         return null;
@@ -760,7 +760,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static Tupple!(Integer, Integer) getResolutionForSquarePixels(Integer width, Integer height, SourceAspectRatio sar)
     {
-        return new Tupple(Integer.valueOf(Math.round(width.intValue() * sar.getSar().floatValue())), height);
+        return new Tupple!(Integer, Integer)(Integer.valueOf(Math.round(width.intValue() * sar.getSar().floatValue())), height);
     }
 
     protected static bool isVideoResolutionChangeRequired(Integer width, Integer height, Integer maxHeight, DisplayAspectRatio dar, VideoContainer targetContainer, SourceAspectRatio sar)
@@ -820,7 +820,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     private static String buildOnlineContentUrl(String url, bool live)
     {
         if ((url.startsWith("rtmp")) && (!live)) {
-            url = String.format("%s buffer=%s", cast(Object[])[ url, Integer.valueOf(100000000) ]);
+            url = java.lang.String.format("%s buffer=%s", cast(Object[])[ url, Integer.valueOf(100000000).toString() ]);
         }
         return url;
     }
@@ -833,7 +833,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         {
             String ver = m.group(1);
             ver = ver.replaceAll(" ", "");
-            return "Lavf" + ver;
+            return "Lavf" ~ ver;
         }
         log.warn("Could not work output FFmpeg default User-Agent");
         return null;
@@ -841,7 +841,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static void setupMaxChannelsMap()
     {
-        maxChannelNumber = new HashMap();
+        maxChannelNumber = new HashMap!(AudioCodec, Integer)();
         maxChannelNumber.put(AudioCodec.AC3, new Integer(6));
         maxChannelNumber.put(AudioCodec.MP2, new Integer(2));
         maxChannelNumber.put(AudioCodec.MP3, new Integer(2));
@@ -851,7 +851,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static void setupStringEncodingMap()
     {
-        stringEncoding = new LinkedHashMap();
+        stringEncoding = new LinkedHashMap!(String, String)();
         stringEncoding.put("\\\\", "/");
         stringEncoding.put("\\[", "\\\\[");
         stringEncoding.put("\\]", "\\\\]");
@@ -859,13 +859,11 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         stringEncoding.put(",", "\\\\,");
         stringEncoding.put("'", "\\\\\\\\\\\\\\\\\\\\\\\\\\\\'");
 
-        windowsStringEncoding = new LinkedHashMap();
+        windowsStringEncoding = new LinkedHashMap!(String, String)();
         windowsStringEncoding.put("\\\\", "/");
         windowsStringEncoding.put("\\[", "\\\\[");
         windowsStringEncoding.put("\\]", "\\\\]");
         windowsStringEncoding.put(",", "\\\\,");
-
-
 
         windowsStringEncoding.put(":", "\\\\\\\\:");
         windowsStringEncoding.put("'", "\\\\\\\\\\\\'");

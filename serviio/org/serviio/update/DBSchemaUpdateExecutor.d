@@ -56,7 +56,7 @@ public class DBSchemaUpdateExecutor
                 }
                 catch (IOException e)
                 {
-                    log.error(String.format("Cannot read script file %s", cast(Object[])[ scriptFile ]));
+                    log.error(java.lang.String.format("Cannot read script file %s", cast(Object[])[ scriptFile ]));
                 }
             }
             log.info("Cleaning temporary cache");

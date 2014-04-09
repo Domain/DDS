@@ -50,7 +50,7 @@ public class BrowsingCategoriesMessages
     public static void loadLocale(Locale locale)
     {
         selectedRb = ResourceBundle.getBundle("org.serviio.upnp.service.contentdirectory.definition.i18n.browsingCategories", locale, control);
-        log.info(String.format("Loaded browsing categories message bundle for locale: %s", cast(Object[])[ locale.toString() ]));
+        log.info(java.lang.String.format("Loaded browsing categories message bundle for locale: %s", cast(Object[])[ locale.toString() ]));
     }
 }
 

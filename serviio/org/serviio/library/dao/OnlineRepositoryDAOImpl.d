@@ -36,7 +36,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         if ((newInstance is null) || (newInstance.getRepositoryUrl() is null) || (newInstance.getFileType() is null) || (newInstance.getRepoType() is null)) {
             throw new InvalidArgumentException("Cannot create OnlineRepository. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new Repository (url = %s)", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]));
+        log.debug_(java.lang.String.format("Creating a new Repository (url = %s)", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -61,7 +61,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create OnlineRepository for url %s", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create OnlineRepository for url %s", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]), e);
         }
         finally
         {
@@ -72,7 +72,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public void delete_(Long id)
     {
-        log.debug_(String.format("Deleting an OnlineRepository (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting an OnlineRepository (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -87,7 +87,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete OnlineRepository with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -98,7 +98,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public OnlineRepository read(Long id)
     {
-        log.debug_(String.format("Reading an OnlineRepository (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading an OnlineRepository (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -111,11 +111,11 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
         }
         catch (MalformedURLException e)
         {
-            throw new PersistenceException(String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read OnlineRepository with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -129,7 +129,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         if ((transientObject is null) || (transientObject.getId() is null) || (transientObject.getRepositoryUrl() is null) || (transientObject.getFileType() is null) || (transientObject.getRepoType() is null)) {
             throw new InvalidArgumentException("Cannot update OnlineRepository. Required data is missing.");
         }
-        log.debug_(String.format("Updating OnlineRepository (id = %s)", cast(Object[])[ transientObject.getId() ]));
+        log.debug_(java.lang.String.format("Updating OnlineRepository (id = %s)", cast(Object[])[ transientObject.getId() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -155,7 +155,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot update OnlineRepository with id %s", cast(Object[])[ transientObject.getId() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot update OnlineRepository with id %s", cast(Object[])[ transientObject.getId() ]), e);
         }
         finally
         {
@@ -193,7 +193,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public List!(OnlineRepository) getRepositories(List!(OnlineRepositoryType) repoTypes, MediaFileType fileType, AccessGroup accessGroup, bool onlyEnabled)
     {
-        log.debug_(String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -214,11 +214,11 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
         }
         catch (MalformedURLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of OnlineRepositories for %s", cast(Object[])[ fileType ]), e);
         }
         finally
         {

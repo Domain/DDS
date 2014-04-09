@@ -81,7 +81,7 @@ public class ProcessExecutor : Thread
         Thread faisafeThread = null;
         try
         {
-            log.debug_("Starting " + CollectionUtils.arrayToCSV(this.commandArguments, " "));
+            log.debug_("Starting " ~ CollectionUtils.arrayToCSV(this.commandArguments, " "));
 
             ProcessBuilder processBuilder = new ProcessBuilder(ProcessExecutorParameter.stringParameters(this.commandArguments));
             Map!(String, String) env = processBuilder.environment();
@@ -107,7 +107,7 @@ public class ProcessExecutor : Thread
             this.stderrReader.start();
             this.stdoutReader.start();
             if (this.failsafeTimeout !is null) {
-                faisafeThread = makeFailSafe(this.failsafeTimeout);
+                faisafeThread = makeFailSafe(cast(immutable)this.failsafeTimeout);
             }
             try
             {
@@ -122,7 +122,7 @@ public class ProcessExecutor : Thread
                     if ((this.process !is null) && (this.process.exitValue() != 0))
                     {
                         StringBuffer errorMessage = new StringBuffer();
-                        errorMessage.append(String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
+                        errorMessage.append(java.lang.String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
                         String last5Lines = this.stderrReader.getLast5Lines();
                         if (ObjectValidator.isNotEmpty(last5Lines)) {
                             errorMessage.append(" Detailed output follows.").append(StringUtils.LINE_SEPARATOR).append(last5Lines);
@@ -139,7 +139,7 @@ public class ProcessExecutor : Thread
                 }
                 catch (IllegalThreadStateException e)
                 {
-                    log.error(String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
+                    log.error(java.lang.String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
                 }
             } else if (!this.destroyed) {
                 notifyListenersEnd(Boolean.valueOf(true));
@@ -152,7 +152,7 @@ public class ProcessExecutor : Thread
         }
         catch (Exception e)
         {
-            log.error("Fatal error in process starting: " + e.getMessage(), e);
+            log.error("Fatal error in process starting: " ~ e.getMessage(), e);
             this.success = false;
             stopProcess(false);
             if ((!this.destroyed) && (this.checkForExitValue)) {
@@ -161,7 +161,7 @@ public class ProcessExecutor : Thread
                     if ((this.process !is null) && (this.process.exitValue() != 0))
                     {
                         StringBuffer errorMessage = new StringBuffer();
-                        errorMessage.append(String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
+                        errorMessage.append(java.lang.String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
                         String last5Lines = this.stderrReader.getLast5Lines();
                         if (ObjectValidator.isNotEmpty(last5Lines)) {
                             errorMessage.append(" Detailed output follows.").append(StringUtils.LINE_SEPARATOR).append(last5Lines);
@@ -178,7 +178,7 @@ public class ProcessExecutor : Thread
                 }
                 catch (IllegalThreadStateException e)
                 {
-                    log.error(String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
+                    log.error(java.lang.String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
                 }
             } else if (!this.destroyed) {
                 notifyListenersEnd(Boolean.valueOf(true));
@@ -192,12 +192,12 @@ public class ProcessExecutor : Thread
         finally
         {
             if ((!this.destroyed) && (this.checkForExitValue)) {
-                try
+                //try
                 {
                     if ((this.process !is null) && (this.process.exitValue() != 0))
                     {
                         StringBuffer errorMessage = new StringBuffer();
-                        errorMessage.append(String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
+                        errorMessage.append(java.lang.String.format("Process %s has a return code of %s! This is a possible error.", cast(Object[])[ this.commandArguments[0], Integer.valueOf(this.process.exitValue()) ]));
                         String last5Lines = this.stderrReader.getLast5Lines();
                         if (ObjectValidator.isNotEmpty(last5Lines)) {
                             errorMessage.append(" Detailed output follows.").append(StringUtils.LINE_SEPARATOR).append(last5Lines);
@@ -212,10 +212,10 @@ public class ProcessExecutor : Thread
                         notifyListenersEnd(Boolean.valueOf(true));
                     }
                 }
-                catch (IllegalThreadStateException e)
-                {
-                    log.error(String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
-                }
+                //catch (IllegalThreadStateException e)
+                //{
+                //    log.error(java.lang.String.format("Error during finishing process execution: %s", cast(Object[])[ e.getMessage() ]));
+                //}
             } else if (!this.destroyed) {
                 notifyListenersEnd(Boolean.valueOf(true));
             }
@@ -237,7 +237,7 @@ public class ProcessExecutor : Thread
     {
         if ((this.process !is null) && (!this.destroyed))
         {
-            log.debug_(String.format("Stopping external process: %s", cast(Object[])[ this ]));
+            log.debug_(java.lang.String.format("Stopping external process: %s", cast(Object[])[ this ]));
             ProcessUtils.destroy(this.process);
             this.destroyed = true;
             closeStreams();
@@ -274,7 +274,7 @@ public class ProcessExecutor : Thread
             return reader.getResults();
         }
         log.warn("Cannot retrieve results, output reader is null");
-        return Collections.emptyList();
+        return Collections.emptyList!(String)();
     }
 
     public bool isSuccess()
@@ -291,18 +291,18 @@ public class ProcessExecutor : Thread
 
     private Map!(String, String) createOSXRuntimeEnvironmentVariables()
     {
-        Map!(String, String) newEnv = new HashMap();
+        Map!(String, String) newEnv = new HashMap!(String, String)();
         newEnv.putAll(System.getenv());
         newEnv.putAll(createFontConfigRuntimeEnvironmentVariables());
         if (log.isTraceEnabled()) {
-            log.trace(String.format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
+            log.trace(java.lang.String.format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
         }
         return newEnv;
     }
 
     private Map!(String, String) createWindowsRuntimeEnvironmentVariables()
     {
-        Map!(String, String) newEnv = new HashMap();
+        Map!(String, String) newEnv = new HashMap!(String, String)();
         newEnv.putAll(System.getenv());
         ProcessExecutorParameter[] i18n = new ProcessExecutorParameter[this.commandArguments.length + 2];
         i18n[0] = new ProcessExecutorParameter("cmd");
@@ -310,8 +310,8 @@ public class ProcessExecutor : Thread
         for (int counter = 0; counter < this.commandArguments.length; counter++)
         {
             ProcessExecutorParameter argument = this.commandArguments[counter];
-            String envName = "JENV_" + counter;
-            i18n[(counter + 2)] = new ProcessExecutorParameter("%" + envName + "%");
+            String envName = "JENV_" ~ counter.toString();
+            i18n[(counter + 2)] = new ProcessExecutorParameter("%" ~ envName ~ "%");
             bool quotesNeeded = quotesNeededForWindows(argument);
             if ((!quotesNeeded) && (!argument.isQuoted())) {
                 argument = new ProcessExecutorParameter(escapeAmpersandForWindows(argument.getValue()));
@@ -324,14 +324,14 @@ public class ProcessExecutor : Thread
         newEnv.put("HOMEPATH", tempPath[1]);
         newEnv.putAll(createFontConfigRuntimeEnvironmentVariables());
         if (log.isTraceEnabled()) {
-            log.trace(String.format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
+            log.trace(java.lang.String.format("Env variables: %s", cast(Object[])[ newEnv.toString() ]));
         }
         return newEnv;
     }
 
     private String wrapInQuotes(ProcessExecutorParameter argument, bool quotesNeeded)
     {
-        return (quotesNeeded ? "\"" : "") + argument + (quotesNeeded ? "\"" : "");
+        return (quotesNeeded ? "\"" : "") ~ argument.toString() ~ (quotesNeeded ? "\"" : "");
     }
 
     protected bool quotesNeededForWindows(ProcessExecutorParameter argument)
@@ -347,13 +347,13 @@ public class ProcessExecutor : Thread
 
     private Map!(String, String) createFontConfigRuntimeEnvironmentVariables()
     {
-        Map!(String, String) newEnv = new HashMap();
+        Map!(String, String) newEnv = new HashMap!(String, String)();
         newEnv.put("FONTCONFIG_FILE", "fonts.conf");
         newEnv.put("FONTCONFIG_PATH", SubtitlesService.FONT_CONFIG_DIR);
         return newEnv;
     }
 
-    private Thread makeFailSafe(immutable Long timeout)
+    private Thread makeFailSafe(const Long timeout)
     {
         Runnable r = new class() Runnable {
             public void run()

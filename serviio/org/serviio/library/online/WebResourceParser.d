@@ -38,7 +38,7 @@ public class WebResourceParser : AbstractOnlineItemParser
 
     public WebResourceFeed parse(URL resourceUrl, Long onlineRepositoryId, MediaFileType fileType)
     {
-        this.log.debug_(String.format("Parsing web resource '%s'", cast(Object[])[ resourceUrl ]));
+        this.log.debug_(java.lang.String.format("Parsing web resource '%s'", cast(Object[])[ resourceUrl ]));
         WebResourceFeed resource = new WebResourceFeed(onlineRepositoryId);
 
         WebResourceUrlExtractor suitablePlugin = cast(WebResourceUrlExtractor)findSuitableExtractorPlugin(resourceUrl, OnlineRepositoryType.WEB_RESOURCE);
@@ -51,7 +51,7 @@ public class WebResourceParser : AbstractOnlineItemParser
             }
             catch (Throwable e)
             {
-                throw new OnlineResourceParseException(String.format("Unexpected error while invoking plugin (%s): %s", cast(Object[])[ suitablePlugin.getExtractorName(), e.getMessage() ]), e);
+                throw new OnlineResourceParseException(java.lang.String.format("Unexpected error while invoking plugin (%s): %s", cast(Object[])[ suitablePlugin.getExtractorName(), e.getMessage() ]), e);
             }
             if (container !is null)
             {
@@ -73,19 +73,19 @@ public class WebResourceParser : AbstractOnlineItemParser
             }
             else
             {
-                throw new OnlineResourceParseException(String.format("Plugin %s returned null container", cast(Object[])[ suitablePlugin.getExtractorName() ]));
+                throw new OnlineResourceParseException(java.lang.String.format("Plugin %s returned null container", cast(Object[])[ suitablePlugin.getExtractorName() ]));
             }
         }
         else
         {
-            throw new MissingPluginException(String.format("No plugin for web resource %s has been found.", cast(Object[])[ resourceUrl.toString() ]));
+            throw new MissingPluginException(java.lang.String.format("No plugin for web resource %s has been found.", cast(Object[])[ resourceUrl.toString() ]));
         }
         return resource;
     }
 
     public synchronized void cleanItemCache(String resourceUrl)
     {
-        this.log.debug_(String.format("Removing all items from parsed items' cache for resource: %s", cast(Object[])[ resourceUrl ]));
+        this.log.debug_(java.lang.String.format("Removing all items from parsed items' cache for resource: %s", cast(Object[])[ resourceUrl ]));
         parsedItemsCache.remove(resourceUrl);
     }
 
@@ -100,7 +100,7 @@ public class WebResourceParser : AbstractOnlineItemParser
                 CachedItem cItem = cast(CachedItem)it.next();
                 if (cItem.cacheKey.opEquals(item.getParsedItemCacheKey()))
                 {
-                    this.log.debug_(String.format("Removing item with key '%s' from parsedItemsCache cache for resource: %s", cast(Object[])[ item.getCacheKey(), resourceUrl.toString() ]));
+                    this.log.debug_(java.lang.String.format("Removing item with key '%s' from parsedItemsCache cache for resource: %s", cast(Object[])[ item.getCacheKey(), resourceUrl.toString() ]));
                     it.remove();
                     break;
                 }
@@ -113,17 +113,17 @@ public class WebResourceParser : AbstractOnlineItemParser
         WebResourceFeedItem resourceItem = findInCache(resourceUrl, item.getCacheKey());
         if (resourceItem !is null)
         {
-            this.log.debug_(String.format("Item with key '%s' already found in the cache, skipping URL extraction", cast(Object[])[ item.getCacheKey() ]));
+            this.log.debug_(java.lang.String.format("Item with key '%s' already found in the cache, skipping URL extraction", cast(Object[])[ item.getCacheKey() ]));
             if (resourceItem.getOrder() != order) {
                 resourceItem.setOrder(order);
             }
             if (!resourceItem.isValidEssence())
             {
-                this.log.debug_(String.format("The cached item '%s' had its essence marked as invalid, setting it back to default to re-try essence validation", cast(Object[])[ resourceItem.getCacheKey() ]));
+                this.log.debug_(java.lang.String.format("The cached item '%s' had its essence marked as invalid, setting it back to default to re-try essence validation", cast(Object[])[ resourceItem.getCacheKey() ]));
                 resourceItem.setValidEssence(true);
             }
             resource.getItems().add(resourceItem);
-            this.log.debug_(String.format("Added cached resource item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), resourceItem.getTitle(), resourceItem.getContentUrl() ]));
+            this.log.debug_(java.lang.String.format("Added cached resource item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), resourceItem.getTitle(), resourceItem.getContentUrl() ]));
             return true;
         }
         resourceItem = new WebResourceFeedItem(resource, order);
@@ -135,7 +135,7 @@ public class WebResourceParser : AbstractOnlineItemParser
             }
             catch (Throwable e)
             {
-                this.log.debug_(String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), resourceItem.getTitle(), e.getMessage() ]), e);
+                this.log.debug_(java.lang.String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), resourceItem.getTitle(), e.getMessage() ]), e);
 
                 return false;
             }
@@ -149,18 +149,18 @@ public class WebResourceParser : AbstractOnlineItemParser
                 {
                     resourceItem.setParsedItemCacheKey(item.getCacheKey());
                     storeInCache(resourceUrl, resourceItem);
-                    this.log.debug_(String.format("Stored item with key '%s' to cache", cast(Object[])[ item.getCacheKey() ]));
+                    this.log.debug_(java.lang.String.format("Stored item with key '%s' to cache", cast(Object[])[ item.getCacheKey() ]));
                 }
-                this.log.debug_(String.format("Added resource item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), resourceItem.getTitle(), resourceItem.getContentUrl() ]));
+                this.log.debug_(java.lang.String.format("Added resource item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), resourceItem.getTitle(), resourceItem.getContentUrl() ]));
                 resource.getItems().add(resourceItem);
                 return true;
             }
-            this.log.debug_(String.format("Skipping web resource item '%s' because it's not of type %s", cast(Object[])[ resourceItem.getTitle(), fileType ]));
+            this.log.debug_(java.lang.String.format("Skipping web resource item '%s' because it's not of type %s", cast(Object[])[ resourceItem.getTitle(), fileType ]));
             return false;
         }
         catch (InvalidMetadataException e)
         {
-            this.log.debug_(String.format("Cannot add item of web resource %s because of invalid metadata. Message: %s", cast(Object[])[ resource.getTitle(), e.getMessage() ]));
+            this.log.debug_(java.lang.String.format("Cannot add item of web resource %s because of invalid metadata. Message: %s", cast(Object[])[ resource.getTitle(), e.getMessage() ]));
         }
         return false;
     }
@@ -175,7 +175,7 @@ public class WebResourceParser : AbstractOnlineItemParser
         }
         else
         {
-            this.log.warn(String.format("Plugin %s returned no value for resource item '%s'", cast(Object[])[ urlExtractor.getExtractorName(), resourceItem.getTitle() ]));
+            this.log.warn(java.lang.String.format("Plugin %s returned no value for resource item '%s'", cast(Object[])[ urlExtractor.getExtractorName(), resourceItem.getTitle() ]));
         }
     }
 
@@ -189,7 +189,7 @@ public class WebResourceParser : AbstractOnlineItemParser
             }
             catch (MalformedURLException e)
             {
-                this.log.warn(String.format("Malformed url of a web resource thumbnail (%s), skipping this thumbnail", cast(Object[])[ container.getThumbnailUrl() ]));
+                this.log.warn(java.lang.String.format("Malformed url of a web resource thumbnail (%s), skipping this thumbnail", cast(Object[])[ container.getThumbnailUrl() ]));
             }
         }
     }

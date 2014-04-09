@@ -35,7 +35,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         if ((newInstance is null) || (ObjectValidator.isEmpty(newInstance.getName()))) {
             throw new InvalidArgumentException("Cannot create Genre. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new Genre (name = %s)", cast(Object[])[ newInstance.getName() ]));
+        log.debug_(java.lang.String.format("Creating a new Genre (name = %s)", cast(Object[])[ newInstance.getName() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -49,7 +49,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create Genre with name %s", cast(Object[])[ newInstance.getName() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create Genre with name %s", cast(Object[])[ newInstance.getName() ]), e);
         }
         finally
         {
@@ -60,7 +60,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public void delete_(final Long id)
     {
-        log.debug_(String.format("Deleting a Genre (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting a Genre (id = %s)", cast(Object[])[ id ]));
         try
         {
             new class() JdbcExecutor {
@@ -75,13 +75,13 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete Genre with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete Genre with id = %s", cast(Object[])[ id ]), e);
         }
     }
 
     public Genre read(Long id)
     {
-        log.debug_(String.format("Reading a Genre (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a Genre (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -94,7 +94,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Genre with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Genre with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -110,7 +110,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public Genre findGenreByName(String name)
     {
-        log.debug_(String.format("Reading a Genre (name = %s)", cast(Object[])[ name ]));
+        log.debug_(java.lang.String.format("Reading a Genre (name = %s)", cast(Object[])[ name ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -123,7 +123,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Genre with name = %s", cast(Object[])[ name ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Genre with name = %s", cast(Object[])[ name ]), e);
         }
         finally
         {
@@ -134,7 +134,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public int getNumberOfMediaItems(Long genreId)
     {
-        log.debug_(String.format("Getting number of media items for genre %s", cast(Object[])[ genreId ]));
+        log.debug_(java.lang.String.format("Getting number of media items for genre %s", cast(Object[])[ genreId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -155,7 +155,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of media items for genre: %s ", cast(Object[])[ genreId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of media items for genre: %s ", cast(Object[])[ genreId ]), e);
         }
         finally
         {
@@ -166,7 +166,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public List!(Genre) retrieveGenres(MediaFileType fileType, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(String.format("Retrieving list of genres for %s (from=%s, count=%s)", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of genres for %s (from=%s, count=%s)", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -182,7 +182,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read list of genres for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of genres for %s", cast(Object[])[ fileType ]), e);
         }
         finally
         {
@@ -193,7 +193,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public int getGenreCount(MediaFileType fileType, bool filterOutSeries)
     {
-        log.debug_(String.format("Retrieving number of genres for %s", cast(Object[])[ fileType ]));
+        log.debug_(java.lang.String.format("Retrieving number of genres for %s", cast(Object[])[ fileType ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -213,7 +213,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read number of genres for %s", cast(Object[])[ fileType ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of genres for %s", cast(Object[])[ fileType ]), e);
         }
         finally
         {

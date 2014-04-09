@@ -31,7 +31,7 @@ public abstract class AudioExtractionStrategy
 
     public void extractMetadata(AudioMetadata metadata, AudioFile f, AudioHeader header, Tag tag)
     {
-        log.debug_(String.format("Extracting metadata of audio file: %s", cast(Object[])[ f.getFile().getAbsolutePath() ]));
+        log.debug_(java.lang.String.format("Extracting metadata of audio file: %s", cast(Object[])[ f.getFile().getAbsolutePath() ]));
         if (tag !is null)
         {
             metadata.setAlbum(getKey(tag, FieldKey.ALBUM));
@@ -57,7 +57,7 @@ public abstract class AudioExtractionStrategy
             }
             catch (NumberFormatException e)
             {
-                log.debug_(String.format("Invalid bitrate: %s", cast(Object[])[ Long.valueOf(bitrate) ]));
+                log.debug_(java.lang.String.format("Invalid bitrate: %s", cast(Object[])[ Long.valueOf(bitrate) ]));
             }
             metadata.setChannels(getNumberOfChannels(header));
             metadata.setSampleFrequency(Integer.valueOf(header.getSampleRateAsNumber()));

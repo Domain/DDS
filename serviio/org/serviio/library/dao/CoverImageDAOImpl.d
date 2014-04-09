@@ -1,6 +1,6 @@
 module org.serviio.library.dao.CoverImageDAOImpl;
 
-import java.lang.Long;
+import java.lang;
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +30,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         if ((newInstance is null) || (newInstance.getImageBytes() is null)) {
             throw new InvalidArgumentException("Cannot create CoverImage. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new ImageCover (length = %s)", cast(Object[])[ Integer.valueOf(newInstance.getImageBytes().length) ]));
+        log.debug_(java.lang.String.format("Creating a new ImageCover (length = %s)", cast(Object[])[ Integer.valueOf(newInstance.getImageBytes().length) ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -62,7 +62,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public void delete_(Long id)
     {
-        log.debug_(String.format("Deleting a CoverImage (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting a CoverImage (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -74,7 +74,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete CoverImage with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete CoverImage with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -85,7 +85,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public CoverImage read(Long id)
     {
-        log.debug_(String.format("Reading a CoverImage (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a CoverImage (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -98,7 +98,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read CoverImage with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read CoverImage with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -114,7 +114,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public Long getCoverImageForMusicAlbum(Long albumId)
     {
-        log.debug_(String.format("Reading a CoverImage for music album (id = %s)", cast(Object[])[ albumId ]));
+        log.debug_(java.lang.String.format("Reading a CoverImage for music album (id = %s)", cast(Object[])[ albumId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -133,7 +133,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read CoverImage for album id = %s", cast(Object[])[ albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read CoverImage for album id = %s", cast(Object[])[ albumId ]), e);
         }
         finally
         {
@@ -144,7 +144,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public Long getCoverImageForFolder(Long folderId, MediaFileType fileType)
     {
-        log.debug_(String.format("Reading a CoverImage for folder (id = %s)", cast(Object[])[ folderId ]));
+        log.debug_(java.lang.String.format("Reading a CoverImage for folder (id = %s)", cast(Object[])[ folderId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -164,7 +164,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read CoverImage for folder id = %s", cast(Object[])[ folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read CoverImage for folder id = %s", cast(Object[])[ folderId ]), e);
         }
         finally
         {
@@ -175,7 +175,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public Long getCoverImageForPerson(Long personId)
     {
-        log.debug_(String.format("Reading a CoverImage for person (id = %s)", cast(Object[])[ personId ]));
+        log.debug_(java.lang.String.format("Reading a CoverImage for person (id = %s)", cast(Object[])[ personId ]));
         Connection con = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
@@ -205,7 +205,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read CoverImage for person id = %s", cast(Object[])[ personId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read CoverImage for person id = %s", cast(Object[])[ personId ]), e);
         }
         finally
         {
@@ -217,7 +217,7 @@ public class CoverImageDAOImpl : CoverImageDAO
 
     public Long getCoverImageForRepository(Long repositoryId, MediaFileType fileType)
     {
-        log.debug_(String.format("Reading a CoverImage for repository (id = %s)", cast(Object[])[ repositoryId ]));
+        log.debug_(java.lang.String.format("Reading a CoverImage for repository (id = %s)", cast(Object[])[ repositoryId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -238,7 +238,7 @@ public class CoverImageDAOImpl : CoverImageDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read CoverImage for repository id = %s", cast(Object[])[ repositoryId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read CoverImage for repository id = %s", cast(Object[])[ repositoryId ]), e);
         }
         finally
         {

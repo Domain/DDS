@@ -56,25 +56,25 @@ public class ServiceEventSubscriptionRequestHandler : AbstractRequestHandler
                     {
                         if (notificationType !is null)
                         {
-                            this.log.debug_(String.format("ServiceEvent subscription request received for service %s", cast(Object[])[ serviceShortName ]));
+                            this.log.debug_(java.lang.String.format("ServiceEvent subscription request received for service %s", cast(Object[])[ serviceShortName ]));
                             subscriptionSetup(response, service, notificationType, callback, timeout is null ? null : resolveTimeout(timeout.getValue()));
                         }
                         else
                         {
-                            this.log.debug_(String.format("ServiceEvent renewal request received for service %s and subscription %s", cast(Object[])[ serviceShortName, sid ]));
+                            this.log.debug_(java.lang.String.format("ServiceEvent renewal request received for service %s and subscription %s", cast(Object[])[ serviceShortName, sid ]));
                             subscriptionRenewal(response, service, subscriptionId, timeout is null ? null : resolveTimeout(timeout.getValue()));
                         }
                     }
                     else
                     {
-                        this.log.debug_(String.format("ServiceEvent unsubscription request received for service %s and subscription %s", cast(Object[])[ serviceShortName, sid ]));
+                        this.log.debug_(java.lang.String.format("ServiceEvent unsubscription request received for service %s and subscription %s", cast(Object[])[ serviceShortName, sid ]));
                         subscriptionCancellation(response, service, subscriptionId);
                     }
                 }
             }
             else
             {
-                this.log.warn(String.format("Requested service %s doesn't exist", cast(Object[])[ serviceShortName ]));
+                this.log.warn(java.lang.String.format("Requested service %s doesn't exist", cast(Object[])[ serviceShortName ]));
                 response.setStatusCode(503);
             }
         }
@@ -103,7 +103,7 @@ public class ServiceEventSubscriptionRequestHandler : AbstractRequestHandler
         if (timeout !is null) {
             subscription.setDuration(timeout);
         }
-        this.log.debug_(String.format("Event subscription renewed for service %s and subscription %s", cast(Object[])[ service.getServiceId(), subscriptionUUID ]));
+        this.log.debug_(java.lang.String.format("Event subscription renewed for service %s and subscription %s", cast(Object[])[ service.getServiceId(), subscriptionUUID ]));
 
 
         generateSuccessfulSubscriptionResponse(response, subscription);
@@ -134,7 +134,7 @@ public class ServiceEventSubscriptionRequestHandler : AbstractRequestHandler
         Subscription subscription = service.getEventSubscription(deliveryURL);
         if (subscription !is null)
         {
-            this.log.debug_(String.format("Event subscription reused (uuid=%s) for service %s reporting to %s", cast(Object[])[ subscription.getUuid(), service.getServiceId(), deliveryURL.toString() ]));
+            this.log.debug_(java.lang.String.format("Event subscription reused (uuid=%s) for service %s reporting to %s", cast(Object[])[ subscription.getUuid(), service.getServiceId(), deliveryURL.toString() ]));
         }
         else
         {
@@ -146,7 +146,7 @@ public class ServiceEventSubscriptionRequestHandler : AbstractRequestHandler
             }
             subscription.setDuration(timeout);
             service.addEventSubscription(subscription);
-            this.log.debug_(String.format("Event subscription registered (uuid=%s) for service %s with duration %s reporting to %s", cast(Object[])[ subscription.getUuid(), service.getServiceId(), timeout, deliveryURL.toString() ]));
+            this.log.debug_(java.lang.String.format("Event subscription registered (uuid=%s) for service %s with duration %s reporting to %s", cast(Object[])[ subscription.getUuid(), service.getServiceId(), timeout, deliveryURL.toString() ]));
         }
         generateSuccessfulSubscriptionResponse(response, subscription);
 
@@ -170,7 +170,7 @@ public class ServiceEventSubscriptionRequestHandler : AbstractRequestHandler
             return;
         }
         service.removeEventSubscription(subscription);
-        this.log.debug_(String.format("Event subscription (uuid=%s) removed for service %s", cast(Object[])[ subscriptionUUID, service.getServiceId() ]));
+        this.log.debug_(java.lang.String.format("Event subscription (uuid=%s) removed for service %s", cast(Object[])[ subscriptionUUID, service.getServiceId() ]));
 
         response.setStatusCode(200);
     }

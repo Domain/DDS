@@ -97,7 +97,7 @@ public class LocalAddressResolverStrategy {
             return InetAddress.getByName(address);
         }
         catch (UnknownHostException e) {
-            LocalAddressResolverStrategy.log.warn(String.format("Cannot resolve IP address %s, will try other means", address));
+            LocalAddressResolverStrategy.log.warn(java.lang.String.format("Cannot resolve IP address %s, will try other means", address));
             return null;
         }
     }

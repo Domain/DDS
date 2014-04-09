@@ -22,7 +22,7 @@ public abstract class ImageExtractionStrategy
 
     public void extractMetadata(ImageMetadata metadata, ByteSource f)
     {
-        log.debug_(String.format("Extracting metadata of image file: %s", cast(Object[])[ f.getFilename() ]));
+        log.debug_(java.lang.String.format("Extracting metadata of image file: %s", cast(Object[])[ f.getFilename() ]));
         try
         {
             ImageInfo imageInfo = Imaging.getImageInfo(f.getInputStream(), f.getFilename());
@@ -36,11 +36,11 @@ public abstract class ImageExtractionStrategy
         }
         catch (ImageReadException e)
         {
-            throw new IOException(String.format("Cannot read file %s for metadata extraction: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]), e);
+            throw new IOException(java.lang.String.format("Cannot read file %s for metadata extraction: %s", cast(Object[])[ f.getFilename(), e.getMessage() ]), e);
         }
         catch (OutOfMemoryError e)
         {
-            throw new IOException(String.format("Cannot read file %s for metadata extraction because of out-of-memory error", cast(Object[])[ f.getFilename() ]), e);
+            throw new IOException(java.lang.String.format("Cannot read file %s for metadata extraction because of out-of-memory error", cast(Object[])[ f.getFilename() ]), e);
         }
     }
 

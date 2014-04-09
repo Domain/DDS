@@ -55,7 +55,7 @@ public class PortMapper
                         }
                         catch (Exception e)
                         {
-                            PortMapper.log.warn(String.format("Could not add port mapping to the router: %s", cast(Object[])[ e.getMessage() ]));
+                            PortMapper.log.warn(java.lang.String.format("Could not add port mapping to the router: %s", cast(Object[])[ e.getMessage() ]));
                         }
                     }
                 }
@@ -75,7 +75,7 @@ public class PortMapper
                     }
                     catch (Exception e)
                     {
-                        PortMapper.log.warn(String.format("Could not remove port mapping from the router: %s", cast(Object[])[ e.getMessage() ]));
+                        PortMapper.log.warn(java.lang.String.format("Could not remove port mapping from the router: %s", cast(Object[])[ e.getMessage() ]));
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class PortMapper
                         }
                         catch (Exception e)
                         {
-                            PortMapper.log.warn(String.format("Could not reset port mapping to the router: %s", cast(Object[])[ e.getMessage() ]), e);
+                            PortMapper.log.warn(java.lang.String.format("Could not reset port mapping to the router: %s", cast(Object[])[ e.getMessage() ]), e);
                         }
                     }
                 }

@@ -44,7 +44,7 @@ public class DiscoverySearchResponder : Runnable
             List!(String) messages = generateMessages();
             if (messages.size() > 0)
             {
-                log.debug_(String.format("Sending %s M-SEARCH response message(s) to %s", cast(Object[])[ Integer.valueOf(messages.size()), this.sourceAddress ]));
+                log.debug_(java.lang.String.format("Sending %s M-SEARCH response message(s) to %s", cast(Object[])[ Integer.valueOf(messages.size()), this.sourceAddress ]));
 
                 sendReply(messages);
             }

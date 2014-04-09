@@ -1,6 +1,7 @@
 module org.serviio.i18n.GetLocalizationMessageBundleControl;
 
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.util.Locale;
 import java.util.ResourceBundle:Control;
 

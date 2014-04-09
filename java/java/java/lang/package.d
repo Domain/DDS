@@ -12,6 +12,7 @@ public import java.lang.Double;
 public import java.lang.exceptions;
 public import java.lang.Float;
 public import java.lang.IllegalArgumentException;
+public import java.lang.IllegalThreadStateException;
 public import java.lang.InstantiationException;
 public import java.lang.Integer;
 public import java.lang.InterruptedException;

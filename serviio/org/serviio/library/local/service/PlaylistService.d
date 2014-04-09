@@ -43,7 +43,7 @@ public class PlaylistService : Service
 
     public static void addPlaylistToLibrary(ParsedPlaylist parsedPlaylist, Repository repository, String filePath, Date lastModified)
     {
-        log.debug_(String.format("Adding playlist into database: %s", cast(Object[])[ parsedPlaylist.getTitle() ]));
+        log.debug_(java.lang.String.format("Adding playlist into database: %s", cast(Object[])[ parsedPlaylist.getTitle() ]));
 
 
         Playlist playlist = new Playlist(parsedPlaylist.getTitle(), new HashSet(), filePath, lastModified, repository.getId());

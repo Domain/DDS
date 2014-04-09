@@ -42,7 +42,7 @@ public class Device
         this.uuid = generateDeviceUUID();
         this.descriptionURL = resolveDescriptionURL();
 
-        log.info(String.format("Created UPnP Device with UUID: %s, bound address: %s", cast(Object[])[ this.uuid, this.bindAddress.getHostAddress() ]));
+        log.info(java.lang.String.format("Created UPnP Device with UUID: %s, bound address: %s", cast(Object[])[ this.uuid, this.bindAddress.getHostAddress() ]));
     }
 
     public static synchronized Device getInstance()
@@ -58,7 +58,7 @@ public class Device
     public void refreshBoundIPAddress()
     {
         setupBindAddress();
-        log.info(String.format("Updated bound IP address of Device with UUID: %s, bound address: %s", cast(Object[])[ this.uuid, this.bindAddress.getHostAddress() ]));
+        log.info(java.lang.String.format("Updated bound IP address of Device with UUID: %s, bound address: %s", cast(Object[])[ this.uuid, this.bindAddress.getHostAddress() ]));
     }
 
     public Service getServiceById(String serviceId)

@@ -101,7 +101,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
 
     protected void searchForRemovedAndUpdatedFiles(Repository repository)
     {
-        log.debug_(String.format("Looking for removed/updated files in repository: %s", cast(Object[])[ repository.getFolder() ]));
+        log.debug_(java.lang.String.format("Looking for removed/updated files in repository: %s", cast(Object[])[ repository.getFolder() ]));
 
         List!(MediaItem) items = MediaService.getMediaItemsInRepository(repository.getId());
         Iterator!(MediaItem) itemsIt = items.iterator();
@@ -113,7 +113,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
             if ((mediaFile !is null) && (!mediaFile.exists())) {
                 try
                 {
-                    log.info(String.format("Removing '%s' (%s) from Library", cast(Object[])[ item.getTitle(), mediaFile.getPath() ]));
+                    log.info(java.lang.String.format("Removing '%s' (%s) from Library", cast(Object[])[ item.getTitle(), mediaFile.getPath() ]));
                     if (item.getFileType() == MediaFileType.AUDIO) {
                         AudioService.removeMusicTrackFromLibrary(item.getId());
                     } else if (item.getFileType() == MediaFileType.VIDEO) {
@@ -125,7 +125,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
                 }
                 catch (Exception e)
                 {
-                    log.warn(String.format("Cannot remove item %s from Library. Message: %s", cast(Object[])[ item.getTitle(), e.getMessage() ]), e);
+                    log.warn(java.lang.String.format("Cannot remove item %s from Library. Message: %s", cast(Object[])[ item.getTitle(), e.getMessage() ]), e);
                 }
             } else if ((Configuration.isSearchUpdatedFiles()) && (!item.isDirty())) {
                 try
@@ -150,7 +150,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
                 }
                 catch (Exception e)
                 {
-                    log.warn(String.format("Cannot search for updated metadata for title %s. Message: %s", cast(Object[])[ item.getTitle(), e.getMessage() ]), e);
+                    log.warn(java.lang.String.format("Cannot search for updated metadata for title %s. Message: %s", cast(Object[])[ item.getTitle(), e.getMessage() ]), e);
                 }
             }
         }
@@ -158,7 +158,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
 
     protected void searchForRemovedPlaylists(Repository repository)
     {
-        log.debug_(String.format("Looking for removed playlist files in repository: %s", cast(Object[])[ repository.getFolder() ]));
+        log.debug_(java.lang.String.format("Looking for removed playlist files in repository: %s", cast(Object[])[ repository.getFolder() ]));
 
         List!(Playlist) playlists = PlaylistService.getPlaylistsInRepository(repository.getId());
         Iterator!(Playlist) playlistIt = playlists.iterator();
@@ -170,14 +170,14 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
             if ((playlistFile !is null) && (!playlistFile.exists())) {
                 try
                 {
-                    log.info(String.format("Removing playlist '%s' (%s) from Library", cast(Object[])[ playlist.getTitle(), FileUtils.getProperFilePath(playlistFile) ]));
+                    log.info(java.lang.String.format("Removing playlist '%s' (%s) from Library", cast(Object[])[ playlist.getTitle(), FileUtils.getProperFilePath(playlistFile) ]));
 
                     PlaylistService.detetePlaylistAndItems(playlist.getId());
                     notifyListenersRemove(null, playlistFile.getName());
                 }
                 catch (Exception e)
                 {
-                    log.warn(String.format("Cannot remove playlist %s from Library. Message: %s", cast(Object[])[ playlist.getTitle(), e.getMessage() ]), e);
+                    log.warn(java.lang.String.format("Cannot remove playlist %s from Library. Message: %s", cast(Object[])[ playlist.getTitle(), e.getMessage() ]), e);
                 }
             }
         }
@@ -188,7 +188,7 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
         List!(MediaItem) mediaItems = MediaService.getDirtyMediaItemsInRepository(repository.getId());
         if (mediaItems.size() > 0)
         {
-            log.debug_(String.format("Updating dirty metadata for repository: %s", cast(Object[])[ repository.getFolder() ]));
+            log.debug_(java.lang.String.format("Updating dirty metadata for repository: %s", cast(Object[])[ repository.getFolder() ]));
             Iterator!(MediaItem) mediaItemsIt = mediaItems.iterator();
             while ((this.workerRunning) && (mediaItemsIt.hasNext()))
             {
@@ -222,11 +222,11 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
                             }
                             else
                             {
-                                log.error(String.format("Error during update metadata extraction for file %s. Metadata mismatch.", new Object[0]), mediaFile.getName());
+                                log.error(java.lang.String.format("Error during update metadata extraction for file %s. Metadata mismatch.", new Object[0]), mediaFile.getName());
                             }
                             if (updated)
                             {
-                                log.info(String.format("Updated '%s' (%s) in Library", cast(Object[])[ mediaItem.getTitle(), mediaFile.getPath() ]));
+                                log.info(java.lang.String.format("Updated '%s' (%s) in Library", cast(Object[])[ mediaItem.getTitle(), mediaFile.getPath() ]));
                                 notifyListenersUpdate(fileType, mediaFile.getName());
                             }
                         }
@@ -234,11 +234,11 @@ public class LibraryUpdatesCheckerThread : AbstractLibraryCheckerThread
                 }
                 catch (InvalidMetadataException ime)
                 {
-                    log.warn(String.format("Cannot update file %s in library because of invalid metadata. Message: %s", cast(Object[])[ mediaItem.getTitle(), ime.getMessage() ]));
+                    log.warn(java.lang.String.format("Cannot update file %s in library because of invalid metadata. Message: %s", cast(Object[])[ mediaItem.getTitle(), ime.getMessage() ]));
                 }
                 catch (Exception e)
                 {
-                    log.warn(String.format("Cannot update file %s in library because of an unexpected error. Message: %s", cast(Object[])[ mediaItem.getTitle(), e.getMessage() ]), e);
+                    log.warn(java.lang.String.format("Cannot update file %s in library because of an unexpected error. Message: %s", cast(Object[])[ mediaItem.getTitle(), e.getMessage() ]), e);
                 }
             }
         }

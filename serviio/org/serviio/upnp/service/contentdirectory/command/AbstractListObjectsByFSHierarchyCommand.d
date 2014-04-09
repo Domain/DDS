@@ -122,7 +122,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
                 List!(Resource) res = ResourceValuesBuilder.buildResources(item, this.rendererProfile);
                 return DirectoryObjectBuilder.createInstance(this.itemClassType, values, res, itemId, this.disablePresentationSettings);
             }
-            throw new ObjectNotFoundException(String.format("MediaItem with id %s not found in CDS", cast(Object[])[ itemId ]));
+            throw new ObjectNotFoundException(java.lang.String.format("MediaItem with id %s not found in CDS", cast(Object[])[ itemId ]));
         }
         Long folderId = getFolderId();
         if (folderId !is null)
@@ -134,7 +134,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
 
                 return DirectoryObjectBuilder.createInstance(this.containerClassType, values, getContainerResources(values, folderId, this.rendererProfile), folderId, this.disablePresentationSettings);
             }
-            throw new ObjectNotFoundException(String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
+            throw new ObjectNotFoundException(java.lang.String.format("Folder with id %s not found in CDS", cast(Object[])[ folderId ]));
         }
         Long repositoryId = getRepositoryId();
         Repository repository = RepositoryService.getRepository(repositoryId);
@@ -144,7 +144,7 @@ public abstract class AbstractListObjectsByFSHierarchyCommand : AbstractCommand!
 
             return DirectoryObjectBuilder.createInstance(this.containerClassType, values, getContainerResources(values, repositoryId, this.rendererProfile), repositoryId, this.disablePresentationSettings);
         }
-        throw new ObjectNotFoundException(String.format("Repository with id %s not found in CDS", cast(Object[])[ this.objectId ]));
+        throw new ObjectNotFoundException(java.lang.String.format("Repository with id %s not found in CDS", cast(Object[])[ this.objectId ]));
     }
 
     public int retrieveItemCount()

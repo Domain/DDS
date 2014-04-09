@@ -56,7 +56,7 @@ public abstract class AbstractEntityItemCommand(E : PersistedEntity) : AbstractC
             List!(Resource) res = generateResourcesForEntity(entity);
             return cast(Item)DirectoryObjectBuilder.createInstance(this.itemClassType, values, res, entity.getId(), this.disablePresentationSettings);
         }
-        throw new ObjectNotFoundException(String.format("Object with id %s not found in CDS", cast(Object[])[ this.objectId ]));
+        throw new ObjectNotFoundException(java.lang.String.format("Object with id %s not found in CDS", cast(Object[])[ this.objectId ]));
     }
 
     override protected Set!(ObjectType) getSupportedObjectTypes()

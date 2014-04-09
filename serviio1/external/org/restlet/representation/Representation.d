@@ -2,7 +2,6 @@
 module org.restlet.representation.Representation;
 
 import java.lang.exceptions;
-import java.io.InputStream;
 
 public class Representation
 {
@@ -10,6 +9,4 @@ public class Representation
     {
         implMissing();
     }
-
-    public abstract InputStream getStream();
 }

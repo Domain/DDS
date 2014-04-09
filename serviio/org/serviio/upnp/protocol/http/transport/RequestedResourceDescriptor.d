@@ -44,7 +44,7 @@ public class RequestedResourceDescriptor
         }
         catch (Exception e)
         {
-            throw new InvalidResourceRequestException(String.format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
+            throw new InvalidResourceRequestException(java.lang.String.format("Invalid incoming request: %s", cast(Object[])[ requestUri ]), e);
         }
     }
 

@@ -170,14 +170,14 @@ public class LibraryManager : AbstractLibraryManager
                     LocalItemMetadata metadata = extractor.extract(mediaFile, fileType, repository);
                     if (metadata !is null)
                     {
-                        log.debug_(String.format("Metadata found via extractor %s: %s", cast(Object[])[ extractor.getExtractorType(), metadata.toString() ]));
+                        log.debug_(java.lang.String.format("Metadata found via extractor %s: %s", cast(Object[])[ extractor.getExtractorType(), metadata.toString() ]));
                         metadataList.add(metadata);
                     }
                 }
             }
             catch (MetadataSourceNotAccessibleException e)
             {
-                log.warn(String.format("Extractor %s failed to connect to metadata source for file %s, will try again later: %s", cast(Object[])[ extractor.getExtractorType(), mediaFile.getPath(), e.getMessage() ]));
+                log.warn(java.lang.String.format("Extractor %s failed to connect to metadata source for file %s, will try again later: %s", cast(Object[])[ extractor.getExtractorType(), mediaFile.getPath(), e.getMessage() ]));
 
                 dirtyMetadata = true;
             }
@@ -185,15 +185,15 @@ public class LibraryManager : AbstractLibraryManager
             {
                 if (extractor.getExtractorType() == ExtractorType.EMBEDDED)
                 {
-                    log.warn(String.format("Skipping processing metadata for an unsupported file (%s). Message: %s", cast(Object[])[ mediaFile.getName(), e.getMessage() ]));
+                    log.warn(java.lang.String.format("Skipping processing metadata for an unsupported file (%s). Message: %s", cast(Object[])[ mediaFile.getName(), e.getMessage() ]));
 
                     return null;
                 }
-                log.debug_(String.format("Skipping processing metadata for an unsupported file (%s). Message: %s", cast(Object[])[ mediaFile.getName(), e.getMessage() ]));
+                log.debug_(java.lang.String.format("Skipping processing metadata for an unsupported file (%s). Message: %s", cast(Object[])[ mediaFile.getName(), e.getMessage() ]));
             }
             catch (IOException e)
             {
-                log.warn(String.format("Cannot read metadata of file %s via extractor %s. Message: %s", cast(Object[])[ mediaFile.getPath(), extractor.getExtractorType(), e.getMessage() ]));
+                log.warn(java.lang.String.format("Cannot read metadata of file %s via extractor %s. Message: %s", cast(Object[])[ mediaFile.getPath(), extractor.getExtractorType(), e.getMessage() ]));
                 if (extractor.getExtractorType() == ExtractorType.EMBEDDED) {
                     return null;
                 }
@@ -205,7 +205,7 @@ public class LibraryManager : AbstractLibraryManager
 
     public void forceMetadataUpdate(MediaFileType fileType)
     {
-        log.info(String.format("Forcing metadata update for '%s' media files", cast(Object[])[ fileType ]));
+        log.info(java.lang.String.format("Forcing metadata update for '%s' media files", cast(Object[])[ fileType ]));
         MediaService.markMediaItemsAsDirty(fileType);
     }
 

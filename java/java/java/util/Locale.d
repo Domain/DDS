@@ -24,6 +24,7 @@ class Locale : Cloneable {
     static Locale TRADITIONAL_CHINESE;
     static Locale UK;
     static Locale US;
+    static Locale ROOT;
 
     this(String language){
         implMissing(__FILE__, __LINE__);

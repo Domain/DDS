@@ -21,7 +21,7 @@ public class ServiceDescriptionRequestHandler : AbstractDescriptionRequestHandle
         String serviceShortName = requestFields[0];
         if (serviceShortName !is null)
         {
-            this.log.debug_(String.format("ServiceDescription request received for service %s", cast(Object[])[ serviceShortName ]));
+            this.log.debug_(java.lang.String.format("ServiceDescription request received for service %s", cast(Object[])[ serviceShortName ]));
 
 
             Device device = Device.getInstance();
@@ -49,13 +49,13 @@ public class ServiceDescriptionRequestHandler : AbstractDescriptionRequestHandle
                 else
                 {
                     response.setStatusCode(404);
-                    this.log.debug_(String.format("Service with name %s is not supported, sending back 404 error", cast(Object[])[ serviceShortName ]));
+                    this.log.debug_(java.lang.String.format("Service with name %s is not supported, sending back 404 error", cast(Object[])[ serviceShortName ]));
                 }
             }
             else
             {
                 response.setStatusCode(404);
-                this.log.debug_(String.format("Service with name %s doesn't exist in the root device, sending back 404 error", cast(Object[])[ serviceShortName ]));
+                this.log.debug_(java.lang.String.format("Service with name %s doesn't exist in the root device, sending back 404 error", cast(Object[])[ serviceShortName ]));
             }
         }
     }

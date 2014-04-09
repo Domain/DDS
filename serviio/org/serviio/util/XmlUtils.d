@@ -78,12 +78,12 @@ public class XmlUtils
         }
         catch (SAXException e)
         {
-            log.error(String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
+            log.error(java.lang.String.format("XML %s didn't pass validation, reason: %s", cast(Object[])[ xmlId, e.getLocalizedMessage() ]));
             return false;
         }
         catch (IOException e)
         {
-            log.error(String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
+            log.error(java.lang.String.format("Cannot validate XML %s, reason: %s", cast(Object[])[ xmlId, e.getMessage() ]));
         }
         return false;
     }

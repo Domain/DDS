@@ -11,6 +11,11 @@ public class StringBuilder
         implMissing();
     }
 
+    public this(String)
+    {
+        implMissing();
+    }
+
     public StringBuilder append(String)
     {
         implMissing();

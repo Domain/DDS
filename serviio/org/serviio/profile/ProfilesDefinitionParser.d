@@ -110,7 +110,7 @@ public class ProfilesDefinitionParser
         }
         catch (UnknownHostException e)
         {
-            log.warn(String.format("Cannot get name of the local computer: %s", cast(Object[])[ e.getMessage() ]));
+            log.warn(java.lang.String.format("Cannot get name of the local computer: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 
@@ -144,11 +144,11 @@ public class ProfilesDefinitionParser
         }
         catch (JDOMException e)
         {
-            throw new ProfilesDefinitionException(String.format("Cannot read Profiles XML. Reason: %s", cast(Object[])[ e.getMessage() ]));
+            throw new ProfilesDefinitionException(java.lang.String.format("Cannot read Profiles XML. Reason: %s", cast(Object[])[ e.getMessage() ]));
         }
         catch (IOException e)
         {
-            throw new ProfilesDefinitionException(String.format("Cannot read Profiles XML. Reason: %s", cast(Object[])[ e.getMessage() ]));
+            throw new ProfilesDefinitionException(java.lang.String.format("Cannot read Profiles XML. Reason: %s", cast(Object[])[ e.getMessage() ]));
         }
     }
 
@@ -163,9 +163,9 @@ public class ProfilesDefinitionParser
         String id = profileNode.getAttributeValue("id");
         if (ObjectValidator.isNotEmpty(id))
         {
-            log.debug_(String.format("Parsing profile definition for profile %s", cast(Object[])[ id ]));
+            log.debug_(java.lang.String.format("Parsing profile definition for profile %s", cast(Object[])[ id ]));
             if (getProfileById(profiles, id) !is null) {
-                throw new ProfilesDefinitionException(String.format("Duplicate profile id %s", cast(Object[])[ id ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Duplicate profile id %s", cast(Object[])[ id ]));
             }
             Profile parentProfile = null;
             String extendsProfileId = profileNode.getAttributeValue("extendsProfileId");
@@ -173,7 +173,7 @@ public class ProfilesDefinitionParser
             {
                 parentProfile = getProfileById(profiles, extendsProfileId);
                 if (parentProfile is null) {
-                    throw new ProfilesDefinitionException(String.format("Profile %s cannot find profile with id %s to extend from. The parent profile must be defined before this profile.", cast(Object[])[ id, extendsProfileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Profile %s cannot find profile with id %s to extend from. The parent profile must be defined before this profile.", cast(Object[])[ id, extendsProfileId ]));
                 }
             }
             String h264LevelCheckTypeValue = profileNode.getChildText("H264LevelCheck");
@@ -210,7 +210,7 @@ public class ProfilesDefinitionParser
             Profile profile = new Profile(id, name, (cdMessageBuilderClass is null) && (parentProfile !is null) ? parentProfile.getContentDirectoryMessageBuilder() : cdMessageBuilderClass, (resourceTrasportProtocolHandler is null) && (parentProfile !is null) ? parentProfile.getResourceTransportProtocolHandler() : resourceTrasportProtocolHandler, detectionDefinitions, protocolInfos, protocolInfoType, deviceDescription, (contentDirectoryDefinitionFilter is null) && (parentProfile !is null) ? parentProfile.getContentDirectoryDefinitionFilter() : contentDirectoryDefinitionFilter, transcodeConfig, onlineTranscodeConfig, hardSubsTranscodeConfig, (ObjectValidator.isEmpty(automaticImageRotation)) && (parentProfile !is null) ? parentProfile.isAutomaticImageRotation() : Boolean.parseBoolean(automaticImageRotation), (ObjectValidator.isEmpty(limitImageResolution)) && (parentProfile !is null) ? parentProfile.isLimitImageResolution() : Boolean.parseBoolean(limitImageResolution), (subtitlesConfiguration is null) && (parentProfile !is null) ? parentProfile.getSubtitlesConfiguration() : subtitlesConfiguration, Boolean.parseBoolean(alwaysEnableTranscoding), selectable !is null ? Boolean.parseBoolean(selectable) : true, getAlternativeDeliveryQualities(id, profileNode, h264LevelCheckType), h264LevelCheckType, thumbnailsResolution, getAllowedImageResolutions(profileNode, parentProfile));
             if (validateProfile(profile))
             {
-                log.info(String.format("Added profile '%s' (id=%s)", cast(Object[])[ name, id ]));
+                log.info(java.lang.String.format("Added profile '%s' (id=%s)", cast(Object[])[ name, id ]));
                 return profile;
             }
             throw new ProfilesDefinitionException("Profile validation failed. Check the log.");
@@ -226,13 +226,13 @@ public class ProfilesDefinitionParser
             {
                 Class/*!(?)*/ clazz = Class.forName(className.trim());
                 if (!ContentDirectoryMessageBuilder.class_.isAssignableFrom(clazz)) {
-                    throw new ProfilesDefinitionException(String.format("Class %s defining ContentDirectoryMessageBuilder for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ContentDirectoryMessageBuilder for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
                 }
                 return clazz;
             }
             catch (ClassNotFoundException e)
             {
-                throw new ProfilesDefinitionException(String.format("Class %s defining ContentDirectoryMessageBuilder of profile %s does not exist", cast(Object[])[ className, profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ContentDirectoryMessageBuilder of profile %s does not exist", cast(Object[])[ className, profileId ]));
             }
         }
         return null;
@@ -246,21 +246,21 @@ public class ProfilesDefinitionParser
             {
                 Class/*!(?)*/ clazz = Class.forName(className);
                 if (!ResourceTransportProtocolHandler.class_.isAssignableFrom(clazz)) {
-                    throw new ProfilesDefinitionException(String.format("Class %s defining ResourceTransportProtocolHandler for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ResourceTransportProtocolHandler for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
                 }
                 return cast(ResourceTransportProtocolHandler)clazz.newInstance();
             }
             catch (ClassNotFoundException e)
             {
-                throw new ProfilesDefinitionException(String.format("Class %s defining ResourceTransportProtocolHandler of profile %s does not exist", cast(Object[])[ className, profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ResourceTransportProtocolHandler of profile %s does not exist", cast(Object[])[ className, profileId ]));
             }
             catch (InstantiationException e)
             {
-                throw new ProfilesDefinitionException(String.format("Cannot instantiate ResourceTransportProtocolHandler of profile %s", cast(Object[])[ profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Cannot instantiate ResourceTransportProtocolHandler of profile %s", cast(Object[])[ profileId ]));
             }
             catch (IllegalAccessException e)
             {
-                throw new ProfilesDefinitionException(String.format("Cannot instantiate ResourceTransportProtocolHandler of profile %s", cast(Object[])[ profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Cannot instantiate ResourceTransportProtocolHandler of profile %s", cast(Object[])[ profileId ]));
             }
         }
         return null;
@@ -274,21 +274,21 @@ public class ProfilesDefinitionParser
             {
                 Class/*!(?)*/ clazz = Class.forName(className);
                 if (!ContentDirectoryDefinitionFilter.class_.isAssignableFrom(clazz)) {
-                    throw new ProfilesDefinitionException(String.format("Class %s defining ContentDirectoryDefinitionFilter for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ContentDirectoryDefinitionFilter for profile %s is not of a proper type", cast(Object[])[ className, profileId ]));
                 }
                 return cast(ContentDirectoryDefinitionFilter)clazz.newInstance();
             }
             catch (ClassNotFoundException e)
             {
-                throw new ProfilesDefinitionException(String.format("Class %s defining ContentDirectoryDefinitionFilter of profile %s does not exist", cast(Object[])[ className, profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Class %s defining ContentDirectoryDefinitionFilter of profile %s does not exist", cast(Object[])[ className, profileId ]));
             }
             catch (InstantiationException e)
             {
-                throw new ProfilesDefinitionException(String.format("Cannot instantiate ContentDirectoryDefinitionFilter of profile %s", cast(Object[])[ profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Cannot instantiate ContentDirectoryDefinitionFilter of profile %s", cast(Object[])[ profileId ]));
             }
             catch (IllegalAccessException e)
             {
-                throw new ProfilesDefinitionException(String.format("Cannot instantiate ContentDirectoryDefinitionFilter of profile %s", cast(Object[])[ profileId ]));
+                throw new ProfilesDefinitionException(java.lang.String.format("Cannot instantiate ContentDirectoryDefinitionFilter of profile %s", cast(Object[])[ profileId ]));
             }
         }
         return null;
@@ -328,7 +328,7 @@ public class ProfilesDefinitionParser
                 String number = ObjectValidator.isEmpty(modelNumber) ? MediaServer.VERSION : modelNumber;
                 return new DeviceDescription(friendlyName, modelName, number, manufacturer, extraElements);
             }
-            throw new ProfilesDefinitionException(String.format("Profile %s has incomplete device description", cast(Object[])[ profileId ]));
+            throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has incomplete device description", cast(Object[])[ profileId ]));
         }
         return parentProfile.getDeviceDescription();
     }
@@ -421,7 +421,7 @@ public class ProfilesDefinitionParser
 
                 VideoContainer targetContainer = VideoContainer.getByFFmpegValue(videoNode.getAttributeValue("targetContainer"), null);
                 if (targetContainer is null) {
-                    throw new ProfilesDefinitionException(String.format("Profile %s has unsupported target container in video transcoding definition", cast(Object[])[ profileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported target container in video transcoding definition", cast(Object[])[ profileId ]));
                 }
                 String vCodecName = videoNode.getAttributeValue("targetVCodec");
                 String aCodecName = videoNode.getAttributeValue("targetACodec");
@@ -447,14 +447,14 @@ public class ProfilesDefinitionParser
                 {
                     targetVCodec = VideoCodec.getByFFmpegValue(vCodecName);
                     if (targetVCodec is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported target video codec '%s' in transcoding definition", cast(Object[])[ profileId, vCodecName ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported target video codec '%s' in transcoding definition", cast(Object[])[ profileId, vCodecName ]));
                     }
                 }
                 if (ObjectValidator.isNotEmpty(aCodecName))
                 {
                     targetACodec = AudioCodec.getByFFmpegDecoderName(aCodecName);
                     if (targetACodec is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported target audio codec '%s' in transcoding definition", cast(Object[])[ profileId, aCodecName ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported target audio codec '%s' in transcoding definition", cast(Object[])[ profileId, aCodecName ]));
                     }
                 }
                 if (ObjectValidator.isNotEmpty(maxVideoBitrateValue)) {
@@ -491,7 +491,7 @@ public class ProfilesDefinitionParser
 
                     VideoContainer container = VideoContainer.getByFFmpegValue(matcherNode.getAttributeValue("container"), null);
                     if (container is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported matcher video container in transcoding definition", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported matcher video container in transcoding definition", cast(Object[])[ profileId ]));
                     }
                     String vcName = matcherNode.getAttributeValue("vCodec");
                     String acName = matcherNode.getAttributeValue("aCodec");
@@ -511,14 +511,14 @@ public class ProfilesDefinitionParser
                     {
                         vCodec = VideoCodec.getByFFmpegValue(vcName);
                         if (vCodec is null) {
-                            throw new ProfilesDefinitionException(String.format("Profile %s has unsupported video codec '%s' in transcoding definition", cast(Object[])[ profileId, vcName ]));
+                            throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported video codec '%s' in transcoding definition", cast(Object[])[ profileId, vcName ]));
                         }
                     }
                     if (ObjectValidator.isNotEmpty(acName))
                     {
                         aCodec = AudioCodec.getByFFmpegDecoderName(acName);
                         if (aCodec is null) {
-                            throw new ProfilesDefinitionException(String.format("Profile %s has unsupported audio codec '%s' in transcoding definition", cast(Object[])[ profileId, acName ]));
+                            throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported audio codec '%s' in transcoding definition", cast(Object[])[ profileId, acName ]));
                         }
                     }
                     if (ObjectValidator.isNotEmpty(h264ProfileName)) {
@@ -555,7 +555,7 @@ public class ProfilesDefinitionParser
 
                 AudioContainer targetContainer = AudioContainer.getByName(audioNode.getAttributeValue("targetContainer"));
                 if (targetContainer is null) {
-                    throw new ProfilesDefinitionException(String.format("Profile %s has unsupported target container in audio transcoding definition", cast(Object[])[ profileId ]));
+                    throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported target container in audio transcoding definition", cast(Object[])[ profileId ]));
                 }
                 String audioBitrateValue = audioNode.getAttributeValue("aBitrate");
                 String audioSampleRateValue = audioNode.getAttributeValue("aSamplerate");
@@ -581,7 +581,7 @@ public class ProfilesDefinitionParser
 
                     AudioContainer container = AudioContainer.getByName(matcherNode.getAttributeValue("container"));
                     if (container is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported matcher audio container in transcoding definition", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported matcher audio container in transcoding definition", cast(Object[])[ profileId ]));
                     }
                     String onlineContentTypeValue = matcherNode.getAttributeValue("contentType");
                     OnlineContentType onlineContentType = OnlineContentType.ANY;
@@ -618,7 +618,7 @@ public class ProfilesDefinitionParser
 
                     ImageContainer container = ImageContainer.getByName(matcherNode.getAttributeValue("container"));
                     if (container is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported matcher image container in transcoding definition", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported matcher image container in transcoding definition", cast(Object[])[ profileId ]));
                     }
                     String subsamplingValue = matcherNode.getAttributeValue("subsampling");
                     SamplingMode samplingMode = null;
@@ -674,10 +674,10 @@ public class ProfilesDefinitionParser
                     String mimeType = formatNode.getAttributeValue("mime-type");
                     String formatName = formatNode.getTextTrim();
                     if (ObjectValidator.isEmpty(mimeType)) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has invalid (missing mime-type) media format profile", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has invalid (missing mime-type) media format profile", cast(Object[])[ profileId ]));
                     }
                     if (ObjectValidator.isEmpty(formatName)) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has invalid (missing value) media format profile", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has invalid (missing value) media format profile", cast(Object[])[ profileId ]));
                     }
                     try
                     {
@@ -689,7 +689,7 @@ public class ProfilesDefinitionParser
                     }
                     catch (IllegalArgumentException e)
                     {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has invalid media format profile %s", cast(Object[])[ profileId, formatName ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has invalid media format profile %s", cast(Object[])[ profileId, formatName ]));
                     }
                 }
             }
@@ -733,7 +733,7 @@ public class ProfilesDefinitionParser
             }
             return protocolAdditionalInfos;
         }
-        throw new ProfilesDefinitionException(String.format("Profile %s has invalid (%s) type of ProtocolInfo", cast(Object[])[ profileId ]));
+        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has invalid (%s) type of ProtocolInfo", cast(Object[])[ profileId ]));
     }
 
     private static Profile getProfileById(List!(Profile) profiles, String profileId)
@@ -787,7 +787,7 @@ public class ProfilesDefinitionParser
                 {
                     VideoContainer container = VideoContainer.getByFFmpegValue(requiredForNode.getAttributeValue("container"), null);
                     if (container is null) {
-                        throw new ProfilesDefinitionException(String.format("Profile %s has unsupported hardsubs container in subtitles definition", cast(Object[])[ profileId ]));
+                        throw new ProfilesDefinitionException(java.lang.String.format("Profile %s has unsupported hardsubs container in subtitles definition", cast(Object[])[ profileId ]));
                     }
                     hardsubsFor.add(container);
                 }

@@ -37,7 +37,7 @@ public class RendererAdvertisementProcessor : Runnable
         } else if (this.nts.equals("ssdp:byebye")) {
             RendererManager.getInstance().rendererUnavailable(this.uuid);
         } else {
-            log.debug_(String.format("Invalid NTS in NOTIFY message: %s", cast(Object[])[ this.nts ]));
+            log.debug_(java.lang.String.format("Invalid NTS in NOTIFY message: %s", cast(Object[])[ this.nts ]));
         }
     }
 }

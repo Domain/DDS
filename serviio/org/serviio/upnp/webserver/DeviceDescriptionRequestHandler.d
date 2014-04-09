@@ -34,7 +34,7 @@ public class DeviceDescriptionRequestHandler : AbstractDescriptionRequestHandler
         String deviceId = requestFields[0];
         InetAddress clientIPAddress = getCallerIPAddress(context);
 
-        this.log.debug_(String.format("DeviceDescription request received for device %s from %s (headers = %s)", cast(Object[])[ deviceId, clientIPAddress.getHostAddress(), HttpUtils.headersToString(request.getAllHeaders()) ]));
+        this.log.debug_(java.lang.String.format("DeviceDescription request received for device %s from %s (headers = %s)", cast(Object[])[ deviceId, clientIPAddress.getHostAddress(), HttpUtils.headersToString(request.getAllHeaders()) ]));
         if (!clientIPAddress.isLoopbackAddress()) {
             RendererManager.getInstance().rendererAvailable(request.getAllHeaders(), clientIPAddress.getHostAddress());
         }
@@ -61,12 +61,12 @@ public class DeviceDescriptionRequestHandler : AbstractDescriptionRequestHandler
             content.setContentType("text/xml");
 
             response.setEntity(content);
-            this.log.debug_(String.format("Sending DeviceDescription XML back using profile '%s'", cast(Object[])[ profile ]));
+            this.log.debug_(java.lang.String.format("Sending DeviceDescription XML back using profile '%s'", cast(Object[])[ profile ]));
         }
         else
         {
             response.setStatusCode(404);
-            this.log.debug_(String.format("Device with id %s doesn't exist, sending back 404 error", cast(Object[])[ deviceId ]));
+            this.log.debug_(java.lang.String.format("Device with id %s doesn't exist, sending back 404 error", cast(Object[])[ deviceId ]));
         }
     }
 

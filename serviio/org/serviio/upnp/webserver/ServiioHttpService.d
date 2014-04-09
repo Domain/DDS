@@ -31,7 +31,7 @@ public class ServiioHttpService : HttpService
     protected void doService(HttpRequest request, HttpResponse response, HttpContext context)
     {
         if (log.isDebugEnabled()) {
-            log.debug_(String.format("Incoming request from %s: %s", cast(Object[])[ context.getAttribute("remote_ip_address"), HttpUtils.requestToString(request) ]));
+            log.debug_(java.lang.String.format("Incoming request from %s: %s", cast(Object[])[ context.getAttribute("remote_ip_address"), HttpUtils.requestToString(request) ]));
         }
         super.doService(request, response, context);
         if (response.getStatusLine().getStatusCode() == 501) {

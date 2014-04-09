@@ -49,7 +49,7 @@ public class UPnPIconRequestHandler : AbstractDescriptionRequestHandler
         String iconName = requestFields[0];
         if (iconName !is null)
         {
-            this.log.debug_(String.format("UPnP icon request received for icon %s", cast(Object[])[ iconName ]));
+            this.log.debug_(java.lang.String.format("UPnP icon request received for icon %s", cast(Object[])[ iconName ]));
             IconDescription id = cast(IconDescription)icons.get(iconName);
             if (id !is null)
             {
@@ -61,7 +61,7 @@ public class UPnPIconRequestHandler : AbstractDescriptionRequestHandler
             }
         }
         response.setStatusCode(404);
-        this.log.debug_(String.format("Icon with id %s doesn't exist, sending back 404 error", cast(Object[])[ iconName ]));
+        this.log.debug_(java.lang.String.format("Icon with id %s doesn't exist, sending back 404 error", cast(Object[])[ iconName ]));
     }
 
     private static class IconDescription

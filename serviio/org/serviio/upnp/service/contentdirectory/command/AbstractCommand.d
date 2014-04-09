@@ -65,7 +65,7 @@ public abstract class AbstractCommand(T : DirectoryObject) : Command!(T)
         }
         catch (Exception e)
         {
-            throw new CommandExecutionException(String.format("Cannot execute library command for list: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new CommandExecutionException(java.lang.String.format("Cannot execute library command for list: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractCommand(T : DirectoryObject) : Command!(T)
             if (( cast(ObjectNotFoundException)e !is null )) {
                 throw (cast(ObjectNotFoundException)e);
             }
-            throw new CommandExecutionException(String.format("Cannot execute library command for single item: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new CommandExecutionException(java.lang.String.format("Cannot execute library command for single item: %s", cast(Object[])[ e.getMessage() ]), e);
         }
     }
 
@@ -141,10 +141,10 @@ public abstract class AbstractCommand(T : DirectoryObject) : Command!(T)
     private void validateSupportedClassTypes()
     {
         if ((this.containerClassType !is null) && (!getSupportedClasses().contains(this.containerClassType))) {
-            throw new CommandExecutionException(String.format("Class %s is not supported by the Command %s", cast(Object[])[ this.containerClassType.toString(), getClass().getName() ]));
+            throw new CommandExecutionException(java.lang.String.format("Class %s is not supported by the Command %s", cast(Object[])[ this.containerClassType.toString(), getClass().getName() ]));
         }
         if ((this.itemClassType !is null) && (!getSupportedClasses().contains(this.itemClassType))) {
-            throw new CommandExecutionException(String.format("Class %s is not supported by the Command %s", cast(Object[])[ this.itemClassType.toString(), getClass().getName() ]));
+            throw new CommandExecutionException(java.lang.String.format("Class %s is not supported by the Command %s", cast(Object[])[ this.itemClassType.toString(), getClass().getName() ]));
         }
     }
 

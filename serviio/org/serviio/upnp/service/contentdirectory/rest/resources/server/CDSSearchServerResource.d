@@ -65,7 +65,7 @@ public class CDSSearchServerResource : AbstractRestrictedCDSServerResource, CDSS
         }
         catch (Exception e)
         {
-            this.log.warn(String.format("Search for term '%s' failed with exception: %s", cast(Object[])[ this.term, e.getMessage() ]), e);
+            this.log.warn(java.lang.String.format("Search for term '%s' failed with exception: %s", cast(Object[])[ this.term, e.getMessage() ]), e);
             throw new RuntimeException(e);
         }
     }

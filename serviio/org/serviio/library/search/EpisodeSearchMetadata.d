@@ -19,7 +19,7 @@ public class EpisodeSearchMetadata : AbstractSearchMetadata
         addCommandMapping(ListEpisodesForSeriesSeasonCommand.class_, mediaItemId);
 
         addToContext(seriesName);
-        addToContext(String.format("%s %s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), season ]));
+        addToContext(java.lang.String.format("%s %s", cast(Object[])[ BrowsingCategoriesMessages.getMessage("season", new Object[0]), season ]));
     }
 }
 

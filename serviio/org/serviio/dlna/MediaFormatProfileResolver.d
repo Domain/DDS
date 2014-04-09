@@ -451,7 +451,7 @@ public class MediaFormatProfileResolver
 
     private static bool isNoTimestamp(TransportStreamTimestamp timestampType)
     {
-        return (timestampType is null) || (timestampType == TransportStreamTimestamp.NONE);
+        return (timestampType == TransportStreamTimestamp.INVALID) || (timestampType == TransportStreamTimestamp.NONE);
     }
 }
 

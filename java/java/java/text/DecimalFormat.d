@@ -10,4 +10,10 @@ class DecimalFormat {
     {
         implMissing();
     }
+
+    public StringBuffer format(float)
+    {
+        implMissing();
+        return null;
+    }
 }

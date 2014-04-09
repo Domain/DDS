@@ -45,7 +45,7 @@ public class VideoService : Service
     {
         if (metadata !is null)
         {
-            log.debug_(String.format("Adding video into database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(java.lang.String.format("Adding video into database: %s", cast(Object[])[ metadata.getTitle() ]));
 
             Tupple!(Long, List!(Tupple!(Long, String))) folderHierarchy = FolderService.createOrReadFolder(repository, metadata.getFilePath());
 
@@ -123,7 +123,7 @@ public class VideoService : Service
         Video video = getVideo(mediaItemId);
         if (video !is null)
         {
-            log.debug_(String.format("Removing video from database: %s", cast(Object[])[ video.getTitle() ]));
+            log.debug_(java.lang.String.format("Removing video from database: %s", cast(Object[])[ video.getTitle() ]));
 
 
             DAOFactory.getPersonDAO().removeAllPersonsFromMedia(mediaItemId);
@@ -161,7 +161,7 @@ public class VideoService : Service
     {
         if (metadata !is null)
         {
-            log.debug_(String.format("Updating video in database: %s", cast(Object[])[ metadata.getTitle() ]));
+            log.debug_(java.lang.String.format("Updating video in database: %s", cast(Object[])[ metadata.getTitle() ]));
 
             Video video = getVideo(mediaItemId);
 
@@ -467,7 +467,7 @@ public class VideoService : Service
             Series series = DAOFactory.getSeriesDAO().findSeriesByName(seriesName);
             if (series is null)
             {
-                log.debug_(String.format("Series %s not found, creating a new one", cast(Object[])[ seriesName ]));
+                log.debug_(java.lang.String.format("Series %s not found, creating a new one", cast(Object[])[ seriesName ]));
 
                 Long seriesThumbnailId = CoverImageService.createCoverImage(thumbnail, null);
                 series = new Series(seriesName, null, seriesThumbnailId);
@@ -475,7 +475,7 @@ public class VideoService : Service
                 series.setId(id);
                 return series;
             }
-            log.debug_(String.format("Series %s found", cast(Object[])[ seriesName ]));
+            log.debug_(java.lang.String.format("Series %s found", cast(Object[])[ seriesName ]));
             if (series.getThumbnailId() is null)
             {
                 Long seriesThumbnailId = CoverImageService.createCoverImage(thumbnail, null);

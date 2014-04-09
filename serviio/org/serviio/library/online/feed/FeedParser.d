@@ -39,7 +39,7 @@ public class FeedParser : AbstractOnlineItemParser
 
     public Feed parse(URL feedUrl, Long onlineRepositoryId, MediaFileType fileType)
     {
-        this.log.debug_(String.format("Parsing feed '%s'", cast(Object[])[ feedUrl ]));
+        this.log.debug_(java.lang.String.format("Parsing feed '%s'", cast(Object[])[ feedUrl ]));
         Feed feed = new Feed(onlineRepositoryId);
         try
         {
@@ -63,11 +63,11 @@ public class FeedParser : AbstractOnlineItemParser
         }
         catch (FeedException e)
         {
-            throw new OnlineResourceParseException(String.format("Error during feed parsing, provided URL probably doesn't point to a valid RSS/Atom feed. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new OnlineResourceParseException(java.lang.String.format("Error during feed parsing, provided URL probably doesn't point to a valid RSS/Atom feed. Message: %s", cast(Object[])[ e.getMessage() ]), e);
         }
         catch (IOException e)
         {
-            throw new OnlineResourceParseException(String.format("Error during feed reading. Message: %s", cast(Object[])[ e.getMessage() ]), e);
+            throw new OnlineResourceParseException(java.lang.String.format("Error during feed reading. Message: %s", cast(Object[])[ e.getMessage() ]), e);
         }
         return feed;
     }
@@ -84,13 +84,13 @@ public class FeedParser : AbstractOnlineItemParser
         catch (FeedException e) {
             this.log.debug_("Failed feed sample: " ~ StringUtils.trimWithEllipsis(new String(feedBytes, "UTF-8"), 100));
             try {
-                this.log.debug_(String.format("Feed failed parsing (%s), trying BOM detection", e.getMessage()));
+                this.log.debug_(java.lang.String.format("Feed failed parsing (%s), trying BOM detection", e.getMessage()));
                 feedStream.reset();
                 return input.build(cast(Reader)new UnicodeReader(feedStream, "UTF-8"));
             }
             catch (FeedException e1) {
                 try {
-                    this.log.debug_(String.format("BOM Feed failed parsing (%s), trying unzipping it", e1.getMessage()));
+                    this.log.debug_(java.lang.String.format("BOM Feed failed parsing (%s), trying unzipping it", e1.getMessage()));
                     feedStream.reset();
                     InputStream unzipped = ZipUtils.unGzipSingleFile(feedStream);
                     try {
@@ -127,7 +127,7 @@ public class FeedParser : AbstractOnlineItemParser
                 }
                 catch (Throwable e)
                 {
-                    this.log.debug_(String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), feedItem.getTitle(), e.getMessage() ]), e);
+                    this.log.debug_(java.lang.String.format("Unexpected error during url extractor plugin invocation (%s) for item %s: %s", cast(Object[])[ suitablePlugin.getExtractorName(), feedItem.getTitle(), e.getMessage() ]), e);
 
                     return false;
                 }
@@ -138,16 +138,16 @@ public class FeedParser : AbstractOnlineItemParser
                 feedItem.validateMetadata();
                 alterUrlsWithCredentials(credentials, feedItem);
 
-                this.log.debug_(String.format("Added feed item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), feedItem.getTitle(), feedItem.getContentUrl() ]));
+                this.log.debug_(java.lang.String.format("Added feed item %s: '%s' (%s)", cast(Object[])[ Integer.valueOf(order), feedItem.getTitle(), feedItem.getContentUrl() ]));
                 feed.getItems().add(feedItem);
                 return true;
             }
-            this.log.debug_(String.format("Skipping feed item '%s' because it's not of type %s", cast(Object[])[ feedItem.getTitle(), fileType ]));
+            this.log.debug_(java.lang.String.format("Skipping feed item '%s' because it's not of type %s", cast(Object[])[ feedItem.getTitle(), fileType ]));
             return false;
         }
         catch (InvalidMetadataException e)
         {
-            this.log.debug_(String.format("Cannot add feed entry of feed %s because of invalid metadata. Message: %s", cast(Object[])[ feed.getTitle(), e.getMessage() ]));
+            this.log.debug_(java.lang.String.format("Cannot add feed entry of feed %s because of invalid metadata. Message: %s", cast(Object[])[ feed.getTitle(), e.getMessage() ]));
         }
         return false;
     }
@@ -158,7 +158,7 @@ public class FeedParser : AbstractOnlineItemParser
         if (extractedUrl !is null) {
             feedItem.applyContentUrlContainer(extractedUrl, urlExtractor);
         } else {
-            this.log.warn(String.format("Plugin %s returned no value for resource item '%s'", cast(Object[])[ urlExtractor.getExtractorName(), feedItem.getTitle() ]));
+            this.log.warn(java.lang.String.format("Plugin %s returned no value for resource item '%s'", cast(Object[])[ urlExtractor.getExtractorName(), feedItem.getTitle() ]));
         }
     }
 
@@ -173,7 +173,7 @@ public class FeedParser : AbstractOnlineItemParser
             }
             catch (MalformedURLException e)
             {
-                this.log.warn(String.format("Malformed url of a feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ image.getUrl() ]));
+                this.log.warn(java.lang.String.format("Malformed url of a feed thumbnail (%s), skipping this thumbnail", cast(Object[])[ image.getUrl() ]));
             }
         }
     }

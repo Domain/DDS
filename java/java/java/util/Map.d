@@ -1,5 +1,6 @@
 module java.util.Map;
 
+import std.conv;
 import java.lang;
 import java.util.Set;
 import java.util.Collection;

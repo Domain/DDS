@@ -45,7 +45,7 @@ public abstract class PluginExecutionProcessor(T)
     }
     catch (TimeoutException e)
     {
-      throw new RuntimeException(String.format("The operation took more than %s ms and has been cancelled.", cast(Object[])[ Integer.valueOf(millisecondsTimeout) ]));
+      throw new RuntimeException(java.lang.String.format("The operation took more than %s ms and has been cancelled.", cast(Object[])[ Integer.valueOf(millisecondsTimeout) ]));
     }
     finally
     {

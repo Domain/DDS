@@ -39,7 +39,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         if ((newInstance is null) || (newInstance.getRepositoryId() is null)) {
             throw new InvalidArgumentException("Cannot create Folder. Required data is missing.");
         }
-        log.debug_(String.format("Creating a new Folder (name = %s)", cast(Object[])[ newInstance.getName() ]));
+        log.debug_(java.lang.String.format("Creating a new Folder (name = %s)", cast(Object[])[ newInstance.getName() ]));
         Connection con = null;
         try
         {
@@ -48,7 +48,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create Folder with name %s", cast(Object[])[ newInstance.getName() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create Folder with name %s", cast(Object[])[ newInstance.getName() ]), e);
         }
         finally
         {
@@ -58,7 +58,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public void delete_(final Long id)
     {
-        log.debug_(String.format("Deleting a Folder (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Deleting a Folder (id = %s)", cast(Object[])[ id ]));
         try
         {
             new class() JdbcExecutor {
@@ -73,13 +73,13 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot delete Folder with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot delete Folder with id = %s", cast(Object[])[ id ]), e);
         }
     }
 
     public Folder read(Long id)
     {
-        log.debug_(String.format("Reading a Folder (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a Folder (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         try
         {
@@ -88,7 +88,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Folder with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Folder with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -103,7 +103,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public Tupple!(Long, List!(Tupple!(Long, String))) getFolderHierarchy(Long folderId)
     {
-        log.debug_(String.format("Reading a Folder hierarchy (id = %s)", cast(Object[])[ folderId ]));
+        log.debug_(java.lang.String.format("Reading a Folder hierarchy (id = %s)", cast(Object[])[ folderId ]));
         Connection con = null;
         PreparedStatement ps = null;
         List!(Tupple!(Long, String)) pathHierarchy = new ArrayList();
@@ -126,7 +126,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create file path hierarchy for Folder %s", cast(Object[])[ folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create file path hierarchy for Folder %s", cast(Object[])[ folderId ]), e);
         }
         finally
         {
@@ -146,7 +146,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         else
         {
-            log.debug_(String.format("Looking for folder hierarchy %s", cast(Object[])[ folderPath.getPath() ]));
+            log.debug_(java.lang.String.format("Looking for folder hierarchy %s", cast(Object[])[ folderPath.getPath() ]));
             if (folderPath.getPath().endsWith(":" + File.separator)) {
                 filePathElements = cast(String[])[ folderPath.getPath() ];
             } else {
@@ -190,7 +190,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create file path for Folder %s", cast(Object[])[ folderPath.getPath() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create file path for Folder %s", cast(Object[])[ folderPath.getPath() ]), e);
         }
         finally
         {
@@ -201,7 +201,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public int getNumberOfMediaItems(Long folderId)
     {
-        log.debug_(String.format("Getting number of media items in folder %s", cast(Object[])[ folderId ]));
+        log.debug_(java.lang.String.format("Getting number of media items in folder %s", cast(Object[])[ folderId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -222,7 +222,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of media items in folder: %s ", cast(Object[])[ folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of media items in folder: %s ", cast(Object[])[ folderId ]), e);
         }
         finally
         {
@@ -233,7 +233,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public int getNumberOfSubFolders(Long folderId, Long repositoryId, AccessGroup accessGroup)
     {
-        log.debug_(String.format("Getting number of sub-Folders in folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
+        log.debug_(java.lang.String.format("Getting number of sub-Folders in folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -260,7 +260,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of sub-Folders in folder: %s ", cast(Object[])[ folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of sub-Folders in folder: %s ", cast(Object[])[ folderId ]), e);
         }
         finally
         {
@@ -271,7 +271,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public int getNumberOfFoldersAndMediaItems(MediaFileType fileType, ObjectType objectType, AccessGroup accessGroup, Long folderId, Long repositoryId)
     {
-        log.debug_(String.format("Getting number of %s sub-folders and media items in folder %s (filter: %s) [%s]", cast(Object[])[ fileType, folderId is null ? "'root'" : folderId, objectType, accessGroup ]));
+        log.debug_(java.lang.String.format("Getting number of %s sub-folders and media items in folder %s (filter: %s) [%s]", cast(Object[])[ fileType, folderId is null ? "'root'" : folderId, objectType, accessGroup ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -311,7 +311,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get number of %s media items in folder: %s ", cast(Object[])[ fileType, folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of %s media items in folder: %s ", cast(Object[])[ fileType, folderId ]), e);
         }
         finally
         {
@@ -340,7 +340,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public List!(Folder) retrieveFoldersWithMedia(MediaFileType fileType, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Retrieving list of leaf folders (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of leaf folders (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -369,7 +369,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public int getFoldersWithMediaCount(MediaFileType fileType, AccessGroup accessGroup)
     {
-        log.debug_(String.format("Retrieving number of leaf folders [%s]", cast(Object[])[ accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of leaf folders [%s]", cast(Object[])[ accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -401,7 +401,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public List!(Folder) retrieveSubFolders(Long folderId, Long repositoryId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(String.format("Getting list of sub-Folders in folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Getting list of sub-Folders in folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -425,7 +425,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot get list of sub-Folders in folder: %s ", cast(Object[])[ folderId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get list of sub-Folders in folder: %s ", cast(Object[])[ folderId ]), e);
         }
         finally
         {
@@ -436,7 +436,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public List!(Folder) getFoldersInRepository(Long repositoryId)
     {
-        log.debug_(String.format("Retrieving list of folders for repository %s", cast(Object[])[ repositoryId ]));
+        log.debug_(java.lang.String.format("Retrieving list of folders for repository %s", cast(Object[])[ repositoryId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -519,7 +519,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Folder with name = %s", cast(Object[])[ name ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Folder with name = %s", cast(Object[])[ name ]), e);
         }
         finally
         {
@@ -542,7 +542,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot create Folder with name %s", cast(Object[])[ newInstance.getName() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create Folder with name %s", cast(Object[])[ newInstance.getName() ]), e);
         }
         finally
         {
@@ -562,7 +562,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read Folder with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read Folder with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {

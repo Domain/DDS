@@ -1,6 +1,6 @@
 module org.serviio.library.dao.AccessGroupDAOImpl;
 
-import java.lang.Long;
+import java.lang;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +37,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
 
     public AccessGroup read(Long id)
     {
-        log.debug_(String.format("Reading a AccessGroup (id = %s)", cast(Object[])[ id ]));
+        log.debug_(java.lang.String.format("Reading a AccessGroup (id = %s)", cast(Object[])[ id ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -50,7 +50,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read AccessGroup with id = %s", cast(Object[])[ id ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read AccessGroup with id = %s", cast(Object[])[ id ]), e);
         }
         finally
         {
@@ -66,7 +66,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
 
     public List!(AccessGroup) getAccessGroupsForRepository(Long repoId)
     {
-        log.debug_(String.format("Reading all AccessGroups for Repository (id = %s)", cast(Object[])[ repoId ]));
+        log.debug_(java.lang.String.format("Reading all AccessGroups for Repository (id = %s)", cast(Object[])[ repoId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -79,7 +79,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read AccessGroups for repository id = %s", cast(Object[])[ repoId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read AccessGroups for repository id = %s", cast(Object[])[ repoId ]), e);
         }
         finally
         {
@@ -90,7 +90,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
 
     public List!(AccessGroup) getAccessGroupsForOnlineRepository(Long repoId)
     {
-        log.debug_(String.format("Reading all AccessGroups for OnlineRepository (id = %s)", cast(Object[])[ repoId ]));
+        log.debug_(java.lang.String.format("Reading all AccessGroups for OnlineRepository (id = %s)", cast(Object[])[ repoId ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -103,7 +103,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(String.format("Cannot read AccessGroups for online repository id = %s", cast(Object[])[ repoId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read AccessGroups for online repository id = %s", cast(Object[])[ repoId ]), e);
         }
         finally
         {
@@ -145,7 +145,7 @@ public class AccessGroupDAOImpl : AccessGroupDAO
 
     protected List!(AccessGroup) mapResultSet(ResultSet rs)
     {
-        List!(AccessGroup) result = new ArrayList();
+        List!(AccessGroup) result = new ArrayList!(AccessGroup)();
         while (rs.next()) {
             result.add(initUserProfile(rs));
         }

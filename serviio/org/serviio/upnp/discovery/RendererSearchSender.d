@@ -38,7 +38,7 @@ public class RendererSearchSender : AbstractSSDPMessageListener
     public void searchForRenderers()
     {
         NicIP iface = getBoundNIC();
-        this.log.info(String.format("Searching for Renderer devices", new Object[0]));
+        this.log.info(java.lang.String.format("Searching for Renderer devices", new Object[0]));
 
         Thread t = ServiioThreadFactory.getInstance().newThread(new RendererSearchWorker(iface));
         t.start();
@@ -67,7 +67,7 @@ public class RendererSearchSender : AbstractSSDPMessageListener
             }
             catch (IOException e)
             {
-                this.log.warn(String.format("Search for Renderers using interface %s failed: %s", cast(Object[])[ MultiCastUtils.getInterfaceName(this.multicastInterface.getNic()), e.getMessage() ]));
+                this.log.warn(java.lang.String.format("Search for Renderers using interface %s failed: %s", cast(Object[])[ MultiCastUtils.getInterfaceName(this.multicastInterface.getNic()), e.getMessage() ]));
             }
         }
 
@@ -82,12 +82,12 @@ public class RendererSearchSender : AbstractSSDPMessageListener
                     socket = MultiCastUtils.startMultiCastSocketForSending(multicastInterface.getNic(), address, 32);
                     if ((socket !is null) && (socket.isBound()))
                     {
-                        this.log.debug_(String.format("Multicasting SSDP M-SEARCH using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
+                        this.log.debug_(java.lang.String.format("Multicasting SSDP M-SEARCH using interface %s and address %s, timeout = %s", cast(Object[])[ MultiCastUtils.getInterfaceName(multicastInterface.getNic()), address.getHostAddress(), Integer.valueOf(socket.getSoTimeout()) ]));
 
 
                         List!(String) messages = SSDPMessageBuilderFactory.getInstance().getBuilder(SSDPMessageType.SEARCH).generateSSDPMessages(Integer.valueOf(this.outer.mx), "urn:schemas-upnp-org:device:MediaRenderer:1");
 
-                        this.log.debug_(String.format("Sending %s 'm-search' messages", cast(Object[])[ Integer.valueOf(messages.size()) ]));
+                        this.log.debug_(java.lang.String.format("Sending %s 'm-search' messages", cast(Object[])[ Integer.valueOf(messages.size()) ]));
                         foreach (String message ; messages) {
                             for (int i = 0; i < this.outer.searchSendCount; i++) {
                                 MultiCastUtils.send(message, socket, device.getMulticastGroupAddress());
@@ -149,7 +149,7 @@ public class RendererSearchSender : AbstractSSDPMessageListener
             Header headerST = response.getFirstHeader("ST");
             Header headerSERVER = response.getFirstHeader("SERVER");
             Header headerUSN = response.getFirstHeader("USN");
-            this.log.debug_(String.format("Received search response: location: %s, st: %s", cast(Object[])[ headerLocation.getValue(), headerST.getValue() ]));
+            this.log.debug_(java.lang.String.format("Received search response: location: %s, st: %s", cast(Object[])[ headerLocation.getValue(), headerST.getValue() ]));
             if ((headerST !is null) && (headerST.getValue().equals("urn:schemas-upnp-org:device:MediaRenderer:1")) && (headerUSN !is null) && (headerSERVER !is null)) {
                 try
                 {
@@ -161,18 +161,18 @@ public class RendererSearchSender : AbstractSSDPMessageListener
                         int timeToKeep = HttpUtils.getMaxAgeFromHeader(headerCacheControl);
                         String deviceIP = getDeviceIPAddress(descriptionURL, receivedPacket.getSocketAddress());
                         if (this.log.isDebugEnabled()) {
-                            this.log.debug_(String.format("Received a valid M-SEARCH response from Renderer %s from address %s", cast(Object[])[ deviceUuid, deviceIP ]));
+                            this.log.debug_(java.lang.String.format("Received a valid M-SEARCH response from Renderer %s from address %s", cast(Object[])[ deviceUuid, deviceIP ]));
                         }
                         ThreadExecutor.execute(new RendererSearchResponseProcessor(deviceIP, deviceUuid, server, timeToKeep, descriptionURL));
                     }
                     else
                     {
-                        this.log.warn(String.format("Provided USN value is invalid: %s. Will not process the search reply.", cast(Object[])[ headerUSN.getValue() ]));
+                        this.log.warn(java.lang.String.format("Provided USN value is invalid: %s. Will not process the search reply.", cast(Object[])[ headerUSN.getValue() ]));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    this.log.warn(String.format("Invalid header value: %s. Will not respond to the request.", cast(Object[])[ e.getMessage() ]));
+                    this.log.warn(java.lang.String.format("Invalid header value: %s. Will not respond to the request.", cast(Object[])[ e.getMessage() ]));
                 }
             }
         }

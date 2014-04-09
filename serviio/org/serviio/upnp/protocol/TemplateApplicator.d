@@ -46,12 +46,12 @@ public class TemplateApplicator
         }
         catch (IOException e)
         {
-            log.error(String.format("Cannot find template %s", cast(Object[])[ templateName ]), e);
+            log.error(java.lang.String.format("Cannot find template %s", cast(Object[])[ templateName ]), e);
             return null;
         }
         catch (TemplateException e)
         {
-            log.error(String.format("Error processing template %s: %s", cast(Object[])[ templateName, e.getMessage() ]), e);
+            log.error(java.lang.String.format("Error processing template %s: %s", cast(Object[])[ templateName, e.getMessage() ]), e);
         }
         return null;
     }

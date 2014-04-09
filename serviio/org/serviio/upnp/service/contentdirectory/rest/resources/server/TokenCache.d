@@ -26,7 +26,7 @@ public class TokenCache : AbstractCacheDecorator
         }
         catch (CacheException e)
         {
-            this.log.warn(String.format("Could not store token to local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+            this.log.warn(java.lang.String.format("Could not store token to local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
         }
     }
 
@@ -38,7 +38,7 @@ public class TokenCache : AbstractCacheDecorator
         }
         catch (CacheException e)
         {
-            this.log.debug_(String.format("Could not evict token from local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+            this.log.debug_(java.lang.String.format("Could not evict token from local cache(%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
         }
     }
 }

@@ -75,7 +75,7 @@ public class EmbeddedMetadataExtractor : MetadataExtractor
         if ((mediaFile.exists()) && (mediaFile.canRead())) {
             return new MetadataFile(getExtractorType(), FileUtils.getLastModifiedDate(mediaFile), null, mediaFile);
         }
-        throw new IOException(String.format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
+        throw new IOException(java.lang.String.format("File %s cannot be read to extract metadata", cast(Object[])[ mediaFile.getAbsolutePath() ]));
     }
 
     override protected void retrieveMetadata(MetadataFile metadataDescriptor, LocalItemMetadata metadata)
@@ -119,7 +119,7 @@ public class EmbeddedMetadataExtractor : MetadataExtractor
             } else if (( cast(VorbisCommentTag)tag !is null )) {
                 strategy = new OGGExtractionStrategy();
             } else {
-                throw new InvalidMediaFormatException(String.format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
+                throw new InvalidMediaFormatException(java.lang.String.format("File %s has unsupported audio format", cast(Object[])[ mediaFile.getName() ]));
             }
             strategy.extractMetadata(aMetadata, audioFile, header, tag);
         }
@@ -164,7 +164,7 @@ public class EmbeddedMetadataExtractor : MetadataExtractor
         }
         catch (ParseException e)
         {
-            log.debug_(String.format("Could not parse year %s to date", cast(Object[])[ year ]));
+            log.debug_(java.lang.String.format("Could not parse year %s to date", cast(Object[])[ year ]));
         }
         return null;
     }

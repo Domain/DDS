@@ -4,7 +4,7 @@ import java.lang.String;
 import java.lang.IllegalArgumentException;
 import java.text.DecimalFormat;
 
-enum DisplayAspectRatio : int[]
+enum DisplayAspectRatio : int[2]
 {
     DAR_16_9 = [16, 9],
 }

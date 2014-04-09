@@ -33,7 +33,7 @@ public class PortMappingChecker
     {
         String externalAddress = ObjectValidator.isEmpty(address) ? ExternalIPRetriever.getExternalIP().getHostAddress() : address;
 
-        log.info(String.format("Running a check for external mapping of port %s on '%s'", cast(Object[])[ Integer.valueOf(port), externalAddress ]));
+        log.info(java.lang.String.format("Running a check for external mapping of port %s on '%s'", cast(Object[])[ Integer.valueOf(port), externalAddress ]));
 
         List!(Parameter) form = new ArrayList(2);
         form.add(new Parameter("remoteAddress", externalAddress));
@@ -51,15 +51,15 @@ public class PortMappingChecker
                 {
                     if (html.indexOf("is closed") > -1)
                     {
-                        log.info(String.format("Port %s is closed", cast(Object[])[ Integer.valueOf(port) ]));
+                        log.info(java.lang.String.format("Port %s is closed", cast(Object[])[ Integer.valueOf(port) ]));
                         return false;
                     }
                     if (html.indexOf("is open") > -1)
                     {
-                        log.info(String.format("Port %s is open", cast(Object[])[ Integer.valueOf(port) ]));
+                        log.info(java.lang.String.format("Port %s is open", cast(Object[])[ Integer.valueOf(port) ]));
                         return true;
                     }
-                    log.warn(String.format("Cannot work out whether port %s is open or closed", cast(Object[])[ Integer.valueOf(port) ]));
+                    log.warn(java.lang.String.format("Cannot work out whether port %s is open or closed", cast(Object[])[ Integer.valueOf(port) ]));
                     return false;
                 }
             }

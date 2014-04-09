@@ -45,7 +45,7 @@ public class RepositoryService : Service
         foreach (Repository existingRepository ; existingRepositories) {
             if (!repositories.contains(existingRepository))
             {
-                log.debug_(String.format("Will remove Repository: %s", cast(Object[])[ existingRepository.toString() ]));
+                log.debug_(java.lang.String.format("Will remove Repository: %s", cast(Object[])[ existingRepository.toString() ]));
                 repsToRemove.add(existingRepository);
             }
         }
@@ -80,11 +80,11 @@ public class RepositoryService : Service
 
     private static bool removeRepositories(List!(Repository) repositories)
     {
-        log.debug_(String.format("Found %s repositories to be removed", cast(Object[])[ Integer.valueOf(repositories.size()) ]));
+        log.debug_(java.lang.String.format("Found %s repositories to be removed", cast(Object[])[ Integer.valueOf(repositories.size()) ]));
         bool mediaItemsRemoved = false;
         foreach (Repository repository ; repositories)
         {
-            log.debug_(String.format("Removing all items in repository %s", cast(Object[])[ repository.getId() ]));
+            log.debug_(java.lang.String.format("Removing all items in repository %s", cast(Object[])[ repository.getId() ]));
 
             List!(MediaItem) mediaItems = MediaService.getMediaItemsInRepository(repository.getId());
             foreach (MediaItem mediaItem ; mediaItems)
@@ -110,7 +110,7 @@ public class RepositoryService : Service
                 }
                 catch (Exception e)
                 {
-                    log.debug_(String.format("An error occured when trying to remove folder %s and it's parents: %s. This should fix itself.", cast(Object[])[ folder.getId(), e.getMessage() ]));
+                    log.debug_(java.lang.String.format("An error occured when trying to remove folder %s and it's parents: %s. This should fix itself.", cast(Object[])[ folder.getId(), e.getMessage() ]));
                 }
             }
             DAOFactory.getRepositoryDAO().delete_(repository.getId());
@@ -124,7 +124,7 @@ public class RepositoryService : Service
         Repository existingRepository = getRepository(repository.getId());
         if (existingRepository is null)
         {
-            log.warn(String.format("Cannot update repository with id '%s' because it doesn't exist.", cast(Object[])[ repository.getId() ]));
+            log.warn(java.lang.String.format("Cannot update repository with id '%s' because it doesn't exist.", cast(Object[])[ repository.getId() ]));
             return false;
         }
         Set!(MediaFileType) existingSupportedFileTypes = existingRepository.getSupportedFileTypes();

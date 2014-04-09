@@ -6,6 +6,7 @@ module java.lang.System;
 import java.lang.util;
 import java.lang.exceptions;
 import java.io.PrintStream;
+import java.util.Map;
 
 version(Tango){
     static import tango.sys.Environment;
@@ -193,6 +194,12 @@ class System {
 
         }
 
+    }
+
+    public static Map!(String, String) getenv()
+    {
+        implMissing();
+        return null;
     }
 
     private static PrintStream err__;

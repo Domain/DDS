@@ -26,11 +26,11 @@ public class OnlineContentCacheDecorator : AbstractCacheDecorator, OnlineCacheDe
         try
         {
             this.cache.put(url, cachedValue);
-            this.log.debug_(String.format("Stored online content '%s' in the cache (%s), returning it", cast(Object[])[ url, this.regionName ]));
+            this.log.debug_(java.lang.String.format("Stored online content '%s' in the cache (%s), returning it", cast(Object[])[ url, this.regionName ]));
         }
         catch (CacheException e)
         {
-            this.log.warn(String.format("Could not store object to local cache (%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
+            this.log.warn(java.lang.String.format("Could not store object to local cache (%s): %s", cast(Object[])[ this.regionName, e.getMessage() ]));
         }
     }
 
@@ -39,11 +39,11 @@ public class OnlineContentCacheDecorator : AbstractCacheDecorator, OnlineCacheDe
         try
         {
             this.cache.remove(url);
-            this.log.debug_(String.format("Removed online content '%s' from cache (%s)", cast(Object[])[ url, this.regionName ]));
+            this.log.debug_(java.lang.String.format("Removed online content '%s' from cache (%s)", cast(Object[])[ url, this.regionName ]));
         }
         catch (CacheException e)
         {
-            this.log.warn(String.format("Could not remove feed %s from cache (%s): %s", cast(Object[])[ url, this.regionName, e.getMessage() ]));
+            this.log.warn(java.lang.String.format("Could not remove feed %s from cache (%s): %s", cast(Object[])[ url, this.regionName, e.getMessage() ]));
         }
     }
 }

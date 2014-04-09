@@ -26,13 +26,13 @@ public class FlowPlayerKeyGeneratorServerResource : AbstractRestrictedCDSServerR
     {
         Request request = getRequest();
         String domain = getSubDomain(request.getReferrerRef().getHostDomain(true));
-        this.log.debug_(String.format("Generating security key for domain '%s'", cast(Object[])[ domain ]));
+        this.log.debug_(java.lang.String.format("Generating security key for domain '%s'", cast(Object[])[ domain ]));
         return new StringRepresentation(generateKey(domain));
     }
 
     protected String getSubDomain(String host)
     {
-        this.log.debug_(String.format("RefererRef of the incoming request is '%s'", cast(Object[])[ host ]));
+        this.log.debug_(java.lang.String.format("RefererRef of the incoming request is '%s'", cast(Object[])[ host ]));
         Matcher m = DOMAIN_MATCHER.matcher(host);
         if ((m.matches()) && (m.groupCount() == 1)) {
             return m.group(1);

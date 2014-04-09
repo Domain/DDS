@@ -177,7 +177,7 @@ public class MultiCastUtils
             if ((nicIP is null) && (countdown > 0))
             {
                 retried = true;
-                log.warn(String.format("Host IP address %s is not available, will try again %s times", cast(Object[])[ ipAddress.getHostAddress(), Integer.valueOf(countdown) ]));
+                log.warn(java.lang.String.format("Host IP address %s is not available, will try again %s times", cast(Object[])[ ipAddress.getHostAddress(), Integer.valueOf(countdown) ]));
                 ThreadUtils.currentThreadSleep(5000L);
             }
         } while ((nicIP is null) && (countdown > 0));
@@ -221,7 +221,7 @@ public class MultiCastUtils
             }
             catch (SocketException e) {}
         }
-        log.warn(String.format("Could not find NIC with name '%s'", cast(Object[])[ nicWithIndex ]));
+        log.warn(java.lang.String.format("Could not find NIC with name '%s'", cast(Object[])[ nicWithIndex ]));
         return null;
     }
 }
