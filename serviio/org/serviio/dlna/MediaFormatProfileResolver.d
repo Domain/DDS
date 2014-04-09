@@ -261,13 +261,13 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.MP3) {
                 return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_MP_%sD_MPEG1_L3%s", cast(Object[])[ resolution, suffix ])));
             }
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AC3)) {
                 return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("AVC_TS_MP_%sD_AC3%s", cast(Object[])[ resolution, suffix ])));
             }
         }
         else if (videoCodec == VideoCodec.VC1)
         {
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3))
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AC3))
             {
                 if ((width.intValue() > 720) || (height.intValue() > 576)) {
                     return Collections.singletonList(MediaFormatProfile.VC1_TS_AP_L2_AC3_ISO);
@@ -291,7 +291,7 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.MP2) {
                 return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_MPEG2_L2%s", cast(Object[])[ suffix ])));
             }
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AC3)) {
                 return Collections.singletonList(valueOf!MediaFormatProfile(java.lang.String.format("MPEG4_P2_TS_ASP_AC3%s", cast(Object[])[ suffix ])));
             }
         }
@@ -305,7 +305,7 @@ public class MediaFormatProfileResolver
             if (audioCodec == AudioCodec.LPCM) {
                 return Collections.singletonList(MediaFormatProfile.AVC_MP4_LPCM);
             }
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AC3)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AC3)) {
                 return Collections.singletonList(MediaFormatProfile.AVC_MP4_MP_SD_AC3);
             }
             if (audioCodec == AudioCodec.MP3) {
@@ -333,14 +333,14 @@ public class MediaFormatProfileResolver
         {
             if ((width.intValue() <= 720) && (height.intValue() <= 576))
             {
-                if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
+                if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AAC)) {
                     return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_ASP_AAC);
                 }
                 if ((audioCodec == AudioCodec.AC3) || (audioCodec == AudioCodec.MP3)) {
                     return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_NDSD);
                 }
             }
-            else if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC))
+            else if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AAC))
             {
                 return Collections.singletonList(MediaFormatProfile.MPEG4_P2_MP4_SP_L6_AAC);
             }
@@ -374,7 +374,7 @@ public class MediaFormatProfileResolver
 
     protected static List!(MediaFormatProfile) resolveVideoHLSFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
     {
-        if ((videoCodec == VideoCodec.H264) && ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC))) {
+        if ((videoCodec == VideoCodec.H264) && ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AAC))) {
             return Collections.singletonList(MediaFormatProfile.HLS);
         }
         throw new UnsupportedDLNAMediaFileFormatException(java.lang.String.format("AppleHttp video file %s does not match any supported DLNA profile", cast(Object[])[ fileName ]));
@@ -384,13 +384,13 @@ public class MediaFormatProfileResolver
     {
         if (videoCodec == VideoCodec.H264)
         {
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AAC)) {
                 return Collections.singletonList(MediaFormatProfile.AVC_3GPP_BL_QCIF15_AAC);
             }
         }
         else if ((videoCodec == VideoCodec.MPEG4) || (videoCodec == VideoCodec.MSMPEG4))
         {
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.AAC)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.AAC)) {
                 return Collections.singletonList(MediaFormatProfile.MPEG4_P2_3GPP_SP_L0B_AAC);
             }
             if (audioCodec == AudioCodec.AMR) {
@@ -416,16 +416,16 @@ public class MediaFormatProfileResolver
 
     protected static List!(MediaFormatProfile) resolveVideoASFFormat(String fileName, VideoCodec videoCodec, AudioCodec audioCodec, Integer width, Integer height, Integer bitrate)
     {
-        if ((videoCodec == VideoCodec.WMV) && ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA) || (audioCodec == AudioCodec.WMA_PRO)))
+        if ((videoCodec == VideoCodec.WMV) && ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.WMA) || (audioCodec == AudioCodec.WMA_PRO)))
         {
             if ((width.intValue() <= 720) && (height.intValue() <= 576))
             {
-                if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA)) {
+                if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.WMA)) {
                     return Collections.singletonList(MediaFormatProfile.WMVMED_FULL);
                 }
                 return Collections.singletonList(MediaFormatProfile.WMVMED_PRO);
             }
-            if ((audioCodec == AudioCodec.INVALID) || (audioCodec == AudioCodec.WMA)) {
+            if ((audioCodec == AudioCodec.UNKNOWN) || (audioCodec == AudioCodec.WMA)) {
                 return Collections.singletonList(MediaFormatProfile.WMVHIGH_FULL);
             }
             return Collections.singletonList(MediaFormatProfile.WMVHIGH_PRO);

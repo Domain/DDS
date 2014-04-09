@@ -46,6 +46,7 @@ import org.serviio.external.AbstractExecutableWrapper;
 import org.serviio.external.FFmpegCLBuilder;
 import org.serviio.external.ProcessExecutorParameter;
 import org.serviio.external.ResizeDefinition;
+import org.serviio.external.ProcessExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,13 +91,13 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
 
-        log.debug_(String.format("Invoking FFMPEG to check if it exists of path %s", cast(Object[])[ FFmpegCLBuilder.executablePath ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to check if it exists of path %s", cast(Object[])[ FFmpegCLBuilder.executablePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false);
         executeSynchronously(executor);
         bool success = (executor.isSuccess()) && (executor.getResults().size() > 5);
         if (success)
         {
-            log.info(String.format("Found FFmpeg: %s", cast(Object[])[ executor.getResults().get(0) ]));
+            log.info(java.lang.String.format("Found FFmpeg: %s", cast(Object[])[ executor.getResults().get(0) ]));
             String ffmpegOutput = CollectionUtils.listToCSV(executor.getResults(), "", false);
             if (ffmpegOutput.indexOf("--enable-librtmp") == -1) {
                 log.warn("FFmpeg is not compiled with librtmp support, RTMP streaming will not work.");
@@ -118,7 +119,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         addInputFileOptions(filePath, context, builder);
         builder.inFile(fixFilePath(filePath, context.isLocalContent()));
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve media information for file: %s", cast(Object[])[ filePath ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to retrieve media information for file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, Long.valueOf(context.isLocalContent() ? LOCAL_FILE_TIMEOUT : onlineItemTimeout()));
 
         executeSynchronously(executor);
@@ -128,7 +129,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     public static byte[] readVideoThumbnail(File f, Integer videoLength, VideoCodec vCodec, VideoContainer vContainer)
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
-        builder.inFile(String.format("%s", cast(Object[])[ f.getAbsolutePath() ]));
+        builder.inFile(java.lang.String.format("%s", cast(Object[])[ f.getAbsolutePath() ]));
         builder.inFileOptions(cast(String[])[ "-threads", Configuration.getTranscodingThreads() ]);
 
 
@@ -136,7 +137,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         addTimePosition(videoLength, (vCodec != VideoCodec.MPEG2) && (vContainer != VideoContainer.MPEG2TS), builder);
         builder.outFileOptions(cast(String[])[ "-an", "-frames:v", "1", "-f", "image2" ]).outFile("pipe:");
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve thumbnail for file: %s", cast(Object[])[ f.getAbsolutePath() ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to retrieve thumbnail for file: %s", cast(Object[])[ f.getAbsolutePath() ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(160000L));
         executeSynchronously(executor);
         ByteArrayOutputStream output = cast(ByteArrayOutputStream)executor.getOutputStream();
@@ -151,12 +152,12 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
 
         builder.inFileOptions(cast(String[])[ "-sub_charenc", Configuration.getSubsCharacterEncoding() ]);
-        builder.inFile(String.format("%s", cast(Object[])[ f.getAbsolutePath() ]));
+        builder.inFile(java.lang.String.format("%s", cast(Object[])[ f.getAbsolutePath() ]));
 
         builder.outFileOptions(cast(String[])[ "-an", "-vn", "-c:s", SubtitleCodec.SRT.getFFmpegEncoderName(), "-f", SubtitleCodec.SRT.getFFmpegEncoderName() ]).outFile("pipe:");
 
 
-        log.debug_(String.format("Invoking FFMPEG to convert subtitle file: %s", cast(Object[])[ f.getAbsolutePath() ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to convert subtitle file: %s", cast(Object[])[ f.getAbsolutePath() ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(30000L));
         executeSynchronously(executor);
         ByteArrayOutputStream output = cast(ByteArrayOutputStream)executor.getOutputStream();
@@ -183,16 +184,16 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         }
         FFmpegCLBuilder builder = prepareCommandForSubtitleExtraction(video, subtitle, subtitleEncoder, subtitleFormat);
 
-        File targetFile = new File(targetFilePath + "." + subtitleExtension);
+        File targetFile = new File(targetFilePath ~ "." ~ subtitleExtension);
         builder.outFile(getOutputFile(targetFile));
 
-        log.debug_(String.format("Invoking FFMPEG to extract subtitle file from: %s", cast(Object[])[ video.getFileName() ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to extract subtitle file from: %s", cast(Object[])[ video.getFileName() ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(30000L));
         executeSynchronously(executor);
         if ((targetFile.exists()) && (targetFile.length() > 0L)) {
             return targetFile;
         }
-        throw new IOException(String.format("Could not extract subtitle from file %s", cast(Object[])[ video.getFileName() ]));
+        throw new IOException(java.lang.String.format("Could not extract subtitle from file %s", cast(Object[])[ video.getFileName() ]));
     }
 
     public static byte[] extractSubtitleFileAsSRT(Video video, EmbeddedSubtitles subtitle)
@@ -201,14 +202,14 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
         builder.outFile(getOutputFile(null));
 
-        log.debug_(String.format("Invoking FFMPEG to extract SRT subtitle file from: %s", cast(Object[])[ video.getFileName() ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to extract SRT subtitle file from: %s", cast(Object[])[ video.getFileName() ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, new Long(30000L));
         executeSynchronously(executor);
         ByteArrayOutputStream output = cast(ByteArrayOutputStream)executor.getOutputStream();
         if (output !is null) {
             return output.toByteArray();
         }
-        throw new IOException(String.format("Could not extract SRT subtitle from file %s", cast(Object[])[ video.getFileName() ]));
+        throw new IOException(java.lang.String.format("Could not extract SRT subtitle from file %s", cast(Object[])[ video.getFileName() ]));
     }
 
     public static byte[] readH264AnnexBHeader(String filePath, VideoContainer container, DeliveryContext context)
@@ -216,7 +217,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
 
         addInputFileOptions(filePath, context, builder);
-        builder.inFile(String.format("%s", cast(Object[])[ fixFilePath(filePath, context.isLocalContent()) ]));
+        builder.inFile(java.lang.String.format("%s", cast(Object[])[ fixFilePath(filePath, context.isLocalContent()) ]));
         builder.outFileOptions(cast(String[])[ "-frames:v", "1", "-c:v", "copy", "-f", "h264" ]);
         if (!isMpegTSbasedContainer(container)) {
             builder.outFileOptions(cast(String[])[ "-bsf:v", "h264_mp4toannexb" ]);
@@ -224,7 +225,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         builder.outFileOptions(cast(String[])[ "-an" ]);
         builder.outFile("pipe:");
 
-        log.debug_(String.format("Invoking FFMPEG to retrieve H264 header for file: %s", cast(Object[])[ filePath ]));
+        log.debug_(java.lang.String.format("Invoking FFMPEG to retrieve H264 header for file: %s", cast(Object[])[ filePath ]));
         ProcessExecutor executor = new ProcessExecutor(builder.build(), false, Long.valueOf(context.isLocalContent() ? LOCAL_FILE_TIMEOUT : onlineItemTimeout()));
 
         executeSynchronously(executor);
@@ -263,7 +264,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         String sourceFileName = getFilePathForTranscoding(video);
         FFmpegCLBuilder builder = buildBasicTranscodingParameters(sourceFileName, video.getDeliveryContext());
-        builder.outFileOptions(cast(String[])[ "-an", "-vn", "-map", "0:" + subtitle.getStreamId(), "-c:s", subtitleEncoder, "-f", subtitleFormat ]);
+        builder.outFileOptions(cast(String[])[ "-an", "-vn", "-map", "0:" ~ subtitle.getStreamId().toString(), "-c:s", subtitleEncoder, "-f", subtitleFormat ]);
 
         return builder;
     }
@@ -301,7 +302,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         builder.outFileOptions(cast(String[])[ "-sn" ]);
         addTargetVideoFormatAndOutputFile(builder, tDef, tmpFile, mediaItem.isLive());
 
-        log.debug_(String.format("Invoking FFmpeg to transcode video file: %s", cast(Object[])[ sourceFileName ]));
+        log.debug_(java.lang.String.format("Invoking FFmpeg to transcode video file: %s", cast(Object[])[ sourceFileName ]));
         return executeTranscodingProcess(tmpFile, listener, builder.build());
     }
 
@@ -341,7 +342,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         {
             Integer itemBitrate = mediaItem.getBitrate() !is null ? mediaItem.getBitrate() : null;
             Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-            builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", audioBitrate) ]);
+            builder.outFileOptions(cast(String[])[ "-b:a", java.lang.String.format("%sk", cast(Object[])[audioBitrate.toString()]) ]);
         }
         if (tDef.getTargetContainer() == AudioContainer.MP3) {
             builder.outFileOptions(cast(String[])[ "-id3v2_version", "3" ]);
@@ -350,12 +351,12 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
         if (frequency !is null) {
             builder.outFileOptions(cast(String[])[ "-ar", frequency.toString() ]);
         }
-        addAudioChannelsNumber(mediaItem.getChannels(), null, true, false, builder);
+        addAudioChannelsNumber(mediaItem.getChannels(), AudioCodec.UNKNOWN, true, false, builder);
 
         builder.outFileOptions(cast(String[])[ "-f", tDef.getTargetContainer().getFFmpegContainerEncoderName() ]).outFile(getOutputFile(tmpFile));
 
 
-        log.debug_(String.format("Invoking FFmpeg to transcode audio file: %s", cast(Object[])[ sourceFileName ]));
+        log.debug_(java.lang.String.format("Invoking FFmpeg to transcode audio file: %s", cast(Object[])[ sourceFileName ]));
         return executeTranscodingProcess(tmpFile, listener, builder.build());
     }
 
@@ -386,7 +387,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         FFmpegCLBuilder builder = new FFmpegCLBuilder();
         addInputFileOptions(sourceFilePath, context, builder);
-        builder.inFile(String.format("%s", cast(Object[])[ sourceFilePath ])).outFileOptions(cast(String[])[ "-y" ]);
+        builder.inFile(java.lang.String.format("%s", cast(Object[])[ sourceFilePath ])).outFileOptions(cast(String[])[ "-y" ]);
         return builder;
     }
 
@@ -406,10 +407,10 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     private static void mapStreams(Video mediaItem, FFmpegCLBuilder builder)
     {
         if (mediaItem.getVideoStreamIndex() !is null) {
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", mediaItem.getVideoStreamIndex()) ]);
+            builder.outFileOptions(cast(String[])[ "-map", java.lang.String.format("0:%s", cast(Object[])[mediaItem.getVideoStreamIndex().toString()]) ]);
         }
-        if ((mediaItem.getAudioCodec() !is null) && (mediaItem.getAudioStreamIndex() !is null)) {
-            builder.outFileOptions(cast(String[])[ "-map", String.format("0:%s", mediaItem.getAudioStreamIndex()) ]);
+        if ((mediaItem.getAudioCodec() != AudioCodec.UNKNOWN) && (mediaItem.getAudioStreamIndex() !is null)) {
+            builder.outFileOptions(cast(String[])[ "-map", java.lang.String.format("0:%s", cast(Object[])[mediaItem.getAudioStreamIndex().toString()]) ]);
         }
     }
 
@@ -440,9 +441,6 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         bool vCodecCopy = false;
         VideoCodec targetCodec = getTargetVideoCodec(mediaItem, tDef);
-
-
-
 
         builder.outFileOptions(cast(String[])[ "-c:v" ]);
         if (!isVideoStreamChanged(mediaItem, tDef, hardSubs))
@@ -494,7 +492,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     public static VideoCodec getTargetVideoCodec(Video mediaItem, VideoTranscodingDefinition tDef)
     {
-        return tDef.getTargetVideoCodec() !is null ? tDef.getTargetVideoCodec() : mediaItem.getVideoCodec();
+        return tDef.getTargetVideoCodec() != VideoCodec.UNKNOWN ? tDef.getTargetVideoCodec() : mediaItem.getVideoCodec();
     }
 
     private static bool isMpegTSbasedContainer(VideoContainer container)
@@ -506,7 +504,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         if (tDef.getMaxVideoBitrate() !is null)
         {
-            builder.outFileOptions(cast(String[])[ "-b:v", tDef.getMaxVideoBitrate().toString() + "k", "-maxrate:v", tDef.getMaxVideoBitrate().toString() + "k", "-bufsize:v", tDef.getMaxVideoBitrate().toString() + "k" ]);
+            builder.outFileOptions(cast(String[])[ "-b:v", tDef.getMaxVideoBitrate().toString() ~ "k", "-maxrate:v", tDef.getMaxVideoBitrate().toString() ~ "k", "-bufsize:v", tDef.getMaxVideoBitrate().toString() ~ "k" ]);
 
             return true;
         }
@@ -515,7 +513,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     private static bool isVideoStreamChanged(Video mediaItem, VideoTranscodingDefinition tDef, HardSubs hardSubs)
     {
-        bool codecCopy = (!tDef.isForceVTranscoding()) && ((tDef.getTargetVideoCodec() is null) || (tDef.getTargetVideoCodec().opEquals(mediaItem.getVideoCodec())));
+        bool codecCopy = (!tDef.isForceVTranscoding()) && ((tDef.getTargetVideoCodec() == VideoCodec.UNKNOWN) || (tDef.getTargetVideoCodec() == mediaItem.getVideoCodec()));
 
         return (!codecCopy) || (hardSubs !is null) || (tDef.getMaxVideoBitrate() !is null) || (isVideoResolutionChangeRequired(mediaItem.getWidth(), mediaItem.getHeight(), tDef.getMaxHeight(), tDef.getDar(), tDef.getTargetContainer(), mediaItem.getSar()));
     }
@@ -532,32 +530,31 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
 
     protected static void addVideoFilters(Video video, Integer maxHeight, DisplayAspectRatio targetDar, VideoContainer targetContainer, HardSubs hardSubs, FFmpegCLBuilder builder)
     {
-        List!(String) filters = new ArrayList();
+        List!(String) filters = new ArrayList!(String)();
         bool parameterQuoted = false;
         ResizeDefinition resizeDefinition = getTargetVideoDimensions(video, maxHeight, targetDar, targetContainer);
         if (resizeDefinition.changed())
         {
             if (resizeDefinition.physicalDimensionsChanged()) {
-                filters.add(String.format("scale=%s:%s", cast(Object[])[ Integer.valueOf(resizeDefinition.contentWidth), Integer.valueOf(resizeDefinition.contentHeight) ]));
+                filters.add(java.lang.String.format("scale=%s:%s", cast(Object[])[ Integer.valueOf(resizeDefinition.contentWidth), Integer.valueOf(resizeDefinition.contentHeight) ]));
             }
             if (resizeDefinition.darChanged)
             {
                 Integer posX = Integer.valueOf(Math.abs(resizeDefinition.width - resizeDefinition.contentWidth) / 2);
                 Integer posY = Integer.valueOf(Math.abs(resizeDefinition.height - resizeDefinition.contentHeight) / 2);
-                filters.add(String.format("pad=%s:%s:%s:%s:black", cast(Object[])[ Integer.valueOf(resizeDefinition.width), Integer.valueOf(resizeDefinition.height), posX, posY ]));
+                filters.add(java.lang.String.format("pad=%s:%s:%s:%s:black", cast(Object[])[ Integer.valueOf(resizeDefinition.width), Integer.valueOf(resizeDefinition.height), posX, posY ]));
 
                 filters.add("setdar=4:3");
             }
             if (resizeDefinition.sarChangedToSquarePixels) {
                 filters.add("setsar=1");
             } else if (!video.getSar().isSquarePixels()) {
-                filters.add("setsar=" + video.getSar().toString());
+                filters.add("setsar=" ~ video.getSar().toString());
             }
         }
         if (hardSubs !is null)
         {
-            filters.add(String.format("subtitles=filename=%s:original_size=%sx%s:charenc=%s", cast(Object[])[ encodeFilePathForFilter(hardSubs, Platform.isWindows()), video.getWidth(), video.getHeight(), Configuration.getSubsCharacterEncoding() ]));
-
+            filters.add(java.lang.String.format("subtitles=filename=%s:original_size=%sx%s:charenc=%s", cast(Object[])[ encodeFilePathForFilter(hardSubs, Platform.isWindows()), video.getWidth().toString(), video.getHeight().toString(), Configuration.getSubsCharacterEncoding() ]));
 
             parameterQuoted = true;
         }
@@ -572,21 +569,21 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
     {
         String tplt = windows ? "\"%s\"" : "'%s'";
         String fileName = hardSubs.getSubtitlesFile();
-        foreach (Map.Entry!(String, String) encodingRule ; windows ? windowsStringEncoding.entrySet() : stringEncoding.entrySet()) {
+        foreach (Entry!(String, String) encodingRule ; windows ? windowsStringEncoding.entrySet() : stringEncoding.entrySet()) {
             fileName = fileName.replaceAll(cast(String)encodingRule.getKey(), cast(String)encodingRule.getValue());
         }
-        return String.format(tplt, cast(Object[])[ fileName ]);
+        return java.lang.String.format(tplt, cast(Object[])[ fileName ]);
     }
 
     private static void addAudioParameters(Video mediaItem, VideoTranscodingDefinition tDef, FFmpegCLBuilder builder)
     {
-        if (mediaItem.getAudioCodec() is null)
+        if (mediaItem.getAudioCodec() == AudioCodec.UNKNOWN)
         {
             builder.outFileOptions(cast(String[])[ "-an" ]);
             return;
         }
         builder.outFileOptions(cast(String[])[ "-c:a" ]);
-        if ((tDef.getTargetAudioCodec() is null) || ((tDef.getTargetAudioCodec().opEquals(mediaItem.getAudioCodec())) && ((tDef.getAudioSamplerate() is null) || (tDef.getAudioSamplerate().opEquals(mediaItem.getFrequency())))))
+        if ((tDef.getTargetAudioCodec()  == AudioCodec.UNKNOWN) || ((tDef.getTargetAudioCodec() == mediaItem.getAudioCodec()) && ((tDef.getAudioSamplerate() is null) || (tDef.getAudioSamplerate().opEquals(mediaItem.getFrequency())))))
         {
             builder.outFileOptions(cast(String[])[ "copy" ]);
         }
@@ -600,7 +597,7 @@ public class FFMPEGWrapper : AbstractExecutableWrapper
             {
                 Integer itemBitrate = mediaItem.getAudioBitrate() !is null ? mediaItem.getAudioBitrate() : null;
                 Integer audioBitrate = getAudioBitrate(itemBitrate, tDef);
-                builder.outFileOptions(cast(String[])[ "-b:a", String.format("%sk", audioBitrate) ]);
+                builder.outFileOptions(cast(String[])[ "-b:a", java.lang.String.format("%sk", cast(Object[])[audioBitrate]) ]);
             }
             Integer frequency = getAudioFrequency(tDef, mediaItem);
             if (frequency !is null) {

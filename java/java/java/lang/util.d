@@ -619,3 +619,15 @@ public T valueOf(T)(String value)
 {
     return std.conv.to!T(value);
 }
+
+public T[] values(T)() if (is(T == enum))
+{
+    return [std.traits.EnumMembers!T];
+}
+
+public T get(T)(T[] a, int index)
+{
+    if (index < a.length)
+        return a[index];
+    return null;
+}

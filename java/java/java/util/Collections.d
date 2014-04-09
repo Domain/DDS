@@ -58,6 +58,17 @@ class Collections {
         }
         return cast(Set!T)EMPTY_SET_;
     }
+
+    public static bool addAll(T)(Collection!T c, T[] values)
+    {
+        bool result = false;
+        foreach(v; values)
+        {
+            result |= c.add(v);
+        }
+        return result;
+    }
+
     static class UnmodifiableIterator(T) : Iterator!T {
         Iterator!T it;
         this(Iterator!T it){

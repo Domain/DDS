@@ -44,6 +44,25 @@ public String[] getFileExtensions(SubtitleCodec codec)
     }
 }
 
+public String getFFmpegEncoderName(SubtitleCodec codec)
+{
+    final switch (codec)
+    {
+        case SubtitleCodec.SRT:
+            return "srt";
+
+        case SubtitleCodec.ASS:
+            return "ass";
+
+        case SubtitleCodec.SUB:
+        case SubtitleCodec.SMI:
+        case SubtitleCodec.VTT:
+        case SubtitleCodec.MOV_TEXT:
+        case SubtitleCodec.UNKNOWN:
+            return null;
+    }
+}
+
 public String[] getAllSupportedExtensions()
 {
     String[] result;

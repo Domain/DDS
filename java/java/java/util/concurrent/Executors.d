@@ -17,7 +17,7 @@ public class Executors
         implMissing();
     }
 
-    public ScheduledExecutorService newScheduledThreadPool(int n)
+    public static ScheduledExecutorService newScheduledThreadPool(int n)
     {
         implMissing();
         return null;

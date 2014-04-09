@@ -1,5 +1,6 @@
 module org.serviio.dlna.MediaFormatProfile;
 
+import java.lang.util;
 import java.util.Arrays;
 import java.util.List;
 import org.serviio.library.metadata.MediaFileType;
@@ -352,7 +353,7 @@ public bool isManifestFormat(MediaFormatProfile profile)
 
 public List!(MediaFormatProfile) getSupportedMediaFormatProfiles()
 {
-    return Arrays.asList(values());
+    return Arrays.asList(values!MediaFormatProfile());
 }
 
 

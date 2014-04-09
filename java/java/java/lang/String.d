@@ -118,6 +118,10 @@ String String_format(Char, Args...)(in Char[] fmt, Args args){
     return std.string.format(fmt, args);
 }
 
+String format(Char, Args...)(in Char[] fmt, Args args){
+    return std.string.format(fmt, args);
+}
+
 String format(String fmt, Object[] args)
 {
     return std.string.format(fmt, args);

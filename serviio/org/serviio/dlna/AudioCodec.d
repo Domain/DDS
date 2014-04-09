@@ -6,7 +6,7 @@ import java.lang.RuntimeException;
 
 public enum AudioCodec
 {
-    MP3,  MP2,  MP1,  AAC,  AC3,  LPCM,  DTS,  WMA,  WMA_PRO,  FLAC,  VORBIS,  TRUEHD,  AMR,  REAL, INVALID
+    MP3,  MP2,  MP1,  AAC,  AC3,  LPCM,  DTS,  WMA,  WMA_PRO,  FLAC,  VORBIS,  TRUEHD,  AMR,  REAL,  UNKNOWN,
 }
 
 public String getFFmpegEncoderName(AudioCodec audioCodec)
@@ -58,8 +58,8 @@ public String getFFmpegEncoderName(AudioCodec audioCodec)
         case AudioCodec.REAL:
             throw new RuntimeException("RealAudio is not supported");
 
-        case AudioCodec.INVALID:
-            throw new RuntimeException("INVALID is not supported");
+        case AudioCodec.UNKNOWN:
+            throw new RuntimeException("UNKNOWN is not supported");
     }
 
     return "";
@@ -98,7 +98,7 @@ public AudioCodec getByFFmpegDecoderName(String ffmpegName)
             return AudioCodec.REAL;
         }
     }
-    return AudioCodec.INVALID;
+    return AudioCodec.UNKNOWN;
 }
 
 /* Location:           C:\Users\Main\Downloads\serviio.jar
