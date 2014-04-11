@@ -58,7 +58,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         }
     }
 
-    public void delete_(final Long id)
+    public void delete_(Long id)
     {
         log.debug_(java.lang.String.format("Deleting a Genre (id = %s)", cast(Object[])[ id ]));
         try
@@ -162,6 +162,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Genre) retrieveGenres(MediaFileType fileType, int startingIndex, int requestedCount, bool filterOutSeries)
@@ -172,9 +173,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(genre.id) as id, genre.name as name FROM genre, media_item WHERE media_item.genre_id = genre.id AND media_item.file_type = ? " + seriesContentTypeCondition(filterOutSeries) + "ORDER BY lower(genre.name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
+            ps = con.prepareStatement("SELECT DISTINCT(genre.id) as id, genre.name as name FROM genre, media_item WHERE media_item.genre_id = genre.id AND media_item.file_type = ? " ~ seriesContentTypeCondition(filterOutSeries) ~ "ORDER BY lower(genre.name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, fileType.toString());
             ResultSet rs = ps.executeQuery();
@@ -189,6 +188,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getGenreCount(MediaFileType fileType, bool filterOutSeries)
@@ -199,7 +199,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT(genre.id)) as c FROM genre, media_item WHERE media_item.genre_id = genre.id AND media_item.file_type = ?" + seriesContentTypeCondition(filterOutSeries));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT(genre.id)) as c FROM genre, media_item WHERE media_item.genre_id = genre.id AND media_item.file_type = ?" ~ seriesContentTypeCondition(filterOutSeries));
 
             ps.setString(1, fileType.toString());
             ResultSet rs = ps.executeQuery();
@@ -220,6 +220,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     protected Genre mapSingleResult(ResultSet rs)

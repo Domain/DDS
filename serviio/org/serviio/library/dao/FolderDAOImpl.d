@@ -347,7 +347,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     public List!(Folder) retrieveFoldersWithMedia(MediaFileType fileType, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of leaf folders (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of leaf folders (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -418,7 +418,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
                 sql = sql ~ " and folder.parent_folder_id = " ~ folderId.toString();
             }
             sql = sql ~ accessGroupConditionForFolder(accessGroup);
-            sql = sql ~ " ORDER BY name " ~ "OFFSET " ~ startingIndex ~ " ROWS FETCH FIRST " ~ requestedCount ~ " ROWS ONLY";
+            sql = sql ~ " ORDER BY name " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY";
 
             ps = con.prepareStatement(sql);
             ps.setLong(1, repositoryId.longValue());
@@ -475,7 +475,7 @@ public class FolderDAOImpl : AbstractAccessibleDao, FolderDAO
 
     protected List!(Folder) mapResultSet(ResultSet rs)
     {
-        List!(Folder) result = new ArrayList();
+        List!(Folder) result = new ArrayList!(Folder)();
         while (rs.next()) {
             result.add(initFolder(rs));
         }
