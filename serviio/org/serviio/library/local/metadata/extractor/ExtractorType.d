@@ -6,30 +6,33 @@ import org.serviio.library.local.metadata.extractor.MetadataExtractor;
 
 public enum ExtractorType
 {
-    EMBEDDED,  COVER_IMAGE_IN_FOLDER,  ONLINE_VIDEO_SOURCES,  SWISSCENTER,  XBMC,  MYMOVIES
+    EMBEDDED,  COVER_IMAGE_IN_FOLDER,  ONLINE_VIDEO_SOURCES,  SWISSCENTER,  XBMC,  MYMOVIES,  UNKNOWN, 
 }
 
 public MetadataExtractor getExtractorInstance(ExtractorType type)
 {
     final switch (type)
     {
-        case EMBEDDED:
+        case ExtractorType.EMBEDDED:
             return new EmbeddedMetadataExtractor();
 
-        case COVER_IMAGE_IN_FOLDER:
+        case ExtractorType.COVER_IMAGE_IN_FOLDER:
             return new CoverImageInFolderExtractor();
 
-        case ONLINE_VIDEO_SOURCES:
+        case ExtractorType.ONLINE_VIDEO_SOURCES:
             return new OnlineVideoSourcesMetadataExtractor();
 
-        case SWISSCENTER:
+        case ExtractorType.SWISSCENTER:
             return new SwissCenterExtractor();
 
-        case XBMC:
+        case ExtractorType.XBMC:
             return new XBMCExtractor();
 
-        case MYMOVIES:
+        case ExtractorType.MYMOVIES:
             return new MyMoviesExtractor();
+
+        case ExtractorType.UNKNOWN:
+            return null;
     }
 }
 
@@ -37,23 +40,26 @@ public int getDefaultPriority(ExtractorType type)
 {
     final switch (type)
     {
-        case EMBEDDED:
+        case ExtractorType.EMBEDDED:
             return 0;
 
-        case COVER_IMAGE_IN_FOLDER:
+        case ExtractorType.COVER_IMAGE_IN_FOLDER:
             return 10;
 
-        case ONLINE_VIDEO_SOURCES:
+        case ExtractorType.ONLINE_VIDEO_SOURCES:
             return 1;
 
-        case SWISSCENTER:
+        case ExtractorType.SWISSCENTER:
             return 2;
 
-        case XBMC:
+        case ExtractorType.XBMC:
             return 2;
 
-        case MYMOVIES:
+        case ExtractorType.MYMOVIES:
             return 2;
+
+        case ExtractorType.UNKNOWN:
+            return 100;
     }
 }
 
@@ -61,14 +67,14 @@ public bool isDescriptiveMetadataExtractor(ExtractorType type)
 {
     switch (type)
     {
-        case EMBEDDED:
-        case COVER_IMAGE_IN_FOLDER:
+        case ExtractorType.EMBEDDED:
+        case ExtractorType.COVER_IMAGE_IN_FOLDER:
             return false;
 
-        case ONLINE_VIDEO_SOURCES:
-        case SWISSCENTER:
-        case XBMC:
-        case MYMOVIES:
+        case ExtractorType.ONLINE_VIDEO_SOURCES:
+        case ExtractorType.SWISSCENTER:
+        case ExtractorType.XBMC:
+        case ExtractorType.MYMOVIES:
             return true;
     }
 }

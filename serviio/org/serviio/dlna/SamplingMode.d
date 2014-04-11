@@ -2,7 +2,7 @@ module org.serviio.dlna.SamplingMode;
 
 public enum SamplingMode
 {
-    UNKNOWN = -2,  DEFAULT = -1,  YUV444 = 17,  YUV422 = 33,  YUV420 = 34,  YUV411 = 65,
+    INVALID = -3,  UNKNOWN = -2,  DEFAULT = -1,  YUV444 = 17,  YUV422 = 33,  YUV420 = 34,  YUV411 = 65,
 }
 
 

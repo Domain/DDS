@@ -20,6 +20,7 @@ public class Image : MediaItem
     {
         super(title, fileName, filePath, fileSize, folderId, repositoryId, date, MediaFileType.IMAGE);
         this.container = container;
+        this.chromaSubsampling = SamplingMode.INVALID;
     }
 
     public Integer getWidth()

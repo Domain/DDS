@@ -47,13 +47,13 @@ public class MediaItemDAOImpl : MediaItemDAO
 
     public MediaItem getMediaItem(String filePath, bool ignoreCase)
     {
-        log.debug_(java.lang.String.format("Looking up a media item for file path: %s, ignore case: %s", cast(Object[])[ filePath, Boolean.valueOf(ignoreCase) ]));
+        log.debug_(java.lang.String.format("Looking up a media item for file path: %s, ignore case: %s", cast(Object[])[ filePath.toString(), Boolean.valueOf(ignoreCase).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT id, title, sort_title, file_size, file_name, file_path, folder_id, creation_date, description, file_type, last_viewed_date, number_viewed, dirty, bookmark, cover_image_id, repository_id FROM media_item WHERE " + (ignoreCase ? "lc_file_path = ?" : "file_path = ?"));
+            ps = con.prepareStatement("SELECT id, title, sort_title, file_size, file_name, file_path, folder_id, creation_date, description, file_type, last_viewed_date, number_viewed, dirty, bookmark, cover_image_id, repository_id FROM media_item WHERE " ~ (ignoreCase ? "lc_file_path = ?" : "file_path = ?"));
 
 
             ps.setString(1, ignoreCase ? filePath.toLowerCase() : filePath);
@@ -155,7 +155,7 @@ public class MediaItemDAOImpl : MediaItemDAO
 
     public List!(MediaItem) getMediaItemsInRepository(Long repositoryId, MediaFileType fileType)
     {
-        log.debug_(java.lang.String.format("Reading MediaItems (%s) for Repository (id = %s)", cast(Object[])[ fileType, repositoryId ]));
+        log.debug_(java.lang.String.format("Reading MediaItems (%s) for Repository (id = %s)", cast(Object[])[ fileType.toString(), repositoryId.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -171,7 +171,7 @@ public class MediaItemDAOImpl : MediaItemDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read MediaItems (%s) for Repository with id = %s", cast(Object[])[ fileType, repositoryId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read MediaItems (%s) for Repository with id = %s", cast(Object[])[ fileType.toString(), repositoryId.toString() ]), e);
         }
         finally
         {
@@ -208,7 +208,7 @@ public class MediaItemDAOImpl : MediaItemDAO
 
     public void markMediaItemsAsDirty(MediaFileType fileType)
     {
-        if (fileType is null) {
+        if (fileType == MediaFileType.UNKNOWN) {
             throw new InvalidArgumentException("Cannot mark MediaItems as dirty. Required data is missing.");
         }
         log.debug_(java.lang.String.format("Marking MediaItems (type = %s) as dirty", cast(Object[])[ fileType ]));
@@ -237,7 +237,7 @@ public class MediaItemDAOImpl : MediaItemDAO
         if ((mediaItemId is null) || (seconds is null)) {
             throw new InvalidArgumentException("Cannot set MediaItem bookmark. Required data is missing.");
         }
-        log.debug_(java.lang.String.format("Bookmarking MediaItem (id = %s) at %s seconds", cast(Object[])[ mediaItemId, seconds ]));
+        log.debug_(java.lang.String.format("Bookmarking MediaItem (id = %s) at %s seconds", cast(Object[])[ mediaItemId.toString(), seconds.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -321,7 +321,7 @@ public class MediaItemDAOImpl : MediaItemDAO
 
     protected List!(MediaItem) mapResultSet(ResultSet rs)
     {
-        List!(MediaItem) result = new ArrayList();
+        List!(MediaItem) result = new ArrayList!(MediaItem)();
         while (rs.next()) {
             result.add(initMediaItem(rs));
         }
@@ -345,7 +345,7 @@ public class MediaItemDAOImpl : MediaItemDAO
         Integer bookmark = Integer.valueOf(rs.getInt("bookmark"));
         Long coverImageId = Long.valueOf(rs.getLong("cover_image_id"));
         bool dirty = rs.getBoolean("dirty");
-        MediaFileType fileType = MediaFileType.valueOf(rs.getString("file_type"));
+        MediaFileType fileType = valueOf!MediaFileType(rs.getString("file_type"));
 
         MediaItem item = new MediaItem(title, fileName, filePath, fileSize, folderId, repositoryId, date, fileType);
         item.setId(id);

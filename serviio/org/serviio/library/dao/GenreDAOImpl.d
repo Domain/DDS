@@ -167,7 +167,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     public List!(Genre) retrieveGenres(MediaFileType fileType, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving list of genres for %s (from=%s, count=%s)", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of genres for %s (from=%s, count=%s)", cast(Object[])[ fileType.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -233,7 +233,7 @@ public class GenreDAOImpl : AbstractDao, GenreDAO
 
     protected List!(Genre) mapResultSet(ResultSet rs)
     {
-        List!(Genre) result = new ArrayList();
+        List!(Genre) result = new ArrayList!(Genre)();
         while (rs.next()) {
             result.add(initGenre(rs));
         }

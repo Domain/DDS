@@ -5,6 +5,7 @@ import java.lang.String;
 import java.lang.exceptions;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.Date;
 
 public class PreparedStatement : Statement
 {
@@ -19,6 +20,16 @@ public class PreparedStatement : Statement
     }
 
     public void setLong(int index, long value)
+    {
+        implMissing();
+    }
+
+    public void setInt(int index, int value)
+    {
+        implMissing();
+    }
+
+    public void setTimestamp(int index, Date value)
     {
         implMissing();
     }

@@ -4,6 +4,7 @@ module java.sql.ResultSet;
 import java.lang.exceptions;
 import java.lang.String;
 import java.sql.Blob;
+import java.util.Date;
 
 public class ResultSet
 {
@@ -43,6 +44,18 @@ public class ResultSet
     }
 
     public Blob getBlob(String name)
+    {
+        implMissing();
+        return null;
+    }
+
+    public bool getBoolean(String name)
+    {
+        implMissing();
+        return false;
+    }
+
+    public Date getTimestamp(String name)
     {
         implMissing();
         return null;

@@ -12,19 +12,21 @@ import org.serviio.util.StringUtils;
 
 public enum MediaFileType
 {
-    IMAGE,  VIDEO,  AUDIO
+    IMAGE,  VIDEO,  AUDIO,  UNKNOWN,
 }
 
 public String[] supportedFileExtensions(MediaFileType type)
 {
-    switch (type)
+    final switch (type)
     {
-        case IMAGE: 
+        case MediaFileType.IMAGE: 
             return ["jpg", "jpeg", "png", "gif", "arw", "cr2", "crw", "dng", "raf", "raw", "rw2", "mrw", "nef", "nrw", "pef", "srf", "orf"];
-        case VIDEO: 
+        case MediaFileType.VIDEO: 
             return ["mpg", "mpeg", "vob", "avi", "mp4", "m4v", "ts", "wmv", "asf", "mkv", "divx", "m2ts", "mts", "mov", "mod", "tp", "trp", "vdr", "flv", "f4v", "dvr", "dvr-ms", "wtv", "ogv", "ogm", "3gp", "rm", "rmvb"];
-        case AUDIO: 
+        case MediaFileType.AUDIO: 
             return ["mp3", "mp2", "wma", "m4a", "flac", "ogg", "oga", "wv", "mpc", "ape"];
+        case MediaFileType.UNKNOWN:
+            return [];
     }
     return [];
 }
@@ -39,7 +41,7 @@ public MediaFileType findMediaFileTypeByExtension(String extension)
             }
         }
     }
-    return null;
+    return MediaFileType.UNKNOWN;
 }
 
 public MediaFileType findMediaFileTypeByMimeType(String mimeType)
@@ -48,16 +50,16 @@ public MediaFileType findMediaFileTypeByMimeType(String mimeType)
     {
         String mimeTypeLC = StringUtils.localeSafeToLowercase(mimeType);
         if (mimeTypeLC.startsWith("audio")) {
-            return AUDIO;
+            return MediaFileType.AUDIO;
         }
         if (mimeTypeLC.startsWith("image")) {
-            return IMAGE;
+            return MediaFileType.IMAGE;
         }
         if (mimeTypeLC.startsWith("video")) {
-            return VIDEO;
+            return MediaFileType.VIDEO;
         }
     }
-    return null;
+    return MediaFileType.UNKNOWN;
 }
 
 public Set!(MediaFileType) parseMediaFileTypesFromString(String fileTypesCSV)

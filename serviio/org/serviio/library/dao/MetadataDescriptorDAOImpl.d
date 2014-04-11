@@ -30,10 +30,10 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public long create(MetadataDescriptor newInstance)
     {
-        if ((newInstance is null) || (newInstance.getExtractorType() is null) || (newInstance.getMediaItemId() is null) || (newInstance.getDateUpdated() is null)) {
+        if ((newInstance is null) || (newInstance.getExtractorType() == ExtractorType.UNKNOWN) || (newInstance.getMediaItemId() is null) || (newInstance.getDateUpdated() is null)) {
             throw new InvalidArgumentException("Cannot create MetadataDescriptor. Required data is missing.");
         }
-        log.debug_(java.lang.String.format("Creating a new MetadataDescriptor (type = %s, mediaItemId = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]));
+        log.debug_(java.lang.String.format("Creating a new MetadataDescriptor (type = %s, mediaItemId = %s)", cast(Object[])[ newInstance.getExtractorType().toString(), newInstance.getMediaItemId().toString() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -51,7 +51,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot create MetadataDescriptor with type %s for mediaItem %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getMediaItemId() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create MetadataDescriptor with type %s for mediaItem %s", cast(Object[])[ newInstance.getExtractorType().toString(), newInstance.getMediaItemId().toString() ]), e);
         }
         finally
         {
@@ -137,7 +137,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     public MetadataDescriptor retrieveMetadataDescriptorForMedia(Long mediaItemId, ExtractorType extractorType)
     {
-        log.debug_(java.lang.String.format("Reading MetadataDescriptor for MediaItem (id = %s) and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]));
+        log.debug_(java.lang.String.format("Reading MetadataDescriptor for MediaItem (id = %s) and extractor %s", cast(Object[])[ mediaItemId.toString(), extractorType.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
