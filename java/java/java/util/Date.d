@@ -13,6 +13,12 @@ class Date {
         implMissing(__FILE__,__LINE__);
         return 0;
     }
+
+    bool after(Date)
+    {
+        implMissing();
+        return false;
+    }
 }
 
 

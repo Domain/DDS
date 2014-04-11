@@ -47,14 +47,13 @@ public class MediaItemDAOImpl : MediaItemDAO
 
     public MediaItem getMediaItem(String filePath, bool ignoreCase)
     {
-        log.debug_(java.lang.String.format("Looking up a media item for file path: %s, ignore case: %s", cast(Object[])[ filePath.toString(), Boolean.valueOf(ignoreCase).toString() ]));
+        log.debug_(java.lang.String.format("Looking up a media item for file path: %s, ignore case: %s", cast(Object[])[ filePath.toString(), ignoreCase.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("SELECT id, title, sort_title, file_size, file_name, file_path, folder_id, creation_date, description, file_type, last_viewed_date, number_viewed, dirty, bookmark, cover_image_id, repository_id FROM media_item WHERE " ~ (ignoreCase ? "lc_file_path = ?" : "file_path = ?"));
-
 
             ps.setString(1, ignoreCase ? filePath.toLowerCase() : filePath);
 

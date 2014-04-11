@@ -58,6 +58,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public void delete_(Long id)
@@ -151,13 +152,14 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read MetadataDescriptor for MediaItem id = %s and extractor %s", cast(Object[])[ mediaItemId, extractorType.toString() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read MetadataDescriptor for MediaItem id = %s and extractor %s", cast(Object[])[ mediaItemId.toString(), extractorType.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     protected MetadataDescriptor mapSingleResult(ResultSet rs)
@@ -170,7 +172,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
 
     protected List!(MetadataDescriptor) mapResultSet(ResultSet rs)
     {
-        List!(MetadataDescriptor) result = new ArrayList();
+        List!(MetadataDescriptor) result = new ArrayList!(MetadataDescriptor)();
         while (rs.next()) {
             result.add(initDescriptor(rs));
         }
@@ -180,7 +182,7 @@ public class MetadataDescriptorDAOImpl : MetadataDescriptorDAO
     private MetadataDescriptor initDescriptor(ResultSet rs)
     {
         Long id = Long.valueOf(rs.getLong("id"));
-        ExtractorType extractorType = ExtractorType.valueOf(rs.getString("extractor_type"));
+        ExtractorType extractorType = valueOf!ExtractorType(rs.getString("extractor_type"));
         Date dateUpdated = rs.getTimestamp("date_updated");
         Long mediaItemId = Long.valueOf(rs.getLong("media_item_id"));
         String identifier = rs.getString("identifier");

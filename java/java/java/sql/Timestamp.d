@@ -9,4 +9,9 @@ public class Timestamp
     {
         implMissing();
     }
+
+    public this(long)
+    {
+        implMissing();
+    }
 }

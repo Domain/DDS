@@ -29,10 +29,10 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
 
     public long create(MetadataExtractorConfig newInstance)
     {
-        if ((newInstance is null) || (newInstance.getExtractorType() is null) || (newInstance.getOrderNumber() == 0) || (newInstance.getFileType() is null)) {
+        if ((newInstance is null) || (newInstance.getExtractorType() == ExtractorType.UNKNOWN) || (newInstance.getOrderNumber() == 0) || (newInstance.getFileType() == MediaFileType.UNKNOWN)) {
             throw new InvalidArgumentException("Cannot create MetadataExtractorConfig. Required data is missing.");
         }
-        log.debug_(java.lang.String.format("Creating a new MetadataExtractorConfig (extractor = %s, file type = %s)", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]));
+        log.debug_(java.lang.String.format("Creating a new MetadataExtractorConfig (extractor = %s, file type = %s)", cast(Object[])[ newInstance.getExtractorType().toString(), newInstance.getFileType().toString() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -49,7 +49,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot create MetadataExtractorConfig %s for file type %s", cast(Object[])[ newInstance.getExtractorType(), newInstance.getFileType() ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot create MetadataExtractorConfig %s for file type %s", cast(Object[])[ newInstance.getExtractorType().toString(), newInstance.getFileType().toString() ]), e);
         }
         finally
         {
@@ -115,7 +115,7 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
 
     protected List!(MetadataExtractorConfig) mapResultSet(ResultSet rs)
     {
-        List!(MetadataExtractorConfig) result = new ArrayList();
+        List!(MetadataExtractorConfig) result = new ArrayList!(MetadataExtractorConfig)();
         while (rs.next()) {
             result.add(initConfig(rs));
         }
@@ -125,8 +125,8 @@ public class MetadataExtractorConfigDAOImpl : MetadataExtractorConfigDAO
     private MetadataExtractorConfig initConfig(ResultSet rs)
     {
         Long id = Long.valueOf(rs.getLong("id"));
-        MediaFileType mediaType = MediaFileType.valueOf(rs.getString("media_file_type"));
-        ExtractorType extractorType = ExtractorType.valueOf(rs.getString("extractor_type"));
+        MediaFileType mediaType = valueOf!MediaFileType(rs.getString("media_file_type"));
+        ExtractorType extractorType = valueOf!ExtractorType(rs.getString("extractor_type"));
         Integer orderNumber = JdbcUtils.getIntFromResultSet(rs, "order_number");
 
         MetadataExtractorConfig config = new MetadataExtractorConfig(mediaType, extractorType, orderNumber.intValue());

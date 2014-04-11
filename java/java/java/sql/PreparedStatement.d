@@ -5,6 +5,7 @@ import java.lang.String;
 import java.lang.exceptions;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class PreparedStatement : Statement
@@ -29,7 +30,7 @@ public class PreparedStatement : Statement
         implMissing();
     }
 
-    public void setTimestamp(int index, Date value)
+    public void setTimestamp(int index, Timestamp value)
     {
         implMissing();
     }

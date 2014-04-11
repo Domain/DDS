@@ -628,7 +628,7 @@ public class ImageDAOImpl : AbstractSortableItemDao, ImageDAO
         String filePath = rs.getString("file_path");
         Long folderId = Long.valueOf(rs.getLong("folder_id"));
         Long repositoryId = Long.valueOf(rs.getLong("repository_id"));
-        ImageContainer container = rs.getString("container") !is null ? valueOf!ImageContainer(rs.getString("container")) : null;
+        ImageContainer container = rs.getString("container") !is null ? valueOf!ImageContainer(rs.getString("container")) : ImageContainer.INVALID;
         Date date = rs.getTimestamp("creation_date");
         String description = rs.getString("description");
         Integer width = JdbcUtils.getIntFromResultSet(rs, "width");
@@ -638,7 +638,7 @@ public class ImageDAOImpl : AbstractSortableItemDao, ImageDAO
         Date lastViewed = rs.getTimestamp("last_viewed_date");
         Integer numberViewed = Integer.valueOf(rs.getInt("number_viewed"));
         Integer rotation = Integer.valueOf(rs.getInt("rotation"));
-        SamplingMode chromaSubsampling = rs.getString("subsampling") !is null ? valueOf!SamplingMode(rs.getString("subsampling")) : null;
+        SamplingMode chromaSubsampling = rs.getString("subsampling") !is null ? valueOf!SamplingMode(rs.getString("subsampling")) : SamplingMode.INVALID;
         bool dirty = rs.getBoolean("dirty");
 
         Image image = new Image(title, container, fileName, filePath, fileSize, folderId, repositoryId, date);
