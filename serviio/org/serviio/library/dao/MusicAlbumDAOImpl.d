@@ -183,7 +183,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m  WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m  WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex ~ " ROWS FETCH FIRST " ~ requestedCount ~ " ROWS ONLY");
 
             ps.setLong(1, personId.longValue());
             ps.setString(2, personRole.toString());
