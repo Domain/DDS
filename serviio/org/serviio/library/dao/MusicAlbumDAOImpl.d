@@ -183,7 +183,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m  WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex ~ " ROWS FETCH FIRST " ~ requestedCount ~ " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m  WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setLong(1, personId.longValue());
             ps.setString(2, personRole.toString());
@@ -199,11 +199,12 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicAlbumsForTrackRoleCount(Long artistId, RoleType personRole)
     {
-        log.debug_(java.lang.String.format("Getting number of albums for person %s and role %s", cast(Object[])[ artistId, personRole ]));
+        log.debug_(java.lang.String.format("Getting number of albums for person %s and role %s", cast(Object[])[ artistId.toString(), personRole.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -225,26 +226,25 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person %s and role %s ", cast(Object[])[ artistId, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person %s and role %s ", cast(Object[])[ artistId.toString(), personRole.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicAlbum) retrieveMusicAlbumsForTrackRole(String personName, RoleType personRole, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music albums for person '%s' and role %s (from=%s, count=%s)", cast(Object[])[ personName, personRole, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of music albums for person '%s' and role %s (from=%s, count=%s)", cast(Object[])[ personName, personRole.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m, person p WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = p.id AND p.name = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
+            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr, media_item m, person p WHERE m.album_id = a.id AND pr.media_item_id = m.id AND pr.person_id = p.id AND p.name = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, personName);
             ps.setString(2, personRole.toString());
@@ -253,18 +253,19 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of music albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of music albums for person '%s' and role %s", cast(Object[])[ personName, personRole.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicAlbumsForTrackRoleCount(String personName, RoleType personRole)
     {
-        log.debug_(java.lang.String.format("Getting number of albums for person '%s' and role %s", cast(Object[])[ personName, personRole ]));
+        log.debug_(java.lang.String.format("Getting number of albums for person '%s' and role %s", cast(Object[])[ personName, personRole.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -286,26 +287,25 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person '%s' and role %s ", cast(Object[])[ personName, personRole ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot get number of albums for person '%s' and role %s ", cast(Object[])[ personName, personRole.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicAlbum) retrieveMusicAlbumsForAlbumArtist(Long artistId, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music albums for album artist %s (from=%s, count=%s)", cast(Object[])[ artistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of music albums for album artist %s (from=%s, count=%s)", cast(Object[])[ artistId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr WHERE pr.music_album_id = a.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
+            ps = con.prepareStatement("SELECT DISTINCT(a.id), a.title, a.sort_title FROM music_album a, person_role pr WHERE pr.music_album_id = a.id AND pr.person_id = ? AND pr.role_type = ? ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setLong(1, artistId.longValue());
             ps.setString(2, RoleType.ALBUM_ARTIST.toString());
@@ -321,6 +321,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicAlbumsForAlbumArtistCount(Long artistId)
@@ -354,6 +355,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicAlbum) retrieveAllMusicAlbums(int startingIndex, int requestedCount)
@@ -364,8 +366,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT a.id, a.title, a.sort_title FROM music_album a ORDER BY lower(a.sort_title) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
+            ps = con.prepareStatement("SELECT a.id, a.title, a.sort_title FROM music_album a ORDER BY lower(a.sort_title) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ResultSet rs = ps.executeQuery();
             return mapResultSet(rs);
@@ -379,6 +380,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveAllMusicAlbumsCount()
@@ -409,6 +411,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicAlbum) retrieveRandomAlbums(int max, int startingIndex, int requestedCount)
@@ -425,12 +428,12 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             ResultSet rs;
             if (requestedCount > 0)
             {
-                ps = con.prepareStatement("SELECT random() as r, a.id, a.title, a.sort_title FROM music_album a ORDER BY r OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+                ps = con.prepareStatement("SELECT random() as r, a.id, a.title, a.sort_title FROM music_album a ORDER BY r OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
                 rs = ps.executeQuery();
                 return mapResultSet(rs);
             }
-            return Collections.emptyList();
+            return Collections.emptyList!(MusicAlbum)();
         }
         catch (SQLException e)
         {
@@ -441,6 +444,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return Collections.emptyList!(MusicAlbum)();
     }
 
     public int retrieveRandomAlbumsCount(int max)
@@ -470,11 +474,12 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicAlbum) retrieveLastViewedMusicAlbums(int max, int startingIndex, int requestedCount, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving list of last viewed music albums (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of last viewed music albums (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -486,16 +491,12 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             if (requestedCount > 0)
             {
                 con = DatabaseManager.getConnection();
-                ps = con.prepareStatement("SELECT a.id, a.title, a.sort_title, MAX(last_viewed_date) as viewed_date FROM music_album a, media_item " + accessGroupTable(accessGroup) + "WHERE media_item.album_id = a.id AND media_item.last_viewed_date IS NOT NULL " + accessGroupConditionForMediaItem(accessGroup) + "GROUP BY a.id, a.title, a.sort_title " + "ORDER BY viewed_date DESC " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
-
-
+                ps = con.prepareStatement("SELECT a.id, a.title, a.sort_title, MAX(last_viewed_date) as viewed_date FROM music_album a, media_item " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.album_id = a.id AND media_item.last_viewed_date IS NOT NULL " ~ accessGroupConditionForMediaItem(accessGroup) ~ "GROUP BY a.id, a.title, a.sort_title " ~ "ORDER BY viewed_date DESC " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
                 rs = ps.executeQuery();
                 return mapResultSet(rs);
             }
-            return Collections.emptyList();
+            return Collections.emptyList!(MusicAlbum)();
         }
         catch (SQLException e)
         {
@@ -506,6 +507,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return Collections.emptyList!(MusicAlbum)();
     }
 
     public int retrieveLastViewedMusicAlbumsCount(int max, AccessGroup accessGroup)
@@ -516,7 +518,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(distinct(a.id)) as c FROM music_album a, media_item " + accessGroupTable(accessGroup) + "WHERE media_item.album_id = a.id AND media_item.last_viewed_date IS NOT NULL " + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(distinct(a.id)) as c FROM music_album a, media_item " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.album_id = a.id AND media_item.last_viewed_date IS NOT NULL " ~ accessGroupConditionForMediaItem(accessGroup));
 
             ResultSet rs = ps.executeQuery();
             Integer count;
@@ -536,6 +538,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     protected MusicAlbum mapSingleResult(ResultSet rs)
@@ -548,7 +551,7 @@ public class MusicAlbumDAOImpl : AbstractSortableItemDao, MusicAlbumDAO
 
     protected List!(MusicAlbum) mapResultSet(ResultSet rs)
     {
-        List!(MusicAlbum) result = new ArrayList();
+        List!(MusicAlbum) result = new ArrayList!(MusicAlbum)();
         while (rs.next()) {
             result.add(initMusicAlbum(rs));
         }

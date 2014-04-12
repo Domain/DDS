@@ -80,6 +80,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0L;
     }
 
     public void delete_(Long id)
@@ -128,6 +129,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public void update(MusicTrack transientObject)
@@ -181,13 +183,13 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 
     public List!(MusicTrack) retrieveMusicTracksForArtist(Long artistId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for artist %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for artist %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, media_item.title as title, media_item.sort_title as sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, season_number, bookmark, media_item.repository_id as repository_id FROM media_item LEFT OUTER JOIN music_album a ON media_item.album_id = a.id, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? AND r.role_type=? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(a.title), media_item.season_number, media_item.order_number, lower(media_item.sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, media_item.title as title, media_item.sort_title as sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, season_number, bookmark, media_item.repository_id as repository_id FROM media_item LEFT OUTER JOIN music_album a ON media_item.album_id = a.id, person_role r, person p " ~ accessGroupTable(accessGroup).toString() ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? AND r.role_type=? " ~ accessGroupConditionForMediaItem(accessGroup).toString() ~ "ORDER BY lower(a.title), media_item.season_number, media_item.order_number, lower(media_item.sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
@@ -204,17 +206,19 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+
+        return null;
     }
 
     public int retrieveMusicTracksForArtistCount(Long artistId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for artist %s [%s]", cast(Object[])[ artistId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for artist %s [%s]", cast(Object[])[ artistId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, person_role r, person p " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
@@ -237,17 +241,18 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForGenre(Long genreId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and genre_id = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and genre_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, genreId.longValue());
@@ -263,17 +268,18 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForGenreCount(Long genreId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for genre %s [%s]", cast(Object[])[ genreId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for genre %s [%s]", cast(Object[])[ genreId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and genre_id = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and genre_id = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, genreId.longValue());
@@ -295,17 +301,18 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForFolder(Long folderId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item" + accessGroupTable(accessGroup) + " WHERE file_type = ? and folder_id = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item" ~ accessGroupTable(accessGroup) ~ " WHERE file_type = ? and folder_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, folderId.longValue());
@@ -321,17 +328,18 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForFolderCount(Long folderId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for folder %s [%s]", cast(Object[])[ folderId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? AND folder_id = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? AND folder_id = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, folderId.longValue());
@@ -353,6 +361,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(String) retrieveMusicTracksInitials(AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -363,7 +372,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT upper(substr(sort_title,1,1)) as letter from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY letter " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT upper(substr(sort_title,1,1)) as letter from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY letter " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -382,6 +391,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksInitialsCount(AccessGroup accessGroup)
@@ -392,7 +402,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT upper(substr(sort_title,1,1))) as c from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT upper(substr(sort_title,1,1))) as c from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -413,6 +423,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForInitial(String initial, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -423,7 +434,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and substr(upper(sort_title),1,1) = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and substr(upper(sort_title),1,1) = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setString(2, StringUtils.localeSafeToUppercase(initial));
@@ -449,7 +460,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and substr(upper(sort_title),1,1) = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and substr(upper(sort_title),1,1) = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setString(2, StringUtils.localeSafeToUppercase(initial));
@@ -481,7 +492,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item" + accessGroupTable(accessGroup) + "WHERE media_item.album_id=? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY media_item.season_number, media_item.order_number, lower(media_item.sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE media_item.album_id=? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY media_item.season_number, media_item.order_number, lower(media_item.sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setLong(1, albumId.longValue());
             ResultSet rs = ps.executeQuery();
@@ -506,7 +517,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" + accessGroupTable(accessGroup) + "WHERE media_item.album_id = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE media_item.album_id = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setLong(1, albumId.longValue());
             ResultSet rs = ps.executeQuery();
@@ -537,7 +548,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -562,7 +573,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -593,10 +604,10 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            if (requestedCount + startingIndex > max) {
+            if (requestedCount.toString() ~ startingIndex > max) {
                 requestedCount = max - startingIndex;
             }
-            ps = con.prepareStatement("SELECT random() as r, media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY r " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT random() as r, media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY r " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -621,7 +632,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
@@ -653,7 +664,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, media_item.title, media_item.sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=? and media_item.album_id=? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY media_item.season_number, media_item.order_number, lower(media_item.sort_title) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, media_item.title, media_item.sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item, person_role r, person p " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=? and media_item.album_id=? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY media_item.season_number, media_item.order_number, lower(media_item.sort_title) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
@@ -681,7 +692,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=? and media_item.album_id=?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, person_role r, person p " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type=? and media_item.album_id=?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, artistId.longValue());
@@ -715,7 +726,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item, playlist_item p " + accessGroupTable(accessGroup) + "WHERE p.media_item_id = media_item.id AND media_item.file_type = ? and p.playlist_id = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY p.item_order " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item, playlist_item p " ~ accessGroupTable(accessGroup) ~ "WHERE p.media_item_id = media_item.id AND media_item.file_type = ? and p.playlist_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY p.item_order " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ps.setLong(2, playlistId.longValue());
@@ -741,7 +752,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, playlist_item p " + accessGroupTable(accessGroup) + "WHERE p.media_item_id = media_item.id AND p.playlist_id = ? AND media_item.file_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, playlist_item p " ~ accessGroupTable(accessGroup) ~ "WHERE p.media_item_id = media_item.id AND p.playlist_id = ? AND media_item.file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setLong(1, playlistId.longValue());
             ps.setString(2, MediaFileType.AUDIO.toString());
