@@ -35,6 +35,11 @@ public class PreparedStatement : Statement
         implMissing();
     }
 
+    public void setBoolean(int index, bool value)
+    {
+        implMissing();
+    }
+
     public void executeUpdate()
     {
         implMissing();

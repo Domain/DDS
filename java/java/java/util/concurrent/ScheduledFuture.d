@@ -3,11 +3,8 @@ module java.util.concurrent.ScheduledFuture;
 
 import java.lang.util;
 import java.lang.exceptions;
+import java.util.concurrent.Future;
 
-public class ScheduledFuture(T)
+public interface ScheduledFuture(T) : Future!T
 {
-    public this()
-    {
-        implMissing();
-    }
 }

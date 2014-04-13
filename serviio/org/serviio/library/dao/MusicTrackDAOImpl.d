@@ -366,7 +366,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 
     public List!(String) retrieveMusicTracksInitials(AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music track initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music track initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -376,7 +376,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 
             ps.setString(1, MediaFileType.AUDIO.toString());
             ResultSet rs = ps.executeQuery();
-            List!(String) result = new ArrayList();
+            List!(String) result = new ArrayList!(String)();
             while (rs.next()) {
                 result.add(rs.getString("letter"));
             }
@@ -428,7 +428,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 
     public List!(MusicTrack) retrieveMusicTracksForInitial(String initial, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -450,11 +450,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForInitialCount(String initial, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks with initial %s [%s]", cast(Object[])[ initial, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks with initial %s [%s]", cast(Object[])[ initial.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -482,11 +483,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForAlbum(Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for album %s (from=%s, count=%s) [%s]", cast(Object[])[ albumId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for album %s (from=%s, count=%s) [%s]", cast(Object[])[ albumId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -507,11 +509,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForAlbumCount(Long albumId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for album %s [%s]", cast(Object[])[ albumId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for album %s [%s]", cast(Object[])[ albumId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -538,11 +541,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveAllMusicTracks(AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of all music tracks (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of all music tracks (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -563,6 +567,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveAllMusicTracksCount(AccessGroup accessGroup)
@@ -594,17 +599,18 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveRandomMusicTracks(int max, int startingIndex, int requestedCount, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving list of random music tracks (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of random music tracks (start = %s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            if (requestedCount.toString() ~ startingIndex > max) {
+            if (requestedCount + startingIndex > max) {
                 requestedCount = max - startingIndex;
             }
             ps = con.prepareStatement("SELECT random() as r, media_item.id as id, title, sort_title, order_number, genre_id,duration, release_year, file_size, file_name, folder_id, album_id, container, creation_date, cover_image_id, audio_bitrate, description, channels, sample_frequency, last_viewed_date, number_viewed, file_path, dirty, bookmark, season_number, media_item.repository_id as repository_id FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY r " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
@@ -622,6 +628,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveRandomMusicTracksCount(int max, AccessGroup accessGroup)
@@ -653,11 +660,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForTrackRoleAndAlbum(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for person %s with role %s on album %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId, role, albumId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for person %s with role %s on album %s (from=%s, count=%s) [%s]", cast(Object[])[ artistId.toString(), role.toString(), albumId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -682,11 +690,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForTrackRoleAndAlbumCount(Long artistId, RoleType role, Long albumId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for person %s with role %s on album %s [%s]", cast(Object[])[ artistId, role, albumId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for person %s with role %s on album %s [%s]", cast(Object[])[ artistId.toString(), role.toString(), albumId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -709,18 +718,19 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read number of music tracks for person %s with role %s on album %s", cast(Object[])[ artistId, role, albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of music tracks for person %s with role %s on album %s", cast(Object[])[ artistId.toString(), role.toString(), albumId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MusicTrack) retrieveMusicTracksForPlaylist(Long playlistId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of music tracks for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of music tracks for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -742,11 +752,12 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMusicTracksForPlaylistCount(Long playlistId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of music tracks for playlist %s [%s]", cast(Object[])[ playlistId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of music tracks for playlist %s [%s]", cast(Object[])[ playlistId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -774,6 +785,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     protected MusicTrack mapSingleResult(ResultSet rs)
@@ -786,7 +798,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
 
     protected List!(MusicTrack) mapResultSet(ResultSet rs)
     {
-        List!(MusicTrack) result = new ArrayList();
+        List!(MusicTrack) result = new ArrayList!(MusicTrack)();
         while (rs.next()) {
             result.add(initMusicTrack(rs));
         }
@@ -807,7 +819,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         String filePath = rs.getString("file_path");
         Long folderId = Long.valueOf(rs.getLong("folder_id"));
         Long repositoryId = Long.valueOf(rs.getLong("repository_id"));
-        AudioContainer container = rs.getString("container") !is null ? AudioContainer.valueOf(rs.getString("container")) : null;
+        AudioContainer container = rs.getString("container") !is null ? valueOf!AudioContainer(rs.getString("container")) : AudioContainer.INVALID;
         Long albumId = JdbcUtils.getLongFromResultSet(rs, "album_id");
         Date date = rs.getTimestamp("creation_date");
         Long albumArtId = JdbcUtils.getLongFromResultSet(rs, "cover_image_id");

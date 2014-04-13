@@ -193,17 +193,17 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public List!(OnlineRepository) getRepositories(List!(OnlineRepositoryType) repoTypes, MediaFileType fileType, AccessGroup accessGroup, bool onlyEnabled)
     {
-        log.debug_(java.lang.String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes, fileType, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of %s OnlineRepositories for %s [%s]", cast(Object[])[ repoTypes.toString(), fileType.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            String query = "SELECT online_repository.id as id, repo_type, file_type, url, thumbnail_url, name, enabled, order_number FROM online_repository " + onlineAccessGroupTable(accessGroup) + "WHERE file_type = ? and repo_type in (" + JdbcUtils.createInClause(repoTypes.size()) + ") " + accessGroupConditionForOnlineRepository(accessGroup);
+            String query = "SELECT online_repository.id as id, repo_type, file_type, url, thumbnail_url, name, enabled, order_number FROM online_repository " ~ onlineAccessGroupTable(accessGroup) ~ "WHERE file_type = ? and repo_type in (" ~ JdbcUtils.createInClause(repoTypes.size()) ~ ") " ~ accessGroupConditionForOnlineRepository(accessGroup);
             if (onlyEnabled) {
-                query = query + "and enabled = 1 ";
+                query = query ~ "and enabled = 1 ";
             }
-            query = query + "ORDER BY order_number ";
+            query = query ~ "ORDER BY order_number ";
             ps = con.prepareStatement(query);
             ps.setString(1, fileType.toString());
             for (int i = 0; i < repoTypes.size(); i++) {

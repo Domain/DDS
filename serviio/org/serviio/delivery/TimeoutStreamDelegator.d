@@ -113,7 +113,7 @@ public class TimeoutStreamDelegator
                 this.scheduledFuture.cancel(true);
             }
             if (!this.scheduler.isShutdown()) {
-                this.scheduledFuture = this.scheduler.schedule(new NonClosingPipedInputStreamCompanion(null), timeout, TimeUnit.SECONDS);
+                this.scheduledFuture = this.scheduler.schedule(new NonClosingPipedInputStreamCompanion(), timeout, TimeUnit.SECONDS);
             }
         }
         catch (Throwable e)

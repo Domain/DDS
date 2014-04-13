@@ -89,7 +89,6 @@
   <resfile />
   <exefile>$(OutDir)\$(ProjectName).lib</exefile>
   <useStdLibPath>1</useStdLibPath>
-  <cRuntime>2</cRuntime>
   <additionalOptions />
   <preBuildCommand />
   <postBuildCommand />
@@ -184,7 +183,6 @@
   <resfile />
   <exefile>$(OutDir)\$(ProjectName).lib</exefile>
   <useStdLibPath>1</useStdLibPath>
-  <cRuntime>1</cRuntime>
   <additionalOptions />
   <preBuildCommand />
   <postBuildCommand />
@@ -411,6 +409,7 @@
      <File path="java\util\concurrent\ConcurrentSkipListSet.d" />
      <File path="java\util\concurrent\CountDownLatch.d" />
      <File path="java\util\concurrent\ExecutionException.d" />
+     <File path="java\util\concurrent\Executor.d" />
      <File path="java\util\concurrent\Executors.d" />
      <File path="java\util\concurrent\ExecutorService.d" />
      <File path="java\util\concurrent\Future.d" />

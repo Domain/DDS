@@ -3,10 +3,7 @@ module java.util.concurrent.Callable;
 
 import java.lang.exceptions;
 
-public class Callable
+public interface Callable(T)
 {
-    public this()
-    {
-        implMissing();
-    }
+    T call();
 }

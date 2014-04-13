@@ -2,11 +2,13 @@
 module java.util.concurrent.Future;
 
 import java.lang.exceptions;
+import java.util.concurrent.TimeUnit;
 
-public class Future
+public interface Future(T)
 {
-    public this()
-    {
-        implMissing();
-    }
+    bool cancel(bool mayInterruptIfRunning);
+    bool isCancelled();
+    bool isDone();
+    T get();
+    T get(long timeout, TimeUnit unit);
 }
