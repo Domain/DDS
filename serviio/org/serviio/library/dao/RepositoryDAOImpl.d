@@ -43,7 +43,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("INSERT INTO repository (folder,file_types,online_metadata_supported,scan_for_updates) VALUES (?,?,?,?)", 1);
             ps.setString(1, newInstance.getFolder().getAbsolutePath());
-            ps.setString(2, MediaFileType.parseMediaFileTypesToString(newInstance.getSupportedFileTypes()));
+            ps.setString(2, parseMediaFileTypesToString(newInstance.getSupportedFileTypes()));
             ps.setBoolean(3, newInstance.isSupportsDescriptiveMetadata());
             ps.setBoolean(4, newInstance.isKeepScanningForUpdates());
             ps.executeUpdate();
@@ -64,6 +64,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public void delete_(Long id)
@@ -130,7 +131,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("UPDATE repository SET folder = ?, file_types = ?, online_metadata_supported = ?, scan_for_updates = ? WHERE id = ?");
             ps.setString(1, transientObject.getFolder().getAbsolutePath());
-            ps.setString(2, MediaFileType.parseMediaFileTypesToString(transientObject.getSupportedFileTypes()));
+            ps.setString(2, parseMediaFileTypesToString(transientObject.getSupportedFileTypes()));
             ps.setBoolean(3, transientObject.isSupportsDescriptiveMetadata());
             ps.setBoolean(4, transientObject.isKeepScanningForUpdates());
 
@@ -207,17 +208,13 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     public List!(Repository) getRepositories(MediaFileType fileType, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of Repositories for %s (from=%s, count=%s) [%s]", cast(Object[])[ fileType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of Repositories for %s (from=%s, count=%s) [%s]", cast(Object[])[ fileType.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT repository.id as id, folder, file_types, online_metadata_supported, scan_for_updates, last_scanned FROM repository " + accessGroupTable(accessGroup) + "WHERE LOCATE(?,file_types) > 0 " + accessGroupConditionForRepository(accessGroup) + "ORDER BY id " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
-
-
+            ps = con.prepareStatement("SELECT repository.id as id, folder, file_types, online_metadata_supported, scan_for_updates, last_scanned FROM repository " ~ accessGroupTable(accessGroup) ~ "WHERE LOCATE(?,file_types) > 0 " ~ accessGroupConditionForRepository(accessGroup) ~ "ORDER BY id " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, fileType.toString());
             ResultSet rs = ps.executeQuery();
@@ -232,17 +229,18 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getRepositoriesCount(MediaFileType fileType, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of repositories for %s [%s]", cast(Object[])[ fileType, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of repositories for %s [%s]", cast(Object[])[ fileType.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(repository.id) as c FROM repository " + accessGroupTable(accessGroup) + "WHERE LOCATE(?,file_types) > 0" + accessGroupConditionForRepository(accessGroup));
+            ps = con.prepareStatement("SELECT COUNT(repository.id) as c FROM repository " ~ accessGroupTable(accessGroup) ~ "WHERE LOCATE(?,file_types) > 0" ~ accessGroupConditionForRepository(accessGroup));
 
 
             ps.setString(1, fileType.toString());
@@ -264,6 +262,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     private void addAccessGroup(Connection con, Long repositoryId, Long accessGroupId)
@@ -315,7 +314,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
 
     protected List!(Repository) mapResultSet(ResultSet rs)
     {
-        List!(Repository) result = new ArrayList();
+        List!(Repository) result = new ArrayList!(Repository)();
         while (rs.next()) {
             result.add(initRepository(rs));
         }
@@ -330,7 +329,7 @@ public class RepositoryDAOImpl : AbstractAccessibleDao, RepositoryDAO
         bool onlineMetadataSupported = rs.getBoolean("online_metadata_supported");
         bool scanForUpdates = rs.getBoolean("scan_for_updates");
         Date lastScanned = rs.getTimestamp("last_scanned");
-        Repository repository = new Repository(new File(folder), MediaFileType.parseMediaFileTypesFromString(fileTypesCSV), onlineMetadataSupported, scanForUpdates);
+        Repository repository = new Repository(new File(folder), parseMediaFileTypesFromString(fileTypesCSV), onlineMetadataSupported, scanForUpdates);
         repository.setId(id);
         repository.setLastScanned(lastScanned);
         return repository;

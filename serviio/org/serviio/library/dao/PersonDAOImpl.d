@@ -84,7 +84,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             log.debug_("Cannot add person to media item. Required data is missing.");
             return null;
         }
-        log.debug_(java.lang.String.format("Adding a Person %s to media item %s as %s", cast(Object[])[ personName, mediaItemId, role.toString() ]));
+        log.debug_(java.lang.String.format("Adding a Person %s to media item %s as %s", cast(Object[])[ personName, mediaItemId.toString(), role.toString() ]));
 
         Person person = findPersonByName(personName);
 
@@ -114,13 +114,14 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot add Person with name %s to media item %s", cast(Object[])[ personName, mediaItemId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot add Person with name %s to media item %s", cast(Object[])[ personName, mediaItemId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public Long addPersonToMusicAlbum(String personName, RoleType role, Long albumId)
@@ -130,7 +131,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             log.debug_("Cannot add person to media item. Required data is missing.");
             return null;
         }
-        log.debug_(java.lang.String.format("Adding a Person %s to album %s as %s", cast(Object[])[ personName, albumId, role.toString() ]));
+        log.debug_(java.lang.String.format("Adding a Person %s to album %s as %s", cast(Object[])[ personName, albumId.toString(), role.toString() ]));
 
         Person person = findPersonByName(personName);
 
@@ -160,13 +161,14 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot add Person with name %s to music album %s", cast(Object[])[ personName, albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot add Person with name %s to music album %s", cast(Object[])[ personName, albumId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public void removeAllPersonsFromMedia(Long mediaItemId)
@@ -179,7 +181,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
 
         List!(Person) persons = retrievePersonsForMediaItem(mediaItemId);
 
-        log.debug_(java.lang.String.format("Found all Persons (%s) for media item %s", cast(Object[])[ Integer.valueOf(persons.size()), mediaItemId ]));
+        log.debug_(java.lang.String.format("Found all Persons (%s) for media item %s", cast(Object[])[ Integer.valueOf(persons.size()).toString(), mediaItemId.toString() ]));
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -221,7 +223,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
 
         Connection con = null;
         PreparedStatement ps = null;
-        List!(Long) removedPersonIds = new ArrayList();
+        List!(Long) removedPersonIds = new ArrayList!(Long)();
         try
         {
             con = DatabaseManager.getConnection();
@@ -249,6 +251,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public void removePersonsAndRoles(List!(Long) personRoleIds)
@@ -264,7 +267,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
                 con = DatabaseManager.getConnection();
                 List!(Person) referencedPersons = findPersonForPersonRole(con, personRoleIds);
 
-                ps = con.prepareStatement("DELETE FROM person_role WHERE id IN (" + JdbcUtils.createInClause(personRoleIds.size()) + ")");
+                ps = con.prepareStatement("DELETE FROM person_role WHERE id IN (" ~ JdbcUtils.createInClause(personRoleIds.size()) ~ ")");
                 for (int i = 1; i <= personRoleIds.size(); i++) {
                     ps.setLong(i, (cast(Long)personRoleIds.get(i - 1)).longValue());
                 }
@@ -291,14 +294,13 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
 
     public List!(Person) retrievePersonsWithRole(RoleType roleType, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of persons with role %s (from=%s, count=%s)", cast(Object[])[ roleType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of persons with role %s (from=%s, count=%s)", cast(Object[])[ roleType.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(p.id) as id, p.name as name, p.sort_name as sort_name, p.initial as initial FROM person p, person_role r WHERE r.person_id = p.id AND r.ROLE_TYPE = ? ORDER BY lower(p.sort_name) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
+            ps = con.prepareStatement("SELECT DISTINCT(p.id) as id, p.name as name, p.sort_name as sort_name, p.initial as initial FROM person p, person_role r WHERE r.person_id = p.id AND r.ROLE_TYPE = ? ORDER BY lower(p.sort_name) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, roleType.toString());
             ResultSet rs = ps.executeQuery();
@@ -313,6 +315,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getPersonsWithRoleCount(RoleType roleType)
@@ -343,6 +346,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public int getRoleForPersonCount(Long personId)
@@ -373,11 +377,12 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Person) retrievePersonsWithRoleForMediaItem(RoleType roleType, Long mediaItemId)
     {
-        log.debug_(java.lang.String.format("Retrieving list of persons with role %s for MediaItem %s", cast(Object[])[ roleType, mediaItemId ]));
+        log.debug_(java.lang.String.format("Retrieving list of persons with role %s for MediaItem %s", cast(Object[])[ roleType.toString(), mediaItemId.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -392,18 +397,19 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with role %s for media item %s", cast(Object[])[ roleType, mediaItemId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with role %s for media item %s", cast(Object[])[ roleType.toString(), mediaItemId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Person) retrievePersonsWithRoleForMusicAlbum(RoleType roleType, Long albumId)
     {
-        log.debug_(java.lang.String.format("Retrieving list of persons with role %s for MusicAlbum %s", cast(Object[])[ roleType, albumId ]));
+        log.debug_(java.lang.String.format("Retrieving list of persons with role %s for MusicAlbum %s", cast(Object[])[ roleType.toString(), albumId.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -418,13 +424,14 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with role %s for music album %s", cast(Object[])[ roleType, albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with role %s for music album %s", cast(Object[])[ roleType.toString(), albumId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Person) retrievePersonsForMediaItem(Long mediaItemId)
@@ -450,6 +457,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Person) retrievePersonsForMusicAlbum(Long albumId)
@@ -475,14 +483,15 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public Long getPersonRoleForMediaItem(RoleType role, Long personId, Long mediaItemId)
     {
-        if ((personId is null) || (mediaItemId is null) || (role is null)) {
+        if ((personId is null) || (mediaItemId is null) || (role == RoleType.INVALID)) {
             throw new InvalidArgumentException("Cannot check for person role. Required data is missing.");
         }
-        log.debug_(java.lang.String.format("Checking if person %s has a role %s for media item %s", cast(Object[])[ personId, role.toString(), mediaItemId ]));
+        log.debug_(java.lang.String.format("Checking if person %s has a role %s for media item %s", cast(Object[])[ personId.toString(), role.toString(), mediaItemId.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -503,21 +512,22 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot check if person %s has a role %s for media item %s", cast(Object[])[ personId, role.toString(), mediaItemId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot check if person %s has a role %s for media item %s", cast(Object[])[ personId.toString(), role.toString(), mediaItemId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public Long getPersonRoleForMusicAlbum(RoleType role, Long personId, Long albumId)
     {
-        if ((personId is null) || (albumId is null) || (role is null)) {
+        if ((personId is null) || (albumId is null) || (role == RoleType.INVALID)) {
             throw new InvalidArgumentException("Cannot check for person role. Required data is missing.");
         }
-        log.debug_(java.lang.String.format("Checking if person %s has a role %s for album %s", cast(Object[])[ personId, role.toString(), albumId ]));
+        log.debug_(java.lang.String.format("Checking if person %s has a role %s for album %s", cast(Object[])[ personId.toString(), role.toString(), albumId.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -538,18 +548,19 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot check if person %s has a role %s for music album %s", cast(Object[])[ personId, role.toString(), albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot check if person %s has a role %s for music album %s", cast(Object[])[ personId.toString(), role.toString(), albumId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Long) getRoleIDsForMediaItem(RoleType role, Long mediaItemId)
     {
-        if ((mediaItemId is null) || (role is null)) {
+        if ((mediaItemId is null) || (role == RoleType.INVALID)) {
             throw new InvalidArgumentException("Cannot get list of roles. Required data is missing.");
         }
         Connection con = null;
@@ -563,7 +574,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             ps.setString(2, role.toString());
 
             ResultSet rs = ps.executeQuery();
-            List!(Long) result = new ArrayList();
+            List!(Long) result = new ArrayList!(Long)();
             while (rs.next()) {
                 result.add(Long.valueOf(rs.getLong("id")));
             }
@@ -571,29 +582,30 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot retrieve list or role IDs for role %s for media item %s", cast(Object[])[ role.toString(), mediaItemId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot retrieve list or role IDs for role %s for media item %s", cast(Object[])[ role.toString(), mediaItemId.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(String) retrievePersonInitials(RoleType role, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of person initials (role = %s, from=%s, count=%s)", cast(Object[])[ role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of person initials (role = %s, from=%s, count=%s)", cast(Object[])[ role.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT initial as letter from person, person_role WHERE person_role.role_type = ?  and person_role.person_id = person.id ORDER BY letter OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT initial as letter from person, person_role WHERE person_role.role_type = ?  and person_role.person_id = person.id ORDER BY letter OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
 
             ps.setString(1, role.toString());
             ResultSet rs = ps.executeQuery();
-            List!(String) result = new ArrayList();
+            List!(String) result = new ArrayList!(String)();
             while (rs.next()) {
                 result.add(rs.getString("letter"));
             }
@@ -608,6 +620,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrievePersonInitialsCount(RoleType role)
@@ -639,17 +652,18 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Person) retrievePersonsForInitial(String initial, RoleType role, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of persons with initial %s and role %s (from=%s, count=%s)", cast(Object[])[ initial, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount) ]));
+        log.debug_(java.lang.String.format("Retrieving list of persons with initial %s and role %s (from=%s, count=%s)", cast(Object[])[ initial, role.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(p.id) as id, p.name as name, p.sort_name as sort_name, p.initial as initial FROM person p, person_role r WHERE r.person_id = p.id AND r.ROLE_TYPE = ? and p.initial = ? ORDER BY lower(p.sort_name) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT(p.id) as id, p.name as name, p.sort_name as sort_name, p.initial as initial FROM person p, person_role r WHERE r.person_id = p.id AND r.ROLE_TYPE = ? and p.initial = ? ORDER BY lower(p.sort_name) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
 
             ps.setString(1, role.toString());
@@ -659,18 +673,19 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with initial %s and role %s", cast(Object[])[ initial, role ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of persons with initial %s and role %s", cast(Object[])[ initial, role.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrievePersonsForInitialCount(String initial, RoleType role)
     {
-        log.debug_(java.lang.String.format("Retrieving number of persons with initial %s and role %s", cast(Object[])[ initial, role ]));
+        log.debug_(java.lang.String.format("Retrieving number of persons with initial %s and role %s", cast(Object[])[ initial, role.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
@@ -691,13 +706,14 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read number of persons with initial %s and role %s", cast(Object[])[ initial, role ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of persons with initial %s and role %s", cast(Object[])[ initial, role.toString() ]), e);
         }
         finally
         {
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     private String createInitial(String name)
@@ -718,7 +734,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
 
     protected List!(Person) mapResultSet(ResultSet rs)
     {
-        List!(Person) result = new ArrayList();
+        List!(Person) result = new ArrayList!(Person)();
         while (rs.next()) {
             result.add(initPerson(rs));
         }
@@ -789,7 +805,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         PreparedStatement ps = null;
         try
         {
-            ps = con.prepareStatement("SELECT DISTINCT(person.id) as id, name, sort_name, initial FROM person, person_role WHERE person_role.person_id = person.id AND person_role.id IN (" + JdbcUtils.createInClause(personRoleIds.size()) + ")");
+            ps = con.prepareStatement("SELECT DISTINCT(person.id) as id, name, sort_name, initial FROM person, person_role WHERE person_role.person_id = person.id AND person_role.id IN (" ~ JdbcUtils.createInClause(personRoleIds.size()) ~ ")");
             for (int i = 1; i <= personRoleIds.size(); i++) {
                 ps.setLong(i, (cast(Long)personRoleIds.get(i - 1)).longValue());
             }
@@ -804,6 +820,7 @@ public class PersonDAOImpl : AbstractSortableItemDao, PersonDAO
         {
             JdbcUtils.closeStatement(ps);
         }
+        return null;
     }
 }
 

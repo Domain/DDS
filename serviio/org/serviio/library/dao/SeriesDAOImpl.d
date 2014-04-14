@@ -59,7 +59,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
         }
     }
 
-    public void delete_(final Long id)
+    public void delete_(Long id)
     {
         log.debug_(java.lang.String.format("Deleting a Series (id = %s)", cast(Object[])[ id ]));
         try
@@ -187,6 +187,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Series) retrieveSeries(int startingIndex, int requestedCount)
@@ -197,7 +198,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT id, title, sort_title, cover_image_id FROM series ORDER BY lower(series.sort_title) OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT id, title, sort_title, cover_image_id FROM series ORDER BY lower(series.sort_title) OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ResultSet rs = ps.executeQuery();
             return mapResultSet(rs);
@@ -211,6 +212,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getSeriesCount()
@@ -240,17 +242,18 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Integer) retrieveSeasonsForSeries(Long seriesId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of seasons for series %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of seasons for series %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(season_number) FROM media_item " + accessGroupTable(accessGroup) + "WHERE series_id = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY season_number " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT(season_number) FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE series_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY season_number " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setLong(1, seriesId.longValue());
             ResultSet rs = ps.executeQuery();
@@ -269,6 +272,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getSeasonsForSeriesCount(Long seriesId, AccessGroup accessGroup)
@@ -300,6 +304,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     protected Series mapSingleResult(ResultSet rs)

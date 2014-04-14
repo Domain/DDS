@@ -5,7 +5,7 @@ import org.serviio.db.entities.PersistedEntity;
 
 public enum RoleType
 {
-    ARTIST,  ACTOR,  DIRECTOR,  WRITER,  PRODUCER,  ALBUM_ARTIST,  COMPOSER
+    ARTIST,  ACTOR,  DIRECTOR,  WRITER,  PRODUCER,  ALBUM_ARTIST,  COMPOSER,  INVALID
 }
 
 public class Person : PersistedEntity

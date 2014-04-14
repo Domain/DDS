@@ -683,7 +683,7 @@ public class MusicTrackDAOImpl : AbstractSortableItemDao, MusicTrackDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of music tracks for person %s with role %s on album %s", cast(Object[])[ artistId, role, albumId ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of music tracks for person %s with role %s on album %s", cast(Object[])[ artistId.toString(), role.toString(), albumId.toString() ]), e);
         }
         finally
         {

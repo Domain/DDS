@@ -33,7 +33,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public long create(OnlineRepository newInstance)
     {
-        if ((newInstance is null) || (newInstance.getRepositoryUrl() is null) || (newInstance.getFileType() is null) || (newInstance.getRepoType() is null)) {
+        if ((newInstance is null) || (newInstance.getRepositoryUrl() is null) || (newInstance.getFileType() == MediaFileType.UNKNOWN) || (newInstance.getRepoType() == OnlineRepositoryType.UNKNOWN)) {
             throw new InvalidArgumentException("Cannot create OnlineRepository. Required data is missing.");
         }
         log.debug_(java.lang.String.format("Creating a new Repository (url = %s)", cast(Object[])[ newInstance.getRepositoryUrl().toString() ]));
@@ -126,7 +126,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     public void update(OnlineRepository transientObject)
     {
-        if ((transientObject is null) || (transientObject.getId() is null) || (transientObject.getRepositoryUrl() is null) || (transientObject.getFileType() is null) || (transientObject.getRepoType() is null)) {
+        if ((transientObject is null) || (transientObject.getId() is null) || (transientObject.getRepositoryUrl() is null) || (transientObject.getFileType() == MediaFileType.UNKNOWN) || (transientObject.getRepoType() == OnlineRepositoryType.UNKNOWN)) {
             throw new InvalidArgumentException("Cannot update OnlineRepository. Required data is missing.");
         }
         log.debug_(java.lang.String.format("Updating OnlineRepository (id = %s)", cast(Object[])[ transientObject.getId() ]));
@@ -276,7 +276,7 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
 
     protected List!(OnlineRepository) mapResultSet(ResultSet rs)
     {
-        List!(OnlineRepository) result = new ArrayList();
+        List!(OnlineRepository) result = new ArrayList!(OnlineRepository)();
         while (rs.next()) {
             result.add(initRepository(rs));
         }
@@ -287,8 +287,8 @@ public class OnlineRepositoryDAOImpl : AbstractAccessibleDao, OnlineRepositoryDA
     {
         Long id = Long.valueOf(rs.getLong("id"));
         String contentUrl = rs.getString("url");
-        MediaFileType fileType = MediaFileType.valueOf(rs.getString("file_type"));
-        OnlineRepositoryType repoType = OnlineRepositoryType.valueOf(rs.getString("repo_type"));
+        MediaFileType fileType = valueOf!MediaFileType(rs.getString("file_type"));
+        OnlineRepositoryType repoType = valueOf!OnlineRepositoryType(rs.getString("repo_type"));
         URL thumbnailUrl = JdbcUtils.getURLFromResultSet(rs, "thumbnail_url");
         String name = rs.getString("name");
         bool enabled = rs.getBoolean("enabled");

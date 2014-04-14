@@ -2,9 +2,11 @@
 module java.util.concurrent.ScheduledExecutorService;
 
 import java.lang.exceptions;
+import java.lang.Runnable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledFuture;
 
 public interface ScheduledExecutorService : ExecutorService
 {

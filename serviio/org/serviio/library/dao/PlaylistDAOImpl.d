@@ -45,7 +45,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             ps = con.prepareStatement("INSERT INTO playlist (file_types, title, file_path, date_updated, repository_id,all_items_found) VALUES (?,?,?,?,?,?)", 1);
 
 
-            ps.setString(1, MediaFileType.parseMediaFileTypesToString(newInstance.getFileTypes()));
+            ps.setString(1, parseMediaFileTypesToString(newInstance.getFileTypes()));
             ps.setString(2, JdbcUtils.trimToMaxLength(newInstance.getTitle(), 128));
             ps.setString(3, newInstance.getFilePath());
             JdbcUtils.setTimestampValueOnStatement(ps, 4, newInstance.getDateUpdated());
@@ -62,6 +62,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         {
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public void delete_(Long id)
@@ -130,7 +131,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("UPDATE playlist SET file_types = ?, title = ?, file_path = ?, date_updated = ?, repository_id = ?,all_items_found = ? WHERE id = ?");
 
-            ps.setString(1, MediaFileType.parseMediaFileTypesToString(transientObject.getFileTypes()));
+            ps.setString(1, parseMediaFileTypesToString(transientObject.getFileTypes()));
             ps.setString(2, JdbcUtils.trimToMaxLength(transientObject.getTitle(), 128));
             ps.setString(3, transientObject.getFilePath());
             JdbcUtils.setTimestampValueOnStatement(ps, 4, transientObject.getDateUpdated());
@@ -209,7 +210,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         }
     }
 
-    public void removeMediaItemFromPlaylists(final Long mediaItemId)
+    public void removeMediaItemFromPlaylists(Long mediaItemId)
     {
         try
         {
@@ -253,7 +254,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         }
     }
 
-    public void removePlaylistItems(final Long playlistId)
+    public void removePlaylistItems(Long playlistId)
     {
         log.debug_(java.lang.String.format("Removing all items from playlist %s", cast(Object[])[ playlistId ]));
         try
@@ -313,7 +314,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             ps = con.prepareStatement("SELECT item_order FROM playlist_item WHERE playlist_id = ? ORDER BY item_order");
             ps.setLong(1, playlistId.longValue());
             ResultSet rs = ps.executeQuery();
-            List!(Integer) numbers = new ArrayList();
+            List!(Integer) numbers = new ArrayList!(Integer)();
             while (rs.next()) {
                 numbers.add(Integer.valueOf(rs.getInt("item_order")));
             }
@@ -328,21 +329,18 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Playlist) retrievePlaylistsWithMedia(MediaFileType mediaType, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of Playlists for %s (from=%s, count=%s) [%s]", cast(Object[])[ mediaType, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of Playlists for %s (from=%s, count=%s) [%s]", cast(Object[])[ mediaType.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT playlist.id as id, file_types, title, file_path, date_updated, playlist.repository_id as repository_id,all_items_found FROM playlist " + accessGroupTable(accessGroup) + "WHERE LOCATE(?,file_types) > 0 " + accessGroupConditionForPlaylist(accessGroup) + "ORDER BY title " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
-
-
-
-
+            ps = con.prepareStatement("SELECT playlist.id as id, file_types, title, file_path, date_updated, playlist.repository_id as repository_id,all_items_found FROM playlist " ~ accessGroupTable(accessGroup) ~ "WHERE LOCATE(?,file_types) > 0 " ~ accessGroupConditionForPlaylist(accessGroup) ~ "ORDER BY title " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, mediaType.toString());
             ResultSet rs = ps.executeQuery();
@@ -357,17 +355,18 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int getPlaylistsWithMediaCount(MediaFileType mediaType, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of playlists for %s [%s]", cast(Object[])[ mediaType, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of playlists for %s [%s]", cast(Object[])[ mediaType.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(playlist.id) as c FROM playlist " + accessGroupTable(accessGroup) + "WHERE LOCATE(?,file_types) > 0" + accessGroupConditionForPlaylist(accessGroup));
+            ps = con.prepareStatement("SELECT COUNT(playlist.id) as c FROM playlist " ~ accessGroupTable(accessGroup) ~ "WHERE LOCATE(?,file_types) > 0" ~ accessGroupConditionForPlaylist(accessGroup));
 
 
             ps.setString(1, mediaType.toString());
@@ -389,9 +388,10 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
-    private void deletePlaylist(Connection con, final Long playlistId)
+    private void deletePlaylist(Connection con, Long playlistId)
     {
         try
         {
@@ -421,7 +421,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
 
     protected List!(Playlist) mapResultSet(ResultSet rs)
     {
-        List!(Playlist) result = new ArrayList();
+        List!(Playlist) result = new ArrayList!(Playlist)();
         while (rs.next()) {
             result.add(initPlaylist(rs));
         }
@@ -438,7 +438,7 @@ public class PlaylistDAOImpl : AbstractAccessibleDao, PlaylistDAO
         Long repositoryId = JdbcUtils.getLongFromResultSet(rs, "repository_id");
         Date dateUpdated = rs.getTimestamp("date_updated");
 
-        Playlist playlist = new Playlist(title, MediaFileType.parseMediaFileTypesFromString(fileTypesCSV), filePath, dateUpdated, repositoryId);
+        Playlist playlist = new Playlist(title, parseMediaFileTypesFromString(fileTypesCSV), filePath, dateUpdated, repositoryId);
         playlist.setId(id);
         playlist.setAllItemsFound(allItemsFound);
 

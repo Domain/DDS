@@ -9,7 +9,7 @@ import org.serviio.util.ServiioUri;
 
 public enum OnlineRepositoryType
 {
-    FEED,  LIVE_STREAM,  WEB_RESOURCE
+    FEED,  LIVE_STREAM,  WEB_RESOURCE,  UNKNOWN,
 }
 
 public class OnlineRepository : PersistedEntity
