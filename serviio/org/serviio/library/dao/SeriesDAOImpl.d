@@ -257,7 +257,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
 
             ps.setLong(1, seriesId.longValue());
             ResultSet rs = ps.executeQuery();
-            List!(Integer) result = new ArrayList();
+            List!(Integer) result = new ArrayList!(Integer)();
             while (rs.next()) {
                 result.add(Integer.valueOf(rs.getInt("season_number")));
             }
@@ -277,13 +277,13 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
 
     public int getSeasonsForSeriesCount(Long seriesId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of seasons for series %s [%s]", cast(Object[])[ seriesId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of seasons for series %s [%s]", cast(Object[])[ seriesId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT(season_number)) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE series_id = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT(season_number)) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE series_id = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setLong(1, seriesId.longValue());
             ResultSet rs = ps.executeQuery();
@@ -317,7 +317,7 @@ public class SeriesDAOImpl : AbstractSortableItemDao, SeriesDAO
 
     protected List!(Series) mapResultSet(ResultSet rs)
     {
-        List!(Series) result = new ArrayList();
+        List!(Series) result = new ArrayList!(Series)();
         while (rs.next()) {
             result.add(initSeries(rs));
         }

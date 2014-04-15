@@ -136,6 +136,11 @@ String toString(T)(T value)
     return std.conv.to!String(value);
 }
 
+String name(T)(T value) if (is(T == enum))
+{
+    return std.conv.to!String(value);
+}
+
 /// Extension to String
 public String toUpperCase( String str ){
     version(Tango){

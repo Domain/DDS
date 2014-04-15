@@ -86,13 +86,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.setIntValueOnStatement(ps, 17, newInstance.getEpisodeNumber());
             JdbcUtils.setIntValueOnStatement(ps, 18, newInstance.getSeasonNumber());
             JdbcUtils.setLongValueOnStatement(ps, 19, newInstance.getSeriesId());
-            JdbcUtils.setStringValueOnStatement(ps, 20, newInstance.getAudioCodec() !is null ? newInstance.getAudioCodec().toString() : null);
+            JdbcUtils.setStringValueOnStatement(ps, 20, newInstance.getAudioCodec() != AudioCodec.UNKNOWN ? newInstance.getAudioCodec().toString() : AudioCodec.UNKNOWN);
             JdbcUtils.setStringValueOnStatement(ps, 21, newInstance.getVideoCodec().toString());
             JdbcUtils.setIntValueOnStatement(ps, 22, newInstance.getChannels());
             JdbcUtils.setStringValueOnStatement(ps, 23, JdbcUtils.trimToMaxLength(newInstance.getFps(), 10));
             JdbcUtils.setIntValueOnStatement(ps, 24, newInstance.getFrequency());
             JdbcUtils.setStringValueOnStatement(ps, 25, newInstance.getContentType().toString());
-            JdbcUtils.setStringValueOnStatement(ps, 26, newInstance.getTimestampType() !is null ? newInstance.getTimestampType().toString() : null);
+            JdbcUtils.setStringValueOnStatement(ps, 26, newInstance.getTimestampType() != TransportStreamTimestamp.INVALID ? newInstance.getTimestampType().toString() : TransportStreamTimestamp.INVALID);
             JdbcUtils.setIntValueOnStatement(ps, 27, newInstance.getAudioBitrate());
             JdbcUtils.setIntValueOnStatement(ps, 28, newInstance.getAudioStreamIndex());
             JdbcUtils.setIntValueOnStatement(ps, 29, newInstance.getVideoStreamIndex());
