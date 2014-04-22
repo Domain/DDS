@@ -233,13 +233,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideos(int type, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos of type %s (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(type), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos of type %s (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(type).toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + " WHERE file_type = ? " + movieTypeCondition(type) + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title), lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ " WHERE file_type = ? " ~ movieTypeCondition(type) ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title), lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -259,13 +259,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosCount(int type, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos of type %s [%s]", cast(Object[])[ Integer.valueOf(type), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos of type %s [%s]", cast(Object[])[ Integer.valueOf(type).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" + accessGroupTable(accessGroup) + " WHERE file_type = ? " + movieTypeCondition(type) + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" ~ accessGroupTable(accessGroup) ~ " WHERE file_type = ? " ~ movieTypeCondition(type) ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -291,13 +291,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForFolder(Long folderId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos for folder %s (from=%s, count=%s) [%s]", cast(Object[])[ folderId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + " WHERE file_type = ? AND folder_id = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ " WHERE file_type = ? AND folder_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, folderId.longValue());
@@ -318,13 +318,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForFolderCount(Long folderId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos for folder %s [%s]", cast(Object[])[ folderId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos for folder %s [%s]", cast(Object[])[ folderId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and folder_id = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and folder_id = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, folderId.longValue());
@@ -351,13 +351,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForPlaylist(Long playlistId, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos for playlist %s (from=%s, count=%s) [%s]", cast(Object[])[ playlistId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year,p.item_order FROM media_item, playlist_item p " + accessGroupTable(accessGroup) + "WHERE p.media_item_id = media_item.id AND media_item.file_type = ? and p.playlist_id = ?" + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY p.item_order " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year,p.item_order FROM media_item, playlist_item p " ~ accessGroupTable(accessGroup) ~ "WHERE p.media_item_id = media_item.id AND media_item.file_type = ? and p.playlist_id = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY p.item_order " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, playlistId.longValue());
@@ -378,13 +378,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForPlaylistCount(Long playlistId, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos for playlist %s [%s]", cast(Object[])[ playlistId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos for playlist %s [%s]", cast(Object[])[ playlistId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, playlist_item p " + accessGroupTable(accessGroup) + "WHERE p.media_item_id = media_item.id AND p.playlist_id = ? AND media_item.file_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item, playlist_item p " ~ accessGroupTable(accessGroup) ~ "WHERE p.media_item_id = media_item.id AND p.playlist_id = ? AND media_item.file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setLong(1, playlistId.longValue());
             ps.setString(2, MediaFileType.VIDEO.toString());
@@ -411,13 +411,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForGenre(Long genreId, AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos for genre %s (from=%s, count=%s) [%s]", cast(Object[])[ genreId.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar,vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and genre_id = ? " + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries) + "ORDER BY lower(sort_title), lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar,vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and genre_id = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries) ~ "ORDER BY lower(sort_title), lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, genreId.longValue());
@@ -438,13 +438,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForGenreCount(Long genreId, AccessGroup accessGroup, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos for genre %s [%s]", cast(Object[])[ genreId, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos for genre %s [%s]", cast(Object[])[ genreId.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and genre_id = ?" + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and genre_id = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, genreId.longValue());
@@ -471,13 +471,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForPerson(Long personId, RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos for person %s with role %s (from=%s, count=%s) [%s]", cast(Object[])[ personId, role, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos for person %s with role %s (from=%s, count=%s) [%s]", cast(Object[])[ personId.toString(), role.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT(media_item.id) as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(media_item.sort_title), lower(media_item.file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT(media_item.id) as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item, person_role r, person p " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(media_item.sort_title), lower(media_item.file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, personId.longValue());
@@ -487,7 +487,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of videos for person %s with role %s", cast(Object[])[ personId.toString(), role.toString() ]), e);
         }
         finally
         {
@@ -499,13 +499,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForPersonCount(Long personId, RoleType role, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos for person %s with role %s [%s]", cast(Object[])[ personId, role, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos for person %s with role %s [%s]", cast(Object[])[ personId.toString(), role.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(DISTINCT(media_item.id)) as c FROM media_item, person_role r, person p " + accessGroupTable(accessGroup) + "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(DISTINCT(media_item.id)) as c FROM media_item, person_role r, person p " ~ accessGroupTable(accessGroup) ~ "WHERE media_item.file_type = ? and p.id = r.person_id and r.media_item_id = media_item.id and p.id=? and r.role_type = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, personId.longValue());
@@ -521,7 +521,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read number of videos for person %s with role %s", cast(Object[])[ personId, role ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of videos for person %s with role %s", cast(Object[])[ personId.toString(), role.toString() ]), e);
         }
         finally
         {
@@ -533,13 +533,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForSeriesSeason(Long seriesId, Integer season, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos for series %s season %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId, season, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos for series %s season %s (from=%s, count=%s) [%s]", cast(Object[])[ seriesId.toString(), season.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and series_id = ? and season_number = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY order_number, lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and series_id = ? and season_number = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY order_number, lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, seriesId.longValue());
@@ -549,7 +549,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read list of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read list of videos for series %s season %s", cast(Object[])[ seriesId.toString(), season.toString() ]), e);
         }
         finally
         {
@@ -561,13 +561,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForSeriesSeasonCount(Long seriesId, Integer season, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos for series %s season %s [%s]", cast(Object[])[ seriesId, season, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos for series %s season %s [%s]", cast(Object[])[ seriesId.toString(), season.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and series_id = ? and season_number = ?" + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and series_id = ? and season_number = ?" ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setLong(2, seriesId.longValue());
@@ -583,7 +583,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         }
         catch (SQLException e)
         {
-            throw new PersistenceException(java.lang.String.format("Cannot read number of videos for series %s season %s", cast(Object[])[ seriesId, season ]), e);
+            throw new PersistenceException(java.lang.String.format("Cannot read number of videos for series %s season %s", cast(Object[])[ seriesId.toString(), season.toString() ]), e);
         }
         finally
         {
@@ -595,17 +595,17 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(String) retrieveVideoInitials(AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving list of video initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of video initials (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT DISTINCT upper(substr(sort_title,1,1)) as letter from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ?" + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries) + "ORDER BY letter " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT DISTINCT upper(substr(sort_title,1,1)) as letter from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries) ~ "ORDER BY letter " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
-            List!(String) result = new ArrayList();
+            List!(String) result = new ArrayList!(String)();
             while (rs.next()) {
                 result.add(rs.getString("letter"));
             }
@@ -631,7 +631,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT upper(substr(sort_title,1,1))) as c from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ?" + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT upper(substr(sort_title,1,1))) as c from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -657,13 +657,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveVideosForInitial(String initial, AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos with initial %s (from=%s, count=%s) [%s]", cast(Object[])[ initial.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and substr(upper(sort_title),1,1) = ? " + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries) + "ORDER BY lower(sort_title), lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and substr(upper(sort_title),1,1) = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries) ~ "ORDER BY lower(sort_title), lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, StringUtils.localeSafeToUppercase(initial));
@@ -684,13 +684,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveVideosForInitialCount(String initial, AccessGroup accessGroup, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos with initial %s [%s]", cast(Object[])[ initial, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos with initial %s [%s]", cast(Object[])[ initial, accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and substr(upper(sort_title),1,1) = ?" + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and substr(upper(sort_title),1,1) = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, StringUtils.localeSafeToUppercase(initial));
@@ -717,18 +717,18 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveLastViewedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of %s last viewed videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of %s last viewed videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned).toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
 
         int availableCount = maxReturned - startingIndex;
         if (availableCount <= 0) {
-            return Collections.emptyList();
+            return Collections.emptyList!(Video)();
         }
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? AND last_viewed_date IS NOT NULL " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY last_viewed_date DESC " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + (requestedCount < availableCount ? requestedCount : availableCount) + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? AND last_viewed_date IS NOT NULL " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY last_viewed_date DESC " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ (requestedCount < availableCount ? requestedCount : availableCount).toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -749,13 +749,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveLastViewedVideosCount(int maxReturned, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of %s last viewed videos [%s]", cast(Object[])[ Integer.valueOf(maxReturned), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of %s last viewed videos [%s]", cast(Object[])[ Integer.valueOf(maxReturned).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? AND last_viewed_date IS NOT NULL " + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? AND last_viewed_date IS NOT NULL " ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -781,18 +781,18 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveLastAddedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of %s last added videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned), Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of %s last added videos (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(maxReturned).toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
 
         int availableCount = maxReturned - startingIndex;
         if (availableCount <= 0) {
-            return Collections.emptyList();
+            return Collections.emptyList!(Video)();
         }
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY date_added DESC " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + (requestedCount < availableCount ? requestedCount : availableCount) + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY date_added DESC " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ (requestedCount < availableCount ? requestedCount : availableCount).toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -833,7 +833,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             Map!(Long, Integer) result;
             if (rs.next())
             {
-                result = new HashMap();
+                result = new HashMap!(Long, Integer)();
                 result.put(Long.valueOf(rs.getLong(1)), Integer.valueOf(rs.getInt(2)));
                 return result;
             }
@@ -853,17 +853,17 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Integer) retrieveVideoReleaseYears(AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos' release years (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos' release years (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT distinct release_year FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? " + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries) + "ORDER BY release_year desc " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT distinct release_year FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries) ~ "ORDER BY release_year desc " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
-            List!(Integer) years = new ArrayList();
+            List!(Integer) years = new ArrayList!(Integer)();
             while (rs.next()) {
                 years.add(Integer.valueOf(rs.getInt("release_year")));
             }
@@ -889,7 +889,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT(release_year)) as c from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ?" + accessGroupConditionForMediaItem(accessGroup) + seriesContentTypeCondition(filterOutSeries));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT(release_year)) as c from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ?" ~ accessGroupConditionForMediaItem(accessGroup) ~ seriesContentTypeCondition(filterOutSeries));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ResultSet rs = ps.executeQuery();
@@ -915,13 +915,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveMoviesForReleaseYear(Integer releaseYear, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos with release year %s (from=%s, count=%s) [%s]", cast(Object[])[ releaseYear, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos with release year %s (from=%s, count=%s) [%s]", cast(Object[])[ releaseYear.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and release_year = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title), lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and release_year = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title), lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setInt(2, releaseYear.intValue());
@@ -943,13 +943,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveMoviesForReleaseYearCount(Integer releaseYear, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos with release year %s [%s]", cast(Object[])[ releaseYear, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos with release year %s [%s]", cast(Object[])[ releaseYear.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and release_year = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and release_year = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setInt(2, releaseYear.intValue());
@@ -977,20 +977,20 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(MPAARating) retrieveMovieRatings(AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos' ratings (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos' ratings (from=%s, count=%s) [%s]", cast(Object[])[ Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT distinct rating FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY rating desc " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT distinct rating FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY rating desc " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, ContentType.MOVIE.toString());
             ResultSet rs = ps.executeQuery();
-            List!(MPAARating) ratings = new ArrayList();
+            List!(MPAARating) ratings = new ArrayList!(MPAARating)();
             while (rs.next()) {
-                ratings.add(MPAARating.valueOf(rs.getString("rating")));
+                ratings.add(valueOf!MPAARating(rs.getString("rating")));
             }
             return ratings;
         }
@@ -1014,7 +1014,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT COUNT(DISTINCT(rating)) as c from media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT COUNT(DISTINCT(rating)) as c from media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, ContentType.MOVIE.toString());
@@ -1041,13 +1041,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public List!(Video) retrieveMoviesForRating(MPAARating rating, AccessGroup accessGroup, int startingIndex, int requestedCount)
     {
-        log.debug_(java.lang.String.format("Retrieving list of videos with rating %s (from=%s, count=%s) [%s]", cast(Object[])[ rating, Integer.valueOf(startingIndex), Integer.valueOf(requestedCount), accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving list of videos with rating %s (from=%s, count=%s) [%s]", cast(Object[])[ rating.toString(), Integer.valueOf(startingIndex).toString(), Integer.valueOf(requestedCount).toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" + accessGroupTable(accessGroup) + "WHERE file_type = ? and rating = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup) + "ORDER BY lower(sort_title), lower(file_name) " + "OFFSET " + startingIndex + " ROWS FETCH FIRST " + requestedCount + " ROWS ONLY");
+            ps = con.prepareStatement("SELECT media_item.id as id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels, fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, media_item.repository_id as repository_id, online_identifiers, sar, vfourcc, embedded_subtitles, release_year FROM media_item" ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and rating = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup) ~ "ORDER BY lower(sort_title), lower(file_name) " ~ "OFFSET " ~ startingIndex.toString() ~ " ROWS FETCH FIRST " ~ requestedCount.toString() ~ " ROWS ONLY");
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, rating.name());
@@ -1069,13 +1069,13 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     public int retrieveMoviesForRatingCount(MPAARating rating, AccessGroup accessGroup)
     {
-        log.debug_(java.lang.String.format("Retrieving number of videos with rating %s [%s]", cast(Object[])[ rating, accessGroup ]));
+        log.debug_(java.lang.String.format("Retrieving number of videos with rating %s [%s]", cast(Object[])[ rating.toString(), accessGroup.toString() ]));
         Connection con = null;
         PreparedStatement ps = null;
         try
         {
             con = DatabaseManager.getConnection();
-            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " + accessGroupTable(accessGroup) + "WHERE file_type = ? and rating = ? and content_type = ? " + accessGroupConditionForMediaItem(accessGroup));
+            ps = con.prepareStatement("SELECT count(media_item.id) as c FROM media_item " ~ accessGroupTable(accessGroup) ~ "WHERE file_type = ? and rating = ? and content_type = ? " ~ accessGroupConditionForMediaItem(accessGroup));
 
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, rating.name());
@@ -1111,7 +1111,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
 
     protected List!(Video) mapResultSet(ResultSet rs)
     {
-        List!(Video) result = new ArrayList();
+        List!(Video) result = new ArrayList!(Video)();
         while (rs.next()) {
             result.add(initVideo(rs));
         }
@@ -1130,9 +1130,9 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         String filePath = rs.getString("file_path");
         Long folderId = Long.valueOf(rs.getLong("folder_id"));
         Long repositoryId = Long.valueOf(rs.getLong("repository_id"));
-        VideoContainer container = rs.getString("container") !is null ? VideoContainer.valueOf(rs.getString("container")) : null;
-        VideoCodec vCodec = rs.getString("vcodec") !is null ? VideoCodec.valueOf(rs.getString("vcodec")) : null;
-        AudioCodec aCodec = rs.getString("acodec") !is null ? AudioCodec.valueOf(rs.getString("acodec")) : null;
+        VideoContainer container = rs.getString("container") !is null ? valueOf!VideoContainer(rs.getString("container")) : VideoContainer.UNKNOWN;
+        VideoCodec vCodec = rs.getString("vcodec") !is null ? valueOf!VideoCodec(rs.getString("vcodec")) : VideoCodec.UNKNOWN;
+        AudioCodec aCodec = rs.getString("acodec") !is null ? valueOf!AudioCodec(rs.getString("acodec")) : AudioCodec.UNKNOWN;
         Date date = rs.getTimestamp("creation_date");
         Long thumbnailId = JdbcUtils.getLongFromResultSet(rs, "cover_image_id");
         String description = rs.getString("description");
@@ -1143,17 +1143,17 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         Integer frequency = JdbcUtils.getIntFromResultSet(rs, "sample_frequency");
         String fps = rs.getString("fps");
         String rating = rs.getString("rating");
-        ContentType contentType = rs.getString("content_type") !is null ? ContentType.valueOf(rs.getString("content_type")) : null;
+        ContentType contentType = rs.getString("content_type") !is null ? valueOf!ContentType(rs.getString("content_type")) : ContentType.UNKNOWN;
         Integer episodeNumber = JdbcUtils.getIntFromResultSet(rs, "order_number");
         Integer seasonNumber = JdbcUtils.getIntFromResultSet(rs, "season_number");
         Long seriesId = JdbcUtils.getLongFromResultSet(rs, "series_id");
         Date lastViewed = rs.getTimestamp("last_viewed_date");
         Integer numberViewed = Integer.valueOf(rs.getInt("number_viewed"));
-        TransportStreamTimestamp timestampType = rs.getString("timestamp_type") !is null ? TransportStreamTimestamp.valueOf(rs.getString("timestamp_type")) : null;
+        TransportStreamTimestamp timestampType = rs.getString("timestamp_type") !is null ? valueOf!TransportStreamTimestamp(rs.getString("timestamp_type")) : TransportStreamTimestamp.INVALID;
         Integer audioBitrate = JdbcUtils.getIntFromResultSet(rs, "audio_bitrate");
         Integer audioStreamIndex = JdbcUtils.getIntFromResultSet(rs, "audio_stream_index");
         Integer videoStreamIndex = JdbcUtils.getIntFromResultSet(rs, "video_stream_index");
-        H264Profile h264Profile = rs.getString("h264_profile") !is null ? H264Profile.valueOf(rs.getString("h264_profile")) : null;
+        H264Profile h264Profile = rs.getString("h264_profile") !is null ? valueOf!H264Profile(rs.getString("h264_profile")) : H264Profile.UNKNOWN;
         String h264LevelsSCV = rs.getString("h264_level");
         String ftyp = rs.getString("ftyp");
         Integer bookmark = JdbcUtils.getIntFromResultSet(rs, "bookmark");
@@ -1177,7 +1177,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         video.setChannels(channels);
         video.setFps(fps);
         video.setFrequency(frequency);
-        video.setRating(rating !is null ? MPAARating.valueOf(rating) : MPAARating.UNKNOWN);
+        video.setRating(rating !is null ? valueOf!MPAARating(rating) : MPAARating.UNKNOWN);
         video.setEpisodeNumber(episodeNumber);
         video.setSeasonNumber(seasonNumber);
         video.setSeriesId(seriesId);
@@ -1191,11 +1191,11 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         video.setAudioStreamIndex(audioStreamIndex);
         video.setVideoStreamIndex(videoStreamIndex);
         video.setH264Profile(h264Profile);
-        video.setH264Levels(H264LevelType.parseFromString(h264LevelsSCV));
+        video.setH264Levels(org.serviio.library.local.H264LevelType.parseFromString(h264LevelsSCV));
         video.setBookmark(bookmark);
         video.setFtyp(ftyp);
         video.setSar(new SourceAspectRatio(sar));
-        video.setOnlineIdentifiers(OnlineDBIdentifier.parseFromString(onlineIdentifiersCSV));
+        video.setOnlineIdentifiers(org.serviio.library.local.OnlineDBIdentifier.parseFromString(onlineIdentifiersCSV));
         video.setVideoFourCC(videoFourCC);
         video.getEmbeddedSubtitles().addAll(EmbeddedSubtitles.fromString(embeddedSubtitles));
         video.setReleaseYear(releaseYear);
@@ -1208,9 +1208,9 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
     {
         String seriesSegment = "";
         if (type == 2) {
-            seriesSegment = "AND content_type = '" + ContentType.MOVIE + "' ";
+            seriesSegment = "AND content_type = '" ~ ContentType.MOVIE ~ "' ";
         } else if (type == 1) {
-            seriesSegment = "AND content_type = '" + ContentType.EPISODE + "' ";
+            seriesSegment = "AND content_type = '" ~ ContentType.EPISODE ~ "' ";
         }
         return seriesSegment;
     }

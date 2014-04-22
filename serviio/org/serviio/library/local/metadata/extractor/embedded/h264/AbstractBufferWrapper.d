@@ -1,6 +1,8 @@
 module org.serviio.library.local.metadata.extractor.embedded.h264.AbstractBufferWrapper;
 
 import java.lang.String;
+import java.lang.StringBuilder;
+import java.lang.RuntimeException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

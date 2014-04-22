@@ -10,3 +10,33 @@ public class Test
     {
     }
 }
+
+public interface ITest
+{
+    void foo();
+    void foo(int);
+}
+
+public abstract class T : ITest
+{
+    public void bar()
+    {
+        foo();
+    }
+
+    public void foo(int i)
+    {
+    }
+}
+
+public class T2 : T
+{
+    public void foo1()
+    {
+    }
+
+    public void bar2()
+    {
+        //foo(1);
+    }
+}

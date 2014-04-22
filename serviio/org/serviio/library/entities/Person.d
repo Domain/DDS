@@ -54,7 +54,7 @@ public class Person : PersistedEntity
 
     override public String toString()
     {
-        return String.format("Person [name=%s, sortName=%s]", cast(Object[])[ this.name, this.sortName ]);
+        return java.lang.String.format("Person [name=%s, sortName=%s]", cast(Object[])[ this.name, this.sortName ]);
     }
 }
 

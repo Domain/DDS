@@ -36,7 +36,7 @@ public class MusicAlbum : PersistedEntity
 
     override public String toString()
     {
-        return String.format("MusicAlbum [title=%s, sortTitle=%s]", cast(Object[])[ this.title, this.sortTitle ]);
+        return java.lang.String.format("MusicAlbum [title=%s, sortTitle=%s]", cast(Object[])[ this.title, this.sortTitle ]);
     }
 }
 

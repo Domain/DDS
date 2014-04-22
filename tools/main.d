@@ -215,6 +215,8 @@ void testObject(Object obj)
 void testCod()
 {
     testObject("string");
+    T t = new T2();
+    t.bar();
     //Test t = new Test();
     //t.foo(0);
 }
