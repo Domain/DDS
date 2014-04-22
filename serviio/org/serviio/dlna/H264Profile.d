@@ -12,6 +12,7 @@ enum H264Profile
     HIGH_10     = 110, 
     HIGH_422    = 122, 
     HIGH_444    = 244,
+    UNKNOWN     = -1,
 }
 
 public int getCode(H264Profile h264Profile)

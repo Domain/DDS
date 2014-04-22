@@ -61,12 +61,6 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("INSERT INTO media_item (file_type, title, genre_id, duration, file_size, file_name, folder_id, container, creation_date,cover_image_id, bitrate, description, sort_title, width, height, rating,order_number, season_number, series_id, acodec, vcodec, channels, fps, sample_frequency,content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, ftyp, file_path, repository_id, online_identifiers, sar, vfourcc, embedded_subtitles,release_year,dirty) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 1);
 
-
-
-
-
-
-
             ps.setString(1, MediaFileType.VIDEO.toString());
             ps.setString(2, JdbcUtils.trimToMaxLength(newInstance.getTitle(), 128));
             JdbcUtils.setLongValueOnStatement(ps, 3, newInstance.getGenreId());
@@ -86,22 +80,22 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.setIntValueOnStatement(ps, 17, newInstance.getEpisodeNumber());
             JdbcUtils.setIntValueOnStatement(ps, 18, newInstance.getSeasonNumber());
             JdbcUtils.setLongValueOnStatement(ps, 19, newInstance.getSeriesId());
-            JdbcUtils.setStringValueOnStatement(ps, 20, newInstance.getAudioCodec() != AudioCodec.UNKNOWN ? newInstance.getAudioCodec().toString() : AudioCodec.UNKNOWN);
+            JdbcUtils.setStringValueOnStatement(ps, 20, newInstance.getAudioCodec() != AudioCodec.UNKNOWN ? newInstance.getAudioCodec().toString() : AudioCodec.UNKNOWN.toString());
             JdbcUtils.setStringValueOnStatement(ps, 21, newInstance.getVideoCodec().toString());
             JdbcUtils.setIntValueOnStatement(ps, 22, newInstance.getChannels());
             JdbcUtils.setStringValueOnStatement(ps, 23, JdbcUtils.trimToMaxLength(newInstance.getFps(), 10));
             JdbcUtils.setIntValueOnStatement(ps, 24, newInstance.getFrequency());
             JdbcUtils.setStringValueOnStatement(ps, 25, newInstance.getContentType().toString());
-            JdbcUtils.setStringValueOnStatement(ps, 26, newInstance.getTimestampType() != TransportStreamTimestamp.INVALID ? newInstance.getTimestampType().toString() : TransportStreamTimestamp.INVALID);
+            JdbcUtils.setStringValueOnStatement(ps, 26, newInstance.getTimestampType() != TransportStreamTimestamp.INVALID ? newInstance.getTimestampType().toString() : TransportStreamTimestamp.INVALID.toString());
             JdbcUtils.setIntValueOnStatement(ps, 27, newInstance.getAudioBitrate());
             JdbcUtils.setIntValueOnStatement(ps, 28, newInstance.getAudioStreamIndex());
             JdbcUtils.setIntValueOnStatement(ps, 29, newInstance.getVideoStreamIndex());
-            JdbcUtils.setStringValueOnStatement(ps, 30, newInstance.getH264Profile() !is null ? newInstance.getH264Profile().toString() : null);
-            JdbcUtils.setStringValueOnStatement(ps, 31, H264LevelType.parseToString(newInstance.getH264Levels()));
+            JdbcUtils.setStringValueOnStatement(ps, 30, newInstance.getH264Profile() != H264Profile.UNKNOWN ? newInstance.getH264Profile().toString() : H264Profile.UNKNOWN.toString());
+            JdbcUtils.setStringValueOnStatement(ps, 31, parseToString(newInstance.getH264Levels()));
             JdbcUtils.setStringValueOnStatement(ps, 32, newInstance.getFtyp());
             ps.setString(33, newInstance.getFilePath());
             JdbcUtils.setLongValueOnStatement(ps, 34, newInstance.getRepositoryId());
-            JdbcUtils.setStringValueOnStatement(ps, 35, OnlineDBIdentifier.parseToString(newInstance.getOnlineIdentifiers()));
+            JdbcUtils.setStringValueOnStatement(ps, 35, parseToString(newInstance.getOnlineIdentifiers()));
             JdbcUtils.setStringValueOnStatement(ps, 36, newInstance.getSar() !is null ? newInstance.getSar().toString() : null);
             JdbcUtils.setStringValueOnStatement(ps, 37, JdbcUtils.trimToMaxLength(newInstance.getVideoFourCC(), 6));
             JdbcUtils.setStringValueOnStatement(ps, 38, CollectionUtils.listToCSV(newInstance.getEmbeddedSubtitles(), ",", true));
@@ -119,6 +113,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public void delete_(Long id)
@@ -154,12 +149,6 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("SELECT id, title, sort_title, genre_id, duration, file_size, file_name, folder_id, container, creation_date, cover_image_id, bitrate, description, width, height, rating, order_number, season_number, series_id, last_viewed_date, number_viewed, dirty, acodec, vcodec, channels,fps, sample_frequency, content_type, timestamp_type, audio_bitrate, audio_stream_index, video_stream_index,h264_profile, h264_level, bookmark, ftyp, file_path, repository_id, online_identifiers, sar, vfourcc, embedded_subtitles,release_year FROM media_item WHERE id = ?");
 
-
-
-
-
-
-
             ps.setLong(1, id.longValue());
             ResultSet rs = ps.executeQuery();
             return mapSingleResult(rs);
@@ -173,6 +162,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public void update(Video transientObject)
@@ -187,11 +177,6 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
         {
             con = DatabaseManager.getConnection();
             ps = con.prepareStatement("UPDATE media_item SET title = ?, file_size = ?, file_name = ?, folder_id = ?, container =?, creation_date = ?, description = ?, width = ?, height = ?, genre_id = ?, duration = ?, bitrate = ?, rating = ?, sort_title = ?, cover_image_id = ?, order_number = ?, season_number = ?, series_id = ?, dirty = ?, acodec = ?, vcodec = ?, channels = ?, fps = ?, sample_frequency = ?, content_type = ?, timestamp_type = ?, audio_bitrate = ?,audio_stream_index = ?, video_stream_index = ?, h264_profile = ?, h264_level = ?, ftyp = ?, file_path = ?,repository_id = ?, online_identifiers = ?, sar = ?, vfourcc = ?, embedded_subtitles = ?, release_year = ? WHERE id = ?");
-
-
-
-
-
 
             ps.setString(1, JdbcUtils.trimToMaxLength(transientObject.getTitle(), 128));
             ps.setLong(2, transientObject.getFileSize().longValue());
@@ -212,22 +197,22 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.setIntValueOnStatement(ps, 17, transientObject.getSeasonNumber());
             JdbcUtils.setLongValueOnStatement(ps, 18, transientObject.getSeriesId());
             ps.setInt(19, transientObject.isDirty() ? 1 : 0);
-            JdbcUtils.setStringValueOnStatement(ps, 20, transientObject.getAudioCodec() !is null ? transientObject.getAudioCodec().toString() : null);
+            JdbcUtils.setStringValueOnStatement(ps, 20, transientObject.getAudioCodec() != AudioCodec.UNKNOWN ? transientObject.getAudioCodec().toString() : AudioCodec.UNKNOWN.toString());
             JdbcUtils.setStringValueOnStatement(ps, 21, transientObject.getVideoCodec().toString());
             JdbcUtils.setIntValueOnStatement(ps, 22, transientObject.getChannels());
             JdbcUtils.setStringValueOnStatement(ps, 23, JdbcUtils.trimToMaxLength(transientObject.getFps(), 10));
             JdbcUtils.setIntValueOnStatement(ps, 24, transientObject.getFrequency());
             JdbcUtils.setStringValueOnStatement(ps, 25, transientObject.getContentType().toString());
-            JdbcUtils.setStringValueOnStatement(ps, 26, transientObject.getTimestampType() !is null ? transientObject.getTimestampType().toString() : null);
+            JdbcUtils.setStringValueOnStatement(ps, 26, transientObject.getTimestampType() != TransportStreamTimestamp.INVALID ? transientObject.getTimestampType().toString() : TransportStreamTimestamp.INVALID.toString());
             JdbcUtils.setIntValueOnStatement(ps, 27, transientObject.getAudioBitrate());
             JdbcUtils.setIntValueOnStatement(ps, 28, transientObject.getAudioStreamIndex());
             JdbcUtils.setIntValueOnStatement(ps, 29, transientObject.getVideoStreamIndex());
-            JdbcUtils.setStringValueOnStatement(ps, 30, transientObject.getH264Profile() !is null ? transientObject.getH264Profile().toString() : null);
-            JdbcUtils.setStringValueOnStatement(ps, 31, H264LevelType.parseToString(transientObject.getH264Levels()));
+            JdbcUtils.setStringValueOnStatement(ps, 30, transientObject.getH264Profile() != H264Profile.UNKNOWN ? transientObject.getH264Profile().toString() : H264Profile.UNKNOWN.toString());
+            JdbcUtils.setStringValueOnStatement(ps, 31, parseToString(transientObject.getH264Levels()));
             JdbcUtils.setStringValueOnStatement(ps, 32, transientObject.getFtyp());
             ps.setString(33, transientObject.getFilePath());
             JdbcUtils.setLongValueOnStatement(ps, 34, transientObject.getRepositoryId());
-            JdbcUtils.setStringValueOnStatement(ps, 35, OnlineDBIdentifier.parseToString(transientObject.getOnlineIdentifiers()));
+            JdbcUtils.setStringValueOnStatement(ps, 35, parseToString(transientObject.getOnlineIdentifiers()));
             JdbcUtils.setStringValueOnStatement(ps, 36, transientObject.getSar().toString());
             JdbcUtils.setStringValueOnStatement(ps, 37, JdbcUtils.trimToMaxLength(transientObject.getVideoFourCC(), 6));
             JdbcUtils.setStringValueOnStatement(ps, 38, CollectionUtils.listToCSV(transientObject.getEmbeddedSubtitles(), ",", true));
@@ -269,6 +254,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosCount(int type, AccessGroup accessGroup)
@@ -300,6 +286,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForFolder(Long folderId, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -326,6 +313,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForFolderCount(Long folderId, AccessGroup accessGroup)
@@ -358,6 +346,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForPlaylist(Long playlistId, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -384,6 +373,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForPlaylistCount(Long playlistId, AccessGroup accessGroup)
@@ -416,6 +406,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForGenre(Long genreId, AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
@@ -442,6 +433,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForGenreCount(Long genreId, AccessGroup accessGroup, bool filterOutSeries)
@@ -474,6 +466,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForPerson(Long personId, RoleType role, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -501,6 +494,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForPersonCount(Long personId, RoleType role, AccessGroup accessGroup)
@@ -534,6 +528,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForSeriesSeason(Long seriesId, Integer season, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -561,6 +556,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForSeriesSeasonCount(Long seriesId, Integer season, AccessGroup accessGroup)
@@ -594,6 +590,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(String) retrieveVideoInitials(AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
@@ -623,6 +620,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideoInitialsCount(AccessGroup accessGroup, bool filterOutSeries)
@@ -654,6 +652,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveVideosForInitial(String initial, AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
@@ -680,6 +679,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideosForInitialCount(String initial, AccessGroup accessGroup, bool filterOutSeries)
@@ -712,6 +712,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveLastViewedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -742,6 +743,8 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+
+        return null;
     }
 
     public int retrieveLastViewedVideosCount(int maxReturned, AccessGroup accessGroup)
@@ -773,6 +776,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveLastAddedVideos(int maxReturned, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -803,6 +807,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveLastAddedVideosCount(int maxReturned, AccessGroup userProfile)
@@ -843,6 +848,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public List!(Integer) retrieveVideoReleaseYears(AccessGroup accessGroup, int startingIndex, int requestedCount, bool filterOutSeries)
@@ -872,6 +878,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveVideoReleaseYearsCount(AccessGroup accessGroup, bool filterOutSeries)
@@ -903,6 +910,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveMoviesForReleaseYear(Integer releaseYear, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -930,6 +938,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMoviesForReleaseYearCount(Integer releaseYear, AccessGroup accessGroup)
@@ -963,6 +972,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(MPAARating) retrieveMovieRatings(AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -993,6 +1003,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMovieRatingsCount(AccessGroup accessGroup)
@@ -1025,6 +1036,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     public List!(Video) retrieveMoviesForRating(MPAARating rating, AccessGroup accessGroup, int startingIndex, int requestedCount)
@@ -1052,6 +1064,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return null;
     }
 
     public int retrieveMoviesForRatingCount(MPAARating rating, AccessGroup accessGroup)
@@ -1085,6 +1098,7 @@ public class VideoDAOImpl : AbstractSortableItemDao, VideoDAO
             JdbcUtils.closeStatement(ps);
             DatabaseManager.releaseConnection(con);
         }
+        return 0;
     }
 
     protected Video mapSingleResult(ResultSet rs)
