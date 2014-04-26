@@ -31,12 +31,12 @@ public abstract class T : ITest
 
 public class T2 : T
 {
-    public void foo1()
+    public void foo()
     {
     }
 
     public void bar2()
     {
-        //foo(1);
+        foo(1);
     }
 }

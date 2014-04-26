@@ -3,6 +3,7 @@ module org.serviio.library.local.metadata.extractor.embedded.h264.AbstractBuffer
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.RuntimeException;
+import java.lang.IllegalArgumentException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -145,17 +146,17 @@ public abstract class AbstractBufferWrapper : BufferWrapper
         if (i > this.readBitsRemaining)
         {
             int resultRemaining = i - this.readBitsRemaining;
-            int buffer = (this.readBitsBuffer & cast(int)(Math.pow(2.0, this.readBitsRemaining) - 1.0)) << resultRemaining;
+            int buffer = (this.readBitsBuffer & cast(int)(std.math.pow(2.0, this.readBitsRemaining) - 1.0)) << resultRemaining;
 
             this.readBitsBuffer = readByte();
             this.readBitsRemaining = (8 - resultRemaining);
-            int movedAndMasked = this.readBitsBuffer >>> this.readBitsRemaining & cast(int)(Math.pow(2.0, resultRemaining) - 1.0);
+            int movedAndMasked = this.readBitsBuffer >>> this.readBitsRemaining & cast(int)(std.math.pow(2.0, resultRemaining) - 1.0);
 
             return buffer | movedAndMasked;
         }
         this.readBitsRemaining -= i;
 
-        return this.readBitsBuffer >>> this.readBitsRemaining & cast(int)(Math.pow(2.0, i) - 1.0);
+        return this.readBitsBuffer >>> this.readBitsRemaining & cast(int)(std.math.pow(2.0, i) - 1.0);
     }
 
     public int getReadBitsRemaining()
@@ -189,7 +190,7 @@ public abstract class AbstractBufferWrapper : BufferWrapper
         read(buffer);
         try
         {
-            return new String(buffer, "UTF-8");
+            return new String(buffer);//, "UTF-8");
         }
         catch (UnsupportedEncodingException e)
         {

@@ -7,7 +7,7 @@ import org.serviio.library.local.metadata.extractor.embedded.h264.BufferWrapper;
 
 public class AnnexBNALUnitReader : NALUnitReader
 {
-    private immutable BufferWrapper src;
+    private BufferWrapper src;
 
     public this(BufferWrapper src)
     {
@@ -26,7 +26,7 @@ public class AnnexBNALUnitReader : NALUnitReader
             if (this.src.remaining() >= 4L)
             {
                 this.src.read(marker);
-                if (Arrays.opEquals(cast(byte[])[ 0, 0, 0, 1 ], marker))
+                if ((cast(byte[])[ 0, 0, 0, 1 ] == marker))
                 {
                     if (start == -1L)
                     {

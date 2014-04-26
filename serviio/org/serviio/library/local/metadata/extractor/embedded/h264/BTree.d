@@ -17,7 +17,6 @@ public class BTree
         }
         char charAt = path.charAt(0);
         BTree branch;
-        BTree branch;
         if (charAt == '0')
         {
             if (this.zero is null) {
