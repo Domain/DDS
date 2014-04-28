@@ -25,6 +25,12 @@ public class ResultSet
         return 0L;
     }
 
+    public long getLong(int)
+    {
+        implMissing();
+        return 0L;
+    }
+
     public String getString(String name)
     {
         implMissing();

@@ -9,4 +9,9 @@ public class ByteBuffer
     {
         implMissing();
     }
+
+    public void wrap(byte[])
+    {
+        implMissing();
+    }
 }

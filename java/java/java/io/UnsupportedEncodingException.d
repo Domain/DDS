@@ -3,7 +3,7 @@ module java.io.UnsupportedEncodingException;
 
 import java.lang.exceptions;
 
-public class UnsupportedEncodingException
+public class UnsupportedEncodingException : Exception
 {
     public this()
     {

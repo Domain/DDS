@@ -190,13 +190,15 @@ public abstract class AbstractBufferWrapper : BufferWrapper
         read(buffer);
         try
         {
-            return new String(buffer);//, "UTF-8");
+            return std.conv.to!String(buffer);//new String(buffer, "UTF-8");
         }
         catch (UnsupportedEncodingException e)
         {
             throw new Error("JVM doesn't support UTF-8");
         }
     }
+
+    alias BufferWrapper.read read;
 
     public byte[] read(int byteCount)
     {

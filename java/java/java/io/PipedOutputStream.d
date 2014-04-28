@@ -14,4 +14,6 @@ public class PipedOutputStream : OutputStream
     {
         implMissing();
     }
+
+    alias OutputStream.write write;
 }

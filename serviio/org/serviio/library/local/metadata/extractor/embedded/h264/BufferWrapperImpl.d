@@ -43,7 +43,7 @@ public class BufferWrapperImpl : AbstractBufferWrapper
         int sliceSize = 134217728;
 
         RandomAccessFile raf = new RandomAccessFile(file, "r");
-        ArrayList!(ByteBuffer) buffers = new ArrayList();
+        ArrayList!(ByteBuffer) buffers = new ArrayList!(ByteBuffer)();
         long i = 0L;
         while (i < filelength) {
             if (filelength - i > sliceSize)

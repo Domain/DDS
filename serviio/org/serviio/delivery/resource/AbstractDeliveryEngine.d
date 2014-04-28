@@ -64,6 +64,7 @@ public abstract class AbstractDeliveryEngine(RI : MediaFormatProfileResource, MI
         this.log.debug_(String_format("Retrieving resource information for item %s and profile %s", cast(Object[])[ mediaItem.getId().toString(), rendererProfile.getName() ]));
         Map!(QualityType, List!(RI)) infos = new LinkedHashMap!(QualityType, List!(RI))();
         try
+
         {
             LinkedHashMap!(QualityType, List!(RI)) originalMediaInfos = retrieveOriginalMediaInfo(mediaItem, rendererProfile);
             if (originalMediaInfos !is null) {
