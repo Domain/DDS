@@ -10,8 +10,9 @@ public class ByteBuffer
         implMissing();
     }
 
-    public void wrap(byte[])
+    static public ByteBuffer wrap(byte[])
     {
         implMissing();
+		return null;
     }
 }
